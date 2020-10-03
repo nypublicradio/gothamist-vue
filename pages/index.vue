@@ -1,0 +1,29 @@
+<template>
+  <div class="l-container">
+    <h1 class="is-vishidden">
+      Livestream WNYC FM 93.9 and AM 820
+    </h1>
+    <main-player
+      :image="$store.getters['whatsOnNow/image']"
+      :title="$store.getters['whatsOnNow/title']"
+      :title-link="$store.getters['whatsOnNow/titleLink']"
+      :details="$store.getters['whatsOnNow/details']"
+      :details-link="$store.getters['whatsOnNow/detailsLink']"
+      :time="$store.getters['whatsOnNow/time']"
+    />
+  </div>
+</template>
+
+<script>
+import MainPlayer from 'nypr-design-system-vue/src/components/MainPlayer'
+
+export default {
+  name: 'HomePage',
+  metaInfo: {
+    title: 'WNYC Labs'
+  },
+  components: {
+    MainPlayer
+  }
+}
+</script>
