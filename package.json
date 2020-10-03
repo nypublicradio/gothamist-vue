@@ -32,5 +32,8 @@
     "nypr-design-system-vue": "nypublicradio/nypr-design-system-vue#5be9e4251a4954e2ed20e240a019935b89dcf831",
     "sass-loader": "^10.0.2",
     "vue-jest": "^3.0.4"
+  },
+  "gitHooks": {
+    "pre-commit": "lint && jest"
   }
 }

@@ -1,7 +1,7 @@
 export const state = () => ({
   whatsOnNow: {
-    image: 'https://placehold.it/175x175',
-    title: 'The Takeaway',
+    image: 'https://media.wnyc.org/i/258/258/l/85/2020/06/AllOfIt.png',
+    title: 'All Of It',
     titleLink: 'http://www.google.com',
     details: 'This week, people in Tulsa filed a lawsuit demanding reparations for victims and descendants of the Tulsa Race Massacre.',
     detailsLink: 'http://www.bing.com',

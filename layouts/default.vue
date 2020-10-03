@@ -1,6 +1,6 @@
 <template>
   <div>
-    <the-header :donate-url="$store.getters['donateUrl']">
+    <the-header :donate-url="$store.getters['global/donateUrl']">
       <wnyc-logo />
     </the-header>
     <v-spacer size="triple" />
@@ -10,8 +10,8 @@
     <v-spacer size="triple" />
     <the-footer
       slogan="Listener-supported WNYC is the home for independent journalism and courageous conversation on air and online. Broadcasting live from New York City on 93.9 FM and AM 820 and available online and on the go."
-      :secondary-nav="$store.getters['footerSecondaryNav']"
-      :tertiary-nav="$store.getters['footerSecondaryNav']"
+      :secondary-nav="$store.getters['global/footerSecondaryNav']"
+      :tertiary-nav="$store.getters['global/footerSecondaryNav']"
       subheader1="About Us"
     >
       <template v-slot:logo>

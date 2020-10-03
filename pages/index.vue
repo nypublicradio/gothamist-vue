@@ -19,11 +19,19 @@ import MainPlayer from 'nypr-design-system-vue/src/components/MainPlayer'
 
 export default {
   name: 'HomePage',
-  metaInfo: {
-    title: 'WNYC Labs'
-  },
   components: {
     MainPlayer
+  },
+  head () {
+    return {
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'test'
+        }
+      ]
+    }
   }
 }
 </script>
