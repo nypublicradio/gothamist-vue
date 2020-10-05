@@ -11,18 +11,23 @@
       :details-link="$store.getters['whatsOnNow/detailsLink']"
       :time="$store.getters['whatsOnNow/time']"
     />
+    <v-spacer size="double" />
     <p>
-      <nuxt-link to="test">test</nuxt-link>
+      <nuxt-link to="/test">
+        test page
+      </nuxt-link>
     </p>
   </div>
 </template>
 
 <script>
+import VSpacer from 'nypr-design-system-vue/src/components/VSpacer'
 import MainPlayer from 'nypr-design-system-vue/src/components/MainPlayer'
 
 export default {
   name: 'HomePage',
   components: {
+    VSpacer,
     MainPlayer
   },
   head () {

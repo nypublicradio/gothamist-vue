@@ -1,7 +1,7 @@
 <template>
   <div>
     <the-header :donate-url="$store.getters['global/donateUrl']">
-      <nuxt-link to="index">
+      <nuxt-link to="/">
         <wnyc-logo />
       </nuxt-link>
     </the-header>
@@ -17,7 +17,9 @@
       subheader1="About Us"
     >
       <template v-slot:logo>
-        <wnyc-logo />
+        <nuxt-link to="/">
+          <wnyc-logo />
+        </nuxt-link>
       </template>
       <template v-slot:leftComponent>
         <div class="o-text-with-icon u-space--double--top">
