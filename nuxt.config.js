@@ -1,6 +1,4 @@
 export default {
-  mode: 'universal',
-
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
 
