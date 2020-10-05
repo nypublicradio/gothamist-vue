@@ -1,7 +1,9 @@
 <template>
   <div>
     <the-header :donate-url="$store.getters['global/donateUrl']">
-      <wnyc-logo />
+      <nuxt-link to="index">
+        <wnyc-logo />
+      </nuxt-link>
     </the-header>
     <v-spacer size="triple" />
     <main>
