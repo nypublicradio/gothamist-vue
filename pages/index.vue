@@ -14,21 +14,18 @@
     <v-spacer size="double" />
     <p>
       <nuxt-link to="/test">
-        test page
+        test page!
       </nuxt-link>
     </p>
   </div>
 </template>
 
 <script>
-import VSpacer from 'nypr-design-system-vue/src/components/VSpacer'
-import MainPlayer from 'nypr-design-system-vue/src/components/MainPlayer'
-
 export default {
   name: 'HomePage',
   components: {
-    VSpacer,
-    MainPlayer
+    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
+    MainPlayer: () => import('nypr-design-system-vue/src/components/MainPlayer')
   },
   head () {
     return {
