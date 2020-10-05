@@ -11,6 +11,9 @@
       :details-link="$store.getters['whatsOnNow/detailsLink']"
       :time="$store.getters['whatsOnNow/time']"
     />
+    <p>
+      <nuxt-link to="test">test</nuxt-link>
+    </p>
   </div>
 </template>
 
