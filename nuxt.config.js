@@ -1,10 +1,4 @@
 export default {
-  // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
-  ssr: false,
-
-  // Target (https://go.nuxtjs.dev/config-target)
-  target: 'static',
-
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     htmlAttrs: {
@@ -124,9 +118,6 @@ export default {
 
   styleResources: { scss: './assets/*.scss' },
 
-  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [],
-
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: false,
 
@@ -148,6 +139,7 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-    analyze: true
+    // this is needed to transpile es6 modules imported from radial
+    transpile: ['nypr-design-system-vue']
   }
 }

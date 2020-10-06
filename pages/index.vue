@@ -14,7 +14,7 @@
     <v-spacer size="double" />
     <p>
       <nuxt-link to="/test">
-        test page!
+        test page
       </nuxt-link>
     </p>
   </div>
