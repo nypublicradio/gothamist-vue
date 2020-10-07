@@ -1,4 +1,5 @@
 export const state = () => ({
+  // need to get these values from the API on load
   whatsOnNow: {
     image: 'https://media.wnyc.org/i/258/258/l/85/2020/06/AllOfIt.png',
     title: 'All Of It',
@@ -10,6 +11,8 @@ export const state = () => ({
     file: 'http://www.hochmuth.com/mp3/Haydn_Cello_Concerto_D-1.mp3'
   }
 })
+
+// Getters read the current state of the store module and return something
 
 export const getters = {
   image (state) {
@@ -35,5 +38,14 @@ export const getters = {
   },
   file (state) {
     return state.whatsOnNow.file
+  }
+}
+
+// Mutations commit values in the state
+// A mutation is a reactive event - our app will know when something changes!
+
+export const mutations = {
+  set (state, whatsOnNow) {
+    state.whatsOnNow = whatsOnNow
   }
 }
