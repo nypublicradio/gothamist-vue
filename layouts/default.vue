@@ -7,11 +7,10 @@
         </nuxt-link>
       </the-header>
     </lazy-hydrate>
-    <v-spacer size="triple" />
     <main>
+      <div class="dots header-dots"></div>
       <Nuxt />
     </main>
-    <v-spacer size="triple" />
     <lazy-hydrate ssr-only>
       <the-footer
         slogan="Listener-supported WNYC is the home for independent journalism and courageous conversation on air and online. Broadcasting live from New York City on 93.9 FM and AM 820 and available online and on the go."
@@ -93,7 +92,6 @@ export default {
     ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
     TheFooter: () => import('nypr-design-system-vue/src/components/TheFooter'),
     TheHeader: () => import('nypr-design-system-vue/src/components/TheHeader'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
     WnycLogo: () => import('nypr-design-system-vue/src/components/icons/wnyc/WnycLogo')
   }
 }

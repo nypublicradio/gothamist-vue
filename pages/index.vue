@@ -20,8 +20,7 @@
         <play-simple />
       </v-button>
     </main-player>
-    <v-spacer size="double" />
-    <p>
+    <p class="u-space--triple--top">
       <nuxt-link to="/test">
         test page
       </nuxt-link>
@@ -31,7 +30,7 @@
 
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
-import global from '~/mixins/global'
+import whatsOnNow from '@/mixins/whatsOnNow'
 
 export default {
   name: 'HomePage',
@@ -39,10 +38,9 @@ export default {
     LazyHydrate,
     MainPlayer: () => import('nypr-design-system-vue/src/components/MainPlayer'),
     PlaySimple: () => import('nypr-design-system-vue/src/components/icons/PlaySimple'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton')
   },
-  mixins: [global],
+  mixins: [whatsOnNow],
   head () {
     return {
       meta: [
