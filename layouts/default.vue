@@ -2,13 +2,21 @@
   <div>
     <lazy-hydrate ssr-only>
       <the-header :donate-url="$store.getters['global/donateUrl']">
-        <nuxt-link to="/">
-          <wnyc-logo />
-        </nuxt-link>
+        <template v-slot:logo>
+          <nuxt-link to="/">
+            <wnyc-logo />
+          </nuxt-link>
+        </template>
+        <template v-slot:navigation>
+          <secondary-navigation
+            orientation="horizontal"
+            :nav-items="$store.getters['global/headerNav']"
+          />
+        </template>
       </the-header>
     </lazy-hydrate>
     <main>
-      <div class="dots header-dots"></div>
+      <div class="dots header-dots" />
       <Nuxt />
     </main>
     <lazy-hydrate ssr-only>
@@ -88,6 +96,7 @@ export default {
     LazyHydrate,
     JlgreeneLogo: () => import('nypr-design-system-vue/src/components/icons/wnyc/JlgreeneLogo'),
     PersistentPlayer: () => import('nypr-design-system-vue/src/components/PersistentPlayer'),
+    SecondaryNavigation: () => import('nypr-design-system-vue/src/components/SecondaryNavigation'),
     ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
     ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
     TheFooter: () => import('nypr-design-system-vue/src/components/TheFooter'),

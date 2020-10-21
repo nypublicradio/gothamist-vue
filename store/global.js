@@ -1,6 +1,12 @@
 export const state = () => ({
   autoPlay: false,
   donateUrl: 'http://www.google.com',
+  headerNav: [
+    {
+      url: 'https://www.wnyc.org/schedule/',
+      text: 'Schedule'
+    }
+  ],
   footerSecondaryNav: [
     {
       url: ['https://www.wnyc.org/resources/912769/fcc_eeo_public_file_report.pdf'],
@@ -43,6 +49,9 @@ export const getters = {
   },
   donateUrl (state) {
     return state.donateUrl
+  },
+  headerNav (state) {
+    return state.headerNav
   },
   footerSecondaryNav (state) {
     return state.footerSecondaryNav

@@ -1,7 +1,7 @@
 export const state = () => ({
   // need to get these values from the API on load
   whatsOnNow: {
-    image: 'https://media.wnyc.org/i/258/258/l/85/2020/06/AllOfIt.png',
+    image: 'https://media.demo.nypr.digital/i/800/800/c/80/1/BL.png',
     title: 'All Of It',
     titleLink: 'http://www.google.com',
     details: 'This week, people in Tulsa filed a lawsuit demanding reparations for victims and descendants of the Tulsa Race Massacre.',
