@@ -21,7 +21,8 @@ templates:
       - deploy:
           name: Deploy to S3
           command: |
-            env | sed -n "s/^${ENV}_//p" >> .env && source .env
+            env | sed -n "s/^${ENV}_//p" >> .env
+            set -o allexport && source .env && set +o allexport
             npm run generate
             npm run deploy
 
