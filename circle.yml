@@ -100,7 +100,7 @@ jobs:
 
   deploy-static:
     environment:
-      ENV: DEMO
+      ENV: nuxt
     <<: *deploy_static
 
   deploy-nuxt:
