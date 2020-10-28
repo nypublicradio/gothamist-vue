@@ -7,7 +7,7 @@ templates:
           JOBS: 2
 
   node_key: &node_key
-    key: node-deps-{{ checksum "yarn.lock" }}-{{ checksum "circle.yml" }}
+    key: node-deps-{{ checksum "package-lock.json" }}-{{ checksum "circle.yml" }}
 
   restore_node: &restore_node
     restore_cache:
@@ -22,7 +22,7 @@ templates:
           name: Deploy to S3
           command: |
             env | sed -n "s/^${ENV}_//p" >> .env && source .env
-            nuxt generate
+            npm run generate
             gulp deploy
 
   filter_demo: &filter_demo
@@ -63,6 +63,7 @@ templates:
               --task-role=wnyc-client-$ENV \
               --ports=80 \
               --environment=$ENV \
+              --no-strict-environment \
               --tag=$TAG \
               --wait=300 \
       - save_cache:
@@ -81,7 +82,7 @@ jobs:
           name: Install node dependencies
           command: |
             if [ ! -d node_modules ]; then
-              yarn --pure-lockfile
+              npm install --only=prod
             fi
       - save_cache:
           <<: *node_key
