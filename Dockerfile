@@ -14,7 +14,7 @@ RUN apt-get update \
 WORKDIR /code
 
 COPY package.json ./
-COPY yarn.lock ./
+COPY package-lock.json ./
 RUN npm install 
 
 COPY . ./

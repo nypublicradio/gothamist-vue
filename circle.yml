@@ -23,7 +23,7 @@ templates:
           command: |
             env | sed -n "s/^${ENV}_//p" >> .env && source .env
             npm run generate
-            gulp deploy
+            npm run deploy
 
   filter_demo: &filter_demo
     filters:
