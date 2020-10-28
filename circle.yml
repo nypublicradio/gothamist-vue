@@ -125,14 +125,14 @@ workflows:
           <<: *filter_demo
 #      - test-static:
 #          <<: *filter_demo
-          requires:
-            - build-static
+#          requires:
+#            - build-static
       - deploy-static:
           <<: *filter_demo
           requires:
-            - test-static
+            - build-static
       - deploy-nuxt:
           <<: *filter_demo
           requires:
-            - test-static
+            - build-static
 
