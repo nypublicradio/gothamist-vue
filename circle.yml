@@ -115,16 +115,16 @@ workflows:
           filters:
             branches:
               ignore: /main|[A-Za-z-_]+/[A-Za-z-_\d]+/
-      - test-static:
-          requires:
-            - build-static
+#      - test-static:
+#          requires:
+#            - build-static
 
   deploy-nuxt:
     jobs:
       - build-static:
           <<: *filter_demo
-      - test-static:
-          <<: *filter_demo
+#      - test-static:
+#          <<: *filter_demo
           requires:
             - build-static
       - deploy-static:
