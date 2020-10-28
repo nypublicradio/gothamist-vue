@@ -82,7 +82,7 @@ jobs:
           name: Install node dependencies
           command: |
             if [ ! -d node_modules ]; then
-              npm install --only=prod
+              npm install 
             fi
       - save_cache:
           <<: *node_key
@@ -106,6 +106,7 @@ jobs:
   deploy-nuxt:
     environment:
       ENV: nuxt
+      TAG: nuxt
     <<: *deploy_nuxt
 
 workflows:
