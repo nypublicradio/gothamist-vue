@@ -14,8 +14,11 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
+    "concurrent-transform": "^1.0.0",
     "core-js": "^3.6.5",
     "gulp": "^4.0.2",
+    "gulp-awspublish": "^4.1.2",
+    "gulp-cloudfront-invalidate-aws-publish": "^1.0.0",
     "nuxt": "^2.14.5"
   },
   "devDependencies": {
