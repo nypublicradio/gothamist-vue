@@ -12,6 +12,9 @@ prod)
 demo)
     supervisord -c nginx/supervisord.conf
     ;;
+nuxt)
+    supervisord -c nginx/supervisord.conf
+    ;;
 *)
     npm run dev
     ;;

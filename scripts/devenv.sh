@@ -5,6 +5,8 @@ prod)
     ;;
 demo)
     ;;
+nuxt)
+    ;;
 *)
     if ! [[ -f ".env" ]]; then
         cp .env.sample .env
