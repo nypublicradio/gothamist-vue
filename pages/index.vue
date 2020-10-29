@@ -5,6 +5,19 @@
         Livestream WNYC FM 93.9 and AM 820
       </h1>
     </lazy-hydrate>
+    <v-spacer size="double" />
+    <stream-switcher class="u-color-group-dark">
+      <stream-switcher-card
+        station="WNYC 93.9 FM"
+        title="BBC World Service"
+        :active="true"
+        :playing="true"
+      />
+      <stream-switcher-card
+        station="WNYC AM 820"
+        title="The Takeaway"
+      />
+    </stream-switcher>
     <main-player
       :image="$store.getters['whatsOnNow/image']"
       :title="$store.getters['whatsOnNow/title']"
@@ -38,7 +51,10 @@ export default {
     LazyHydrate,
     MainPlayer: () => import('nypr-design-system-vue/src/components/MainPlayer'),
     PlaySimple: () => import('nypr-design-system-vue/src/components/icons/PlaySimple'),
-    VButton: () => import('nypr-design-system-vue/src/components/VButton')
+    StreamSwitcher: () => import('nypr-design-system-vue/src/components/StreamSwitcher'),
+    StreamSwitcherCard: () => import('nypr-design-system-vue/src/components/StreamSwitcherCard'),
+    VButton: () => import('nypr-design-system-vue/src/components/VButton'),
+    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
   mixins: [whatsOnNow],
   head () {
