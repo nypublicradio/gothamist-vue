@@ -1,5 +1,5 @@
 <template>
-  <div class="l-container">
+  <div class="l-container l-container--12col">
     <lazy-hydrate ssr-only>
       <h1 class="is-vishidden">
         Livestream WNYC FM 93.9 and AM 820
