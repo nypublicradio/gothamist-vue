@@ -8,29 +8,29 @@
     <v-spacer size="double" />
     <stream-switcher class="u-color-group-dark">
       <stream-switcher-card
-        station="WNYC 93.9 FM"
-        title="BBC World Service"
-        :active="true"
-        :playing="true"
-      />
-      <stream-switcher-card
-        station="WNYC AM 820"
-        title="The Takeaway"
+        v-for="(stream, index) in $store.getters['whatsOnNow/streams']"
+        :key="index"
+        :station="stream.station"
+        :title="stream.title"
+        :active="stream.active"
+        :playing="stream.playing"
+        @click="setSelectedStream(stream, index)"
       />
     </stream-switcher>
     <main-player
-      :image="$store.getters['whatsOnNow/image']"
-      :title="$store.getters['whatsOnNow/title']"
-      :title-link="$store.getters['whatsOnNow/titleLink']"
-      :details="$store.getters['whatsOnNow/details']"
-      :details-link="$store.getters['whatsOnNow/detailsLink']"
-      :time="$store.getters['whatsOnNow/time']"
+      :image="$store.getters['whatsOnNow/selectedStreamImage']"
+      :title="$store.getters['whatsOnNow/selectedStreamTitle']"
+      :title-link="$store.getters['whatsOnNow/selectedStreamTitleLink']"
+      :details="$store.getters['whatsOnNow/selectedStreamDetails']"
+      :details-link="$store.getters['whatsOnNow/selectedStreamDetailsLink']"
+      :time="$store.getters['whatsOnNow/selectedStreamTime']"
     >
       <v-button
         label="Listen Live"
-        @click="updateWhatsOnNow"
+        @click="togglePlay"
       >
-        <play-simple />
+        <pause-icon v-if="$store.getters['global/playing']" />
+        <play-simple v-else />
       </v-button>
     </main-player>
     <p class="u-space--triple--top">
@@ -50,23 +50,13 @@ export default {
   components: {
     LazyHydrate,
     MainPlayer: () => import('nypr-design-system-vue/src/components/MainPlayer'),
+    PauseIcon: () => import('nypr-design-system-vue/src/components/icons/wqxr/PauseIcon'),
     PlaySimple: () => import('nypr-design-system-vue/src/components/icons/PlaySimple'),
     StreamSwitcher: () => import('nypr-design-system-vue/src/components/StreamSwitcher'),
     StreamSwitcherCard: () => import('nypr-design-system-vue/src/components/StreamSwitcherCard'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
-  mixins: [whatsOnNow],
-  head () {
-    return {
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: 'test'
-        }
-      ]
-    }
-  }
+  mixins: [whatsOnNow]
 }
 </script>

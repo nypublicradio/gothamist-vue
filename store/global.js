@@ -1,5 +1,5 @@
 export const state = () => ({
-  autoPlay: false,
+  playing: false,
   donateUrl: 'http://www.google.com',
   headerNav: [
     {
@@ -44,8 +44,8 @@ export const state = () => ({
 // Getters read the current state of the store module and return something
 
 export const getters = {
-  autoPlay (state) {
-    return state.autoPlay
+  playing (state) {
+    return state.playing
   },
   donateUrl (state) {
     return state.donateUrl
@@ -65,7 +65,7 @@ export const getters = {
 // A mutation is a reactive event - our app will know when something changes!
 
 export const mutations = {
-  setAutoPlay (state, autoPlay) {
-    state.autoPlay = autoPlay
+  setPlaying (state, playing) {
+    state.playing = playing
   }
 }

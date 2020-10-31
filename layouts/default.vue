@@ -73,15 +73,16 @@
     >
       <persistent-player
         livestream
-        :auto-play="$store.getters['global/autoPlay']"
-        :station="$store.getters['whatsOnNow/station']"
-        :title="$store.getters['whatsOnNow/title']"
-        :title-link="$store.getters['whatsOnNow/titleLink']"
-        :details="$store.getters['whatsOnNow/details']"
-        :details-link="$store.getters['whatsOnNow/detailsLink']"
-        :file="$store.getters['whatsOnNow/file']"
+        :playing="$store.getters['global/playing']"
+        :station="$store.getters['whatsOnNow/whatsOnNowStation']"
+        :title="$store.getters['whatsOnNow/whatsOnNowTitle']"
+        :title-link="$store.getters['whatsOnNow/whatsOnNowTitleLink']"
+        :details="$store.getters['whatsOnNow/whatsOnNowDetails']"
+        :details-link="$store.getters['whatsOnNow/whatsOnNowDetailsLink']"
+        :file="$store.getters['whatsOnNow/whatsOnNowFile']"
         class="u-color-group-dark"
         aria-live="polite"
+        @togglePlay="togglePlay"
       />
     </div>
   </div>
@@ -89,6 +90,7 @@
 
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
+import whatsOnNow from '@/mixins/whatsOnNow'
 
 export default {
   name: 'Wnyc',
@@ -101,7 +103,9 @@ export default {
     ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
     TheFooter: () => import('nypr-design-system-vue/src/components/TheFooter'),
     TheHeader: () => import('nypr-design-system-vue/src/components/TheHeader'),
-    WnycLogo: () => import('nypr-design-system-vue/src/components/icons/wnyc/WnycLogo')
-  }
+    WnycLogo: () => import('nypr-design-system-vue/src/components/icons/wnyc/WnycLogo'),
+    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
+  },
+  mixins: [whatsOnNow]
 }
 </script>
