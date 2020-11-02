@@ -1,5 +1,6 @@
 export const state = () => ({
   whatsOnNow: {
+    active: true,
     details: 'This is the description for All Of It on WNYC 93.9 FM!',
     detailsLink: 'http://www.google.com',
     file: 'http://www.hochmuth.com/mp3/Haydn_Cello_Concerto_D-1.mp3',
@@ -8,9 +9,11 @@ export const state = () => ({
     station: 'WNYC 93.9 FM',
     time: '3:00 PM - 4:00 PM',
     title: 'All Of It',
-    titleLink: 'http://www.google.com'
+    titleLink: 'http://www.google.com',
+    upNextTitle: 'The Next Show'
   },
   selectedStream: {
+    active: true,
     details: 'This is the description for All Of It on WNYC 93.9 FM!',
     detailsLink: 'http://www.google.com',
     file: 'http://www.hochmuth.com/mp3/Haydn_Cello_Concerto_D-1.mp3',
@@ -19,7 +22,8 @@ export const state = () => ({
     station: 'WNYC 93.9 FM',
     time: '3:00 PM - 4:00 PM',
     title: 'All Of It',
-    titleLink: 'http://www.google.com'
+    titleLink: 'http://www.google.com',
+    upNextTitle: 'The Next Show'
   },
   streams: [
     {
@@ -32,7 +36,8 @@ export const state = () => ({
       station: 'WNYC 93.9 FM',
       time: '3:00 PM - 4:00 PM',
       title: 'All Of It',
-      titleLink: 'http://www.google.com'
+      titleLink: 'http://www.google.com',
+      upNextTitle: 'The Next Show'
     },
     {
       active: false,
@@ -44,7 +49,8 @@ export const state = () => ({
       station: 'WNYC AM 820',
       time: '4:30 PM - 5:30 PM',
       title: 'The Brian Lehrer Show',
-      titleLink: 'http://www.bing.com'
+      titleLink: 'http://www.bing.com',
+      upNextTitle: 'The Next Show'
     }
   ]
 })
@@ -52,6 +58,9 @@ export const state = () => ({
 // Getters read the current state of the store module and return something
 
 export const getters = {
+  selectedStream (state) {
+    return state.selectedStream
+  },
   selectedStreamImage (state) {
     return state.selectedStream.image
   },
@@ -78,6 +87,9 @@ export const getters = {
   },
   selectedStreamFile (state) {
     return state.selectedStream.file
+  },
+  whatsOnNow (state) {
+    return state.whatsOnNow
   },
   whatsOnNowImage (state) {
     return state.whatsOnNow.image
@@ -119,17 +131,30 @@ export const mutations = {
   setWhatsOnNow (state, whatsOnNow) {
     state.whatsOnNow = whatsOnNow
   },
+  // update what's on now to playing
+  setWhatsOnNowPlaying (state, value) {
+    state.whatsOnNow.playing = value
+  },
   // update the selected stream
   setSelectedStream (state, selectedStream) {
     state.selectedStream = selectedStream
   },
   // update the streams
-  setStreams (state, index) {
+  setStreamToActive (state, index) {
     // set all streams' active property to false
     for (const i in state.streams) {
       state.streams[i].active = false
     }
     // set the selected stream's active property to true
     state.streams[index].active = true
+  },
+  // update the stream to playing
+  setStreamToPlaying (state, index) {
+    // set all streams' playing property to false
+    for (const i in state.streams) {
+      state.streams[i].playing = false
+    }
+    // set the selected stream's active property to true
+    state.streams[index].playing = true
   }
 }

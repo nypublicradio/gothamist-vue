@@ -67,24 +67,28 @@
       </the-footer>
     </lazy-hydrate>
     <v-spacer size="quad" />
-    <div
-      role="complementary"
-      aria-label="WNYC Audio Controls"
-    >
-      <persistent-player
-        livestream
-        :playing="$store.getters['global/playing']"
-        :station="$store.getters['whatsOnNow/whatsOnNowStation']"
-        :title="$store.getters['whatsOnNow/whatsOnNowTitle']"
-        :title-link="$store.getters['whatsOnNow/whatsOnNowTitleLink']"
-        :details="$store.getters['whatsOnNow/whatsOnNowDetails']"
-        :details-link="$store.getters['whatsOnNow/whatsOnNowDetailsLink']"
-        :file="$store.getters['whatsOnNow/whatsOnNowFile']"
-        class="u-color-group-dark"
-        aria-live="polite"
-        @togglePlay="togglePlay"
-      />
-    </div>
+    <transition name="fade">
+      <div
+        v-if="$store.getters['whatsOnNow/whatsOnNow']"
+        role="complementary"
+        aria-label="WNYC Audio Controls"
+      >
+        <persistent-player
+          livestream
+          :auto-play="$store.getters['whatsOnNow/whatsOnNowPlaying']"
+          :is-playing="$store.getters['whatsOnNow/whatsOnNowPlaying']"
+          :station="$store.getters['whatsOnNow/whatsOnNowStation']"
+          :title="$store.getters['whatsOnNow/whatsOnNowTitle']"
+          :title-link="$store.getters['whatsOnNow/whatsOnNowTitleLink']"
+          :details="$store.getters['whatsOnNow/whatsOnNowDetails']"
+          :details-link="$store.getters['whatsOnNow/whatsOnNowDetailsLink']"
+          :file="$store.getters['whatsOnNow/whatsOnNowFile']"
+          class="u-color-group-dark"
+          aria-live="polite"
+          @togglePlay="togglePlay($store.getters['whatsOnNow/whatsOnNow'])"
+        />
+      </div>
+    </transition>
   </div>
 </template>
 

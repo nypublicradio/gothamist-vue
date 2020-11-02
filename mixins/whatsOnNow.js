@@ -12,6 +12,7 @@ export default {
           detailsLink: stream.detailsLink,
           time: stream.time,
           station: stream.station,
+          streamIndex: stream.index,
           file: stream.file
         }
       )
@@ -31,21 +32,34 @@ export default {
           file: stream.file
         }
       )
-      // update the streams to set the active/inactive states
+      // update the stream to active
       this.$store.commit(
-        'whatsOnNow/setStreams',
+        'whatsOnNow/setStreamToActive',
         index
       )
     },
-    togglePlay () {
-      // update the global "playing" state
-      if (this.$store.getters['global/playing']) {
-        this.$store.commit(
-          'global/setPlaying', false
-        )
+    togglePlay (stream) {
+      if (stream === this.$store.getters['whatsOnNow/whatsOnNow']) {
+        // if the stream is the same one that's currently playing or paused
+        // toggle the what's on now playing state
+        if (this.$store.getters['whatsOnNow/whatsOnNowPlaying']) {
+          this.$store.commit(
+            'whatsOnNow/setWhatsOnNowPlaying', false
+          )
+        } else {
+          this.$store.commit(
+            'whatsOnNow/setWhatsOnNowPlaying', true
+          )
+        }
       } else {
+        // if the stream is not the same one that's currently playing or paused
+        // update what's on now
         this.$store.commit(
-          'global/setPlaying', true
+          'whatsOnNow/setWhatsOnNow', stream
+        )
+        // play the stream / set what's on now playing to true
+        this.$store.commit(
+          'whatsOnNow/setWhatsOnNowPlaying', true
         )
       }
     }

@@ -12,6 +12,7 @@
         :key="index"
         :station="stream.station"
         :title="stream.title"
+        :up-next-title="stream.upNextTitle"
         :active="stream.active"
         :playing="stream.playing"
         @click="setSelectedStream(stream, index)"
@@ -27,12 +28,18 @@
     >
       <v-button
         label="Listen Live"
-        @click="togglePlay"
+        @click="togglePlay($store.getters['whatsOnNow/selectedStream'])"
       >
-        <pause-icon v-if="$store.getters['global/playing']" />
+        <pause-icon v-if="$store.getters['whatsOnNow/whatsOnNowPlaying']" />
         <play-simple v-else />
       </v-button>
     </main-player>
+    <p>
+      {{ $store.getters['whatsOnNow/whatsOnNowPlaying'] }}
+    </p>
+    <p>
+      {{ $store.getters['whatsOnNow/whatsOnNow'] }}
+    </p>
     <p class="u-space--triple--top">
       <nuxt-link to="/test">
         test page
