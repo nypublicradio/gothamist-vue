@@ -1,43 +1,125 @@
 export const state = () => ({
-  // need to get these values from the API on load
   whatsOnNow: {
-    image: 'https://media.demo.nypr.digital/i/800/800/c/80/1/BL.png',
+    active: true,
+    details: 'This is the description for All Of It on WNYC 93.9 FM!',
+    detailsLink: 'http://www.google.com',
+    file: 'http://www.hochmuth.com/mp3/Haydn_Cello_Concerto_D-1.mp3',
+    image: 'https://media.wnyc.org/i/258/258/l/85/2020/06/AllOfIt.png',
+    playing: false,
+    station: 'WNYC 93.9 FM',
+    time: '3:00 PM - 4:00 PM',
     title: 'All Of It',
     titleLink: 'http://www.google.com',
-    details: 'This week, people in Tulsa filed a lawsuit demanding reparations for victims and descendants of the Tulsa Race Massacre.',
-    detailsLink: 'http://www.bing.com',
-    time: '3:00 PM - 4:00 PM',
+    upNextTitle: 'The Next Show'
+  },
+  selectedStream: {
+    active: true,
+    details: 'This is the description for All Of It on WNYC 93.9 FM!',
+    detailsLink: 'http://www.google.com',
+    file: 'http://www.hochmuth.com/mp3/Haydn_Cello_Concerto_D-1.mp3',
+    image: 'https://media.wnyc.org/i/258/258/l/85/2020/06/AllOfIt.png',
+    playing: false,
     station: 'WNYC 93.9 FM',
-    file: 'http://www.hochmuth.com/mp3/Haydn_Cello_Concerto_D-1.mp3'
-  }
+    time: '3:00 PM - 4:00 PM',
+    title: 'All Of It',
+    titleLink: 'http://www.google.com',
+    upNextTitle: 'The Next Show'
+  },
+  streams: [
+    {
+      active: true,
+      details: 'This is the description for All Of It on WNYC 93.9 FM!',
+      detailsLink: 'http://www.google.com',
+      file: 'http://www.hochmuth.com/mp3/Haydn_Cello_Concerto_D-1.mp3',
+      image: 'https://media.wnyc.org/i/258/258/l/85/2020/06/AllOfIt.png',
+      playing: false,
+      station: 'WNYC 93.9 FM',
+      time: '3:00 PM - 4:00 PM',
+      title: 'All Of It',
+      titleLink: 'http://www.google.com',
+      upNextTitle: 'The Next Show'
+    },
+    {
+      active: false,
+      details: 'This is the description for The Brian Lehrer Show on WNYC AM 820!',
+      detailsLink: 'http://www.bing.com',
+      file: 'https://www.liberliber.it/mediateca/musica/g/gershwin/rhapsody_in_blue/mp3/gershwin_rhapsody_in_blue_bl_01.mp3',
+      image: 'https://media.demo.nypr.digital/i/800/800/c/80/1/BL.png',
+      playing: false,
+      station: 'WNYC AM 820',
+      time: '4:30 PM - 5:30 PM',
+      title: 'The Brian Lehrer Show',
+      titleLink: 'http://www.bing.com',
+      upNextTitle: 'The Next Show'
+    }
+  ]
 })
 
 // Getters read the current state of the store module and return something
 
 export const getters = {
-  image (state) {
+  selectedStream (state) {
+    return state.selectedStream
+  },
+  selectedStreamImage (state) {
+    return state.selectedStream.image
+  },
+  selectedStreamTitle (state) {
+    return state.selectedStream.title
+  },
+  selectedStreamTitleLink (state) {
+    return state.selectedStream.titleLink
+  },
+  selectedStreamDetails (state) {
+    return state.selectedStream.details
+  },
+  selectedStreamDetailsLink (state) {
+    return state.selectedStream.detailsLink
+  },
+  selectedStreamPlaying (state) {
+    return state.selectedStream.playing
+  },
+  selectedStreamTime (state) {
+    return state.selectedStream.time
+  },
+  selectedStreamStation (state) {
+    return state.selectedStream.station
+  },
+  selectedStreamFile (state) {
+    return state.selectedStream.file
+  },
+  whatsOnNow (state) {
+    return state.whatsOnNow
+  },
+  whatsOnNowImage (state) {
     return state.whatsOnNow.image
   },
-  title (state) {
+  whatsOnNowTitle (state) {
     return state.whatsOnNow.title
   },
-  titleLink (state) {
+  whatsOnNowTitleLink (state) {
     return state.whatsOnNow.titleLink
   },
-  details (state) {
+  whatsOnNowDetails (state) {
     return state.whatsOnNow.details
   },
-  detailsLink (state) {
+  whatsOnNowDetailsLink (state) {
     return state.whatsOnNow.detailsLink
   },
-  time (state) {
+  whatsOnNowPlaying (state) {
+    return state.whatsOnNow.playing
+  },
+  whatsOnNowTime (state) {
     return state.whatsOnNow.time
   },
-  station (state) {
+  whatsOnNowStation (state) {
     return state.whatsOnNow.station
   },
-  file (state) {
+  whatsOnNowFile (state) {
     return state.whatsOnNow.file
+  },
+  streams (state) {
+    return state.streams
   }
 }
 
@@ -45,7 +127,34 @@ export const getters = {
 // A mutation is a reactive event - our app will know when something changes!
 
 export const mutations = {
-  set (state, whatsOnNow) {
+  // update what's on now
+  setWhatsOnNow (state, whatsOnNow) {
     state.whatsOnNow = whatsOnNow
+  },
+  // update what's on now to playing
+  setWhatsOnNowPlaying (state, value) {
+    state.whatsOnNow.playing = value
+  },
+  // update the selected stream
+  setSelectedStream (state, selectedStream) {
+    state.selectedStream = selectedStream
+  },
+  // update the streams
+  setStreamToActive (state, index) {
+    // set all streams' active property to false
+    for (const i in state.streams) {
+      state.streams[i].active = false
+    }
+    // set the selected stream's active property to true
+    state.streams[index].active = true
+  },
+  // update the stream to playing
+  setStreamToPlaying (state, index) {
+    // set all streams' playing property to false
+    for (const i in state.streams) {
+      state.streams[i].playing = false
+    }
+    // set the selected stream's active property to true
+    state.streams[index].playing = true
   }
 }

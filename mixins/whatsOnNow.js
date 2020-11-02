@@ -1,24 +1,67 @@
 export default {
   methods: {
-    updateWhatsOnNow () {
-      // set the persistent player to auto play
+    setWhatsOnNow (stream) {
+      // update what's on now in the vuex store
       this.$store.commit(
-        'global/setAutoPlay', true
-      )
-      // update what's on now in the store
-      this.$store.commit(
-        'whatsOnNow/set',
+        'whatsOnNow/setWhatsOnNow',
         {
-          image: 'https://media.wnyc.org/i/258/258/l/85/2020/06/AllOfIt.png',
-          title: 'All Of It 2222',
-          titleLink: 'http://www.google.com',
-          details: 'This week, people in Tulsa filed a lawsuit demanding reparations for victims and descendants of the Tulsa Race Massacre.',
-          detailsLink: 'http://www.bing.com',
-          time: '3:00 PM - 4:00 PM',
-          station: 'WNYC 93.9 FM',
-          file: 'https://www.liberliber.it/mediateca/musica/g/gershwin/rhapsody_in_blue/mp3/gershwin_rhapsody_in_blue_bl_01.mp3'
+          image: stream.image,
+          title: stream.title,
+          titleLink: stream.titleLink,
+          details: stream.details,
+          detailsLink: stream.detailsLink,
+          time: stream.time,
+          station: stream.station,
+          streamIndex: stream.index,
+          file: stream.file
         }
       )
+    },
+    setSelectedStream (stream, index) {
+      // update the selected stream in the vuex store
+      this.$store.commit(
+        'whatsOnNow/setSelectedStream',
+        {
+          image: stream.image,
+          title: stream.title,
+          titleLink: stream.titleLink,
+          details: stream.details,
+          detailsLink: stream.detailsLink,
+          time: stream.time,
+          station: stream.station,
+          file: stream.file
+        }
+      )
+      // update the stream to active
+      this.$store.commit(
+        'whatsOnNow/setStreamToActive',
+        index
+      )
+    },
+    togglePlay (stream) {
+      if (stream === this.$store.getters['whatsOnNow/whatsOnNow']) {
+        // if the stream is the same one that's currently playing or paused
+        // toggle the what's on now playing state
+        if (this.$store.getters['whatsOnNow/whatsOnNowPlaying']) {
+          this.$store.commit(
+            'whatsOnNow/setWhatsOnNowPlaying', false
+          )
+        } else {
+          this.$store.commit(
+            'whatsOnNow/setWhatsOnNowPlaying', true
+          )
+        }
+      } else {
+        // if the stream is not the same one that's currently playing or paused
+        // update what's on now
+        this.$store.commit(
+          'whatsOnNow/setWhatsOnNow', stream
+        )
+        // play the stream / set what's on now playing to true
+        this.$store.commit(
+          'whatsOnNow/setWhatsOnNowPlaying', true
+        )
+      }
     }
   }
 }
