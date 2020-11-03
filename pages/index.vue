@@ -34,6 +34,12 @@
         <play-simple v-else />
       </v-button>
     </main-player>
+<!--    <p class="u-space&#45;&#45;triple&#45;&#45;top">-->
+<!--      playing? {{ $store.getters['whatsOnNow/whatsOnNowPlaying'] }}-->
+<!--    </p>-->
+<!--    <p class="u-space&#45;&#45;triple&#45;&#45;top">-->
+<!--      {{ $store.getters['whatsOnNow/whatsOnNow'] }}-->
+<!--    </p>-->
     <p class="u-space--triple--top">
       <nuxt-link to="/test">
         test page
