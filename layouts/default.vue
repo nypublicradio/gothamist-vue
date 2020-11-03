@@ -85,6 +85,7 @@
           :description="$store.getters['whatsOnNow/whatsOnNowDetails']"
           :description-link="$store.getters['whatsOnNow/whatsOnNowDetailsLink']"
           :file="$store.getters['whatsOnNow/whatsOnNowFile']"
+          :should-show-cta="true"
           class="u-color-group-dark"
           aria-live="polite"
           @togglePlay="togglePlay($store.getters['whatsOnNow/whatsOnNow'])"
