@@ -3,7 +3,7 @@
     <lazy-hydrate ssr-only>
       <the-header :donate-url="$store.getters['global/donateUrl']">
         <template v-slot:logo>
-          <nuxt-link to="/">
+          <nuxt-link to="/" aria-label="wnyc home page">
             <wnyc-logo />
           </nuxt-link>
         </template>
@@ -28,7 +28,7 @@
         subheader1="About Us"
       >
         <template v-slot:logo>
-          <nuxt-link to="/">
+          <nuxt-link to="/" aria-label="wnyc home page">
             <wnyc-logo />
           </nuxt-link>
         </template>
