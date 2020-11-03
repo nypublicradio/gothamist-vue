@@ -7,6 +7,7 @@
             <wnyc-logo />
           </nuxt-link>
         </template>
+
         <template v-slot:navigation>
           <secondary-navigation
             orientation="horizontal"
