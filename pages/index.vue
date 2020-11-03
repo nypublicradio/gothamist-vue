@@ -35,6 +35,12 @@
       </v-button>
     </main-player>
     <p class="u-space--triple--top">
+      playing? {{ $store.getters['whatsOnNow/whatsOnNowPlaying'] }}
+    </p>
+    <p class="u-space--triple--top">
+      {{ $store.getters['whatsOnNow/whatsOnNow'] }}
+    </p>
+    <p class="u-space--triple--top">
       <nuxt-link to="/test">
         test page
       </nuxt-link>
