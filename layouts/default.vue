@@ -7,12 +7,18 @@
             <wnyc-logo />
           </nuxt-link>
         </template>
-
         <template v-slot:navigation>
-          <secondary-navigation
-            orientation="horizontal"
-            :nav-items="$store.getters['global/headerNav']"
-          />
+          <div>
+            <secondary-navigation
+              orientation="horizontal"
+              :nav-items="[
+                {
+                  url: 'https://www.wnyc.org/schedule/',
+                  text: 'Schedule'
+                }
+              ]"
+            />
+          </div>
         </template>
       </the-header>
     </lazy-hydrate>

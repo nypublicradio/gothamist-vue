@@ -5,7 +5,7 @@
         Livestream WNYC FM 93.9 and AM 820
       </h1>
     </lazy-hydrate>
-    <v-spacer size="double" />
+    <v-spacer size="quad" />
     <stream-switcher class="u-color-group-dark">
       <stream-switcher-card
         v-for="(stream, index) in $store.getters['whatsOnNow/streams']"
@@ -30,15 +30,10 @@
         label="Listen Live"
         @click="togglePlay($store.getters['whatsOnNow/selectedStream'])"
       >
-        <pause-icon v-if="$store.getters['whatsOnNow/whatsOnNowPlaying']" />
+        <pause-icon v-if="$store.getters['whatsOnNow/selectedStreamPlaying']" />
         <play-simple v-else />
       </v-button>
     </main-player>
-    <p class="u-space--triple--top">
-      <nuxt-link to="/test">
-        test page
-      </nuxt-link>
-    </p>
   </div>
 </template>
 

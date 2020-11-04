@@ -1,5 +1,6 @@
 export const state = () => ({
   whatsOnNow: {
+    index: 0,
     active: true,
     details: 'This is the description for All Of It on WNYC 93.9 FM!',
     detailsLink: 'http://www.google.com',
@@ -13,6 +14,7 @@ export const state = () => ({
     upNextTitle: 'The Next Show'
   },
   selectedStream: {
+    index: 0,
     active: true,
     details: 'This is the description for All Of It on WNYC 93.9 FM!',
     detailsLink: 'http://www.google.com',
@@ -27,6 +29,7 @@ export const state = () => ({
   },
   streams: [
     {
+      index: 0,
       active: true,
       details: 'This is the description for All Of It on WNYC 93.9 FM!',
       detailsLink: 'http://www.google.com',
@@ -40,6 +43,7 @@ export const state = () => ({
       upNextTitle: 'The Next Show'
     },
     {
+      index: 1,
       active: false,
       details: 'This is the description for The Brian Lehrer Show on WNYC AM 820!',
       detailsLink: 'http://www.bing.com',
@@ -58,6 +62,9 @@ export const state = () => ({
 // Getters read the current state of the store module and return something
 
 export const getters = {
+  streams (state) {
+    return state.streams
+  },
   selectedStream (state) {
     return state.selectedStream
   },
@@ -117,9 +124,6 @@ export const getters = {
   },
   whatsOnNowFile (state) {
     return state.whatsOnNow.file
-  },
-  streams (state) {
-    return state.streams
   }
 }
 
@@ -132,8 +136,8 @@ export const mutations = {
     state.whatsOnNow = whatsOnNow
   },
   // update what's on now to playing
-  setWhatsOnNowPlaying (state, value) {
-    state.whatsOnNow.playing = value
+  setWhatsOnNowPlaying (state) {
+    state.whatsOnNow.playing = true
   },
   // update the selected stream
   setSelectedStream (state, selectedStream) {
@@ -148,13 +152,20 @@ export const mutations = {
     // set the selected stream's active property to true
     state.streams[index].active = true
   },
-  // update the stream to playing
+  // set the selected stream's playing to true
+  // set all the other streams' playing to false
   setStreamToPlaying (state, index) {
-    // set all streams' playing property to false
     for (const i in state.streams) {
       state.streams[i].playing = false
     }
-    // set the selected stream's active property to true
     state.streams[index].playing = true
+    state.whatsOnNow.playing = true
+  },
+  // set all the streams' playing to false
+  setStreamsToNotPlaying (state) {
+    for (const i in state.streams) {
+      state.streams[i].playing = false
+    }
+    state.whatsOnNow.playing = false
   }
 }
