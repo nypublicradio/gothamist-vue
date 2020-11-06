@@ -30,7 +30,7 @@
       <the-footer
         slogan="Listener-supported WNYC is the home for independent journalism and courageous conversation on air and online. Broadcasting live from New York City on 93.9 FM and AM 820 and available online and on the go."
         :secondary-nav="$store.getters['global/footerSecondaryNav']"
-        :tertiary-nav="$store.getters['global/footerSecondaryNav']"
+        :tertiary-nav="$store.getters['global/footerTertiaryNav']"
         subheader1="About Us"
       >
         <template v-slot:logo>
