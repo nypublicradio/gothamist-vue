@@ -49,19 +49,16 @@ export default {
       if (stream === this.$store.getters['whatsOnNow/whatsOnNow']) {
         // if the stream is the same one that's currently playing or paused:
         // toggle the what's on now playing state
-        // console.log('stream is the same one that is currently playing or paused')
         if (this.$store.getters['whatsOnNow/whatsOnNowPlaying']) {
-          // console.log('currently playing - pause it')
           this.$store.commit(
-            'whatsOnNow/setWhatsOnNowPlaying', false
+            'whatsOnNow/setWhatsOnNowToNotPlaying'
           )
           this.$store.commit(
             'whatsOnNow/setStreamsToNotPlaying'
           )
         } else {
-          // console.log('NOT currently playing - play it')
           this.$store.commit(
-            'whatsOnNow/setWhatsOnNowPlaying', true
+            'whatsOnNow/setWhatsOnNowToPlaying'
           )
           this.$store.commit(
             'whatsOnNow/setStreamToPlaying', stream.index
@@ -70,7 +67,6 @@ export default {
       } else {
         // if the stream is not the same one that's currently playing or paused:
         // update what's on now
-        // console.log('stream is NOT the same one that is currently playing or paused - set it an play it')
         this.$store.commit(
           'whatsOnNow/setWhatsOnNow', stream
         )
@@ -78,10 +74,17 @@ export default {
         this.$store.commit(
           'whatsOnNow/setStreamToPlaying', stream.index
         )
-        // set what's on now playing to true
+        // stop playback
         this.$store.commit(
-          'whatsOnNow/setWhatsOnNowPlaying'
+          'whatsOnNow/setWhatsOnNowToNotPlaying'
         )
+        // play the new selection
+        // needed a setTimeout because stopping and playing without one was too fast and the persistent player wasn't stopping playback
+        setTimeout(() => {
+          this.$store.commit(
+            'whatsOnNow/setWhatsOnNowToPlaying'
+          )
+        }, 100)
       }
     }
   }

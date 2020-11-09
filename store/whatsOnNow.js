@@ -136,8 +136,12 @@ export const mutations = {
     state.whatsOnNow = whatsOnNow
   },
   // update what's on now to playing
-  setWhatsOnNowPlaying (state) {
+  setWhatsOnNowToPlaying (state) {
     state.whatsOnNow.playing = true
+  },
+  // update what's on now to not playing
+  setWhatsOnNowToNotPlaying (state) {
+    state.whatsOnNow.playing = false
   },
   // update the selected stream
   setSelectedStream (state, selectedStream) {
@@ -152,6 +156,13 @@ export const mutations = {
     // set the selected stream's active property to true
     state.streams[index].active = true
   },
+  // set all the streams' playing to false
+  setStreamsToNotPlaying (state) {
+    for (const i in state.streams) {
+      state.streams[i].playing = false
+    }
+    state.whatsOnNow.playing = false
+  },
   // set the selected stream's playing to true
   // set all the other streams' playing to false
   setStreamToPlaying (state, index) {
@@ -160,12 +171,5 @@ export const mutations = {
     }
     state.streams[index].playing = true
     state.whatsOnNow.playing = true
-  },
-  // set all the streams' playing to false
-  setStreamsToNotPlaying (state) {
-    for (const i in state.streams) {
-      state.streams[i].playing = false
-    }
-    state.whatsOnNow.playing = false
   }
 }
