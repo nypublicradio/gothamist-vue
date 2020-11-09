@@ -1,9 +1,12 @@
 export const state = () => ({
+  hasSomethingBeenPlayedYet: false,
   whatsOnNow: {
     index: 0,
     active: true,
     details: 'This is the description for All Of It on WNYC 93.9 FM!',
     detailsLink: 'http://www.google.com',
+    episodeTitle: 'This is the episode title for All Of It',
+    episodeLink: 'http://www.yahoo.com',
     file: 'https://www.mfiles.co.uk/mp3-downloads/isaac-albeniz-espana-tango-op165-no2.mp3',
     image: 'https://media.wnyc.org/i/660/660/l/85/2020/06/AllOfIt.png',
     playing: false,
@@ -18,6 +21,8 @@ export const state = () => ({
     active: true,
     details: 'This is the description for All Of It on WNYC 93.9 FM!',
     detailsLink: 'http://www.google.com',
+    episodeTitle: 'This is the episode title for All Of It',
+    episodeLink: 'http://www.yahoo.com',
     file: 'https://www.mfiles.co.uk/mp3-downloads/isaac-albeniz-espana-tango-op165-no2.mp3',
     image: 'https://media.wnyc.org/i/660/660/l/85/2020/06/AllOfIt.png',
     playing: false,
@@ -33,6 +38,8 @@ export const state = () => ({
       active: true,
       details: 'This is the description for All Of It on WNYC 93.9 FM!',
       detailsLink: 'http://www.google.com',
+      episodeTitle: 'This is the episode title for All Of It',
+      episodeLink: 'http://www.yahoo.com',
       file: 'https://www.mfiles.co.uk/mp3-downloads/isaac-albeniz-espana-tango-op165-no2.mp3',
       image: 'https://media.wnyc.org/i/660/660/l/85/2020/06/AllOfIt.png',
       playing: false,
@@ -47,6 +54,8 @@ export const state = () => ({
       active: false,
       details: 'This is the description for The Brian Lehrer Show on WNYC AM 820!',
       detailsLink: 'http://www.bing.com',
+      episodeTitle: 'This is the episode title for The Brian Lehrer Show',
+      episodeLink: 'http://www.msnbc.com',
       file: 'https://www.mfiles.co.uk/mp3-downloads/book1-prelude01.mp3',
       image: 'https://media.demo.nypr.digital/i/660/660/c/80/1/BL.png',
       playing: false,
@@ -62,6 +71,9 @@ export const state = () => ({
 // Getters read the current state of the store module and return something
 
 export const getters = {
+  hasSomethingBeenPlayedYet (state) {
+    return state.hasSomethingBeenPlayedYet
+  },
   streams (state) {
     return state.streams
   },
@@ -113,6 +125,12 @@ export const getters = {
   whatsOnNowDetailsLink (state) {
     return state.whatsOnNow.detailsLink
   },
+  whatsOnNowEpisodeTitle (state) {
+    return state.whatsOnNow.episodeTitle
+  },
+  whatsOnNowEpisodeLink (state) {
+    return state.whatsOnNow.episodeLink
+  },
   whatsOnNowPlaying (state) {
     return state.whatsOnNow.playing
   },
@@ -131,6 +149,10 @@ export const getters = {
 // A mutation is a reactive event - our app will know when something changes!
 
 export const mutations = {
+  // update what's on now
+  somethingHasBeenPlayed (state) {
+    state.hasSomethingBeenPlayedYet = true
+  },
   // update what's on now
   setWhatsOnNow (state, whatsOnNow) {
     state.whatsOnNow = whatsOnNow
