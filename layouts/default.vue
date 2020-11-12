@@ -39,8 +39,10 @@
           </nuxt-link>
         </template>
         <template v-slot:leftComponent>
-          <div class="o-text-with-icon u-space--double--top">
-            <p>WNYC is supported by the JLGreene Foundation</p>
+          <div class="o-text-with-icon u-space--double--top jlgreen-box">
+            <p class="jlgreen-message">
+              WNYC is supported by the JLGreene Foundation
+            </p>
             <a
               href="https://jlgreene.org"
               target="_blank"
