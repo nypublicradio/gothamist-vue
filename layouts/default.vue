@@ -54,24 +54,26 @@
           </div>
         </template>
         <template v-slot:social>
-          <share-tools label="Connect">
-            <share-tools-item
-              service="facebook"
-              username="WNYC"
-            />
-            <share-tools-item
-              service="twitter"
-              username="WNYC"
-            />
-            <share-tools-item
-              service="instagram"
-              username="WNYC"
-            />
-            <share-tools-item
-              service="youtube"
-              username="UCbysmY4hyViQAAYEzOR-uCQ"
-            />
-          </share-tools>
+          <div>
+            <share-tools label="Connect">
+              <share-tools-item
+                service="facebook"
+                username="WNYC"
+              />
+              <share-tools-item
+                service="twitter"
+                username="WNYC"
+              />
+              <share-tools-item
+                service="instagram"
+                username="WNYC"
+              />
+              <share-tools-item
+                service="youtube"
+                username="UCbysmY4hyViQAAYEzOR-uCQ"
+              />
+            </share-tools>
+          </div>
         </template>
       </the-footer>
     </lazy-hydrate>
