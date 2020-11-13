@@ -39,8 +39,10 @@
           </nuxt-link>
         </template>
         <template v-slot:leftComponent>
-          <div class="o-text-with-icon u-space--double--top">
-            <p>WNYC is supported by the JLGreene Foundation</p>
+          <div class="o-text-with-icon u-space--double--top jlgreen-box">
+            <p class="jlgreen-message">
+              WNYC is supported by the JLGreene Foundation
+            </p>
             <a
               href="https://jlgreene.org"
               target="_blank"
@@ -52,24 +54,26 @@
           </div>
         </template>
         <template v-slot:social>
-          <share-tools label="Connect">
-            <share-tools-item
-              service="facebook"
-              username="WNYC"
-            />
-            <share-tools-item
-              service="twitter"
-              username="WNYC"
-            />
-            <share-tools-item
-              service="instagram"
-              username="WNYC"
-            />
-            <share-tools-item
-              service="youtube"
-              username="UCbysmY4hyViQAAYEzOR-uCQ"
-            />
-          </share-tools>
+          <div>
+            <share-tools label="Connect">
+              <share-tools-item
+                service="facebook"
+                username="WNYC"
+              />
+              <share-tools-item
+                service="twitter"
+                username="WNYC"
+              />
+              <share-tools-item
+                service="instagram"
+                username="WNYC"
+              />
+              <share-tools-item
+                service="youtube"
+                username="UCbysmY4hyViQAAYEzOR-uCQ"
+              />
+            </share-tools>
+          </div>
         </template>
       </the-footer>
     </lazy-hydrate>
