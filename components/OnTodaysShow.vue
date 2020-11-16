@@ -28,6 +28,14 @@
         credit-url="http:///www.google.com"
       />
       <div class="dots" />
+      <share-tools label="Connect with the show!">
+        <share-tools-item
+          v-for="(socialshare, index) in social"
+          :key="index"
+          :service="socialshare.service"
+          :username="socialshare.contact"
+        />
+      </share-tools>
     </div>
   </div>
 </template>
@@ -41,6 +49,8 @@ export default {
     ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
     SegmentList: () => import('nypr-design-system-vue/src/components/SegmentList'),
     SegmentListItem: () => import('nypr-design-system-vue/src/components/SegmentListItem'),
+    ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
+    ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
@@ -90,8 +100,38 @@ export default {
           url: 'http://www.google.com'
         }
       ],
-      segmentsToShow: 6
+      segmentsToShow: 6,
+      social: [
+        {
+          contact: 'AllOfItWNYC',
+          service: 'facebook'
+        },
+        {
+          contact: 'AllOfItWNYC',
+          service: 'twitter'
+        },
+        {
+          contact: 'allofitwnyc',
+          service: 'instagram'
+        }]
     }
   }
 }
 </script>
+<style scoped>
+.o-icon.twitter {
+  border: none;
+  fill: RGB(var(--color-text));
+  z-index:10;
+}
+.o-icon.facebook {
+  border: none;
+  fill: RGB(var(--color-text));
+  z-index:10;
+}
+.o-icon.instagram {
+  border: none;
+  fill: RGB(var(--color-text));
+  z-index:10;
+}
+</style>
