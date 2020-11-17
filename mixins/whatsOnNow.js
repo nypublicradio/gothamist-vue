@@ -33,7 +33,6 @@ export default {
       )
       // if nothing has been played yet, set what's on now to the selected stream
       if (!this.$store.getters['whatsOnNow/hasSomethingBeenPlayedYet']) {
-        console.log('nothing has been played yet')
         this.$store.commit(
           'whatsOnNow/setWhatsOnNow', stream
         )
