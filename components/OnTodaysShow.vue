@@ -33,7 +33,7 @@
     <div class="on-todays-show-right l-grid--order-2-large">
       <image-with-caption
         alt-text="image alt text"
-        image="http://placehold.it/600x375"
+        image="http://placehold.it/506x327"
         caption="This is the caption lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elitlorem ipsum dolor sit amet, consectetur adipiscing elit"
         credit="( AP Photo/Carolyn Kaster )"
         credit-url="http:///www.google.com"
