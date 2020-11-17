@@ -108,6 +108,7 @@
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
 import whatsOnNow from '@/mixins/whatsOnNow'
+import 'focus-visible'
 
 export default {
   name: 'Wnyc',
