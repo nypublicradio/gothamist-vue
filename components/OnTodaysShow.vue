@@ -8,7 +8,7 @@
     <div class="l-grid l-grid--2up l-grid--1up--large l-grid--large-gutters">
       <div class="on-todays-show-left l-grid--order-1-large">
         <p class="on-todays-show-headline">
-          The Future of Industry City; How Do Prosecutors Decide When to Convict Cops?; How the Kennedy Campaign Used Tech and Data
+          <a href="http://www.google.com" target="_blank" rel="nofollow">The Future of Industry City; How Do Prosecutors Decide When to Convict Cops?; How the Kennedy Campaign Used Tech and Data</a>
         </p>
         <v-spacer size="triple" />
         <segment-list>
