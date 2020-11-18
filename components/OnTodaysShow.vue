@@ -5,7 +5,7 @@
         On Today's Show
       </h2>
       <p class="on-todays-show-headline">
-        The Future of Industry City; How Do Prosecutors Decide When to Convict Cops?; How the Kennedy Campaign Used Tech and Data
+        <a href="http://www.google.com" target="_blank" rel="nofollow">The Future of Industry City; How Do Prosecutors Decide When to Convict Cops?; How the Kennedy Campaign Used Tech and Data</a>
       </p>
       <v-spacer size="triple" />
       <segment-list>
