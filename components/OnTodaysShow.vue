@@ -42,6 +42,7 @@
           credit-url="http:///www.google.com"
         />
         <div class="dots" />
+      </div>
         <share-tools label="Connect with the show!">
           <share-tools-item
             v-for="(socialshare, index) in social"
@@ -50,7 +51,6 @@
             :username="socialshare.contact"
           />
         </share-tools>
-      </div>
     </div>
   </div>
 </template>
