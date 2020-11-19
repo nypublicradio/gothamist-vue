@@ -20,7 +20,7 @@ export const state = () => ({
       text: 'WNYC-AM FCC Public File'
     },
     {
-      url: ['https://www.wnyc.org/articles/wnyc-contest-rules'],
+      url: ['https://www.wnyc.org/contact'],
       text: 'Contact Us'
     }
   ],
