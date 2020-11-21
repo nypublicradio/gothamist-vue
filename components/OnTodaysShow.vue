@@ -56,7 +56,27 @@
     </div>
       <v-spacer size="triple" />
       <lazy-hydrate ssr-only>
-        <share-tools label="Connect with the show!" layout="vertical">
+      <div class="on-todays-show-person-social-wrapper">
+        <ul class="on-todays-show-person-list">
+          <li class="on-todays-show-person-item">
+            <v-person
+              class="on-todays-show-person"
+              image="http://placehold.it/120x120"
+              name="Alison Stewart"
+              name-link="http://example.com"
+              role="Host"
+            />
+          </li>
+          <li class="on-todays-show-person-item">
+            <v-person
+              class="on-todays-show-person"
+              image="http://placehold.it/120x120"
+              name="Andrew Cuomo"
+              role="Guest"
+            />
+          </li>
+        </ul>
+        <share-tools class="on-todays-show-social" label="Connect with the show!" layout="vertical">
           <share-tools-item
             v-for="(socialshare, index) in social"
             :key="index"
@@ -64,8 +84,9 @@
             :username="socialshare.contact"
           />
         </share-tools>
+      </div>
       </lazy-hydrate>
-  </div>
+      </div>
 </template>
 
 <script>
@@ -82,7 +103,8 @@ export default {
     ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
     ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
+    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
+    VPerson: () => import('nypr-design-system-vue/src/components/VPerson')
   },
   mixins: [whatsOnNow],
   data () {
@@ -171,3 +193,70 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.o-icon {
+  border: none;
+  fill: RGB(var(--color-text));
+  z-index: 10;
+}
+
+.o-icon:hover {
+  fill: RGB(var(--color-text));
+  opacity: var(--opacity-hover);
+}
+
+.on-todays-show-person-social-wrapper {
+  grid-column: 1 / 3;
+  display: flex;
+  width: 100%;
+}
+
+.on-todays-show-person-list {
+  flex: 1;
+  display: block;
+}
+
+.on-todays-show-social {
+  flex: 0 1 180px;
+  width: 180px;
+}
+
+.on-todays-show-person-item {
+  display: inline-block;
+  list-style: none;
+  width: 180px;
+  @include media(">medium") {
+    width: 300px;
+  }
+}
+
+.on-todays-show-person.card.person-card {
+  list-style: none;
+  width: 180px;
+  max-width: 180px;
+  @include media(">medium") {
+    width: 300px;
+    max-width: 300px;
+  }
+}
+
+.on-todays-show-person-item:only-child {
+    position: relative;
+    margin-right: 24px;
+}
+
+.on-todays-show-person-item:only-child:after {
+  content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 112px;
+    opacity: 0.5;
+    border: 1px solid #EAEFF0;
+    @include media(">medium") {
+      height: 100px;
+    }
+}
+
+</style>
