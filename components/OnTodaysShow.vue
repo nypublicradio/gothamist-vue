@@ -54,8 +54,8 @@
         <div class="dots" />
       </div>
     </div>
-      <v-spacer size="triple" />
-      <lazy-hydrate ssr-only>
+    <v-spacer size="triple" />
+    <lazy-hydrate ssr-only>
       <div class="on-todays-show-person-social-wrapper">
         <ul class="on-todays-show-person-list">
           <li class="on-todays-show-person-item">
@@ -85,8 +85,8 @@
           />
         </share-tools>
       </div>
-      </lazy-hydrate>
-      </div>
+    </lazy-hydrate>
+  </div>
 </template>
 
 <script>
