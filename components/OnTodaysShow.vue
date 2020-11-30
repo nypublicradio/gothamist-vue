@@ -53,8 +53,10 @@
         </lazy-hydrate>
         <div class="dots" />
       </div>
+    </div>
+      <v-spacer size="triple" />
       <lazy-hydrate ssr-only>
-        <share-tools label="Connect with the show!">
+        <share-tools label="Connect with the show!" layout="vertical">
           <share-tools-item
             v-for="(socialshare, index) in social"
             :key="index"
@@ -63,7 +65,6 @@
           />
         </share-tools>
       </lazy-hydrate>
-    </div>
   </div>
 </template>
 
