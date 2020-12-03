@@ -57,22 +57,14 @@
     <v-spacer size="triple" />
     <lazy-hydrate ssr-only>
       <div class="on-todays-show-person-social-wrapper">
-        <ul class="on-todays-show-person-list">
-          <li class="on-todays-show-person-item">
+        <ul class="on-todays-show-person-list" :data-count="people.length">
+          <li v-for="person in people" :key="person.name" class="on-todays-show-person-item">
             <v-person
               class="on-todays-show-person"
-              image="http://placehold.it/120x120"
-              name="Alison Stewart"
-              name-link="http://example.com"
-              role="Host"
-            />
-          </li>
-          <li class="on-todays-show-person-item">
-            <v-person
-              class="on-todays-show-person"
-              image="http://placehold.it/120x120"
-              name="Andrew Cuomo"
-              role="Guest"
+              :image="person.image"
+              :name="person.name"
+              :name-link="person.nameLink"
+              :role="person.role"
             />
           </li>
         </ul>
@@ -174,7 +166,20 @@ export default {
           contact: 'allofitwnyc',
           service: 'instagram'
         }],
-      segmentsToShow: 3
+      segmentsToShow: 3,
+      people: [
+        {
+          image: 'http://placehold.it/120x120',
+          name: 'Alison Stewart',
+          'name-link': 'http://example.com',
+          role: 'Host'
+        },
+        {
+          image: 'http://placehold.it/120x120',
+          name: 'Andrew Cuomo',
+          role: 'Guest'
+        }
+      ]
     }
   },
   mounted () {
@@ -207,19 +212,29 @@ export default {
 }
 
 .on-todays-show-person-social-wrapper {
-  grid-column: 1 / 3;
   display: flex;
   width: 100%;
 }
 
 .on-todays-show-person-list {
-  flex: 1;
-  display: block;
+  flex: 1 1;
+  display: flex;
+  flex-basis: 360px;
+  max-width: 360px;
+  @include media(">medium") {
+    flex-basis: 600px;
+    max-width: 600px;
+  }
 }
 
 .on-todays-show-social {
-  flex: 0 1 180px;
+  flex: 1 0 180px;
   width: 180px;
+  margin-top: 36px;
+  @include media(">medium") {
+    margin: 0;
+    align-self: center;
+  }
 }
 
 .on-todays-show-person-item {
@@ -241,12 +256,24 @@ export default {
   }
 }
 
-.on-todays-show-person-item:only-child {
-    position: relative;
-    margin-right: 24px;
+.on-todays-show-person-list[data-count="1"] {
+  flex-basis: 204px;
+  max-width: 204px;
+  @include media(">medium") {
+    flex-basis: 348px;
+    max-width: 348px;
+  }
 }
 
-.on-todays-show-person-item:only-child:after {
+.on-todays-show-person-list[data-count="1"]  .on-todays-show-person-item {
+  position: relative;
+  margin-right: 24px;
+  @include media(">medium") {
+    margin-right: 48px;
+  }
+}
+
+.on-todays-show-person-list[data-count="1"] .on-todays-show-person-item:after {
   content: "";
     position: absolute;
     right: 0;
