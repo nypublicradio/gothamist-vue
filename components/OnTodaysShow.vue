@@ -178,6 +178,11 @@ export default {
           image: 'http://placehold.it/120x120',
           name: 'Andrew Cuomo',
           role: 'Guest'
+        },
+        {
+          image: 'http://placehold.it/120x120',
+          name: 'Andrew Cuomo',
+          role: 'Guest'
         }
       ]
     }
@@ -213,17 +218,45 @@ export default {
 
 .on-todays-show-person-social-wrapper {
   display: flex;
+  flex-direction: column;
   width: 100%;
+  @include media(">medium") {
+    flex-direction: row;
+  }
 }
 
 .on-todays-show-person-list {
+  position: relative;
   flex: 1 1;
-  display: flex;
-  flex-basis: 360px;
-  max-width: 360px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  justify-items: center;
   @include media(">medium") {
-    flex-basis: 600px;
-    max-width: 600px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    margin-right: 24px;
+    flex-basis: 328px;
+    max-width: 328px;
+  }
+  @include media(">860px") {
+    flex-basis: 560px;
+    align-self: center;
+    max-width: 560px;
+    margin-right: 48px;
+  }
+}
+
+.on-todays-show-person-list:after {
+  display: none;
+  @include media(">medium") {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    opacity: 0.5;
+    border: 1px solid #EAEFF0;
+    height: 100%;
   }
 }
 
@@ -231,18 +264,19 @@ export default {
   flex: 1 0 180px;
   width: 180px;
   margin-top: 36px;
+  align-self: center;
   @include media(">medium") {
     margin: 0;
-    align-self: center;
   }
 }
 
 .on-todays-show-person-item {
   display: inline-block;
   list-style: none;
+  margin-bottom: 24px;
   width: 180px;
   @include media(">medium") {
-    width: 300px;
+    width: 280px;
   }
 }
 
@@ -251,8 +285,8 @@ export default {
   width: 180px;
   max-width: 180px;
   @include media(">medium") {
-    width: 300px;
-    max-width: 300px;
+    width: 280px;
+    max-width: 280px;
   }
 }
 
@@ -260,30 +294,8 @@ export default {
   flex-basis: 204px;
   max-width: 204px;
   @include media(">medium") {
-    flex-basis: 348px;
-    max-width: 348px;
+    flex-basis: 328px;
+    max-width: 328px;
   }
 }
-
-.on-todays-show-person-list[data-count="1"]  .on-todays-show-person-item {
-  position: relative;
-  margin-right: 24px;
-  @include media(">medium") {
-    margin-right: 48px;
-  }
-}
-
-.on-todays-show-person-list[data-count="1"] .on-todays-show-person-item:after {
-  content: "";
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 112px;
-    opacity: 0.5;
-    border: 1px solid #EAEFF0;
-    @include media(">medium") {
-      height: 100px;
-    }
-}
-
 </style>
