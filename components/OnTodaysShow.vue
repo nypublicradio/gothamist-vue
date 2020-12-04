@@ -54,9 +54,21 @@
         <div class="dots" />
       </div>
     </div>
-      <v-spacer size="triple" />
-      <lazy-hydrate ssr-only>
-        <share-tools label="Connect with the show!" layout="vertical">
+    <v-spacer size="triple" />
+    <lazy-hydrate ssr-only>
+      <div class="on-todays-show-person-social-wrapper">
+        <ul class="on-todays-show-person-list" :data-count="people.length">
+          <li v-for="person in people" :key="person.name" class="on-todays-show-person-item">
+            <v-person
+              class="on-todays-show-person"
+              :image="person.image"
+              :name="person.name"
+              :name-link="person.nameLink"
+              :role="person.role"
+            />
+          </li>
+        </ul>
+        <share-tools class="on-todays-show-social" label="Connect with the show!" layout="vertical">
           <share-tools-item
             v-for="(socialshare, index) in social"
             :key="index"
@@ -64,7 +76,8 @@
             :username="socialshare.contact"
           />
         </share-tools>
-      </lazy-hydrate>
+      </div>
+    </lazy-hydrate>
   </div>
 </template>
 
@@ -82,7 +95,8 @@ export default {
     ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
     ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
+    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
+    VPerson: () => import('nypr-design-system-vue/src/components/VPerson')
   },
   mixins: [whatsOnNow],
   data () {
@@ -152,7 +166,21 @@ export default {
           contact: 'allofitwnyc',
           service: 'instagram'
         }],
-      segmentsToShow: 3
+      segmentsToShow: 3,
+      people: [
+        {
+          image: 'http://placehold.it/120x120',
+          name: 'Alison Stewart',
+          'name-link': 'http://example.com',
+          role: 'Host'
+        },
+        {
+          image: 'http://placehold.it/120x120',
+          name: 'Andrew Cuomo',
+          'name-link': 'http://example.com',
+          role: 'Guest'
+        }
+      ]
     }
   },
   mounted () {
@@ -171,3 +199,101 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.o-icon {
+  border: none;
+  fill: RGB(var(--color-text));
+  z-index: 10;
+}
+
+.o-icon:hover {
+  fill: RGB(var(--color-text));
+  opacity: var(--opacity-hover);
+}
+
+.on-todays-show-person-social-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  @include media(">medium") {
+    flex-direction: row;
+  }
+}
+
+.on-todays-show-person-list {
+  position: relative;
+  flex: 1 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  justify-items: center;
+  @include media(">medium") {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    margin-right: 24px;
+    flex-basis: 328px;
+    max-width: 328px;
+  }
+  @include media(">860px") {
+    flex-basis: 560px;
+    align-self: center;
+    max-width: 560px;
+    margin-right: 48px;
+  }
+}
+
+.on-todays-show-person-list:after {
+  display: none;
+  @include media(">medium") {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    opacity: 0.5;
+    border: 1px solid #EAEFF0;
+    height: 100%;
+  }
+}
+
+.on-todays-show-social {
+  flex: 1 0 180px;
+  width: 180px;
+  margin-top: 36px;
+  align-self: center;
+  @include media(">medium") {
+    margin: 0;
+  }
+}
+
+.on-todays-show-person-item {
+  display: inline-block;
+  list-style: none;
+  margin-bottom: 24px;
+  width: 180px;
+  @include media(">medium") {
+    width: 280px;
+  }
+}
+
+.on-todays-show-person.card.person-card {
+  list-style: none;
+  width: 180px;
+  max-width: 180px;
+  @include media(">medium") {
+    width: 280px;
+    max-width: 280px;
+  }
+}
+
+.on-todays-show-person-list[data-count="1"] {
+  align-self: center;
+  flex-basis: 204px;
+  max-width: 204px;
+  @include media(">medium") {
+    align-self: left;
+    flex-basis: 328px;
+    max-width: 328px;
+  }
+}
+</style>
