@@ -177,11 +177,7 @@ export default {
         {
           image: 'http://placehold.it/120x120',
           name: 'Andrew Cuomo',
-          role: 'Guest'
-        },
-        {
-          image: 'http://placehold.it/120x120',
-          name: 'Andrew Cuomo',
+          'name-link': 'http://example.com',
           role: 'Guest'
         }
       ]
@@ -291,9 +287,11 @@ export default {
 }
 
 .on-todays-show-person-list[data-count="1"] {
+  align-self: center;
   flex-basis: 204px;
   max-width: 204px;
   @include media(">medium") {
+    align-self: left;
     flex-basis: 328px;
     max-width: 328px;
   }
