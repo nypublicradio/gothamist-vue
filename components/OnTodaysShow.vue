@@ -56,8 +56,8 @@
     </div>
     <v-spacer size="triple" />
     <lazy-hydrate ssr-only>
-      <div class="on-todays-show-person-social-wrapper">
-        <ul class="on-todays-show-person-list" :data-count="people.length">
+      <div class="on-todays-show-person-social-wrapper" :data-person-count="people.length">
+        <ul class="on-todays-show-person-list">
           <li v-for="person in people" :key="person.name" class="on-todays-show-person-item">
             <v-person
               class="on-todays-show-person"
@@ -171,13 +171,13 @@ export default {
         {
           image: 'http://placehold.it/120x120',
           name: 'Alison Stewart',
-          'name-link': 'http://example.com',
+          nameLink: 'http://example.com',
           role: 'Host'
         },
         {
           image: 'http://placehold.it/120x120',
           name: 'Andrew Cuomo',
-          'name-link': 'http://example.com',
+          nameLink: 'http://example.com',
           role: 'Guest'
         }
       ]
@@ -215,10 +215,14 @@ export default {
 .on-todays-show-person-social-wrapper {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  margin: 0 auto;
   @include media(">medium") {
     flex-direction: row;
   }
+}
+
+.on-todays-show-person-social-wrapper[data-person-count="1"] {
+  flex-direction: row;
 }
 
 .on-todays-show-person-list {
@@ -226,50 +230,45 @@ export default {
   flex: 1 1;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  row-gap: 24px;
   justify-items: center;
+  padding-bottom: 48px;
   @include media(">medium") {
+    padding: 0;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    margin-right: 24px;
-    flex-basis: 328px;
-    max-width: 328px;
+    flex-basis: 280px;
+    max-width: 280px;
   }
   @include media(">860px") {
     flex-basis: 560px;
     align-self: center;
     max-width: 560px;
-    margin-right: 48px;
   }
 }
 
-.on-todays-show-person-list:after {
-  display: none;
+.on-todays-show-person-social-wrapper .on-todays-show-social {
+  border-left: 1px solid rgba(234, 239, 240, 0.5);
+  padding-left: 24px;
+  height: 124px;
+  width: 200px;
+  flex-direction: column;
+  justify-content: center;
+  align-self: flex-start;
   @include media(">medium") {
-    content: "";
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    opacity: 0.5;
-    border: 1px solid #EAEFF0;
-    height: 100%;
+    align-self: center;
+    flex: 1 0 200px;
+    padding-left: 48px;
+    margin-top: 0;
   }
-}
 
-.on-todays-show-social {
-  flex: 1 0 180px;
-  width: 180px;
-  margin-top: 36px;
-  align-self: center;
-  @include media(">medium") {
-    margin: 0;
+  .c-share-tools__label {
+    flex-basis: auto;
   }
 }
 
 .on-todays-show-person-item {
   display: inline-block;
   list-style: none;
-  margin-bottom: 24px;
   width: 180px;
   @include media(">medium") {
     width: 280px;
@@ -286,14 +285,20 @@ export default {
   }
 }
 
-.on-todays-show-person-list[data-count="1"] {
+[data-person-count="1"] .on-todays-show-person-list {
   align-self: center;
-  flex-basis: 204px;
-  max-width: 204px;
+  flex-basis: 180px;
+  max-width: 180px;
+  padding-bottom: 0;
   @include media(">medium") {
     align-self: left;
-    flex-basis: 328px;
-    max-width: 328px;
+    flex-basis: 280px;
+    max-width: 280px;
   }
 }
+
+[data-person-count="1"]  .on-todays-show-social {
+  align-self: center;
+}
+
 </style>
