@@ -225,6 +225,10 @@ export default {
   flex-direction: row;
 }
 
+.on-todays-show-person-social-wrapper[data-person-count="1"] .on-todays-show-social {
+  height: 124px;
+}
+
 .on-todays-show-person-list {
   position: relative;
   flex: 1 1;
