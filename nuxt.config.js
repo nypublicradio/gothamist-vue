@@ -4,7 +4,7 @@ export default {
     htmlAttrs: {
       lang: 'en'
     },
-    title: 'New York Public Radio Live Streaming | WNYC Lab',
+    title: 'WNYC | New York Public Radio, Podcasts, Live Streaming Radio, News',
     meta: [
       { charset: 'utf-8' },
       {
@@ -14,17 +14,17 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: 'WNYC Lab is a new, experimental way to listen to WNYC, America\'s most listened-to public radio station. Enjoy the public radio programming you love, try out new features, and leave us your feedback.'
+        content: "WNYC is America's most listened-to public radio station and the producer of award-winning programs and podcasts like Radiolab, On the Media, and The Brian Lehrer Show."
       },
       {
         hid: 'og_site_name',
         name: 'og:site_name',
-        content: 'WNYC Lab'
+        content: 'WNYC'
       },
       {
         hid: 'og_url',
         name: 'og:url',
-        content: 'https://lab.wnyc.org'
+        content: 'https://www.wnyc.org/radio'
       },
       {
         hid: 'og_type',
@@ -39,12 +39,12 @@ export default {
       {
         hid: 'og_title',
         name: 'og:title',
-        content: 'An experimental way to listen to WNYC, America\'s most listened-to public radio station.'
+        content: 'WNYC | New York Public Radio, Podcasts, Live Streaming Radio, News'
       },
       {
         hid: 'og_description',
         name: 'og:description',
-        content: 'Enjoy the public radio programming you love, try out new features, and leave us your feedback.'
+        content: "WNYC is America's most listened-to public radio station and the producer of award-winning programs and podcasts like Radiolab, On the Media, and The Brian Lehrer Show."
       },
       {
         hid: 'og_image',
@@ -64,7 +64,7 @@ export default {
       {
         hid: 'og_image_alt',
         name: 'og:image:alt',
-        content: 'WNYC Lab'
+        content: 'WNYC'
       },
       {
         hid: 'fb_app_id',
@@ -74,17 +74,17 @@ export default {
       {
         hid: 'twitter_title',
         name: 'twitter:title',
-        content: 'WNYC Lab'
+        content: 'WNYC'
       },
       {
         hid: 'twitter_description',
         name: 'twitter:description',
-        content: 'An experimental way to listen to WNYC, America\'s most listened-to public radio station.'
+        content: "WNYC | New York Public Radio, Podcasts, Live Streaming Radio, News"
       },
       {
         hid: 'twitter_url',
         name: 'twitter:url',
-        content: 'https://lab.wnyc.org'
+        content: 'https://www.wnyc.org/radio'
       },
       {
         hid: 'twitter_site',
@@ -99,7 +99,7 @@ export default {
       {
         hid: 'twitter_alt',
         name: 'twitter:alt',
-        content: 'WNYC Lab'
+        content: 'WNYC'
       }
     ],
     link: [
