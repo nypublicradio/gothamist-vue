@@ -229,7 +229,7 @@ export default {
   position: relative;
   flex: 1 1;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   row-gap: 24px;
   justify-items: center;
   padding-bottom: 48px;
@@ -249,12 +249,12 @@ export default {
 .on-todays-show-person-social-wrapper .on-todays-show-social {
   border-left: 1px solid rgba(234, 239, 240, 0.5);
   padding-left: 24px;
-  height: 124px;
   width: 200px;
   flex-direction: column;
   justify-content: center;
   align-self: flex-start;
   @include media(">medium") {
+    height: 124px;
     align-self: center;
     flex: 1 0 200px;
     padding-left: 48px;
@@ -269,7 +269,7 @@ export default {
 .on-todays-show-person-item {
   display: inline-block;
   list-style: none;
-  width: 180px;
+  width: 160px;
   @include media(">medium") {
     width: 280px;
   }
@@ -277,8 +277,8 @@ export default {
 
 .on-todays-show-person.card.person-card {
   list-style: none;
-  width: 180px;
-  max-width: 180px;
+  width: 160px;
+  max-width: 160px;
   @include media(">medium") {
     width: 280px;
     max-width: 280px;
@@ -287,8 +287,8 @@ export default {
 
 [data-person-count="1"] .on-todays-show-person-list {
   align-self: center;
-  flex-basis: 180px;
-  max-width: 180px;
+  flex-basis: 160px;
+  max-width: 160px;
   padding-bottom: 0;
   @include media(">medium") {
     align-self: left;
