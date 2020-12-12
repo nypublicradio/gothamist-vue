@@ -3,9 +3,14 @@
     <lazy-hydrate ssr-only>
       <the-header :donate-url="$store.getters['global/donateUrl']">
         <template v-slot:logo>
-          <nuxt-link to="/" aria-label="wnyc home page">
-            <wnyc-logo />
-          </nuxt-link>
+          <a
+            href="https://wnyc.org"
+            target="_blank"
+            rel="noopener"
+          >
+            <wnyc-logo title="WNYC" />
+            <span class="is-vishidden">(New tab)</span>
+          </a>
         </template>
         <template v-slot:navigation>
           <div>
@@ -15,6 +20,14 @@
                 {
                   url: 'https://www.wnyc.org/schedule/',
                   text: 'Schedule'
+                },
+                {
+                  url: 'https://www.wnyc.org/streams',
+                  text: 'All Streams'
+                },
+                {
+                  url: 'https://www.wnyc.org/shows',
+                  text: 'Shows'
                 }
               ]"
             />
