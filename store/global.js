@@ -20,6 +20,10 @@ export const state = () => ({
       text: 'WNYC-AM FCC Public File'
     },
     {
+      url: ['https://www.wnyc.org/support'],
+      text: 'Support WNYC'
+    },
+    {
       url: ['https://www.wnyc.org/contact'],
       text: 'Contact Us'
     }
