@@ -169,13 +169,13 @@ export default {
       segmentsToShow: 3,
       people: [
         {
-          image: 'http://placehold.it/120x120',
+          image: 'https://placehold.it/120x120',
           name: 'Alison Stewart',
           nameLink: 'http://example.com',
           role: 'Host'
         },
         {
-          image: 'http://placehold.it/120x120',
+          image: 'https://placehold.it/120x120',
           name: 'Andrew Cuomo',
           nameLink: 'http://example.com',
           role: 'Guest'
