@@ -38,7 +38,7 @@ export default {
         )
       }
     },
-    togglePlay (stream) {
+    toggleAudioPlayback (stream) {
       this.$store.commit(
         'whatsOnNow/somethingHasBeenPlayed'
       )
@@ -74,13 +74,6 @@ export default {
         this.$store.commit(
           'whatsOnNow/setWhatsOnNowToNotPlaying'
         )
-        // play the new selection
-        // needed a setTimeout because stopping and playing without one was too fast and the persistent player wasn't stopping playback
-        setTimeout(() => {
-          this.$store.commit(
-            'whatsOnNow/setWhatsOnNowToPlaying'
-          )
-        }, 100)
       }
     }
   }

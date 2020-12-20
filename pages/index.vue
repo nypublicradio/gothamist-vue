@@ -30,9 +30,9 @@
         >
           <v-button
             label="Listen Live"
-            @click="togglePlay($store.getters['whatsOnNow/selectedStream'])"
+            @click="playButtonClicked"
           >
-            <pause-icon v-if="$store.getters['whatsOnNow/selectedStreamPlaying']" />
+            <pause-icon v-if="$store.getters['vue-hifi/getIsPlaying']" />
             <play-simple v-else />
           </v-button>
         </main-player>
@@ -46,6 +46,7 @@
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
 import whatsOnNow from '@/mixins/whatsOnNow'
+import vueHifi from '../node_modules/vue-hifi/src/mixins/vue-hifi'
 
 export default {
   name: 'HomePage',
@@ -60,6 +61,19 @@ export default {
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
-  mixins: [whatsOnNow]
+  mixins: [whatsOnNow, vueHifi],
+  methods: {
+    playButtonClicked () {
+      this.toggleAudioPlayback(this.$store.getters['whatsOnNow/whatsOnNow'])
+
+      const isPlaying = this.$store.getters['vue-hifi/getIsPlaying']
+      const stream = this.$store.getters['whatsOnNow/whatsOnNow']
+      if (isPlaying) {
+        this.stop()
+      } else if (stream) {
+        this.play([stream.file])
+      }
+    }
+  }
 }
 </script>
