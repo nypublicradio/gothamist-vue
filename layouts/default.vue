@@ -100,7 +100,10 @@
         <persistent-player
           livestream
           :auto-play="$store.getters['whatsOnNow/whatsOnNowPlaying']"
-          :is-playing="$store.getters['whatsOnNow/whatsOnNowPlaying']"
+          :is-playing="$store.getters['vue-hifi/getIsPlaying']"
+          :is-loading="$store.getters['vue-hifi/getIsLoading']"
+          :volume="$store.getters['vue-hifi/getVolume']"
+          :is-muted="$store.getters['vue-hifi/getIsMuted']"
           :image="$store.getters['whatsOnNow/whatsOnNowImage']"
           :station="$store.getters['whatsOnNow/whatsOnNowStation']"
           :title="$store.getters['whatsOnNow/whatsOnNowTitle']"
@@ -111,7 +114,9 @@
           :should-show-cta="!$store.getters['whatsOnNow/hasSomethingBeenPlayedYet']"
           class="u-color-group-dark"
           aria-live="polite"
-          @togglePlay="togglePlay($store.getters['whatsOnNow/whatsOnNow'])"
+          @togglePlay="playButtonClicked"
+          @volume-toggle-mute="toggleMute"
+          @volume-change="setVolume($event)"
         />
       </div>
     </transition>
@@ -121,6 +126,7 @@
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
 import whatsOnNow from '@/mixins/whatsOnNow'
+import vueHifi from '../node_modules/vue-hifi/src/mixins/vue-hifi'
 import 'focus-visible'
 
 export default {
@@ -137,6 +143,24 @@ export default {
     WnycLogo: () => import('nypr-design-system-vue/src/components/icons/wnyc/WnycLogo'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
-  mixins: [whatsOnNow]
+  mixins: [whatsOnNow, vueHifi],
+  methods: {
+    playButtonClicked () {
+      this.toggleAudioPlayback(this.$store.getters['whatsOnNow/whatsOnNow'])
+
+      const isPlaying = this.$store.getters['vue-hifi/getIsPlaying']
+      const stream = this.$store.getters['whatsOnNow/whatsOnNow']
+      if (isPlaying) {
+        this.stop()
+      } else if (stream) {
+        this.play([stream.file])
+      }
+    },
+    setVolume (volume) {
+      if (!isNaN(volume)) {
+        this.volume = volume
+      }
+    }
+  }
 }
 </script>
