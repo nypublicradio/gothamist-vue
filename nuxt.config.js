@@ -147,6 +147,9 @@ export default {
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     // this is needed to transpile es6 modules imported from radial
-    transpile: ['nypr-design-system-vue']
+    transpile: [
+      'nypr-design-system-vue',
+      'vue-hifi'
+    ]
   }
 }
