@@ -32,7 +32,7 @@
             label="Listen Live"
             @click="playButtonClicked($store.getters['whatsOnNow/selectedStream'])"
           >
-            <pause-icon v-if="$store.getters['vue-hifi/getIsPlaying']" />
+            <pause-icon v-if="$store.getters['vue-hifi/getIsPlaying'] && $store.getters['whatsOnNow/selectedStreamPlaying']" />
             <play-simple v-else />
           </v-button>
         </main-player>
