@@ -53,6 +53,7 @@ export default {
             'whatsOnNow/setStreamsToNotPlaying'
           )
         } else {
+          this.setWhatsOnNow(stream)
           this.$store.commit(
             'whatsOnNow/setWhatsOnNowToPlaying'
           )
@@ -74,6 +75,26 @@ export default {
         this.$store.commit(
           'whatsOnNow/setWhatsOnNowToNotPlaying'
         )
+      }
+    },
+    playButtonClicked (stream) {
+      this.toggleAudioPlayback(stream)
+      const isPlaying = this.$store.getters['vue-hifi/getIsPlaying']
+      if (isPlaying) {
+        this.stop()
+        this.$store.commit(
+          'whatsOnNow/setStreamToNotPlaying', stream.index
+        )
+      } else if (stream) {
+        this.play([stream.file])
+        this.$store.commit(
+          'whatsOnNow/setStreamToPlaying', stream.index
+        )
+      }
+    },
+    setVolume (volume) {
+      if (!isNaN(volume)) {
+        this.volume = volume
       }
     }
   }

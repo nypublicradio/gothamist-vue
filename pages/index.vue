@@ -30,7 +30,7 @@
         >
           <v-button
             label="Listen Live"
-            @click="playButtonClicked"
+            @click="playButtonClicked($store.getters['whatsOnNow/selectedStream'])"
           >
             <pause-icon v-if="$store.getters['vue-hifi/getIsPlaying']" />
             <play-simple v-else />
@@ -61,19 +61,6 @@ export default {
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
-  mixins: [whatsOnNow, vueHifi],
-  methods: {
-    playButtonClicked () {
-      this.toggleAudioPlayback(this.$store.getters['whatsOnNow/whatsOnNow'])
-
-      const isPlaying = this.$store.getters['vue-hifi/getIsPlaying']
-      const stream = this.$store.getters['whatsOnNow/whatsOnNow']
-      if (isPlaying) {
-        this.stop()
-      } else if (stream) {
-        this.play([stream.file])
-      }
-    }
-  }
+  mixins: [whatsOnNow, vueHifi]
 }
 </script>
