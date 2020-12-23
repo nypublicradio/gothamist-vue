@@ -66,6 +66,11 @@
             </a>
           </div>
         </template>
+        <template v-slot:rightComponent>
+          <div>
+            <v-button label="Send Us Your Feedback" href="https://www.surveymonkey.com/r/LGP2Z96" target="_blank" />
+          </div>
+        </template>
         <template v-slot:social>
           <div>
             <share-tools label="Connect">
@@ -114,7 +119,7 @@
           :should-show-cta="!$store.getters['whatsOnNow/hasSomethingBeenPlayedYet']"
           class="u-color-group-dark"
           aria-live="polite"
-          @togglePlay="playButtonClicked"
+          @togglePlay="playButtonClicked($store.getters['whatsOnNow/whatsOnNow'])"
           @volume-toggle-mute="toggleMute"
           @volume-change="setVolume($event)"
         />
@@ -141,26 +146,9 @@ export default {
     TheFooter: () => import('nypr-design-system-vue/src/components/TheFooter'),
     TheHeader: () => import('nypr-design-system-vue/src/components/TheHeader'),
     WnycLogo: () => import('nypr-design-system-vue/src/components/icons/wnyc/WnycLogo'),
+    VButton: () => import('nypr-design-system-vue/src/components/VButton'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
-  mixins: [whatsOnNow, vueHifi],
-  methods: {
-    playButtonClicked () {
-      this.toggleAudioPlayback(this.$store.getters['whatsOnNow/whatsOnNow'])
-
-      const isPlaying = this.$store.getters['vue-hifi/getIsPlaying']
-      const stream = this.$store.getters['whatsOnNow/whatsOnNow']
-      if (isPlaying) {
-        this.stop()
-      } else if (stream) {
-        this.play([stream.file])
-      }
-    },
-    setVolume (volume) {
-      if (!isNaN(volume)) {
-        this.volume = volume
-      }
-    }
-  }
+  mixins: [whatsOnNow, vueHifi]
 }
 </script>
