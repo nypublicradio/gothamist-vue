@@ -46,6 +46,7 @@ export default {
         // if the stream is the same one that's currently playing or paused:
         // toggle the what's on now playing state
         if (this.$store.getters['whatsOnNow/whatsOnNowPlaying']) {
+          this.stop()
           this.$store.commit(
             'whatsOnNow/setWhatsOnNowToNotPlaying'
           )
@@ -53,7 +54,10 @@ export default {
             'whatsOnNow/setStreamsToNotPlaying'
           )
         } else {
-          this.setWhatsOnNow(stream)
+          this.play([stream.file])
+          this.$store.commit(
+            'whatsOnNow/setWhatsOnNow', stream
+          )
           this.$store.commit(
             'whatsOnNow/setWhatsOnNowToPlaying'
           )
@@ -67,30 +71,23 @@ export default {
         this.$store.commit(
           'whatsOnNow/setWhatsOnNow', stream
         )
-        // set the stream to playing
-        this.$store.commit(
-          'whatsOnNow/setStreamToPlaying', stream.index
-        )
         // stop playback
+        this.stop()
         this.$store.commit(
           'whatsOnNow/setWhatsOnNowToNotPlaying'
+        )
+        // set the stream to playing
+        this.play([stream.file])
+        this.$store.commit(
+          'whatsOnNow/setWhatsOnNowToPlaying'
+        )
+        this.$store.commit(
+          'whatsOnNow/setStreamToPlaying', stream.index
         )
       }
     },
     playButtonClicked (stream) {
       this.toggleAudioPlayback(stream)
-      const isPlaying = this.$store.getters['vue-hifi/getIsPlaying']
-      if (isPlaying) {
-        this.stop()
-        this.$store.commit(
-          'whatsOnNow/setStreamToNotPlaying', stream.index
-        )
-      } else if (stream) {
-        this.play([stream.file])
-        this.$store.commit(
-          'whatsOnNow/setStreamToPlaying', stream.index
-        )
-      }
     },
     setVolume (volume) {
       if (!isNaN(volume)) {
