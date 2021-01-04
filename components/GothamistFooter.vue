@@ -1,95 +1,55 @@
 <template>
-  <the-header :donate-url="$store.getters['global/donateUrl']">
-    <template v-slot:logo>
-      <a
-        href="https://wnyc.org"
-        target="_blank"
-        rel="noopener"
-      >
-        <gothamist-logo-stacked title="Gothamist" />
-        <span class="is-vishidden">(New tab)</span>
-      </a>
-    </template>
-    <template v-slot:navigation>
-      <div>
-        <secondary-navigation
-          orientation="horizontal"
-          :nav-items="$store.getters['global/primaryNav']"
-        />
-      </div>
-    </template>
-    <template v-slot:search>
-      <search-icon />
-      <div v-if="searchIsActive">
-        <v-search />
-      </div>
-    </template>
-    <template v-slot:menu>
-      <v-menu
-        class="not-fixed"
-        :primary-nav="$store.getters['global/primaryNav']"
-        :secondary-nav="$store.getters['global/primaryNav']"
-      >
-        <template v-slot:logo>
-          <gothamist-logo />
-        </template>
-        <template v-slot:button>
-          <v-button
-            href="http://www.google.com"
-            label="Primary Button"
-          />
-        </template>
-        <template v-slot:component>
-          <p class="u-align--center">
-            <em>slot for component</em>
-          </p>
-        </template>
-        <template v-slot:search>
-          <v-search action="/search" />
-        </template>
-        <template v-slot:social>
-          <share-tools label="Connect">
+  <div>
+    <the-footer
+      slogan="Gothamist is a website about New York City news, arts and events, and food, brought to you by New York Public Radio. Gothamist is supported by the American Express Foundation."
+      :primary-nav="$store.getters['global/footerNav']"
+      subheader1="About Us"
+    >
+      <template v-slot:logo>
+        <nuxt-link
+          to="/"
+          aria-label="gothamist home page"
+        >
+          <gothamist-logo-stacked />
+        </nuxt-link>
+      </template>
+      <template v-slot:social>
+        <div>
+          <share-tools label="Follow Us">
             <share-tools-item
               service="facebook"
-              username="WNYC"
+              username="gothamist"
             />
             <share-tools-item
               service="twitter"
-              username="WNYC"
+              username="gothamist"
             />
             <share-tools-item
               service="instagram"
-              username="WNYC"
+              username="gothamist"
             />
             <share-tools-item
               service="youtube"
-              username="UCbysmY4hyViQAAYEzOR-uCQ"
+              username="UCY_2VeS5Q9_sMZRhtvF0c5Q"
             />
           </share-tools>
-        </template>
-      </v-menu>
-    </template>
-  </the-header>
+        </div>
+      </template>
+      <template v-slot:rightComponent>
+        <p><em>slot for footer newsletter component</em></p>
+      </template>
+    </the-footer>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'GothamistHeader',
+  name: 'GothamistFooter',
   components: {
-    SecondaryNavigation: () => import('nypr-design-system-vue/src/components/SecondaryNavigation'),
     ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
     ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
-    TheHeader: () => import('nypr-design-system-vue/src/components/TheHeader'),
-    GothamistLogo: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogo'),
     GothamistLogoStacked: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogoStacked'),
-    SearchIcon: () => import('nypr-design-system-vue/src/components/icons/SearchIcon'),
-    VSearch: () => import('nypr-design-system-vue/src/components/VSearch'),
-    VMenu: () => import('nypr-design-system-vue/src/components/VMenu')
-  },
-  data () {
-    return {
-      searchIsActive: false
-    }
+    TheFooter: () => import('nypr-design-system-vue/src/components/TheFooter')
   }
 }
 </script>

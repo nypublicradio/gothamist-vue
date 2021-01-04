@@ -1,4 +1,4 @@
-# wnyc-vue
+# gothamist-vue
 
 ## Build Setup
 

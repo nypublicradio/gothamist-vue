@@ -1,308 +1,229 @@
 <template>
-  <div class="on-todays-show">
-    <div class="l-grid l-grid--2up l-grid--1up--large l-grid--large-gutters">
-      <lazy-hydrate ssr-only>
-        <h2 class="on-todays-show-title">
-          On Today's Show
-        </h2>
-      </lazy-hydrate>
-    </div>
-    <div class="l-grid l-grid--2up l-grid--1up--large l-grid--large-gutters">
-      <div class="on-todays-show-left l-grid--order-1-large">
-        <lazy-hydrate ssr-only>
-          <p class="on-todays-show-headline">
-            <a href="http://www.google.com" target="_blank" rel="noopener">The Future of Industry City; How Do Prosecutors Decide When to Convict Cops?; How the Kennedy Campaign Used Tech and Data</a>
-          </p>
-        </lazy-hydrate>
-        <v-spacer size="triple" />
-        <client-only>
-          <segment-list>
-            <segment-list-item
-              v-for="(segment, index) in segments.slice(0, segmentsToShow)"
-              :key="index"
-              :title="segment.title"
-              :url="segment.url"
-              :new-window="segment.newWindow"
-            />
-            <v-button
-              v-if="segments.length > segmentsToShow"
-              label="show more"
-              class="u-space--top"
-              @click="segmentsToShow=segments.length"
-            />
-            <v-button
-              v-else
-              label="show less"
-              class="u-space--top"
-              @click="collapseSegments"
-            />
-          </segment-list>
-        </client-only>
-      </div>
-      <div class="on-todays-show-right l-grid--order-2-large">
-        <lazy-hydrate ssr-only>
-          <image-with-caption
-            alt-text="image alt text"
-            image="https://placehold.it/506x327"
-            width="506"
-            height="327"
-            caption="This is the caption lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elitlorem ipsum dolor sit amet, consectetur adipiscing elit"
-            credit="( AP Photo/Carolyn Kaster )"
-            credit-url="http:///www.google.com"
+  <div>
+    <the-header
+      :donate-url="$store.getters['global/donateUrl']"
+      class="u-color-group-dark"
+    >
+      <template v-slot:logo>
+        <a
+          href="/"
+        >
+          <gothamist-logo title="Gothamist" />
+          <gothamist-logo-stacked
+            v-if="isHomepage"
+            title="Gothamist"
           />
-        </lazy-hydrate>
-        <div class="dots" />
-      </div>
-    </div>
-    <v-spacer size="triple" />
-    <lazy-hydrate ssr-only>
-      <div class="on-todays-show-person-social-wrapper" :data-person-count="people.length">
-        <ul class="on-todays-show-person-list">
-          <li v-for="person in people" :key="person.name" class="on-todays-show-person-item">
-            <v-person
-              class="on-todays-show-person"
-              :image="person.image"
-              :name="person.name"
-              :name-link="person.nameLink"
-              :role="person.role"
-            />
-          </li>
-        </ul>
-        <share-tools class="on-todays-show-social" label="Connect with the show!" layout="vertical">
-          <share-tools-item
-            v-for="(socialshare, index) in social"
-            :key="index"
-            :service="socialshare.service"
-            :username="socialshare.contact"
+        </a>
+      </template>
+      <template v-slot:navigation>
+        <div>
+          <secondary-navigation
+            orientation="horizontal"
+            :nav-items="$store.getters['global/headerNav']"
           />
-        </share-tools>
-      </div>
-    </lazy-hydrate>
+        </div>
+      </template>
+      <template v-slot:search>
+        <search-icon class="u-icon--xs" />
+        <div v-if="searchIsActive">
+          <v-search />
+        </div>
+      </template>
+      <template v-slot:menu>
+        <v-menu
+          class="not-fixed u-color-group-dark"
+          :primary-nav="$store.getters['global/headerNav']"
+          :secondary-nav="$store.getters['global/footerNav']"
+        >
+          <template v-slot:logo>
+            <gothamist-logo />
+          </template>
+          <template v-slot:button>
+            <div>
+              <v-button
+                href="http://www.google.com"
+                class="c-main-header__donate"
+                label="Donate"
+              />
+            </div>
+          </template>
+          <template v-slot:component>
+            <v-button
+              href="mailto:tips@gothamist.com"
+              label="Send Us A Story Idea"
+              class="send-story"
+            />
+          </template>
+          <template v-slot:search>
+            <div>
+              <v-search action="/search" />
+            </div>
+          </template>
+          <template v-slot:social>
+            <div>
+              <share-tools label="Follow Us">
+                <share-tools-item
+                  service="facebook"
+                  username="gothamist"
+                />
+                <share-tools-item
+                  service="twitter"
+                  username="gothamist"
+                />
+                <share-tools-item
+                  service="instagram"
+                  username="gothamist"
+                />
+                <share-tools-item
+                  service="youtube"
+                  username="UCY_2VeS5Q9_sMZRhtvF0c5Q"
+                />
+              </share-tools>
+            </div>
+          </template>
+        </v-menu>
+      </template>
+    </the-header>
   </div>
 </template>
 
 <script>
-import LazyHydrate from 'vue-lazy-hydration'
-import whatsOnNow from '@/mixins/whatsOnNow'
-
 export default {
-  name: 'OnTodaysShow',
+  name: 'GothamistHeader',
   components: {
-    LazyHydrate,
-    ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
-    SegmentList: () => import('nypr-design-system-vue/src/components/SegmentList'),
-    SegmentListItem: () => import('nypr-design-system-vue/src/components/SegmentListItem'),
-    ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
-    ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
+    SecondaryNavigation: () => import('nypr-design-system-vue/src/components/SecondaryNavigation'),
+    TheHeader: () => import('nypr-design-system-vue/src/components/TheHeader'),
+    GothamistLogo: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogo'),
+    GothamistLogoStacked: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogoStacked'),
+    SearchIcon: () => import('nypr-design-system-vue/src/components/icons/SearchIcon'),
+    VSearch: () => import('nypr-design-system-vue/src/components/VSearch'),
+    VMenu: () => import('nypr-design-system-vue/src/components/VMenu'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
-    VPerson: () => import('nypr-design-system-vue/src/components/VPerson')
+    ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
+    ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem')
   },
-  mixins: [whatsOnNow],
   data () {
     return {
-      segments: [
-        {
-          title: 'A Lawsuit Demanding Reparations, 100 Years After the Tulsa Race Massacre',
-          url: 'http://www.google.com',
-          newWindow: true
-        },
-        {
-          title: 'Item Number Two with no link!',
-          url: '',
-          newWindow: true
-        },
-        {
-          title: 'Item number 3',
-          url: 'http://www.google.com',
-          newWindow: true
-        },
-        {
-          title: 'Item number 4',
-          url: 'http://www.google.com',
-          newWindow: true
-        },
-        {
-          title: 'Item number 5',
-          url: 'http://www.google.com',
-          newWindow: true
-        },
-        {
-          title: 'Item number 6',
-          url: 'http://www.google.com',
-          newWindow: true
-        },
-        {
-          title: 'Item number 7',
-          url: 'http://www.google.com',
-          newWindow: true
-        },
-        {
-          title: 'Item number 8',
-          url: 'http://www.google.com',
-          newWindow: true
-        },
-        {
-          title: 'Item number 9',
-          url: 'http://www.google.com',
-          newWindow: true
-        },
-        {
-          title: 'Item number 10',
-          url: 'http://www.google.com',
-          newWindow: true
-        }
-      ],
-      social: [
-        {
-          contact: 'AllOfItWNYC',
-          service: 'facebook'
-        },
-        {
-          contact: 'AllOfItWNYC',
-          service: 'twitter'
-        },
-        {
-          contact: 'allofitwnyc',
-          service: 'instagram'
-        }],
-      segmentsToShow: 3,
-      people: [
-        {
-          image: 'https://placehold.it/120x120',
-          name: 'Alison Stewart',
-          nameLink: 'http://example.com',
-          role: 'Host'
-        },
-        {
-          image: 'https://placehold.it/120x120',
-          name: 'Andrew Cuomo',
-          nameLink: 'http://example.com',
-          role: 'Guest'
-        }
-      ]
-    }
-  },
-  mounted () {
-    if (window.innerWidth > 850) {
-      this.segmentsToShow = 6
-    }
-  },
-  methods: {
-    collapseSegments () {
-      if (window.innerWidth > 850) {
-        this.segmentsToShow = 6
-      } else {
-        this.segmentsToShow = 3
-      }
+      searchIsActive: false,
+      isHomepage: false
     }
   }
 }
 </script>
 
 <style lang="scss">
-.o-icon {
-  border: none;
-  fill: RGB(var(--color-text));
-  z-index: 10;
+.c-side-menu {
+  margin-right: var(--space-3);
 }
 
-.o-icon:hover {
-  fill: RGB(var(--color-text));
-  opacity: var(--opacity-hover);
+.c-side-menu .menu-hamburger {
+  width: 16px;
 }
 
-.on-todays-show-person-social-wrapper {
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  @include media(">medium") {
-    flex-direction: row;
+.menu .menu-logo {
+  margin: auto;
+  width: 180px;
+}
+
+.menu .menu-primary-navigation .c-secondary-nav__item,
+.menu .menu-secondary-navigation .c-secondary-nav__item {
+  margin-bottom: var(--space-4);
+  padding-left: 0;
+
+  &::after {
+    display: none;
+  }
+
+  &:last-of-type a::before {
+    display: none;
   }
 }
 
-.on-todays-show-person-social-wrapper[data-person-count="1"] {
-  flex-direction: row;
-}
-
-.on-todays-show-person-social-wrapper[data-person-count="1"] .on-todays-show-social {
-  height: 124px;
-}
-
-.on-todays-show-person-list {
-  position: relative;
-  flex: 1 1;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  row-gap: 24px;
-  justify-items: center;
-  padding-bottom: 48px;
-  @include media(">medium") {
-    padding: 0;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    flex-basis: 280px;
-    max-width: 280px;
-  }
-  @include media(">860px") {
-    flex-basis: 560px;
-    align-self: center;
-    max-width: 560px;
-  }
-}
-
-.on-todays-show-person-social-wrapper .on-todays-show-social {
-  border-left: 1px solid rgba(234, 239, 240, 0.5);
-  padding-left: 24px;
-  width: 200px;
-  flex-direction: column;
-  justify-content: center;
-  align-self: flex-start;
-  @include media(">medium") {
-    height: 124px;
-    align-self: center;
-    flex: 1 0 200px;
-    padding-left: 48px;
-    margin-top: 0;
-  }
-
-  .c-share-tools__label {
-    flex-basis: auto;
-  }
-}
-
-.on-todays-show-person-item {
+.menu .menu-primary-navigation .c-secondary-nav__link {
+  border-bottom: 2px dotted RGB(var(--color-banana-yellow));
+  color: RGB(var(--color-banana-yellow));
   display: inline-block;
-  list-style: none;
-  width: 160px;
-  @include media(">medium") {
-    width: 280px;
+  padding-bottom: 2px;
+  font-size: var(--font-size-9);
+  line-height: 1;
+
+  &:hover {
+    color: RGB(var(--color-white));
+    background-color: RGB(var(--color-reddish-orange));
   }
 }
 
-.on-todays-show-person.card.person-card {
-  list-style: none;
-  width: 160px;
-  max-width: 160px;
-  @include media(">medium") {
-    width: 280px;
-    max-width: 280px;
+.menu .menu-secondary-navigation .c-secondary-nav__link {
+  color: RGB(var(--color-white));
+  display: inline-block;
+  padding-bottom: 2px;
+  border-bottom: 2px dotted RGB(var(--color-white));
+  text-transform: uppercase;
+  font-family: var(--font-family-small) !important;
+  letter-spacing: var(--letter-spacing-small) !important;
+  line-height: var(--line-height-3);
+  font-weight: var(--font-weight-small) !important;
+  font-size: var(--font-size-4) !important;
+  margin: 0 var(--space-3);
+
+  &:hover {
+    color: RGB(var(--color-white));
+    background-color: RGB(var(--color-reddish-orange));
   }
 }
 
-[data-person-count="1"] .on-todays-show-person-list {
-  align-self: center;
-  flex-basis: 160px;
-  max-width: 160px;
-  padding-bottom: 0;
-  @include media(">medium") {
-    align-self: left;
-    flex-basis: 280px;
-    max-width: 280px;
+.menu .menu-secondary-navigation .c-secondary-nav__item {
+  display: inline-block;
+}
+
+.menu .menu-panel .menu-copyright {
+  font-family: var(--font-family-small);
+  letter-spacing: var(--letter-spacing-small);
+  font-weight: var(--font-weight-small);
+  line-height: var(--line-height-1);
+  font-size: var(--font-size-2);
+}
+
+.menu .menu-panel .menu-terms-links a {
+  color: RGB(var(--color-banana-yellow));
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 8px 0;
+  line-height: var(--line-height-1);
+  font-size: var(--font-size-2);
+  font-family: var(--font-family-small);
+  letter-spacing: var(--letter-spacing-small);
+  font-weight: var(--font-weight-small);
+}
+
+.menu .menu-button .button,
+.menu .menu-button .send-story {
+  max-width: 310px;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+}
+
+.menu .menu-button .button .button-label,
+.menu .menu-button .send-story .button-label {
+  font-size: var(--font-size-6);
+}
+
+.menu .menu-search .search-bar {
+  margin: 0 auto var(--space-4) !important;
+}
+
+.menu .menu-panel .search-bar .button {
+  background-color: RGB(var(--color-banana-yellow));
+  &:hover {
+    background-color: RGB(var(--color-reddish-orange));
+    transform: none;
+    &::before {
+      display: none;
+    }
   }
 }
 
-[data-person-count="1"]  .on-todays-show-social {
-  align-self: center;
+.menu .menu-button .send-story {
 }
-
 </style>
