@@ -13,7 +13,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/axios": "^5.12.5",
     "@nuxtjs/gtm": "^2.4.0",
     "concurrent-transform": "^1.0.0",
     "core-js": "^3.6.5",
@@ -36,7 +36,7 @@
     "eslint-plugin-nuxt": "^1.0.0",
     "jest": "^26.4.2",
     "node-sass": "^4.14.1",
-    "nypr-design-system-vue": "nypublicradio/nypr-design-system-vue#71eb80b5c15785adf939787bac27ab07ca42059b",
+    "nypr-design-system-vue": "nypublicradio/nypr-design-system-vue#main",
     "sass-loader": "^10.0.2",
     "vue-jest": "^3.0.4",
     "vue-lazy-hydration": "^1.0.0-beta.14",
