@@ -3,36 +3,38 @@
     <lazy-hydrate ssr-only>
       <the-header :donate-url="$store.getters['global/donateUrl']">
         <template v-slot:menu>
-          <v-menu
-            class="not-fixed u-color-group-dark"
-            :primary-nav="$store.getters['global/headerNav']"
-          >
-            <template v-slot:logo>
-              <wnyc-logo />
-            </template>
-            <template v-slot:social>
-              <div>
-                <share-tools label="Connect">
-                  <share-tools-item
-                    service="facebook"
-                    username="WNYC"
-                  />
-                  <share-tools-item
-                    service="twitter"
-                    username="WNYC"
-                  />
-                  <share-tools-item
-                    service="instagram"
-                    username="WNYC"
-                  />
-                  <share-tools-item
-                    service="youtube"
-                    username="UCbysmY4hyViQAAYEzOR-uCQ"
-                  />
-                </share-tools>
-              </div>
-            </template>
-          </v-menu>
+          <div>
+            <v-menu
+              class="not-fixed u-color-group-dark"
+              :primary-nav="$store.getters['global/headerNav']"
+            >
+              <template v-slot:logo>
+                <wnyc-logo />
+              </template>
+              <template v-slot:social>
+                <div>
+                  <share-tools label="Connect">
+                    <share-tools-item
+                      service="facebook"
+                      username="WNYC"
+                    />
+                    <share-tools-item
+                      service="twitter"
+                      username="WNYC"
+                    />
+                    <share-tools-item
+                      service="instagram"
+                      username="WNYC"
+                    />
+                    <share-tools-item
+                      service="youtube"
+                      username="UCbysmY4hyViQAAYEzOR-uCQ"
+                    />
+                  </share-tools>
+                </div>
+              </template>
+            </v-menu>
+          </div>
         </template>
         <template v-slot:logo>
           <a
