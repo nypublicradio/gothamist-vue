@@ -4,6 +4,14 @@ export const state = () => ({
     {
       url: 'https://www.wnyc.org/schedule/',
       text: 'Schedule'
+    },
+    {
+      url: 'https://www.wnyc.org/streams',
+      text: 'All Streams'
+    },
+    {
+      url: 'https://www.wnyc.org/shows',
+      text: 'Shows'
     }
   ],
   footerSecondaryNav: [
