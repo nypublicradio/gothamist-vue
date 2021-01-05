@@ -42,7 +42,8 @@ export default {
       this.$store.commit(
         'whatsOnNow/somethingHasBeenPlayed'
       )
-      if (stream === this.$store.getters['whatsOnNow/whatsOnNow']) {
+      // clean this up in API integration
+      if (stream.slug === this.$store.getters['whatsOnNow/whatsOnNow'].slug) {
         // if the stream is the same one that's currently playing or paused:
         // toggle the what's on now playing state
         if (this.$store.getters['whatsOnNow/whatsOnNowPlaying']) {
