@@ -26,9 +26,10 @@
           :title-link="$store.getters['whatsOnNow/selectedStreamTitleLink']"
           :details="$store.getters['whatsOnNow/selectedStreamDetails']"
           :details-link="$store.getters['whatsOnNow/selectedStreamDetailsLink']"
-          :time="$store.getters['whatsOnNow/selectedStreamTime']"
+          :time="formatTime($store.getters['whatsOnNow/selectedStreamTime'])"
         >
           <v-button
+            v-if="$store.getters['whatsOnNow/dataLoaded']"
             label="Listen Live"
             @click="playButtonClicked($store.getters['whatsOnNow/selectedStream'])"
           >
@@ -46,7 +47,7 @@
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
 import whatsOnNow from '@/mixins/whatsOnNow'
-import vueHifi from '../node_modules/vue-hifi/src/mixins/vue-hifi'
+import vueHifi from 'vue-hifi/src/mixins/vue-hifi'
 
 export default {
   name: 'HomePage',

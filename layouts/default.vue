@@ -132,7 +132,7 @@
     <v-spacer size="quad" />
     <transition name="fade">
       <div
-        v-if="$store.getters['whatsOnNow/whatsOnNow']"
+        v-if="$store.getters['whatsOnNow/dataLoaded']"
         role="complementary"
         aria-label="WNYC Audio Controls"
       >
@@ -165,6 +165,7 @@
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
 import whatsOnNow from '@/mixins/whatsOnNow'
+import api from '@/mixins/api'
 import vueHifi from '../node_modules/vue-hifi/src/mixins/vue-hifi'
 import 'focus-visible'
 
@@ -184,6 +185,6 @@ export default {
     VMenu: () => import('nypr-design-system-vue/src/components/VMenu'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
-  mixins: [whatsOnNow, vueHifi]
+  mixins: [whatsOnNow, vueHifi, api]
 }
 </script>
