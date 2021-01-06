@@ -142,7 +142,9 @@ export default {
   },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    baseURL: process.env.WHATS_ON_API
+  },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {

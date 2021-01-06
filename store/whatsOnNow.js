@@ -1,73 +1,74 @@
 export const state = () => ({
+  dataLoaded: false,
   hasSomethingBeenPlayedYet: false,
   whatsOnNow: {
     index: 0,
     active: true,
-    details: 'This is the description for All Of It on WNYC 93.9 FM!',
-    detailsLink: 'http://www.google.com',
-    episodeTitle: 'This is the episode title for All Of It',
-    episodeLink: 'http://www.yahoo.com',
-    file: 'https://hls-live.wnyc.org/wnycfm32/playlist.m3u8',
-    image: 'https://media.wnyc.org/i/936/936/l/85/2020/06/AllOfIt.png',
+    details: '',
+    detailsLink: null,
+    episodeTitle: '',
+    episodeLink: null,
+    file: null,
+    image: 'https://media.demo.nypr.digital/i/240/240/c/80/1/wnyc_2_1.png',
     playing: false,
     slug: 'wnyc-fm939',
     station: 'WNYC 93.9 FM',
-    time: '3:00 PM - 4:00 PM',
-    title: 'All Of It',
-    titleLink: 'http://www.google.com',
-    upNextTitle: 'The Next Show'
+    time: null,
+    title: '',
+    titleLink: null,
+    upNextTitle: ''
   },
   selectedStream: {
     index: 0,
     active: true,
-    details: 'This is the description for All Of It on WNYC 93.9 FM!',
-    detailsLink: 'http://www.google.com',
-    episodeTitle: 'This is the episode title for All Of It',
-    episodeLink: 'http://www.yahoo.com',
-    file: 'https://hls-live.wnyc.org/wnycfm32/playlist.m3u8',
-    image: 'https://media.wnyc.org/i/936/936/l/85/2020/06/AllOfIt.png',
+    details: '',
+    detailsLink: null,
+    episodeTitle: '',
+    episodeLink: null,
+    file: null,
+    image: 'https://media.demo.nypr.digital/i/240/240/c/80/1/wnyc_2_1.png',
     playing: false,
     slug: 'wnyc-fm939',
     station: 'WNYC 93.9 FM',
-    time: '3:00 PM - 4:00 PM',
-    title: 'All Of It',
-    titleLink: 'http://www.google.com',
-    upNextTitle: 'The Next Show'
+    time: null,
+    title: '',
+    titleLink: null,
+    upNextTitle: ''
   },
   streams: [
     {
       index: 0,
       active: true,
-      details: 'This is the description for All Of It on WNYC 93.9 FM!',
-      detailsLink: 'http://www.google.com',
-      episodeTitle: 'This is the episode title for All Of It',
-      episodeLink: 'http://www.yahoo.com',
-      file: 'https://hls-live.wnyc.org/wnycfm32/playlist.m3u8',
-      image: 'https://media.wnyc.org/i/936/936/l/85/2020/06/AllOfIt.png',
+      details: '',
+      detailsLink: null,
+      episodeTitle: '',
+      episodeLink: null,
+      file: null,
+      image: 'https://media.demo.nypr.digital/i/240/240/c/80/1/wnyc_2_1.png',
       playing: false,
       slug: 'wnyc-fm939',
       station: 'WNYC 93.9 FM',
-      time: '3:00 PM - 4:00 PM',
-      title: 'All Of It',
-      titleLink: 'http://www.google.com',
-      upNextTitle: 'The Next Show'
+      time: null,
+      title: '',
+      titleLink: null,
+      upNextTitle: ''
     },
     {
       index: 1,
       active: false,
-      details: 'This is the description for The Brian Lehrer Show on WNYC AM 820!',
-      detailsLink: 'http://www.bing.com',
-      episodeTitle: 'This is the episode title for The Brian Lehrer Show',
-      episodeLink: 'http://www.msnbc.com',
-      file: 'https://hls-live.wnyc.org/wnycam32/playlist.m3u8',
-      image: 'https://media.demo.nypr.digital/i/936/936/c/80/1/BL.png',
+      details: '',
+      detailsLink: null,
+      episodeTitle: '',
+      episodeLink: null,
+      file: null,
+      image: 'https://media.demo.nypr.digital/i/240/240/c/10/1/wnyc_2_1.png',
       playing: false,
       slug: 'wnyc-am820',
       station: 'WNYC AM 820',
-      time: '4:30 PM - 5:30 PM',
-      title: 'The Brian Lehrer Show or a long title',
-      titleLink: 'http://www.bing.com',
-      upNextTitle: 'The Next Show'
+      time: null,
+      title: '',
+      titleLink: null,
+      upNextTitle: ''
     }
   ]
 })
@@ -75,8 +76,14 @@ export const state = () => ({
 // Getters read the current state of the store module and return something
 
 export const getters = {
+  dataLoaded (state) {
+    return state.dataLoaded
+  },
   hasSomethingBeenPlayedYet (state) {
     return state.hasSomethingBeenPlayedYet
+  },
+  firstStream (state) {
+    return state.streams[0]
   },
   streams (state) {
     return state.streams
@@ -153,7 +160,9 @@ export const getters = {
 // A mutation is a reactive event - our app will know when something changes!
 
 export const mutations = {
-  // update what's on now
+  dataLoaded (state) {
+    state.dataLoaded = true
+  },
   somethingHasBeenPlayed (state) {
     state.hasSomethingBeenPlayedYet = true
   },
@@ -168,6 +177,14 @@ export const mutations = {
   // update what's on now to not playing
   setWhatsOnNowToNotPlaying (state) {
     state.whatsOnNow.playing = false
+  },
+  // update a stream
+  setStream (state, stream) {
+    state.streams[stream.index] = stream
+  },
+  // update the streams
+  setStreams (state, streams) {
+    state.streams = streams
   },
   // update the selected stream
   setSelectedStream (state, selectedStream) {

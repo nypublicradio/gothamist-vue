@@ -1,101 +1,35 @@
 <template>
   <div class="on-todays-show">
-    <div class="l-grid l-grid--2up l-grid--1up--large l-grid--large-gutters">
-      <lazy-hydrate ssr-only>
-        <h2 class="on-todays-show-title">
-          On Today's Show
-        </h2>
-      </lazy-hydrate>
-    </div>
-    <div class="l-grid l-grid--2up l-grid--1up--large l-grid--large-gutters">
-      <div class="on-todays-show-left l-grid--order-1-large">
-        <lazy-hydrate ssr-only>
-          <p class="on-todays-show-headline">
-            <a href="http://www.google.com" target="_blank" rel="noopener">The Future of Industry City; How Do Prosecutors Decide When to Convict Cops?; How the Kennedy Campaign Used Tech and Data</a>
-          </p>
-        </lazy-hydrate>
-        <v-spacer size="triple" />
-        <client-only>
-          <segment-list>
-            <segment-list-item
-              v-for="(segment, index) in segments.slice(0, segmentsToShow)"
-              :key="index"
-              :title="segment.title"
-              :url="segment.url"
-              :new-window="segment.newWindow"
-            />
-            <v-button
-              v-if="segments.length > segmentsToShow"
-              label="show more"
-              class="u-space--top"
-              @click="segmentsToShow=segments.length"
-            />
-            <v-button
-              v-else
-              label="show less"
-              class="u-space--top"
-              @click="collapseSegments"
-            />
-          </segment-list>
-        </client-only>
-      </div>
-      <div class="on-todays-show-right l-grid--order-2-large">
-        <lazy-hydrate ssr-only>
-          <image-with-caption
-            alt-text="image alt text"
-            image="https://placehold.it/506x327"
-            width="506"
-            height="327"
-            caption="This is the caption lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elitlorem ipsum dolor sit amet, consectetur adipiscing elit"
-            credit="( AP Photo/Carolyn Kaster )"
-            credit-url="http:///www.google.com"
+    <div class="on-todays-show-person-social-wrapper" :data-person-count="hosts.length">
+      <ul class="on-todays-show-person-list">
+        <li v-for="(host, index) in hosts" :key="index" class="on-todays-show-person-item">
+          <v-person
+            class="on-todays-show-person"
+            :name="host['first-name'] + ' ' + host['last-name']"
+            :name-link="'https://www.wnyc.org/'+host.url"
           />
-        </lazy-hydrate>
-        <div class="dots" />
-      </div>
+        </li>
+      </ul>
+      <share-tools class="on-todays-show-social" label="Connect with the show!" layout="vertical">
+        <share-tools-item
+          v-for="(link, index) in socialLinks"
+          :key="index"
+          :link="link.href"
+          :service="link.title"
+        />
+      </share-tools>
     </div>
-    <v-spacer size="triple" />
-    <lazy-hydrate ssr-only>
-      <div class="on-todays-show-person-social-wrapper" :data-person-count="people.length">
-        <ul class="on-todays-show-person-list">
-          <li v-for="person in people" :key="person.name" class="on-todays-show-person-item">
-            <v-person
-              class="on-todays-show-person"
-              :image="person.image"
-              :name="person.name"
-              :name-link="person.nameLink"
-              :role="person.role"
-            />
-          </li>
-        </ul>
-        <share-tools class="on-todays-show-social" label="Connect with the show!" layout="vertical">
-          <share-tools-item
-            v-for="(socialshare, index) in social"
-            :key="index"
-            :service="socialshare.service"
-            :username="socialshare.contact"
-          />
-        </share-tools>
-      </div>
-    </lazy-hydrate>
   </div>
 </template>
 
 <script>
-import LazyHydrate from 'vue-lazy-hydration'
 import whatsOnNow from '@/mixins/whatsOnNow'
 
 export default {
   name: 'OnTodaysShow',
   components: {
-    LazyHydrate,
-    ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
-    SegmentList: () => import('nypr-design-system-vue/src/components/SegmentList'),
-    SegmentListItem: () => import('nypr-design-system-vue/src/components/SegmentListItem'),
     ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
     ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
-    VButton: () => import('nypr-design-system-vue/src/components/VButton'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
     VPerson: () => import('nypr-design-system-vue/src/components/VPerson')
   },
   mixins: [whatsOnNow],
@@ -153,34 +87,9 @@ export default {
           newWindow: true
         }
       ],
-      social: [
-        {
-          contact: 'AllOfItWNYC',
-          service: 'facebook'
-        },
-        {
-          contact: 'AllOfItWNYC',
-          service: 'twitter'
-        },
-        {
-          contact: 'allofitwnyc',
-          service: 'instagram'
-        }],
+      socialLinks: this.$store.getters['onTodaysShow/social'],
       segmentsToShow: 3,
-      people: [
-        {
-          image: 'https://placehold.it/120x120',
-          name: 'Alison Stewart',
-          nameLink: 'http://example.com',
-          role: 'Host'
-        },
-        {
-          image: 'https://placehold.it/120x120',
-          name: 'Andrew Cuomo',
-          nameLink: 'http://example.com',
-          role: 'Guest'
-        }
-      ]
+      hosts: this.$store.getters['onTodaysShow/hosts']
     }
   },
   mounted () {
@@ -301,7 +210,7 @@ export default {
   }
 }
 
-[data-person-count="1"]  .on-todays-show-social {
+[data-person-count="1"] .on-todays-show-social {
   align-self: center;
 }
 

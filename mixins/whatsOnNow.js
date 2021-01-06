@@ -1,5 +1,11 @@
 export default {
   methods: {
+    // format time from API
+    formatTime (time) {
+      // const formattedDate = new Date(time)
+      // console.log(formattedDate)
+      return time
+    },
     // update what's on now in the vuex store
     setWhatsOnNow (stream) {
       this.$store.commit(
