@@ -1,56 +1,53 @@
 <template>
   <div>
-    <lazy-hydrate ssr-only>
-      <the-header :donate-url="$store.getters['global/donateUrl']">
-        <template v-slot:menu>
-          <div>
-            <v-menu
-              class="not-fixed u-color-group-dark"
-              :primary-nav="$store.getters['global/headerNav']"
-            >
-              <template v-slot:logo>
-                <wnyc-logo />
-              </template>
-              <template v-slot:social>
-                <div>
-                  <share-tools label="Connect">
-                    <share-tools-item
-                      service="facebook"
-                      username="WNYC"
-                    />
-                    <share-tools-item
-                      service="twitter"
-                      username="WNYC"
-                    />
-                    <share-tools-item
-                      service="instagram"
-                      username="WNYC"
-                    />
-                    <share-tools-item
-                      service="youtube"
-                      username="UCbysmY4hyViQAAYEzOR-uCQ"
-                    />
-                  </share-tools>
-                </div>
-              </template>
-            </v-menu>
-          </div>
-        </template>
-        <template v-slot:logo>
-          <a
-            href="https://wnyc.org"
-            target="_blank"
-            rel="noopener"
-          >
-            <wnyc-logo title="WNYC" />
-            <span class="is-vishidden">(New tab)</span>
-          </a>
-        </template>
-        <template v-slot:navigation>
-          <div>
-            <secondary-navigation
-              orientation="horizontal"
-              :nav-items="[
+    <the-header :donate-url="$store.getters['global/donateUrl']">
+      <template v-slot:menu>
+        <v-menu
+          class="not-fixed u-color-group-dark"
+          :primary-nav="$store.getters['global/headerNav']"
+        >
+          <template v-slot:logo>
+            <wnyc-logo />
+          </template>
+          <template v-slot:social>
+            <div>
+              <share-tools label="Connect">
+                <share-tools-item
+                  service="facebook"
+                  username="WNYC"
+                />
+                <share-tools-item
+                  service="twitter"
+                  username="WNYC"
+                />
+                <share-tools-item
+                  service="instagram"
+                  username="WNYC"
+                />
+                <share-tools-item
+                  service="youtube"
+                  username="UCbysmY4hyViQAAYEzOR-uCQ"
+                />
+              </share-tools>
+            </div>
+          </template>
+        </v-menu>
+      </template>
+      <template v-slot:logo>
+        <a
+          href="https://wnyc.org"
+          target="_blank"
+          rel="noopener"
+        >
+          <wnyc-logo title="WNYC" />
+          <span class="is-vishidden">(New tab)</span>
+        </a>
+      </template>
+      <template v-slot:navigation>
+        <div>
+          <secondary-navigation
+            orientation="horizontal"
+            :nav-items="[
                 {
                   url: 'https://www.wnyc.org/schedule/',
                   text: 'Schedule'
@@ -64,11 +61,10 @@
                   text: 'Shows'
                 }
               ]"
-            />
-          </div>
-        </template>
-      </the-header>
-    </lazy-hydrate>
+          />
+        </div>
+      </template>
+    </the-header>
     <main>
       <div class="dots header-dots" />
       <Nuxt />
