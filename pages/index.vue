@@ -17,7 +17,7 @@
             :up-next-title="stream.upNextTitle"
             :active="stream.active"
             :playing="stream.playing"
-            @click="setSelectedStream(stream, index)"
+            @click="setSelectedStream(stream, stream.index)"
           />
         </stream-switcher>
         <main-player
@@ -38,7 +38,6 @@
           </v-button>
         </main-player>
       </div>
-      <v-spacer size="triple" />
       <on-todays-show />
     </div>
   </div>

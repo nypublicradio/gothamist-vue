@@ -82,8 +82,11 @@ export const getters = {
   hasSomethingBeenPlayedYet (state) {
     return state.hasSomethingBeenPlayedYet
   },
-  firstStream (state) {
+  fmStream (state) {
     return state.streams[0]
+  },
+  amStream (state) {
+    return state.streams[1]
   },
   streams (state) {
     return state.streams
@@ -190,7 +193,7 @@ export const mutations = {
   setSelectedStream (state, selectedStream) {
     state.selectedStream = selectedStream
   },
-  // update the streams
+  // set a stream to active
   setStreamToActive (state, index) {
     // set all streams' active property to false
     for (const i in state.streams) {
@@ -214,5 +217,17 @@ export const mutations = {
     }
     state.streams[index].playing = true
     state.whatsOnNow.playing = true
+  },
+  // set the initial state of everything
+  setInitialState (state, stream) {
+    if (!state.dataLoaded) {
+      console.log(stream)
+      // update selected stream
+      state.selectedStream = stream
+      // update what's on now
+      state.whatsOnNow = stream
+      // tell the store the data has been loaded
+      state.dataLoaded = true
+    }
   }
 }

@@ -1,7 +1,8 @@
 <template>
-  <div class="on-todays-show">
-    <div class="on-todays-show-person-social-wrapper" :data-person-count="hosts.length">
-      <ul class="on-todays-show-person-list">
+  <div v-if="hosts || socialLinks" class="on-todays-show">
+    <v-spacer size="triple" />
+    <div class="on-todays-show-person-social-wrapper">
+      <ul v-if="hosts" class="on-todays-show-person-list">
         <li v-for="(host, index) in hosts" :key="index" class="on-todays-show-person-item">
           <v-person
             class="on-todays-show-person"
@@ -10,7 +11,7 @@
           />
         </li>
       </ul>
-      <share-tools class="on-todays-show-social" label="Connect with the show!" layout="vertical">
+      <share-tools v-if="socialLinks" class="on-todays-show-social" label="Connect with the show!" layout="vertical">
         <share-tools-item
           v-for="(link, index) in socialLinks"
           :key="index"
@@ -30,7 +31,8 @@ export default {
   components: {
     ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
     ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
-    VPerson: () => import('nypr-design-system-vue/src/components/VPerson')
+    VPerson: () => import('nypr-design-system-vue/src/components/VPerson'),
+    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
   mixins: [whatsOnNow],
   data () {
