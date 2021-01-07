@@ -96,6 +96,7 @@ export default {
   },
   mounted () {
     console.log(this.socialLinks)
+    console.log(this.$store.getters['onTodaysShow/social'])
     if (window.innerWidth > 850) {
       this.segmentsToShow = 6
     }
