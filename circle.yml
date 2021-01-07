@@ -26,13 +26,6 @@ templates:
             npm run generate
             npm run deploy
 
-  filter_demo: &filter_demo
-    filters:
-      branches:
-        only: main
-      tags:
-        only: demo
-
   deploy_nuxt: &deploy_nuxt
     docker:
       - image: circleci/python:3.6
@@ -72,6 +65,20 @@ templates:
           paths:
             - ~/.venv
 
+  filter_demo: &filter_demo
+    filters:
+      branches:
+        only: main
+      tags:
+        only: demo
+
+  filter_prod: &filter_prod
+    filters:
+      branches:
+        ignore: /.*/
+      tags:
+        only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+
 version: 2
 jobs:
   build-static:
@@ -99,16 +106,27 @@ jobs:
           name: Test
           command: npm test
 
-  deploy-static:
+  deploy-static-demo:
     environment:
       ENV: DEMO
     <<: *deploy_static
 
-  deploy-demo:
+  deploy-nuxt-demo:
     environment:
       ENV: demo
       TAG: demo
     <<: *deploy_nuxt
+
+  deploy-static-prod:
+    environment:
+      ENV: PROD
+    <<: *deploy_static
+
+  deploy-nuxt-prod:
+    environment:
+      ENV: prod
+    <<: *deploy_nuxt
+
 
 workflows:
   version: 2
@@ -130,12 +148,29 @@ workflows:
 #          <<: *filter_demo
 #          requires:
 #            - build-static
-      - deploy-static:
+      - deploy-static-demo:
           <<: *filter_demo
           requires:
             - build-static
-      - deploy-demo:
+      - deploy-nuxt-demo:
           <<: *filter_demo
+          requires:
+            - build-static
+
+  deploy-prod:
+    jobs:
+      - build-static:
+          <<: *filter_prod
+#      - test-static:
+#          <<: *filter_prod
+#          requires:
+#            - build-static
+      - deploy-static-prod:
+          <<: *filter_prod
+          requires:
+            - build-static
+      - deploy-nuxt-prod:
+          <<: *filter_prod
           requires:
             - build-static
 
