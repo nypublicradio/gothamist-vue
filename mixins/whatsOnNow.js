@@ -1,10 +1,17 @@
+import moment from 'moment'
+
 export default {
   methods: {
     // format time from API
     formatTime (time) {
-      // const formattedDate = new Date(time)
-      // console.log(formattedDate)
-      return time
+      console.log(time)
+      if (time !== null && time.length > 0) {
+        const formattedDate = time.split('-')
+        const startTime = new Date(formattedDate[0])
+        const endTime = new Date(formattedDate[1])
+        return moment(startTime).format('LT') + ' - ' + moment(endTime).format('LT')
+      }
+      return null
     },
     // update what's on now in the vuex store
     setWhatsOnNow (stream) {
