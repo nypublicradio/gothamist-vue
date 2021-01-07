@@ -134,7 +134,7 @@ workflows:
           <<: *filter_demo
           requires:
             - build-static
-      - deploy-nuxt:
+      - deploy-demo:
           <<: *filter_demo
           requires:
             - build-static
