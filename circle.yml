@@ -58,10 +58,10 @@ templates:
               --fargate \
               --cpu=1024 \
               --memory-reservation=2048 \
-              --ecr-repository=wnyc-client \
+              --ecr-repository=wnyc-3000-vue \
               --cluster-override=fastboot-demo \
-              --execution-role=wnyc-client-$ENV \
-              --task-role=wnyc-client-$ENV \
+              --execution-role=wnyc-3000-vue-$ENV \
+              --task-role=wnyc-3000-vue-$ENV \
               --ports=80 \
               --environment=$ENV \
               --no-strict-environment \
@@ -101,13 +101,13 @@ jobs:
 
   deploy-static:
     environment:
-      ENV: NUXT
+      ENV: DEMO
     <<: *deploy_static
 
-  deploy-nuxt:
+  deploy-demo:
     environment:
-      ENV: nuxt
-      TAG: nuxt
+      ENV: demo
+      TAG: demo
     <<: *deploy_nuxt
 
 workflows:
@@ -122,7 +122,7 @@ workflows:
 #          requires:
 #            - build-static
 
-  deploy-nuxt:
+  deploy-demo:
     jobs:
       - build-static:
           <<: *filter_demo
