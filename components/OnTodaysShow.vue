@@ -2,7 +2,7 @@
   <div v-if="hosts || socialLinks" class="on-todays-show">
     <v-spacer size="triple" />
     <div class="on-todays-show-person-social-wrapper">
-      <ul v-if="$store.getters['onTodaysShow/hosts']" class="on-todays-show-person-list">
+      <ul v-if="hosts && $store.getters['onTodaysShow/hosts']" class="on-todays-show-person-list">
         <li v-for="(host, index) in hosts" :key="index" class="on-todays-show-person-item">
           <v-person
             class="on-todays-show-person"
@@ -11,7 +11,7 @@
           />
         </li>
       </ul>
-      <share-tools v-if="$store.getters['onTodaysShow/social']" class="on-todays-show-social" label="Connect with the show!" layout="vertical">
+      <share-tools v-if="socialLinks && $store.getters['onTodaysShow/social']" class="on-todays-show-social" label="Connect with the show!" layout="vertical">
         <share-tools-item
           v-for="(link, index) in socialLinks"
           :key="index"
@@ -95,8 +95,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.socialLinks)
-    console.log(this.$store.getters['onTodaysShow/social'])
     if (window.innerWidth > 850) {
       this.segmentsToShow = 6
     }

@@ -220,14 +220,11 @@ export const mutations = {
   },
   // set the initial state of everything
   setInitialState (state, stream) {
-    if (!state.dataLoaded) {
-      console.log(stream)
-      // update selected stream
-      state.selectedStream = stream
-      // update what's on now
-      state.whatsOnNow = stream
-      // tell the store the data has been loaded
-      state.dataLoaded = true
-    }
+    // update selected stream
+    state.selectedStream = stream
+    // update what's on now
+    state.whatsOnNow = stream
+    // tell the store the data has been loaded
+    state.dataLoaded = true
   }
 }
