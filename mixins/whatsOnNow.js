@@ -3,12 +3,11 @@ import moment from 'moment'
 export default {
   methods: {
     // format time from API
-    formatTime (time) {
-      if (time !== null && time.length > 0) {
-        const formattedDate = time.split('-')
-        const startTime = new Date(formattedDate[0])
-        const endTime = new Date(formattedDate[1])
-        return moment(startTime).format('LT') + ' - ' + moment(endTime).format('LT')
+    formatTime (timeStart, timeEnd) {
+      if (timeStart !== undefined && timeStart !== null && timeEnd !== undefined && timeEnd !== null) {
+        const start = moment(timeStart)
+        const end = moment(timeEnd)
+        return start.utc().local().format('h:mm a') + ' - ' + end.utc().local().format('h:mm a')
       }
       return null
     },
