@@ -58,7 +58,7 @@
               class="on-todays-show-person"
               role="host"
               :name="host['first-name'] + ' ' + host['last-name']"
-              :name-link="'https://www.wnyc.org/'+host.url"
+              :name-link="'https://www.wnyc.org'+host.url"
               image="https://media.wnyc.org/i/100/100/l/80/2021/01/genericperson.png"
             />
           </li>
