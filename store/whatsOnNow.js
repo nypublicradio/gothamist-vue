@@ -300,5 +300,16 @@ export const mutations = {
     } else {
       state.streams[stream.index] = stream
     }
+  },
+  // update the On Today's Show section of a stream
+  updateOnTodaysShow (state, data) {
+    state.streams[data.index].onTodaysShowHeadline = data.onTodaysShowHeadline
+    state.streams[data.index].onTodaysShowHeadlineLink = data.onTodaysShowHeadlineLink
+    state.streams[data.index].onTodaysShowImage = data.onTodaysShowImage
+    state.streams[data.index].onTodaysShowImageAltText = data.onTodaysShowImageAltText
+    state.streams[data.index].onTodaysShowImageCaption = data.onTodaysShowImageCaption
+    state.streams[data.index].onTodaysShowImageCredits = data.onTodaysShowImageCredits
+    state.streams[data.index].onTodaysShowImageCreditsUrl = data.onTodaysShowImageCreditsUrl
+    state.streams[data.index].onTodaysShowSegments = data.onTodaysShowSegments
   }
 }
