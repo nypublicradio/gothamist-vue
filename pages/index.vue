@@ -2,11 +2,9 @@
   <div>
     <div class="l-container">
       <div class="l-container--12col">
-        <lazy-hydrate ssr-only>
-          <h1 class="is-vishidden">
-            Livestream WNYC FM 93.9 and AM 820
-          </h1>
-        </lazy-hydrate>
+        <h1 class="is-vishidden">
+          Livestream WNYC FM 93.9 and AM 820
+        </h1>
         <v-spacer size="quad" />
         <stream-switcher class="u-color-group-dark">
           <stream-switcher-card
@@ -14,7 +12,6 @@
             :key="index"
             :station="stream.station"
             :title="stream.title"
-            :up-next-title="stream.upNextTitle"
             :active="stream.active"
             :playing="stream.playing"
             @click="setSelectedStream(stream, stream.index)"
@@ -45,14 +42,12 @@
 </template>
 
 <script>
-import LazyHydrate from 'vue-lazy-hydration'
 import whatsOnNow from '@/mixins/whatsOnNow'
 import vueHifi from 'vue-hifi/src/mixins/vue-hifi'
 
 export default {
   name: 'HomePage',
   components: {
-    LazyHydrate,
     MainPlayer: () => import('nypr-design-system-vue/src/components/MainPlayer'),
     OnTodaysShow: () => import('../components/OnTodaysShow'),
     PauseIcon: () => import('nypr-design-system-vue/src/components/icons/wqxr/PauseIcon'),
