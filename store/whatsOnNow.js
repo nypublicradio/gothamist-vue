@@ -290,6 +290,8 @@ export const mutations = {
   },
   // set the initial state of everything
   setInitialState (state, stream) {
+    state.streams[stream.index] = stream
+    console.log(stream)
     if (!state.dataLoaded) {
       // update selected stream
       state.selectedStream = stream
@@ -297,8 +299,6 @@ export const mutations = {
       state.whatsOnNow = stream
       // tell the store the data has been loaded
       state.dataLoaded = true
-    } else {
-      state.streams[stream.index] = stream
     }
   },
   // update the On Today's Show section of a stream
@@ -310,6 +310,40 @@ export const mutations = {
     state.streams[data.index].onTodaysShowImageCaption = data.onTodaysShowImageCaption
     state.streams[data.index].onTodaysShowImageCredits = data.onTodaysShowImageCredits
     state.streams[data.index].onTodaysShowImageCreditsUrl = data.onTodaysShowImageCreditsUrl
-    state.streams[data.index].onTodaysShowSegments = data.onTodaysShowSegments
+  },
+  // update the On Today's Show segments
+  updateOnTodaysShowSegmentsFm (state, data) {
+    if (data !== null) {
+      const formattedSegments = []
+      // need to get rid of first item in array
+      const slicedData = data.slice(1)
+      slicedData.forEach(function (value) {
+        formattedSegments.push(
+          {
+            title: value.attributes.title,
+            url: 'https://www.wnyc.org/story/' + value.attributes.slug,
+            newWindow: true
+          }
+        )
+        state.streams[0].onTodaysShowSegments = formattedSegments
+      })
+    }
+  },
+  // update the On Today's Show segments
+  updateOnTodaysShowSegmentsAm (state, data) {
+    if (data !== null) {
+      const formattedSegments = []
+      const slicedData = data.slice(1)
+      slicedData.forEach(function (value) {
+        formattedSegments.push(
+          {
+            title: value.attributes.title,
+            url: 'https://www.wnyc.org/story/' + value.attributes.slug,
+            newWindow: true
+          }
+        )
+        state.streams[1].onTodaysShowSegments = formattedSegments
+      })
+    }
   }
 }

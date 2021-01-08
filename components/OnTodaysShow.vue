@@ -22,16 +22,10 @@
               :new-window="segment.newWindow"
             />
             <v-button
-              v-if="segments.length > segmentsToShow"
+              v-if="$store.getters['whatsOnNow/onTodaysShowSegments'].length > segmentsToShow"
               label="show more"
               class="u-space--top"
-              @click="segmentsToShow=segments.length"
-            />
-            <v-button
-              v-else
-              label="show less"
-              class="u-space--top"
-              @click="collapseSegments"
+              @click="segmentsToShow=$store.getters['whatsOnNow/onTodaysShowSegments'].length"
             />
           </segment-list>
         </template>
@@ -65,16 +59,21 @@
           </li>
         </ul>
         <share-tools v-if="$store.getters['whatsOnNow/onTodaysShowSocial']" class="on-todays-show-social" label="Connect with the show!" layout="vertical">
-          <template
-            v-for="(link, index) in $store.getters['whatsOnNow/onTodaysShowSocial']"
-          >
-            <share-tools-item
-              v-if="link['contact-string'] && link.service"
-              :key="index"
-              :username="link['contact-string']"
-              :service="link.service"
-            />
-          </template>
+          <share-tools-item
+            v-if="twitter"
+            :username="twitter"
+            service="twitter"
+          />
+          <share-tools-item
+            v-if="instagram"
+            :username="instagram"
+            service="instagram"
+          />
+          <share-tools-item
+            v-if="facebook"
+            :username="facebook"
+            service="facebook"
+          />
         </share-tools>
       </div>
     </div>
@@ -99,13 +98,19 @@ export default {
   mixins: [whatsOnNow],
   data () {
     return {
-      segmentsToShow: 3
+      segmentsToShow: 3,
+      twitter: null,
+      instagram: null,
+      facebook: null
     }
   },
   mounted () {
     if (window.innerWidth > 850) {
       this.segmentsToShow = 6
     }
+    this.twitter = this.$store.getters['whatsOnNow/onTodaysShowSocial'].twitter
+    this.instagram = this.$store.getters['whatsOnNow/onTodaysShowSocial'].instagram
+    this.facebook = this.$store.getters['whatsOnNow/onTodaysShowSocial'].facebook
   },
   methods: {
     collapseSegments () {
@@ -138,14 +143,6 @@ export default {
   @include media(">medium") {
     flex-direction: row;
   }
-}
-
-.on-todays-show-person-social-wrapper[data-person-count="1"] {
-  flex-direction: row;
-}
-
-.on-todays-show-person-social-wrapper[data-person-count="1"] .on-todays-show-social {
-  height: 124px;
 }
 
 .on-todays-show-person-list {
@@ -209,21 +206,4 @@ export default {
 .on-todays-show-person-link {
   border: none;
 }
-
-[data-person-count="1"] .on-todays-show-person-list {
-  align-self: center;
-  flex-basis: 160px;
-  max-width: 160px;
-  padding-bottom: 0;
-  @include media(">medium") {
-    align-self: left;
-    flex-basis: 280px;
-    max-width: 280px;
-  }
-}
-
-[data-person-count="1"] .on-todays-show-social {
-  align-self: center;
-}
-
 </style>

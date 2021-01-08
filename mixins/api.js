@@ -2,17 +2,19 @@ export default {
   data () {
     return {
       amStream: [],
-      amStreamEpisodeData: [],
       amStreamFormatted: {},
+      amStreamEpisodeData: [],
+      amStreamSegments: [],
       fmStream: [],
-      fmStreamEpisodeData: [],
-      fmStreamFormatted: {}
+      fmStreamFormatted: {},
+      fmStreamSegments: [],
+      fmStreamEpisodeData: []
     }
   },
   methods: {
     async pollApi () {
       // fm stream
-      await this.$axios.get('/?filter[slug]=wnyc-fm939&include=current-airing,current-show.image')
+      await this.$axios.get('/?filter[slug]=wnyc-fm939&include=current-airing,current-show.show.image')
         .then(response => (
           this.fmStream = response.data
         ))
@@ -27,12 +29,13 @@ export default {
             detailsLink: this.fmStream.included[1].attributes ? this.fmStream.included[1].attributes.url : null,
             episodeTitle: null,
             episodeLink: null,
-            image: this.fmStream.included[0].attributes.name ? 'https://media.wnyc.org/i/240/240/l/80/' + this.fmStream.included[0].attributes.name : this.fmStream.data[0].attributes['image-logo'],
+            file: this.fmStream.data[0].attributes.hls ? this.fmStream.data[0].attributes.hls : this.fmStream.data[0].aac,
+            image: this.fmStream.included[1].attributes.name ? 'https://media.wnyc.org/i/240/240/l/80/' + this.fmStream.included[1].attributes.name : this.fmStream.data[0].attributes['image-logo'],
             playing: this.$store.getters['whatsOnNow/streams'][0].playing,
             slug: this.fmStream.data[0].attributes.slug,
             station: this.fmStream.data[0].attributes.name,
             time: null,
-            title: this.fmStream.included[1].attributes.title ? this.fmStream.included[1].attributes.title : this.fmStream.data[0].attributes.name,
+            title: this.fmStream.included[1].attributes.title ? this.fmStream.included[1].attributes.title : this.amStream.data[0].attributes.name,
             titleLink: this.fmStream.included[1].attributes ? this.fmStream.included[1].attributes.url : null,
             upNextTitle: null,
             onTodaysShowHeadline: null,
@@ -60,7 +63,7 @@ export default {
           )
         ))
       // fm stream episode data
-      await this.$axios.get('/?filter[slug]=wnyc-fm939&include=current-show,current-airing,current-episode,current-episode.segments,current-show.image')
+      await this.$axios.get('/?filter[slug]=wnyc-fm939&include=current-show,current-airing,current-episode,current-episode.segments,current-show.show.image')
         .then(response => (
           this.fmStreamEpisodeData = response.data
         ))
@@ -83,8 +86,22 @@ export default {
             }
           )
         ))
+      // fm stream segments
+      // await this.$axios.get('/?filter[slug]=wnyc-fm939&include=current-episode.segments')
+      //   .then(response => (
+      //     this.fmStreamSegments = response.data.included ? response.data.included : null
+      //   ))
+      //   .catch(function (error) {
+      //     console.log(error)
+      //   })
+      //   .then(response => (
+      //     this.$store.commit(
+      //       'whatsOnNow/updateOnTodaysShowSegmentsFm',
+      //       this.fmStreamSegments
+      //     )
+      //   ))
       // am stream
-      await this.$axios.get('/?filter[slug]=wnyc-am820&include=current-airing,current-show.image')
+      await this.$axios.get('/?filter[slug]=wnyc-am820&include=current-airing,current-show.show.image')
         .then(response => (
           this.amStream = response.data
         ))
@@ -133,7 +150,7 @@ export default {
           )
         ))
       // am stream episode data
-      await this.$axios.get('/?filter[slug]=wnyc-am820&&include=current-show,current-airing,current-episode,current-episode.segments,current-show.image')
+      await this.$axios.get('/?filter[slug]=wnyc-am820&&include=current-show,current-airing,current-episode,current-episode.segments,current-show.show.image')
         .then(response => (
           this.amStreamEpisodeData = response.data
         ))
@@ -156,12 +173,26 @@ export default {
             }
           )
         ))
+      // am stream segments
+      // await this.$axios.get('/?filter[slug]=wnyc-am820&include=current-episode.segments')
+      //   .then(response => (
+      //     this.amStreamSegments = response.data.included ? response.data.included : null
+      //   ))
+      //   .catch(function (error) {
+      //     console.log(error)
+      //   })
+      //   .then(response => (
+      //     this.$store.commit(
+      //       'whatsOnNow/updateOnTodaysShowSegmentsAm',
+      //       this.amStreamSegments
+      //     )
+      //   ))
     }
   },
   mounted () {
     this.pollApi()
     // poll the API every 6 seconds
-    this.timer = setInterval(this.pollApi, 6000)
+    // this.timer = setInterval(this.pollApi, 6000)
   },
   beforeDestroy () {
     clearInterval(this.timer)
