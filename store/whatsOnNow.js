@@ -13,7 +13,8 @@ export const state = () => ({
     playing: false,
     slug: 'wnyc-fm939',
     station: 'WNYC 93.9 FM',
-    time: null,
+    timeStart: null,
+    timeEnd: null,
     title: '',
     titleLink: null,
     upNextTitle: null,
@@ -40,7 +41,8 @@ export const state = () => ({
     playing: false,
     slug: 'wnyc-fm939',
     station: 'WNYC 93.9 FM',
-    time: null,
+    timeStart: null,
+    timeEnd: null,
     title: '',
     titleLink: null,
     upNextTitle: null,
@@ -68,7 +70,8 @@ export const state = () => ({
       playing: false,
       slug: 'wnyc-fm939',
       station: 'WNYC 93.9 FM',
-      time: null,
+      timeStart: null,
+      timeEnd: null,
       title: '',
       titleLink: null,
       upNextTitle: null,
@@ -95,7 +98,8 @@ export const state = () => ({
       playing: false,
       slug: 'wnyc-am820',
       station: 'WNYC AM 820',
-      time: null,
+      timeStart: null,
+      timeEnd: null,
       title: '',
       titleLink: null,
       upNextTitle: null,
@@ -152,8 +156,11 @@ export const getters = {
   selectedStreamPlaying (state) {
     return state.selectedStream.playing
   },
-  selectedStreamTime (state) {
-    return state.selectedStream.time
+  selectedStreamTimeStart (state) {
+    return state.selectedStream.timeStart
+  },
+  selectedStreamTimeEnd (state) {
+    return state.selectedStream.timeEnd
   },
   selectedStreamStation (state) {
     return state.selectedStream.station

@@ -53,7 +53,7 @@
                 class="on-todays-show-person"
                 role="host"
                 :name="host['first-name'] + ' ' + host['last-name']"
-                image="https://media.wnyc.org/i/100/100/l/80/2021/01/genericperson.png"
+                :image="host.image ? host.image : 'https://media.wnyc.org/i/raw/2021/01/radio_avatar.png'"
               />
             </a>
           </li>
@@ -108,9 +108,11 @@ export default {
     if (window.innerWidth > 850) {
       this.segmentsToShow = 6
     }
-    this.twitter = this.$store.getters['whatsOnNow/onTodaysShowSocial'].twitter
-    this.instagram = this.$store.getters['whatsOnNow/onTodaysShowSocial'].instagram
-    this.facebook = this.$store.getters['whatsOnNow/onTodaysShowSocial'].facebook
+    if (this.$store.getters['whatsOnNow/onTodaysShowSocial']) {
+      this.twitter = this.$store.getters['whatsOnNow/onTodaysShowSocial'].twitter
+      this.instagram = this.$store.getters['whatsOnNow/onTodaysShowSocial'].instagram
+      this.facebook = this.$store.getters['whatsOnNow/onTodaysShowSocial'].facebook
+    }
   },
   methods: {
     collapseSegments () {
@@ -157,7 +159,6 @@ export default {
     padding: 0;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     flex-basis: 280px;
-    max-width: 280px;
   }
   @include media(">860px") {
     align-self: center;

@@ -23,7 +23,7 @@
           :title-link="$store.getters['whatsOnNow/selectedStreamTitleLink']"
           :details="$store.getters['whatsOnNow/selectedStreamDetails']"
           :details-link="$store.getters['whatsOnNow/selectedStreamDetailsLink']"
-          :time="formatTime($store.getters['whatsOnNow/selectedStreamTime'])"
+          :time="formatTime(startTime, endTime)"
         >
           <v-button
             v-if="$store.getters['whatsOnNow/dataLoaded']"
@@ -57,6 +57,16 @@ export default {
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
-  mixins: [whatsOnNow, vueHifi]
+  data () {
+    return {
+      startTime: null,
+      endTime: null
+    }
+  },
+  mixins: [whatsOnNow, vueHifi],
+  mounted () {
+    this.startTime = this.$store.getters['whatsOnNow/selectedStreamTimeStart']
+    this.endTime = this.$store.getters['whatsOnNow/selectedStreamTimeEnd']
+  }
 }
 </script>
