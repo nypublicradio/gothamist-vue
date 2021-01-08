@@ -290,11 +290,15 @@ export const mutations = {
   },
   // set the initial state of everything
   setInitialState (state, stream) {
-    // update selected stream
-    state.selectedStream = stream
-    // update what's on now
-    state.whatsOnNow = stream
-    // tell the store the data has been loaded
-    state.dataLoaded = true
+    if (!state.dataLoaded) {
+      // update selected stream
+      state.selectedStream = stream
+      // update what's on now
+      state.whatsOnNow = stream
+      // tell the store the data has been loaded
+      state.dataLoaded = true
+    } else {
+      state.streams[stream.index] = stream
+    }
   }
 }

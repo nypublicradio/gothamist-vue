@@ -56,9 +56,10 @@
           <li v-for="(host, index) in $store.getters['whatsOnNow/onTodaysShowHosts']" :key="index" class="on-todays-show-person-item">
             <v-person
               class="on-todays-show-person"
+              role="host"
               :name="host['first-name'] + ' ' + host['last-name']"
               :name-link="'https://www.wnyc.org/'+host.url"
-              image="https://media.demo.nypr.digital/i/120/120/c/80/1/wnyc_2_1.png"
+              image="https://media.wnyc.org/i/100/100/l/80/2021/01/genericperson.png"
             />
           </li>
         </ul>
