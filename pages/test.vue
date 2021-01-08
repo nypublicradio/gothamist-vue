@@ -54,7 +54,7 @@ export default {
   components: {
     LazyHydrate,
     MainPlayer: () => import('nypr-design-system-vue/src/components/MainPlayer'),
-    OnTodaysShow: () => import('../components/OnTodaysShow'),
+    OnTodaysShow: () => import('../components/OnTodaysShow2'),
     PauseIcon: () => import('nypr-design-system-vue/src/components/icons/wqxr/PauseIcon'),
     PlaySimple: () => import('nypr-design-system-vue/src/components/icons/PlaySimple'),
     StreamSwitcher: () => import('nypr-design-system-vue/src/components/StreamSwitcher'),

@@ -7,7 +7,9 @@
           :primary-nav="$store.getters['global/headerNav']"
         >
           <template v-slot:logo>
-            <wnyc-logo />
+            <a href="https://www.WNYC.org" target="_blank">
+              <wnyc-logo />
+            </a>
           </template>
           <template v-slot:social>
             <div>
