@@ -1,0 +1,236 @@
+{
+  "links": {
+    "first": "http://api.demo.nypr.digital/api/v4/whats_on/?filter%5Bslug%5D=wnyc-fm939&include=current-show%2Ccurrent-airing%2Ccurrent-episode%2Ccurrent-episode.segments&page=1",
+    "last": "http://api.demo.nypr.digital/api/v4/whats_on/?filter%5Bslug%5D=wnyc-fm939&include=current-show%2Ccurrent-airing%2Ccurrent-episode%2Ccurrent-episode.segments&page=1",
+    "next": null,
+    "prev": null
+  },
+  "data": [
+    {
+      "type": "whats-on-now",
+      "id": "1",
+      "attributes": {
+        "name": "WNYC 93.9 FM",
+        "slug": "wnyc-fm939",
+        "short-description": "News, Culture & Talk",
+        "has-playlists": false,
+        "image-logo": "https://media.demo.nypr.digital/i/500/500/c/80/1/wnyc_2_1.png",
+        "schedule-url": "http://wnyc.demo2.wnyc.net/schedule/?scheduleStation=wnyc-fm939",
+        "playlist-url": "http://wnyc.demo2.wnyc.net/playlist-daily/?scheduleStation=wnyc-fm939",
+        "whats-on": null,
+        "audio-bumper": "/streambumper/streambumper000001_wnycfm.mp3",
+        "aac": "http://fm939.wnyc.org/wnycfm.aac",
+        "mp3": "http://fm939.wnyc.org/wnycfm",
+        "mobile-aac": "https://fm939.wnyc.org/wnycfm-mobile.aac",
+        "mobile-mp3": "https://fm939.wnyc.org/wnycfm-web",
+        "hls": "https://hls-live.wnyc.org/wnycfm/playlist.m3u8",
+        "twitter-handle": "",
+        "site-id": 1,
+        "order": 1
+      },
+      "relationships": {
+        "current-show": {
+          "data": {
+            "type": "show",
+            "id": "370"
+          }
+        },
+        "current-airing": {
+          "data": null
+        },
+        "current-episode": {
+          "data": null
+        }
+      }
+    }
+  ],
+  "included": [
+    {
+      "type": "show",
+      "id": "370",
+      "attributes": {
+        "slug": "freshair",
+        "title": "Fresh Air",
+        "url": "https://wnyc.demo2.wnyc.net/shows/freshair",
+        "linkroll": [
+          {
+            "href": null,
+            "nav-slug": "episodes",
+            "title": "Episodes"
+          },
+          {
+            "href": null,
+            "nav-slug": "about",
+            "title": "About"
+          }
+        ],
+        "about": {
+          "body": "<p>\"If you want to understand a political conflict, it helps to understand the culture in which that conflict is taking place,\" says host Terry Gross. Fresh Air is one of the most popular programs on public radio, breaking the \"talk show\" mold, and Gross is known for her fearless and insightful interviews with prominent figures in American arts, politics, and popular culture. \"When there is a crisis in a foreign country, we sometimes call up that country's leading novelist or filmmaker to get the cultural perspective.\" Fresh Air features daily reports and reviews from critics and commentators on music, books, movies, and other cultural phenomena that invade the national psyche.</p>",
+          "roles": {
+            "host": [
+              {
+                "url": "/people/terry-gross/",
+                "first-name": "Terry",
+                "last-name": "Gross"
+              }
+            ]
+          },
+          "social": [
+            {
+              "contact-string": "",
+              "service": "twitter"
+            },
+            {
+              "contact-string": "",
+              "service": "facebook"
+            },
+            {
+              "contact-string": "",
+              "service": "instagram"
+            }
+          ]
+        },
+        "description": "<p>\"If you want to understand a political conflict, it helps to understand the culture in which that conflict is taking place,\" says host Terry Gross. Fresh Air is one of the most popular programs on public radio, breaking the \"talk show\" mold, and Gross is known for her fearless and insightful interviews with prominent figures in American arts, politics, and popular culture. \"When there is a crisis in a foreign country, we sometimes call up that country's leading novelist or filmmaker to get the cultural perspective.\" Fresh Air features daily reports and reviews from critics and commentators on music, books, movies, and other cultural phenomena that invade the national psyche.</p>",
+        "social-links": [
+          {
+            "href": "https://twitter.com/nprfreshair",
+            "title": "twitter"
+          },
+          {
+            "href": "https://www.facebook.com/freshairwithterrygross",
+            "title": "facebook"
+          }
+        ],
+        "bg-color": "",
+        "featured": {
+          "analytics-code": "ExperimentalStory:testing-fresh-air-episode $A0$AD0$V0$Me$D1$HS1$HC0$B0$SS++$C$SFresh Air$T!weird!business!world_news!wnyc_app_local!firstperson_story!$APnone$",
+          "audio-eventually": true,
+          "cms-pk": 1019999,
+          "date-line": "Tuesday, October 20, 2020",
+          "site-id": 1,
+          "image-main": null,
+          "audio-show-options": true,
+          "large-tease-layout": true,
+          "slug": "testing-fresh-air-episode",
+          "audio-may-embed": true,
+          "date-line-datetime": "2020-10-20T12:00:00-04:00",
+          "audio-duration-readable": null,
+          "npr-analytics-dimensions": [
+            "NYPR",
+            "episode",
+            "1019999",
+            "0",
+            "business,wnyc_app_local,world_news",
+            "",
+            "business,first-person_story,weird,wnyc_app_local,world_news",
+            "1",
+            "WNYC",
+            "0",
+            "Fresh Air",
+            "2020-10-20 12:00:00-04:00",
+            "8",
+            "none"
+          ],
+          "title": "Testing a Fresh Air episode HEADLINE",
+          "url": "//wnyc.demo2.wnyc.net/story/testing-fresh-air-episode/",
+          "is-latest": true,
+          "tease": "Testing testing testing the freshest of air TEASE",
+          "id": 1019999,
+          "headers": {
+            "brand": {
+              "url": "https://wnyc.demo2.wnyc.net/shows/freshair",
+              "title": "Fresh Air",
+              "slug": "freshair",
+              "logo-image": {
+                "alt-text": "",
+                "name": "1/fresh_air_crD2Ny5.png",
+                "source": null,
+                "url": "https://media.demo.nypr.digital/i/1860/1860/l/80/1/fresh_air_crD2Ny5.png",
+                "h": 1860,
+                "is-display": true,
+                "crop": "l",
+                "caption": "",
+                "credits-url": "",
+                "template": "https://media.demo.nypr.digital/i/%s/%s/%s/%s/1/fresh_air_crD2Ny5.png",
+                "w": 1860,
+                "id": 155853,
+                "credits-name": "whyy "
+              }
+            },
+            "links": [
+              {
+                "url": "https://wnyc.demo2.wnyc.net/shows/freshair",
+                "title": "Fresh Air",
+                "item-type": "show",
+                "slug": "freshair"
+              }
+            ]
+          },
+          "audio-may-download": "",
+          "edit-link": "cms/episode/1019999",
+          "audio": [],
+          "audio-available": false
+        },
+        "sidebar-chunks": [
+          null,
+          null
+        ],
+        "donate-chunk": {
+          "content": "",
+          "slug": ""
+        },
+        "listing-object-type": "show",
+        "rss-feed": "http://www.npr.org/rss/podcast.php?id=13",
+        "edit-link": [
+          "cms/show/370"
+        ],
+        "podcast-links": null,
+        "itunes-podcast-id": null,
+        "studios-marquee-mobile-offset": null,
+        "cms-pk": 370,
+        "tease": "<p>The Peabody Award-winning program features Terry Gross&rsquo; fearless and insightful interviews with big names in pop culture, politics and the arts.</p>",
+        "schedule-summary": "Airs Monday through Thursday at 2pm on 93.9 FM; Airs Monday through Friday at 9pm on AM 820 and NJPR",
+        "contact-email": "test@wnyc.org"
+      },
+      "relationships": {
+        "image": {
+          "data": {
+            "type": "image",
+            "id": "155853"
+          }
+        },
+        "marquee-image": {
+          "data": null
+        },
+        "studios-marquee-image": {
+          "data": null
+        },
+        "fb-image": {
+          "data": null
+        },
+        "producing-organizations": {
+          "meta": {
+            "count": 2
+          },
+          "data": [
+            {
+              "type": "producing-organization",
+              "id": "6"
+            },
+            {
+              "type": "producing-organization",
+              "id": "58"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pages": 1,
+      "count": 1
+    }
+  }
+}

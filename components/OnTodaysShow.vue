@@ -1,24 +1,76 @@
 <template>
-  <div v-if="hosts || socialLinks" class="on-todays-show">
-    <v-spacer size="triple" />
-    <div class="on-todays-show-person-social-wrapper">
-      <ul v-if="hosts && $store.getters['onTodaysShow/hosts']" class="on-todays-show-person-list">
-        <li v-for="(host, index) in hosts" :key="index" class="on-todays-show-person-item">
-          <v-person
-            class="on-todays-show-person"
-            :name="host['first-name'] + ' ' + host['last-name']"
-            :name-link="'https://www.wnyc.org/'+host.url"
-          />
-        </li>
-      </ul>
-      <share-tools v-if="socialLinks && $store.getters['onTodaysShow/social']" class="on-todays-show-social" label="Connect with the show!" layout="vertical">
-        <share-tools-item
-          v-for="(link, index) in socialLinks"
-          :key="index"
-          :link="link.href"
-          :service="link.title"
+  <div class="on-todays-show">
+    <v-spacer v-if="$store.getters['whatsOnNow/onTodaysShowHeadline']" size="triple" />
+    <div v-if="$store.getters['whatsOnNow/onTodaysShowHeadline']" class="l-grid l-grid--2up l-grid--1up--large l-grid--large-gutters">
+      <h2 class="on-todays-show-title">
+        On Today's Show
+      </h2>
+    </div>
+    <div class="l-grid l-grid--2up l-grid--1up--large l-grid--large-gutters">
+      <div v-if="$store.getters['whatsOnNow/onTodaysShowHeadline']" class="on-todays-show-left l-grid--order-1-large">
+        <p class="on-todays-show-headline">
+          <a :href="$store.getters['whatsOnNow/onTodaysShowHeadlineLink']" target="_blank" rel="noopener" v-html="$store.getters['whatsOnNow/onTodaysShowHeadline']" />
+        </p>
+        <template v-if="$store.getters['whatsOnNow/onTodaysShowSegments']">
+          <v-spacer size="triple" />
+          <segment-list>
+            <segment-list-item
+              v-for="(segment, index) in $store.getters['whatsOnNow/onTodaysShowSegments'].slice(0, segmentsToShow)"
+              :key="index"
+              :title="segment.title"
+              :url="segment.url"
+              :new-window="segment.newWindow"
+            />
+            <v-button
+              v-if="segments.length > segmentsToShow"
+              label="show more"
+              class="u-space--top"
+              @click="segmentsToShow=segments.length"
+            />
+            <v-button
+              v-else
+              label="show less"
+              class="u-space--top"
+              @click="collapseSegments"
+            />
+          </segment-list>
+        </template>
+      </div>
+      <div v-if="$store.getters['whatsOnNow/onTodaysShowImage']" class="on-todays-show-right l-grid--order-2-large">
+        <image-with-caption
+          :alt-text="$store.getters['whatsOnNow/onTodaysShowImageAltText']"
+          :image="$store.getters['whatsOnNow/onTodaysShowImage']"
+          width="506"
+          height="327"
+          :caption="$store.getters['whatsOnNow/onTodaysShowImageCaption']"
+          :credit="$store.getters['whatsOnNow/onTodaysShowImageCredits']"
+          :credit-url="$store.getters['whatsOnNow/onTodaysShowImageCreditsUrl']"
         />
-      </share-tools>
+        <div class="dots" />
+      </div>
+    </div>
+    <div v-if="$store.getters['whatsOnNow/onTodaysShowHosts'] || $store.getters['whatsOnNow/onTodaysShowSocial']" class="on-todays-show">
+      <v-spacer size="triple" />
+      <div class="on-todays-show-person-social-wrapper">
+        <ul v-if="$store.getters['whatsOnNow/onTodaysShowHosts']" class="on-todays-show-person-list">
+          <li v-for="(host, index) in $store.getters['whatsOnNow/onTodaysShowHosts']" :key="index" class="on-todays-show-person-item">
+            <v-person
+              class="on-todays-show-person"
+              :name="host['first-name'] + ' ' + host['last-name']"
+              :name-link="'https://www.wnyc.org/'+host.url"
+              image="https://media.demo.nypr.digital/i/120/120/c/80/1/wnyc_2_1.png"
+            />
+          </li>
+        </ul>
+        <share-tools v-if="$store.getters['whatsOnNow/onTodaysShowSocial']" class="on-todays-show-social" label="Connect with the show!" layout="vertical">
+          <share-tools-item
+            v-for="(link, index) in $store.getters['whatsOnNow/onTodaysShowSocial']"
+            :key="index"
+            :username="link['contact-string']"
+            :service="link.service"
+          />
+        </share-tools>
+      </div>
     </div>
   </div>
 </template>
@@ -27,71 +79,21 @@
 import whatsOnNow from '@/mixins/whatsOnNow'
 
 export default {
-  name: 'OnTodaysShow',
+  name: 'whatsOnNow',
   components: {
+    ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
+    SegmentList: () => import('nypr-design-system-vue/src/components/SegmentList'),
+    SegmentListItem: () => import('nypr-design-system-vue/src/components/SegmentListItem'),
     ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
     ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
-    VPerson: () => import('nypr-design-system-vue/src/components/VPerson'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
+    VButton: () => import('nypr-design-system-vue/src/components/VButton'),
+    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
+    VPerson: () => import('nypr-design-system-vue/src/components/VPerson')
   },
   mixins: [whatsOnNow],
   data () {
     return {
-      segments: [
-        {
-          title: 'A Lawsuit Demanding Reparations, 100 Years After the Tulsa Race Massacre',
-          url: 'http://www.google.com',
-          newWindow: true
-        },
-        {
-          title: 'Item Number Two with no link!',
-          url: '',
-          newWindow: true
-        },
-        {
-          title: 'Item number 3',
-          url: 'http://www.google.com',
-          newWindow: true
-        },
-        {
-          title: 'Item number 4',
-          url: 'http://www.google.com',
-          newWindow: true
-        },
-        {
-          title: 'Item number 5',
-          url: 'http://www.google.com',
-          newWindow: true
-        },
-        {
-          title: 'Item number 6',
-          url: 'http://www.google.com',
-          newWindow: true
-        },
-        {
-          title: 'Item number 7',
-          url: 'http://www.google.com',
-          newWindow: true
-        },
-        {
-          title: 'Item number 8',
-          url: 'http://www.google.com',
-          newWindow: true
-        },
-        {
-          title: 'Item number 9',
-          url: 'http://www.google.com',
-          newWindow: true
-        },
-        {
-          title: 'Item number 10',
-          url: 'http://www.google.com',
-          newWindow: true
-        }
-      ],
-      socialLinks: this.$store.getters['onTodaysShow/social'],
-      segmentsToShow: 3,
-      hosts: this.$store.getters['onTodaysShow/hosts']
+      segmentsToShow: 3
     }
   },
   mounted () {
@@ -155,9 +157,7 @@ export default {
     max-width: 280px;
   }
   @include media(">860px") {
-    flex-basis: 560px;
     align-self: center;
-    max-width: 560px;
   }
 }
 
