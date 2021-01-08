@@ -22,4 +22,5 @@ RUN rm /etc/nginx/nginx.conf \
     && ln -sf /code/nginx/* /etc/nginx/
 
 RUN ./scripts/devenv.sh
+EXPOSE 3000
 ENTRYPOINT ["./scripts/entrypoint.sh"]
