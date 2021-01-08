@@ -16,7 +16,17 @@ export const state = () => ({
     time: null,
     title: '',
     titleLink: null,
-    upNextTitle: ''
+    upNextTitle: null,
+    onTodaysShowHeadline: null,
+    onTodaysShowHeadlineLink: null,
+    onTodaysShowHosts: null,
+    onTodaysShowImage: null,
+    onTodaysShowImageAltText: null,
+    onTodaysShowImageCaption: null,
+    onTodaysShowImageCredits: null,
+    onTodaysShowImageCreditsUrl: null,
+    onTodaysShowSegments: null,
+    onTodaysShowSocial: null
   },
   selectedStream: {
     index: 0,
@@ -33,7 +43,17 @@ export const state = () => ({
     time: null,
     title: '',
     titleLink: null,
-    upNextTitle: ''
+    upNextTitle: null,
+    onTodaysShowHeadline: null,
+    onTodaysShowHeadlineLink: null,
+    onTodaysShowHosts: null,
+    onTodaysShowImage: null,
+    onTodaysShowImageAltText: null,
+    onTodaysShowImageCaption: null,
+    onTodaysShowImageCredits: null,
+    onTodaysShowImageCreditsUrl: null,
+    onTodaysShowSegments: null,
+    onTodaysShowSocial: null
   },
   streams: [
     {
@@ -51,7 +71,17 @@ export const state = () => ({
       time: null,
       title: '',
       titleLink: null,
-      upNextTitle: ''
+      upNextTitle: null,
+      onTodaysShowHeadline: null,
+      onTodaysShowHeadlineLink: null,
+      onTodaysShowHosts: null,
+      onTodaysShowImage: null,
+      onTodaysShowImageAltText: null,
+      onTodaysShowImageCaption: null,
+      onTodaysShowImageCredits: null,
+      onTodaysShowImageCreditsUrl: null,
+      onTodaysShowSegments: null,
+      onTodaysShowSocial: null
     },
     {
       index: 1,
@@ -68,7 +98,17 @@ export const state = () => ({
       time: null,
       title: '',
       titleLink: null,
-      upNextTitle: ''
+      upNextTitle: null,
+      onTodaysShowHeadline: null,
+      onTodaysShowHeadlineLink: null,
+      onTodaysShowHosts: null,
+      onTodaysShowImage: null,
+      onTodaysShowImageAltText: null,
+      onTodaysShowImageCaption: null,
+      onTodaysShowImageCredits: null,
+      onTodaysShowImageCreditsUrl: null,
+      onTodaysShowSegments: null,
+      onTodaysShowSocial: null
     }
   ]
 })
@@ -156,6 +196,36 @@ export const getters = {
   },
   whatsOnNowFile (state) {
     return state.whatsOnNow.file
+  },
+  onTodaysShowHeadline (state) {
+    return state.whatsOnNow.onTodaysShowHeadline
+  },
+  onTodaysShowHeadlineLink (state) {
+    return state.whatsOnNow.onTodaysShowHeadlineLink
+  },
+  onTodaysShowHosts (state) {
+    return state.whatsOnNow.onTodaysShowHosts
+  },
+  onTodaysShowImage (state) {
+    return state.whatsOnNow.onTodaysShowImage
+  },
+  onTodaysShowImageAltText (state) {
+    return state.whatsOnNow.onTodaysShowImageAltText
+  },
+  onTodaysShowImageCaption (state) {
+    return state.whatsOnNow.onTodaysShowImageCaption
+  },
+  onTodaysShowImageCredits (state) {
+    return state.whatsOnNow.onTodaysShowImageCredits
+  },
+  onTodaysShowImageCreditsUrl (state) {
+    return state.whatsOnNow.onTodaysShowImageCreditsUrl
+  },
+  onTodaysShowSegments (state) {
+    return state.whatsOnNow.onTodaysShowSegments
+  },
+  onTodaysShowSocial (state) {
+    return state.whatsOnNow.onTodaysShowSocial
   }
 }
 
