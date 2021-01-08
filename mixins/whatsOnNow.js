@@ -4,7 +4,6 @@ export default {
   methods: {
     // format time from API
     formatTime (time) {
-      console.log(time)
       if (time !== null && time.length > 0) {
         const formattedDate = time.split('-')
         const startTime = new Date(formattedDate[0])
