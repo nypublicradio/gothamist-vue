@@ -49,20 +49,7 @@
         <div>
           <secondary-navigation
             orientation="horizontal"
-            :nav-items="[
-                {
-                  url: 'https://www.wnyc.org/schedule/',
-                  text: 'Schedule'
-                },
-                {
-                  url: 'https://www.wnyc.org/streams',
-                  text: 'All Streams'
-                },
-                {
-                  url: 'https://www.wnyc.org/shows',
-                  text: 'Shows'
-                }
-              ]"
+            :nav-items="$store.getters['global/headerNav']"
           />
         </div>
       </template>

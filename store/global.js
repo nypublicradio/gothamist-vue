@@ -3,51 +3,62 @@ export const state = () => ({
   headerNav: [
     {
       url: 'https://www.wnyc.org/schedule/',
-      text: 'Schedule'
+      text: 'Schedule',
+      newWindow: true
     },
     {
       url: 'https://www.wnyc.org/streams',
-      text: 'All Streams'
+      text: 'All Streams',
+      newWindow: true
     },
     {
       url: 'https://www.wnyc.org/shows',
-      text: 'Shows'
+      text: 'Shows',
+      newWindow: true
     }
   ],
   footerSecondaryNav: [
     {
       url: ['https://www.wnyc.org/resources/912769/fcc_eeo_public_file_report.pdf'],
-      text: 'EEO Report'
+      text: 'EEO Report',
+      newWindow: true
     },
     {
       url: ['https://publicfiles.fcc.gov/fm-profile/wnyc-fm'],
-      text: 'WNYC-FM FCC Public File'
+      text: 'WNYC-FM FCC Public File',
+      newWindow: true
     },
     {
       url: ['https://publicfiles.fcc.gov/am-profile/wnyc'],
-      text: 'WNYC-AM FCC Public File'
+      text: 'WNYC-AM FCC Public File',
+      newWindow: true
     },
     {
       url: ['https://www.wnyc.org/support'],
-      text: 'Support WNYC'
+      text: 'Support WNYC',
+      newWindow: true
     },
     {
       url: ['https://www.wnyc.org/contact'],
-      text: 'Contact Us'
+      text: 'Contact Us',
+      newWindow: true
     }
   ],
   footerTertiaryNav: [
     {
       url: ['https://www.wnyc.org/corrections/'],
-      text: 'Corrections'
+      text: 'Corrections',
+      newWindow: true
     },
     {
       url: ['https://www.wnyc.org/articles/wnyc-contest-rules'],
-      text: 'Giveaway Rules'
+      text: 'Giveaway Rules',
+      newWindow: true
     },
     {
       url: ['https://sponsorship.wnyc.org/'],
-      text: 'Sponsorship'
+      text: 'Sponsorship',
+      newWindow: true
     }
   ]
 })

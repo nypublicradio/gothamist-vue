@@ -54,22 +54,27 @@
       <div class="on-todays-show-person-social-wrapper">
         <ul v-if="$store.getters['whatsOnNow/onTodaysShowHosts']" class="on-todays-show-person-list">
           <li v-for="(host, index) in $store.getters['whatsOnNow/onTodaysShowHosts']" :key="index" class="on-todays-show-person-item">
-            <v-person
-              class="on-todays-show-person"
-              role="host"
-              :name="host['first-name'] + ' ' + host['last-name']"
-              :name-link="'https://www.wnyc.org'+host.url"
-              image="https://media.wnyc.org/i/100/100/l/80/2021/01/genericperson.png"
-            />
+            <a :href="'https://www.wnyc.org'+host.url" target="_blank" class="on-todays-show-person-link">
+              <v-person
+                class="on-todays-show-person"
+                role="host"
+                :name="host['first-name'] + ' ' + host['last-name']"
+                image="https://media.wnyc.org/i/100/100/l/80/2021/01/genericperson.png"
+              />
+            </a>
           </li>
         </ul>
         <share-tools v-if="$store.getters['whatsOnNow/onTodaysShowSocial']" class="on-todays-show-social" label="Connect with the show!" layout="vertical">
-          <share-tools-item
+          <template
             v-for="(link, index) in $store.getters['whatsOnNow/onTodaysShowSocial']"
-            :key="index"
-            :username="link['contact-string']"
-            :service="link.service"
-          />
+          >
+            <share-tools-item
+              v-if="link['contact-string'] && link.service"
+              :key="index"
+              :username="link['contact-string']"
+              :service="link.service"
+            />
+          </template>
         </share-tools>
       </div>
     </div>
@@ -199,6 +204,10 @@ export default {
     width: 280px;
     max-width: 280px;
   }
+}
+
+.on-todays-show-person-link {
+  border: none;
 }
 
 [data-person-count="1"] .on-todays-show-person-list {
