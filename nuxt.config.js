@@ -79,7 +79,7 @@ export default {
       {
         hid: 'twitter_description',
         name: 'twitter:description',
-        content: "WNYC | New York Public Radio, Podcasts, Live Streaming Radio, News"
+        content: 'WNYC | New York Public Radio, Podcasts, Live Streaming Radio, News'
       },
       {
         hid: 'twitter_url',
