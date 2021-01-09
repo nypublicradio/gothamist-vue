@@ -10,7 +10,7 @@
       <div v-if="headline" class="on-todays-show-left l-grid--order-1-large">
         <p class="on-todays-show-headline">
           <a v-if="headlineLink" :href="headlineLink" target="_blank" rel="noopener" v-html="headline" />
-          <span v-else v-html="headline" />
+          <span v-if="!headlineLink" v-html="headline" />
         </p>
         <template v-if="segments">
           <v-spacer size="triple" />

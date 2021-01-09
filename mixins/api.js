@@ -1,3 +1,5 @@
+import { mapState } from 'vuex'
+
 export default {
   data () {
     return {
@@ -24,14 +26,14 @@ export default {
         .then(response => (
           this.fmStreamFormatted = {
             index: 0,
-            active: this.$store.getters['whatsOnNow/streams'][0].active,
-            details: this.fmStream.included[1].attributes.tease,
+            active: this.streams[0].active,
+            details: this.fmStream.included[1].attributes ? this.fmStream.included[1].attributes.tease : null,
             detailsLink: this.fmStream.included[1].attributes ? this.fmStream.included[1].attributes.url : null,
             episodeTitle: null,
             episodeLink: null,
             file: this.fmStream.data[0].attributes.hls ? this.fmStream.data[0].attributes.hls : this.fmStream.data[0].aac,
             image: this.fmStream.included[1].attributes.name ? 'https://media.wnyc.org/i/240/240/l/80/' + this.fmStream.included[1].attributes.name : this.fmStream.data[0].attributes['image-logo'],
-            playing: this.$store.getters['whatsOnNow/streams'][0].playing,
+            playing: this.streams[0].playing,
             slug: this.fmStream.data[0].attributes.slug,
             station: this.fmStream.data[0].attributes.name,
             timeStart: this.fmStream.included[2].attributes['iso-start-time'],
@@ -112,14 +114,14 @@ export default {
         .then(response => (
           this.amStreamFormatted = {
             index: 1,
-            active: this.$store.getters['whatsOnNow/streams'][1].active,
-            details: this.amStream.included[1].attributes.tease,
+            active: this.streams[1].active,
+            details: this.fmStream.included[1].attributes ? this.amStream.included[1].attributes.tease : null,
             detailsLink: this.amStream.included[1].attributes ? this.amStream.included[1].attributes.url : null,
             episodeTitle: null,
             episodeLink: null,
             file: this.amStream.data[0].attributes.hls ? this.amStream.data[0].attributes.hls : this.amStream.data[0].aac,
             image: this.amStream.included[0].attributes.name ? 'https://media.wnyc.org/i/240/240/l/80/' + this.amStream.included[0].attributes.name : this.amStream.data[0].attributes['image-logo'],
-            playing: this.$store.getters['whatsOnNow/streams'][1].playing,
+            playing: this.streams[1].playing,
             slug: this.amStream.data[0].attributes.slug,
             station: this.amStream.data[0].attributes.name,
             timeStart: this.amStream.included[2].attributes['iso-start-time'],
@@ -190,6 +192,11 @@ export default {
       //     )
       //   ))
     }
+  },
+  computed: {
+    ...mapState('whatsOnNow', {
+      streams: state => state.streams
+    })
   },
   mounted () {
     this.pollApi()
