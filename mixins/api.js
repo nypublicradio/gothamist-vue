@@ -199,9 +199,10 @@ export default {
     })
   },
   mounted () {
-    this.$nextTick(() => {
-      this.pollApi()
-    })
+    this.pollApi()
+      .then(
+        res => this.pollApi()
+      )
     // poll the API every 6 seconds
     this.timer = setInterval(this.pollApi, 6000)
   },
