@@ -27,7 +27,7 @@
     </template>
     <template v-slot:rightComponent>
       <div>
-        <v-button label="Send Us Your Feedback" href="https://www.surveymonkey.com/r/LGP2Z96" target="_blank" />
+        <v-button label="Send Us Your Feedback" rel="noopener" href="https://www.surveymonkey.com/r/LGP2Z96" target="_blank" />
       </div>
     </template>
     <template v-slot:social>
