@@ -16,10 +16,21 @@ export default {
           playing: stream.playing,
           slug: stream.slug,
           station: stream.station,
-          time: stream.time,
+          timeStart: stream.timeStart,
+          timeEnd: stream.timeEnd,
           title: stream.title,
           titleLink: stream.titleLink,
-          upNextTitle: stream.upNextTitle
+          upNextTitle: stream.upNextTitle,
+          onTodaysShowHeadline: stream.onTodaysShowHeadline,
+          onTodaysShowHeadlineLink: stream.onTodaysShowHeadlineLink,
+          onTodaysShowHosts: stream.onTodaysShowHosts,
+          onTodaysShowImage: stream.onTodaysShowHeadline,
+          onTodaysShowImageAltText: stream.onTodaysShowImageAltText,
+          onTodaysShowImageCaption: stream.onTodaysShowImageCaption,
+          onTodaysShowImageCredits: stream.onTodaysShowImageCredits,
+          onTodaysShowImageCreditsUrl: stream.onTodaysShowImageCreditsUrl,
+          onTodaysShowSegments: stream.onTodaysShowSegments,
+          onTodaysShowSocial: stream.onTodaysShowSocial
         }
       )
     },
