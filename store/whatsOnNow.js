@@ -296,16 +296,18 @@ export const mutations = {
     state.whatsOnNow.playing = true
   },
   // set the initial state of everything
-  setInitialState (state, stream) {
+  setTheState (state, stream) {
     state.streams[stream.index] = stream
     if (!state.dataLoaded) {
+      // if this is first load, update what's on now
+      state.whatsOnNow = stream
+    }
+    if (stream.active) {
       // update selected stream
       state.selectedStream = stream
-      // update what's on now
-      state.whatsOnNow = stream
-      // tell the store the data has been loaded
-      state.dataLoaded = true
     }
+    // tell the store the data has been loaded
+    state.dataLoaded = true
   },
   // update the On Today's Show section of a stream
   updateOnTodaysShow (state, data) {

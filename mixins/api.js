@@ -61,7 +61,7 @@ export default {
         ))
         .then(response => (
           this.$store.commit(
-            'whatsOnNow/setInitialState',
+            'whatsOnNow/setTheState',
             this.fmStreamFormatted
           )
         ))
@@ -149,7 +149,7 @@ export default {
         ))
         .then(response => (
           this.$store.commit(
-            'whatsOnNow/setInitialState',
+            'whatsOnNow/setTheState',
             this.amStreamFormatted
           )
         ))
