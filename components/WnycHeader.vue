@@ -6,7 +6,7 @@
         :primary-nav="headerNav"
       >
         <template v-slot:logo>
-          <a href="https://www.WNYC.org" target="_blank">
+          <a href="https://www.WNYC.org" target="_blank" rel="noopener">
             <wnyc-logo />
           </a>
         </template>

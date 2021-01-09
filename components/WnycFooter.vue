@@ -6,9 +6,9 @@
     subheader1="About Us"
   >
     <template v-slot:logo>
-      <nuxt-link to="/" aria-label="wnyc home page">
+      <a href="https://www.WNYC.org" target="_blank" rel="noopener">
         <wnyc-logo />
-      </nuxt-link>
+      </a>
     </template>
     <template v-slot:leftComponent>
       <div class="o-text-with-icon jlgreen-box">

@@ -90,19 +90,19 @@ export default {
           )
         ))
       // fm stream segments
-      // await this.$axios.get('/?filter[slug]=wnyc-fm939&include=current-episode.segments')
-      //   .then(response => (
-      //     this.fmStreamSegments = response.data.included ? response.data.included : null
-      //   ))
-      //   .catch(function (error) {
-      //     console.log(error)
-      //   })
-      //   .then(response => (
-      //     this.$store.commit(
-      //       'whatsOnNow/updateOnTodaysShowSegmentsFm',
-      //       this.fmStreamSegments
-      //     )
-      //   ))
+      await this.$axios.get('/?filter[slug]=wnyc-fm939&include=current-episode.segments')
+        .then(response => (
+          this.fmStreamSegments = response.data.included ? response.data.included : null
+        ))
+        .catch(function (error) {
+          console.log(error)
+        })
+        .then(response => (
+          this.$store.commit(
+            'whatsOnNow/updateOnTodaysShowSegmentsFm',
+            this.fmStreamSegments
+          )
+        ))
       // am stream
       await this.$axios.get('/?filter[slug]=wnyc-am820&include=current-airing,current-show.show.image')
         .then(response => (
@@ -178,19 +178,19 @@ export default {
           )
         ))
       // am stream segments
-      // await this.$axios.get('/?filter[slug]=wnyc-am820&include=current-episode.segments')
-      //   .then(response => (
-      //     this.amStreamSegments = response.data.included ? response.data.included : null
-      //   ))
-      //   .catch(function (error) {
-      //     console.log(error)
-      //   })
-      //   .then(response => (
-      //     this.$store.commit(
-      //       'whatsOnNow/updateOnTodaysShowSegmentsAm',
-      //       this.amStreamSegments
-      //     )
-      //   ))
+      await this.$axios.get('/?filter[slug]=wnyc-am820&include=current-episode.segments')
+        .then(response => (
+          this.amStreamSegments = response.data.included ? response.data.included : null
+        ))
+        .catch(function (error) {
+          console.log(error)
+        })
+        .then(response => (
+          this.$store.commit(
+            'whatsOnNow/updateOnTodaysShowSegmentsAm',
+            this.amStreamSegments
+          )
+        ))
     }
   },
   computed: {
