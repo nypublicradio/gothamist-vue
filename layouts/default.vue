@@ -1,144 +1,36 @@
 <template>
   <div>
-    <the-header :donate-url="$store.getters['global/donateUrl']">
-      <template v-slot:menu>
-        <v-menu
-          class="not-fixed u-color-group-dark"
-          :primary-nav="$store.getters['global/headerNav']"
-        >
-          <template v-slot:logo>
-            <a href="https://www.WNYC.org" target="_blank">
-              <wnyc-logo />
-            </a>
-          </template>
-          <template v-slot:social>
-            <div>
-              <share-tools label="Connect">
-                <share-tools-item
-                  service="facebook"
-                  username="WNYC"
-                />
-                <share-tools-item
-                  service="twitter"
-                  username="WNYC"
-                />
-                <share-tools-item
-                  service="instagram"
-                  username="WNYC"
-                />
-                <share-tools-item
-                  service="youtube"
-                  username="UCbysmY4hyViQAAYEzOR-uCQ"
-                />
-              </share-tools>
-            </div>
-          </template>
-        </v-menu>
-      </template>
-      <template v-slot:logo>
-        <a
-          href="https://wnyc.org"
-          target="_blank"
-          rel="noopener"
-        >
-          <wnyc-logo title="WNYC" />
-          <span class="is-vishidden">(New tab)</span>
-        </a>
-      </template>
-      <template v-slot:navigation>
-        <div>
-          <secondary-navigation
-            orientation="horizontal"
-            :nav-items="$store.getters['global/headerNav']"
-          />
-        </div>
-      </template>
-    </the-header>
+    <wnyc-header />
     <main>
       <div class="dots header-dots" />
       <Nuxt />
     </main>
-    <lazy-hydrate ssr-only>
-      <the-footer
-        slogan="Listener-supported WNYC is the home for independent journalism and courageous conversation on air and online. Broadcasting live from New York City on 93.9 FM and AM 820 and available online and on the go."
-        :secondary-nav="$store.getters['global/footerSecondaryNav']"
-        :tertiary-nav="$store.getters['global/footerTertiaryNav']"
-        subheader1="About Us"
-      >
-        <template v-slot:logo>
-          <nuxt-link to="/" aria-label="wnyc home page">
-            <wnyc-logo />
-          </nuxt-link>
-        </template>
-        <template v-slot:leftComponent>
-          <div class="o-text-with-icon jlgreen-box">
-            <p class="jlgreen-message">
-              WNYC is supported by the JLGreene Foundation
-            </p>
-            <a
-              href="https://jlgreene.org"
-              target="_blank"
-              aria-label="JL greene.org"
-              rel="noopener"
-            >
-              <jlgreene-logo aria-hidden="true" />
-            </a>
-          </div>
-        </template>
-        <template v-slot:rightComponent>
-          <div>
-            <v-button label="Send Us Your Feedback" href="https://www.surveymonkey.com/r/LGP2Z96" target="_blank" />
-          </div>
-        </template>
-        <template v-slot:social>
-          <div>
-            <share-tools label="Connect">
-              <share-tools-item
-                service="facebook"
-                username="WNYC"
-              />
-              <share-tools-item
-                service="twitter"
-                username="WNYC"
-              />
-              <share-tools-item
-                service="instagram"
-                username="WNYC"
-              />
-              <share-tools-item
-                service="youtube"
-                username="UCbysmY4hyViQAAYEzOR-uCQ"
-              />
-            </share-tools>
-          </div>
-        </template>
-      </the-footer>
-    </lazy-hydrate>
+    <wnyc-footer />
     <v-spacer size="quad" />
     <transition name="fade">
       <div
-        v-if="$store.getters['whatsOnNow/dataLoaded']"
+        v-if="dataLoaded"
         role="complementary"
         aria-label="WNYC Audio Controls"
       >
         <persistent-player
           livestream
-          :auto-play="$store.getters['whatsOnNow/whatsOnNowPlaying']"
-          :is-playing="$store.getters['vue-hifi/getIsPlaying']"
-          :is-loading="$store.getters['vue-hifi/getIsLoading']"
-          :volume="$store.getters['vue-hifi/getVolume']"
-          :is-muted="$store.getters['vue-hifi/getIsMuted']"
-          :image="$store.getters['whatsOnNow/whatsOnNowImage']"
-          :station="$store.getters['whatsOnNow/whatsOnNowStation']"
-          :title="$store.getters['whatsOnNow/whatsOnNowTitle']"
-          :title-link="$store.getters['whatsOnNow/whatsOnNowTitleLink']"
-          :description="$store.getters['whatsOnNow/whatsOnNowEpisodeTitle']"
-          :description-link="$store.getters['whatsOnNow/whatsOnNowEpisodeLink']"
-          :file="$store.getters['whatsOnNow/whatsOnNowFile']"
-          :should-show-cta="!$store.getters['whatsOnNow/hasSomethingBeenPlayedYet']"
+          :auto-play="whatsOnNowPlaying"
+          :is-playing="vueHifiIsPlaying"
+          :is-loading="vueHifiIsLoading"
+          :volume="vueHifiVolume"
+          :is-muted="vueHifiIsMuted"
+          :image="whatsOnNowImage"
+          :station="whatsOnNowStation"
+          :title="whatsOnNowTitle"
+          :title-link="whatsOnNowTitleLink"
+          :description="whatsOnNowEpisodeTitle"
+          :description-link="whatsOnNowEpisodeLink"
+          :file="whatsOnNowFile"
+          :should-show-cta="!hasSomethingBeenPlayedYet"
           class="u-color-group-dark"
           aria-live="polite"
-          @togglePlay="playButtonClicked($store.getters['whatsOnNow/whatsOnNow'])"
+          @togglePlay="playButtonClicked(whatsOnNow)"
           @volume-toggle-mute="toggleMute"
           @volume-change="setVolume($event)"
         />
@@ -148,7 +40,7 @@
 </template>
 
 <script>
-import LazyHydrate from 'vue-lazy-hydration'
+import { mapState } from 'vuex'
 import whatsOnNow from '@/mixins/whatsOnNow'
 import api from '@/mixins/api'
 import vueHifi from '../node_modules/vue-hifi/src/mixins/vue-hifi'
@@ -157,19 +49,32 @@ import 'focus-visible'
 export default {
   name: 'Wnyc',
   components: {
-    LazyHydrate,
-    JlgreeneLogo: () => import('nypr-design-system-vue/src/components/icons/wnyc/JlgreeneLogo'),
     PersistentPlayer: () => import('nypr-design-system-vue/src/components/PersistentPlayer'),
-    SecondaryNavigation: () => import('nypr-design-system-vue/src/components/SecondaryNavigation'),
-    ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
-    ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
-    TheFooter: () => import('nypr-design-system-vue/src/components/TheFooter'),
-    TheHeader: () => import('nypr-design-system-vue/src/components/TheHeader'),
-    WnycLogo: () => import('nypr-design-system-vue/src/components/icons/wnyc/WnycLogo'),
-    VButton: () => import('nypr-design-system-vue/src/components/VButton'),
-    VMenu: () => import('nypr-design-system-vue/src/components/VMenu'),
+    WnycFooter: () => import('../components/WnycFooter'),
+    WnycHeader: () => import('../components/WnycHeader'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
-  mixins: [whatsOnNow, vueHifi, api]
+  mixins: [whatsOnNow, vueHifi, api],
+  computed: {
+    ...mapState('whatsOnNow', {
+      dataLoaded: state => state.dataLoaded,
+      hasSomethingBeenPlayedYet: state => state.hasSomethingBeenPlayedYet,
+      whatsOnNow: state => state.whatsOnNow,
+      whatsOnNowEpisodeTitle: state => state.whatsOnNow.episodeTitle,
+      whatsOnNowEpisodeLink: state => state.whatsOnNow.episodeLink,
+      whatsOnNowFile: state => state.whatsOnNow.file,
+      whatsOnNowImage: state => state.whatsOnNow.image,
+      whatsOnNowPlaying: state => state.whatsOnNow.playing,
+      whatsOnNowStation: state => state.whatsOnNow.station,
+      whatsOnNowTitle: state => state.whatsOnNow.title,
+      whatsOnNowTitleLink: state => state.whatsOnNow.titleLink
+    }),
+    ...mapState('vue-hifi', {
+      vueHifiVolume: state => state.volume,
+      vueHifiIsLoading: state => state.isLoading,
+      vueHifiIsMuted: state => state.isMuted,
+      vueHifiIsPlaying: state => state.isPlaying
+    })
+  }
 }
 </script>

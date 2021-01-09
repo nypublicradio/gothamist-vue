@@ -26,7 +26,7 @@
           :title-link="$store.getters['whatsOnNow/selectedStreamTitleLink']"
           :details="$store.getters['whatsOnNow/selectedStreamDetails']"
           :details-link="$store.getters['whatsOnNow/selectedStreamDetailsLink']"
-          :time="formatTime($store.getters['whatsOnNow/selectedStreamTime'])"
+          time="test"
         >
           <v-button
             v-if="$store.getters['whatsOnNow/dataLoaded']"

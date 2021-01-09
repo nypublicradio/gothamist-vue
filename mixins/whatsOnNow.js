@@ -1,16 +1,5 @@
-import moment from 'moment'
-
 export default {
   methods: {
-    // format time from API
-    formatTime (timeStart, timeEnd) {
-      if (timeStart !== undefined && timeStart !== null && timeEnd !== undefined && timeEnd !== null) {
-        const start = moment(timeStart)
-        const end = moment(timeEnd)
-        return start.utc().local().format('h:mm a') + ' - ' + end.utc().local().format('h:mm a')
-      }
-      return null
-    },
     // update what's on now in the vuex store
     setWhatsOnNow (stream) {
       this.$store.commit(

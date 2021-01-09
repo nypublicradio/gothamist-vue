@@ -298,7 +298,6 @@ export const mutations = {
   // set the initial state of everything
   setInitialState (state, stream) {
     state.streams[stream.index] = stream
-    console.log(stream)
     if (!state.dataLoaded) {
       // update selected stream
       state.selectedStream = stream

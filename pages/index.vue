@@ -8,7 +8,7 @@
         <v-spacer size="quad" />
         <stream-switcher class="u-color-group-dark">
           <stream-switcher-card
-            v-for="(stream, index) in $store.getters['whatsOnNow/streams']"
+            v-for="(stream, index) in streams"
             :key="index"
             :station="stream.station"
             :title="stream.title"
@@ -18,19 +18,19 @@
           />
         </stream-switcher>
         <main-player
-          :image="$store.getters['whatsOnNow/selectedStreamImage']"
-          :title="$store.getters['whatsOnNow/selectedStreamTitle']"
-          :title-link="$store.getters['whatsOnNow/selectedStreamTitleLink']"
-          :details="$store.getters['whatsOnNow/selectedStreamDetails']"
-          :details-link="$store.getters['whatsOnNow/selectedStreamDetailsLink']"
-          :time="formatTime(startTime, endTime)"
+          :image="mainPlayerImage"
+          :title="mainPlayerTitle"
+          :title-link="mainPlayerTitleLink"
+          :details="mainPlayerDetails"
+          :details-link="mainPlayerDetailsLink"
+          :time="mainPlayerTime"
         >
           <v-button
             v-if="$store.getters['whatsOnNow/dataLoaded']"
             label="Listen Live"
-            @click="playButtonClicked($store.getters['whatsOnNow/selectedStream'])"
+            @click="playButtonClicked(selectedStream)"
           >
-            <pause-icon v-if="$store.getters['vue-hifi/getIsPlaying'] && $store.getters['whatsOnNow/selectedStreamPlaying']" />
+            <pause-icon v-if="vueHifiIsPlaying && selectedStreamPlaying" />
             <play-simple v-else />
           </v-button>
         </main-player>
@@ -42,8 +42,11 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import whatsOnNow from '@/mixins/whatsOnNow'
 import vueHifi from 'vue-hifi/src/mixins/vue-hifi'
+import api from '~/mixins/api'
+import helpers from '~/mixins/helpers'
 
 export default {
   name: 'HomePage',
@@ -57,16 +60,29 @@ export default {
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
-  data () {
-    return {
-      startTime: null,
-      endTime: null
+  mixins: [whatsOnNow, vueHifi, api, helpers],
+  computed: {
+    ...mapState('whatsOnNow', {
+      streams: state => state.streams,
+      selectedStream: state => state.selectedStream,
+      selectedStreamPlaying: state => state.selectedStream.playing,
+      mainPlayerEndTime: state => state.selectedStream.timeEnd,
+      mainPlayerDetails: state => state.selectedStream.details,
+      mainPlayerDetailsLink: state => state.selectedStream.detailsLink,
+      mainPlayerImage: state => state.selectedStream.image,
+      mainPlayerStartTime: state => state.selectedStream.timeStart,
+      mainPlayerTitle: state => state.selectedStream.title,
+      mainPlayerTitleLink: state => state.selectedStream.titleLink
+    }),
+    ...mapState('vue-hifi', {
+      vueHifiIsPlaying: state => state.isPlaying
+    }),
+    mainPlayerTime () {
+      if (this.mainPlayerStartTime && this.mainPlayerEndTime) {
+        return this.formatTime(this.mainPlayerStartTime) + ' - ' + this.formatTime(this.mainPlayerEndTime)
+      }
+      return null
     }
-  },
-  mixins: [whatsOnNow, vueHifi],
-  mounted () {
-    this.startTime = this.$store.getters['whatsOnNow/selectedStreamTimeStart']
-    this.endTime = this.$store.getters['whatsOnNow/selectedStreamTimeEnd']
   }
 }
 </script>

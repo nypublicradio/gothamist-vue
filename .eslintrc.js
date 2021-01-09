@@ -14,5 +14,8 @@ module.exports = {
   plugins: [
   ],
   // add your custom rules here
-  rules: {}
+  rules: {
+    // we trust the content from our CMS so we can safely ignore these warnings
+    'vue/no-v-html': 0
+  }
 }

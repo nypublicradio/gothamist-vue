@@ -1,53 +1,54 @@
 <template>
   <div class="on-todays-show">
-    <v-spacer v-if="$store.getters['whatsOnNow/onTodaysShowHeadline']" size="triple" />
-    <div v-if="$store.getters['whatsOnNow/onTodaysShowHeadline']" class="l-grid l-grid--2up l-grid--1up--large l-grid--large-gutters">
+    <v-spacer v-if="headline" size="triple" />
+    <div v-if="headline" class="l-grid l-grid--2up l-grid--1up--large l-grid--large-gutters">
       <h2 class="on-todays-show-title">
         On Today's Show
       </h2>
     </div>
     <div class="l-grid l-grid--2up l-grid--1up--large l-grid--large-gutters">
-      <div v-if="$store.getters['whatsOnNow/onTodaysShowHeadline']" class="on-todays-show-left l-grid--order-1-large">
+      <div v-if="headline" class="on-todays-show-left l-grid--order-1-large">
         <p class="on-todays-show-headline">
-          <a :href="$store.getters['whatsOnNow/onTodaysShowHeadlineLink']" target="_blank" rel="noopener" v-html="$store.getters['whatsOnNow/onTodaysShowHeadline']" />
+          <a v-if="headlineLink" :href="headlineLink" target="_blank" rel="noopener" v-html="headline" />
+          <span v-else v-html="headline" />
         </p>
-        <template v-if="$store.getters['whatsOnNow/onTodaysShowSegments']">
+        <template v-if="segments">
           <v-spacer size="triple" />
           <segment-list>
             <segment-list-item
-              v-for="(segment, index) in $store.getters['whatsOnNow/onTodaysShowSegments'].slice(0, segmentsToShow)"
+              v-for="(segment, index) in segments.slice(0, segmentsToShow)"
               :key="index"
               :title="segment.title"
               :url="segment.url"
               :new-window="segment.newWindow"
             />
             <v-button
-              v-if="$store.getters['whatsOnNow/onTodaysShowSegments'].length > segmentsToShow"
+              v-if="segments.length > segmentsToShow"
               label="show more"
               class="u-space--top"
-              @click="segmentsToShow=$store.getters['whatsOnNow/onTodaysShowSegments'].length"
+              @click="segmentsToShow=segments.length"
             />
           </segment-list>
         </template>
       </div>
-      <div v-if="$store.getters['whatsOnNow/onTodaysShowImage']" class="on-todays-show-right l-grid--order-2-large">
+      <div v-if="image" class="on-todays-show-right l-grid--order-2-large">
         <image-with-caption
-          :alt-text="$store.getters['whatsOnNow/onTodaysShowImageAltText']"
-          :image="$store.getters['whatsOnNow/onTodaysShowImage']"
+          :alt-text="imageAltText"
+          :image="image"
           width="506"
           height="327"
-          :caption="$store.getters['whatsOnNow/onTodaysShowImageCaption']"
-          :credit="$store.getters['whatsOnNow/onTodaysShowImageCredits']"
-          :credit-url="$store.getters['whatsOnNow/onTodaysShowImageCreditsUrl']"
+          :caption="imageCaption"
+          :credit="imageCredits"
+          :credit-url="imageCreditsUrl"
         />
         <div class="dots" />
       </div>
     </div>
-    <div v-if="$store.getters['whatsOnNow/onTodaysShowHosts'] || $store.getters['whatsOnNow/onTodaysShowSocial']" class="on-todays-show">
+    <div v-if="hosts || social">
       <v-spacer size="triple" />
       <div class="on-todays-show-person-social-wrapper">
-        <ul v-if="$store.getters['whatsOnNow/onTodaysShowHosts']" class="on-todays-show-person-list">
-          <li v-for="(host, index) in $store.getters['whatsOnNow/onTodaysShowHosts']" :key="index" class="on-todays-show-person-item">
+        <ul v-if="hosts" class="on-todays-show-person-list">
+          <li v-for="(host, index) in hosts" :key="index" class="on-todays-show-person-item">
             <a :href="'https://www.wnyc.org'+host.url" target="_blank" class="on-todays-show-person-link">
               <v-person
                 class="on-todays-show-person"
@@ -58,20 +59,20 @@
             </a>
           </li>
         </ul>
-        <share-tools v-if="$store.getters['whatsOnNow/onTodaysShowSocial']" class="on-todays-show-social" label="Connect with the show!" layout="vertical">
+        <share-tools v-if="social.twitter || social.instagram || social.facebook" class="on-todays-show-social" label="Connect with the show!" layout="vertical">
           <share-tools-item
-            v-if="twitter"
-            :username="twitter"
+            v-if="social.twitter"
+            :username="social.twitter"
             service="twitter"
           />
           <share-tools-item
-            v-if="instagram"
-            :username="instagram"
+            v-if="social.instagram"
+            :username="social.instagram"
             service="instagram"
           />
           <share-tools-item
-            v-if="facebook"
-            :username="facebook"
+            v-if="social.facebook"
+            :username="social.facebook"
             service="facebook"
           />
         </share-tools>
@@ -81,10 +82,11 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import whatsOnNow from '@/mixins/whatsOnNow'
 
 export default {
-  name: 'whatsOnNow',
+  name: 'WhatsOnNow',
   components: {
     ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
     SegmentList: () => import('nypr-design-system-vue/src/components/SegmentList'),
@@ -98,20 +100,26 @@ export default {
   mixins: [whatsOnNow],
   data () {
     return {
-      segmentsToShow: 3,
-      twitter: null,
-      instagram: null,
-      facebook: null
+      segmentsToShow: 3
     }
+  },
+  computed: {
+    ...mapState('whatsOnNow', {
+      headline: state => state.selectedStream.onTodaysShowHeadline,
+      headlineLink: state => state.selectedStream.onTodaysShowHeadlineLink,
+      hosts: state => state.selectedStream.onTodaysShowHosts,
+      image: state => state.selectedStream.onTodaysShowImage,
+      imageAltText: state => state.selectedStream.onTodaysShowImageAltText,
+      imageCaption: state => state.selectedStream.onTodaysShowImageCaption,
+      imageCredits: state => state.selectedStream.onTodaysShowImageCredits,
+      imageCreditsUrl: state => state.selectedStream.onTodaysShowImageCreditsUrl,
+      segments: state => state.selectedStream.onTodaysShowSegments,
+      social: state => state.selectedStream.onTodaysShowSocial
+    })
   },
   mounted () {
     if (window.innerWidth > 850) {
       this.segmentsToShow = 6
-    }
-    if (this.$store.getters['whatsOnNow/onTodaysShowSocial']) {
-      this.twitter = this.$store.getters['whatsOnNow/onTodaysShowSocial'].twitter
-      this.instagram = this.$store.getters['whatsOnNow/onTodaysShowSocial'].instagram
-      this.facebook = this.$store.getters['whatsOnNow/onTodaysShowSocial'].facebook
     }
   },
   methods: {
@@ -153,7 +161,6 @@ export default {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   row-gap: 24px;
-  justify-items: center;
   padding-bottom: 48px;
   @include media(">medium") {
     padding: 0;
