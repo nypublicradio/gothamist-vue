@@ -23,7 +23,6 @@
           :title-link="mainPlayerTitleLink"
           :details="mainPlayerDetails"
           :details-link="mainPlayerDetailsLink"
-          :time="mainPlayerTime"
         >
           <v-button
             v-if="$store.getters['whatsOnNow/dataLoaded']"
@@ -76,13 +75,13 @@ export default {
     }),
     ...mapState('vue-hifi', {
       vueHifiIsPlaying: state => state.isPlaying
-    }),
-    mainPlayerTime () {
-      if (this.mainPlayerStartTime && this.mainPlayerEndTime) {
-        return this.formatTime(this.mainPlayerStartTime) + ' - ' + this.formatTime(this.mainPlayerEndTime)
-      }
-      return null
-    }
+    })
+    // mainPlayerTime () {
+    //   if (this.mainPlayerStartTime && this.mainPlayerEndTime) {
+    //     return this.formatTime(this.mainPlayerStartTime) + ' - ' + this.formatTime(this.mainPlayerEndTime)
+    //   }
+    //   return null
+    // }
   }
 }
 </script>
