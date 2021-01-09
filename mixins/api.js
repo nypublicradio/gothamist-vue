@@ -194,7 +194,7 @@ export default {
   mounted () {
     this.pollApi()
     // poll the API every 6 seconds
-    // this.timer = setInterval(this.pollApi, 6000)
+    this.timer = setInterval(this.pollApi, 6000)
   },
   beforeDestroy () {
     clearInterval(this.timer)
