@@ -27,7 +27,7 @@ export default {
           this.fmStreamFormatted = {
             index: 0,
             active: this.streams[0].active,
-            details: this.fmStream.included[1].attributes ? this.fmStream.included[1].attributes.tease : null,
+            details: this.fmStream.included[1].attributes.tease ? this.fmStream.included[1].attributes.tease : null,
             detailsLink: this.fmStream.included[1].attributes ? this.fmStream.included[1].attributes.url : null,
             episodeTitle: null,
             episodeLink: null,
@@ -115,7 +115,7 @@ export default {
           this.amStreamFormatted = {
             index: 1,
             active: this.streams[1].active,
-            details: this.fmStream.included[1].attributes ? this.amStream.included[1].attributes.tease : null,
+            details: this.amStream.included[1].attributes.tease ? this.amStream.included[1].attributes.tease : null,
             detailsLink: this.amStream.included[1].attributes ? this.amStream.included[1].attributes.url : null,
             episodeTitle: null,
             episodeLink: null,
