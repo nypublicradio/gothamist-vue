@@ -302,6 +302,10 @@ export const mutations = {
       // if this is first load, update what's on now
       state.whatsOnNow = stream
     }
+    if (stream.index === state.whatsOnNow.index) {
+      // if the stream matches what's on now, update what's on now
+      state.whatsOnNow = stream
+    }
     if (stream.active) {
       // update selected stream
       state.selectedStream = stream
