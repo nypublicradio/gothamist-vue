@@ -2,42 +2,44 @@
   <div>
     <div class="l-container">
       <div class="l-container--12col">
-        <lazy-hydrate ssr-only>
-          <h1 class="is-vishidden">
-            Livestream WNYC FM 93.9 and AM 820
-          </h1>
-        </lazy-hydrate>
+        <h1 class="is-vishidden">
+          Livestream WNYC FM 93.9 and AM 820
+        </h1>
         <v-spacer size="quad" />
         <stream-switcher class="u-color-group-dark">
           <stream-switcher-card
-            v-for="(stream, index) in $store.getters['whatsOnNow/streams']"
+            v-for="(stream, index) in streams"
             :key="index"
             :station="stream.station"
             :title="stream.title"
-            :up-next-title="stream.upNextTitle"
             :active="stream.active"
             :playing="stream.playing"
             @click="setSelectedStream(stream, stream.index)"
           />
         </stream-switcher>
         <main-player
-          :image="$store.getters['whatsOnNow/selectedStreamImage']"
-          :title="$store.getters['whatsOnNow/selectedStreamTitle']"
-          :title-link="$store.getters['whatsOnNow/selectedStreamTitleLink']"
-          :details="$store.getters['whatsOnNow/selectedStreamDetails']"
-          :details-link="$store.getters['whatsOnNow/selectedStreamDetailsLink']"
-          time="test"
+          :image="mainPlayerImage"
+          :title="mainPlayerTitle"
+          :title-link="mainPlayerTitleLink"
+          :details="mainPlayerDetails"
+          :details-link="mainPlayerDetailsLink"
         >
           <v-button
             v-if="$store.getters['whatsOnNow/dataLoaded']"
             label="Listen Live"
-            @click="playButtonClicked($store.getters['whatsOnNow/selectedStream'])"
+            @click="playButtonClicked(selectedStream)"
           >
-            <pause-icon v-if="$store.getters['vue-hifi/getIsPlaying'] && $store.getters['whatsOnNow/selectedStreamPlaying']" />
+            <pause-icon v-if="vueHifiIsPlaying && selectedStreamPlaying" />
             <play-simple v-else />
           </v-button>
         </main-player>
       </div>
+      <v-spacer size="quad" />
+      streams:
+      <v-spacer />
+      {{ streams[0] }}
+      <v-spacer />
+      {{ streams[1] }}
       <v-spacer size="quad" />
       <on-todays-show />
     </div>
@@ -45,16 +47,17 @@
 </template>
 
 <script>
-import LazyHydrate from 'vue-lazy-hydration'
+import { mapState } from 'vuex'
 import whatsOnNow from '@/mixins/whatsOnNow'
 import vueHifi from 'vue-hifi/src/mixins/vue-hifi'
+import api from '~/mixins/api'
+import helpers from '~/mixins/helpers'
 
 export default {
   name: 'HomePage',
   components: {
-    LazyHydrate,
     MainPlayer: () => import('nypr-design-system-vue/src/components/MainPlayer'),
-    OnTodaysShow: () => import('../components/OnTodaysShow2'),
+    OnTodaysShow: () => import('../components/OnTodaysShow'),
     PauseIcon: () => import('nypr-design-system-vue/src/components/icons/wqxr/PauseIcon'),
     PlaySimple: () => import('nypr-design-system-vue/src/components/icons/PlaySimple'),
     StreamSwitcher: () => import('nypr-design-system-vue/src/components/StreamSwitcher'),
@@ -62,6 +65,32 @@ export default {
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
-  mixins: [whatsOnNow, vueHifi]
+  mixins: [whatsOnNow, vueHifi, api, helpers],
+  computed: {
+    ...mapState('whatsOnNow', {
+      streams: state => state.streams,
+      selectedStream: state => state.selectedStream,
+      selectedStreamPlaying: state => state.selectedStream.playing,
+      mainPlayerEndTime: state => state.selectedStream.timeEnd,
+      mainPlayerDetails: state => state.selectedStream.details,
+      mainPlayerDetailsLink: state => state.selectedStream.detailsLink,
+      mainPlayerImage: state => state.selectedStream.image,
+      mainPlayerStartTime: state => state.selectedStream.timeStart,
+      mainPlayerTitle: state => state.selectedStream.title,
+      mainPlayerTitleLink: state => state.selectedStream.titleLink
+    }),
+    ...mapState('vue-hifi', {
+      vueHifiIsPlaying: state => state.isPlaying
+    })
+    // mainPlayerTime () {
+    //   if (this.mainPlayerStartTime && this.mainPlayerEndTime) {
+    //     return this.formatTime(this.mainPlayerStartTime) + ' - ' + this.formatTime(this.mainPlayerEndTime)
+    //   }
+    //   return null
+    // }
+  },
+  head: {
+    title: 'test page'
+  }
 }
 </script>
