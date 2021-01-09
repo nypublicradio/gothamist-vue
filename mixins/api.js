@@ -32,7 +32,7 @@ export default {
             episodeTitle: null,
             episodeLink: null,
             file: this.fmStream.data[0].attributes.hls ? this.fmStream.data[0].attributes.hls : this.fmStream.data[0].aac,
-            image: this.fmStream.included[1].attributes.name ? 'https://media.wnyc.org/i/240/240/l/80/' + this.fmStream.included[1].attributes.name : this.fmStream.data[0].attributes['image-logo'],
+            image: this.fmStream.included[0].attributes.name ? 'https://media.wnyc.org/i/240/240/l/80/' + this.fmStream.included[0].attributes.name : this.fmStream.data[0].attributes['image-logo'],
             playing: this.streams[0].playing,
             slug: this.fmStream.data[0].attributes.slug,
             station: this.fmStream.data[0].attributes.name,
