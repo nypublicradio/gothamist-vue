@@ -23,23 +23,19 @@
           :title-link="mainPlayerTitleLink"
           :details="mainPlayerDetails"
           :details-link="mainPlayerDetailsLink"
+          :time="mainPlayerTime"
         >
           <v-button
             v-if="$store.getters['whatsOnNow/dataLoaded']"
             label="Listen Live"
             @click="playButtonClicked(selectedStream)"
           >
-            <pause-icon v-if="vueHifiIsPlaying && selectedStreamPlaying" />
-            <play-simple v-else />
+            <pause-icon v-show="vueHifiIsPlaying && selectedStreamPlaying" />
+            <loading-icon v-show="vueHifiIsLoading" />
+            <play-simple v-show="!vueHifiIsPlaying && !selectedStreamPlaying" />
           </v-button>
         </main-player>
       </div>
-      <v-spacer size="quad" />
-      streams:
-      <v-spacer />
-      {{ streams[0] }}
-      <v-spacer />
-      {{ streams[1] }}
       <v-spacer size="quad" />
       <on-todays-show />
     </div>
@@ -56,8 +52,9 @@ import helpers from '~/mixins/helpers'
 export default {
   name: 'HomePage',
   components: {
+    LoadingIcon: () => import('nypr-design-system-vue/src/components/animations/LoadingIcon'),
     MainPlayer: () => import('nypr-design-system-vue/src/components/MainPlayer'),
-    OnTodaysShow: () => import('../components/OnTodaysShow'),
+    OnTodaysShow: () => import('../components/OnTodaysShowDummyData'),
     PauseIcon: () => import('nypr-design-system-vue/src/components/icons/wqxr/PauseIcon'),
     PlaySimple: () => import('nypr-design-system-vue/src/components/icons/PlaySimple'),
     StreamSwitcher: () => import('nypr-design-system-vue/src/components/StreamSwitcher'),
@@ -80,17 +77,15 @@ export default {
       mainPlayerTitleLink: state => state.selectedStream.titleLink
     }),
     ...mapState('vue-hifi', {
-      vueHifiIsPlaying: state => state.isPlaying
-    })
-    // mainPlayerTime () {
-    //   if (this.mainPlayerStartTime && this.mainPlayerEndTime) {
-    //     return this.formatTime(this.mainPlayerStartTime) + ' - ' + this.formatTime(this.mainPlayerEndTime)
-    //   }
-    //   return null
-    // }
-  },
-  head: {
-    title: 'test page'
+      vueHifiIsPlaying: state => state.isPlaying,
+      vueHifiIsLoading: state => state.isLoading
+    }),
+    mainPlayerTime () {
+      if (this.mainPlayerStartTime && this.mainPlayerEndTime) {
+        return this.formatTime(this.mainPlayerStartTime) + ' - ' + this.formatTime(this.mainPlayerEndTime)
+      }
+      return null
+    }
   }
 }
 </script>

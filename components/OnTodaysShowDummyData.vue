@@ -10,7 +10,7 @@
     <div class="l-grid l-grid--2up l-grid--1up--large l-grid--large-gutters">
       <div class="on-todays-show-left l-grid--order-1-large">
         <p class="on-todays-show-headline">
-          <a href="http://www.google.com" target="_blank" rel="noopener" v-html="$store.getters['whatsOnNow/onTodaysShowHeadline']" />
+          <a href="http://www.google.com" target="_blank" rel="noopener">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias commodi culpa cupiditate dolore eos eveniet.</a>
         </p>
         <v-spacer size="triple" />
         <client-only>
@@ -66,12 +66,10 @@
         </li>
       </ul>
       <share-tools class="on-todays-show-social" label="Connect with the show!" layout="vertical">
-        <share-tools-item
-          v-for="(link, index) in socialLinks"
-          :key="index"
-          :link="link.href"
-          :service="link.title"
-        />
+        <share-tools-item service="facebook" username="WNYC" />
+        <share-tools-item service="twitter" username="WNYC" />
+        <share-tools-item service="instagram" username="WNYC" />
+        <share-tools-item service="youtube" username="UCbysmY4hyViQAAYEzOR-uCQ" />
       </share-tools>
     </div>
   </div>
@@ -151,7 +149,6 @@ export default {
       ],
       socialLinks: this.$store.getters['whatsOnNow/onTodaysShowSocial'],
       segmentsToShow: 3,
-      hosts: this.$store.getters['whatsOnNow/onTodaysShowHosts'],
       people: [
         {
           image: 'https://placehold.it/120x120',
