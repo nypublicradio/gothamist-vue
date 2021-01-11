@@ -3,7 +3,7 @@
     <v-spacer v-if="headline" size="triple" />
     <div v-if="headline" class="l-grid l-grid--2up l-grid--1up--large l-grid--large-gutters">
       <h2 class="on-todays-show-title">
-        On Today's Show
+        Today on {{ title }}
       </h2>
     </div>
     <div class="l-grid l-grid--2up l-grid--1up--large l-grid--large-gutters">
@@ -114,7 +114,8 @@ export default {
       imageCredits: state => state.selectedStream.onTodaysShowImageCredits,
       imageCreditsUrl: state => state.selectedStream.onTodaysShowImageCreditsUrl,
       segments: state => state.selectedStream.onTodaysShowSegments,
-      social: state => state.selectedStream.onTodaysShowSocial
+      social: state => state.selectedStream.onTodaysShowSocial,
+      title: state => state.selectedStream.title
     })
   },
   mounted () {
