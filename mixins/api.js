@@ -79,8 +79,8 @@ export default {
             {
               index: 0,
               episodeTitle: this.fmStreamEpisodeData.included[0].attributes && this.fmStreamEpisodeData.included[0].attributes.title ? this.fmStreamEpisodeData.included[0].attributes.title : null,
-              episodeTitleLink: this.fmStreamEpisodeData.included[0].attributes && this.fmStreamEpisodeData.included[0].attributes.url ? this.fmStreamEpisodeData.included[0].attributes.url : null,
-              onTodaysShowHeadline: this.fmStreamEpisodeData.included[0].attributes ? this.fmStreamEpisodeData.included[0].attributes.tease : null,
+              episodeLink: this.fmStreamEpisodeData.included[0].attributes && this.fmStreamEpisodeData.included[0].attributes.url ? this.fmStreamEpisodeData.included[0].attributes.url : null,
+              onTodaysShowHeadline: this.fmStreamEpisodeData.included[0].attributes ? this.fmStreamEpisodeData.included[0].attributes.title : null,
               onTodaysShowHeadlineLink: this.fmStreamEpisodeData.included[0].attributes ? this.fmStreamEpisodeData.included[0].attributes.url : null,
               onTodaysShowImage: this.fmStreamEpisodeData.included[0].attributes && this.fmStreamEpisodeData.included[0].attributes['image-main'] ? this.fmStreamEpisodeData.included[0].attributes['image-main'].url : null,
               onTodaysShowImageAltText: this.fmStreamEpisodeData.included[0].attributes && this.fmStreamEpisodeData.included[0].attributes['image-main'] ? this.fmStreamEpisodeData.included[0].attributes['image-main']['alt-text'] : null,
@@ -169,8 +169,8 @@ export default {
             {
               index: 1,
               episodeTitle: this.amStreamEpisodeData.included[0].attributes && this.amStreamEpisodeData.included[0].attributes.title ? this.amStreamEpisodeData.included[0].attributes.title : null,
-              episodeTitleLink: this.amStreamEpisodeData.included[0].attributes && this.amStreamEpisodeData.included[0].attributes.url ? this.amStreamEpisodeData.included[0].attributes.url : null,
-              onTodaysShowHeadline: this.amStreamEpisodeData.included[0].attributes ? this.amStreamEpisodeData.included[0].attributes.tease : null,
+              episodeLink: this.amStreamEpisodeData.included[0].attributes && this.amStreamEpisodeData.included[0].attributes.url ? this.amStreamEpisodeData.included[0].attributes.url : null,
+              onTodaysShowHeadline: this.amStreamEpisodeData.included[0].attributes ? this.amStreamEpisodeData.included[0].attributes.title : null,
               onTodaysShowHeadlineLink: this.amStreamEpisodeData.included[0].attributes ? this.amStreamEpisodeData.included[0].attributes.url : null,
               onTodaysShowImage: this.amStreamEpisodeData.included[0].attributes['image-main'] ? this.amStreamEpisodeData.included[0].attributes['image-main'].url : null,
               onTodaysShowImageAltText: this.amStreamEpisodeData.included[0].attributes['image-main'] ? this.amStreamEpisodeData.included[0].attributes['image-main']['alt-text'] : null,

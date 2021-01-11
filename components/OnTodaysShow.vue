@@ -107,6 +107,7 @@ export default {
     ...mapState('whatsOnNow', {
       headline: state => state.selectedStream.onTodaysShowHeadline,
       headlineLink: state => state.selectedStream.onTodaysShowHeadlineLink,
+      episodeLink: state => state.selectedStream.episodeLink,
       hosts: state => state.selectedStream.onTodaysShowHosts,
       image: state => state.selectedStream.onTodaysShowImage,
       imageAltText: state => state.selectedStream.onTodaysShowImageAltText,
