@@ -137,14 +137,17 @@ export default {
 
   publicRuntimeConfig: {
     gtm: {
-      id: process.env.GTM_ID,
-      pageTracking: true,
-      pageViewEventName: 'Page View'
+      id: process.env.GTM_ID
     },
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {
       baseURL: process.env.WHATS_ON_API
     }
+  },
+
+  gtm: {
+    pageTracking: true,
+    pageViewEventName: 'Page View'
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
