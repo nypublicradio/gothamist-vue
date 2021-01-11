@@ -315,6 +315,8 @@ export const mutations = {
   },
   // update the On Today's Show section of a stream
   updateOnTodaysShow (state, data) {
+    state.streams[data.index].episodeTitle = data.episodeTitle
+    state.streams[data.index].episodeLink = data.episodeLink
     state.streams[data.index].onTodaysShowHeadline = data.onTodaysShowHeadline
     state.streams[data.index].onTodaysShowHeadlineLink = data.onTodaysShowHeadlineLink
     state.streams[data.index].onTodaysShowImage = data.onTodaysShowImage
