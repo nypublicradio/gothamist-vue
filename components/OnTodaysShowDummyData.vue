@@ -203,7 +203,15 @@ export default {
   opacity: var(--opacity-hover);
 }
 
+.on-todays-show .dots {
+  display: none;
+  @include media(">medium") {
+    display: block;
+  }
+}
+
 .on-todays-show-person-social-wrapper {
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   margin: 0 auto;

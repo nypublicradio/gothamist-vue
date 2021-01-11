@@ -148,6 +148,13 @@ export default {
   opacity: var(--opacity-hover);
 }
 
+.on-todays-show .dots {
+  display: none;
+  @include media(">medium") {
+    display: block;
+  }
+}
+
 .on-todays-show-person-social-wrapper {
   display: flex;
   flex-direction: column;
@@ -175,6 +182,7 @@ export default {
 }
 
 .on-todays-show-person-social-wrapper .on-todays-show-social {
+  overflow-x: hidden;
   border-left: 1px solid rgba(234, 239, 240, 0.5);
   padding-left: 24px;
   width: 200px;
