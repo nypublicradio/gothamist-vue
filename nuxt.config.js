@@ -1,7 +1,4 @@
 export default {
-  router: {
-    base: 'https://wnyc-3000-vue.demo.nypr.digital/'
-  },
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     htmlAttrs: {
