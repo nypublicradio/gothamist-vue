@@ -31,8 +31,8 @@
             @click="playButtonClicked(selectedStream)"
           >
             <pause-icon v-show="!vueHifiIsLoading && selectedStreamPlaying" />
-            <loading-icon v-show="vueHifiIsLoading" />
-            <play-simple v-show="!vueHifiIsLoading && !selectedStreamPlaying" />
+            <loading-icon v-show="vueHifiIsLoading && selectedStreamPlaying" />
+            <play-simple v-show="!selectedStreamPlaying" />
           </v-button>
         </main-player>
       </div>

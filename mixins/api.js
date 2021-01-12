@@ -1,200 +1,96 @@
 import { mapState } from 'vuex'
 
 export default {
-  data () {
-    return {
-      amStream: [],
-      amStreamFormatted: {},
-      amStreamEpisodeData: [],
-      amStreamSegments: [],
-      fmStream: [],
-      fmStreamFormatted: {},
-      fmStreamSegments: [],
-      fmStreamEpisodeData: []
-    }
-  },
   methods: {
     async pollApi () {
       // fm stream
-      await this.$axios.get('/?filter[slug]=wnyc-fm939&include=current-airing,current-show.show.image')
+      await this.$axios.get('/?filter[slug]=wnyc-fm939&include=current-airing.image,current-show.show.image,current-episode.segments')
         .then(response => (
-          this.fmStream = response.data
+          this.setTheState(response.data, 0)
         ))
         .catch(function (error) {
           console.log(error)
         })
-        .then(response => (
-          this.fmStreamFormatted = {
-            index: 0,
-            active: this.streams[0].active,
-            details: this.fmStream.included[1].attributes.tease ? this.fmStream.included[1].attributes.tease : null,
-            detailsLink: this.fmStream.included[1].attributes ? this.fmStream.included[1].attributes.url : null,
-            episodeTitle: this.streams[0].episodeTitle ? this.streams[0].episodeTitle : null,
-            episodeLink: this.streams[0].episodeLink ? this.streams[0].episodeLink : null,
-            file: this.fmStream.data[0].attributes.aac,
-            image: this.fmStream.included[0].attributes.name ? 'https://media.wnyc.org/i/480/480/l/80/' + this.fmStream.included[0].attributes.name : this.fmStream.data[0].attributes['image-logo'],
-            playing: this.streams[0].playing,
-            slug: this.fmStream.data[0].attributes.slug,
-            station: this.fmStream.data[0].attributes.name,
-            timeStart: this.fmStream.included[2].attributes['iso-start-time'],
-            timeEnd: this.fmStream.included[2].attributes['iso-end-time'],
-            title: this.fmStream.included[1].attributes.title ? this.fmStream.included[1].attributes.title : this.amStream.data[0].attributes.name,
-            titleLink: this.fmStream.included[1].attributes ? this.fmStream.included[1].attributes.url : null,
-            upNextTitle: this.streams[0].upNextTitle ? this.streams[0].upNextTitle : null,
-            onTodaysShowHeadline: this.streams[0].onTodaysShowHeadline ? this.streams[0].onTodaysShowHeadline : null,
-            onTodaysShowHeadlineLink: this.streams[0].onTodaysShowHeadlineLink ? this.streams[0].onTodaysShowHeadlineLink : null,
-            onTodaysShowHosts: this.fmStream.included[1].attributes.about ? this.fmStream.included[1].attributes.about.roles.host : null,
-            onTodaysShowImage: this.streams[0].onTodaysShowImage ? this.streams[0].onTodaysShowImage : null,
-            onTodaysShowImageAltText: this.streams[0].onTodaysShowImageAltText ? this.streams[0].onTodaysShowImageAltText : null,
-            onTodaysShowImageCaption: this.streams[0].onTodaysShowImageCaption ? this.streams[0].onTodaysShowImageCaption : null,
-            onTodaysShowImageCredits: this.streams[0].onTodaysShowImageCredits ? this.streams[0].onTodaysShowImageCredits : null,
-            onTodaysShowImageCreditsUrl: this.streams[0].onTodaysShowImageCreditsUrl ? this.streams[0].onTodaysShowImageCreditsUrl : null,
-            onTodaysShowSegments: this.streams[0].onTodaysShowSegments ? this.streams[0].onTodaysShowSegments : null,
-            onTodaysShowSocial: this.fmStream.included[1].attributes.about ? this.fmStream.included[1].attributes.about.social : null
-          }
-        ))
-        .then(response => (
-          this.$store.commit(
-            'whatsOnNow/setStream',
-            this.fmStreamFormatted
-          )
-        ))
-        .then(response => (
-          this.$store.commit(
-            'whatsOnNow/setTheState',
-            this.fmStreamFormatted
-          )
-        ))
-      // fm stream episode data
-      await this.$axios.get('/?filter[slug]=wnyc-fm939&include=current-show,current-airing,current-episode,current-episode.segments,current-show.show.image')
-        .then(response => (
-          this.fmStreamEpisodeData = response.data
-        ))
-        .catch(function (error) {
-          console.log(error)
-        })
-        .then(response => (
-          this.$store.commit(
-            'whatsOnNow/updateOnTodaysShow',
-            {
-              index: 0,
-              episodeTitle: this.fmStreamEpisodeData.included[0].attributes && this.fmStreamEpisodeData.included[0].attributes.title ? this.fmStreamEpisodeData.included[0].attributes.title : null,
-              episodeLink: this.fmStreamEpisodeData.included[0].attributes && this.fmStreamEpisodeData.included[0].attributes.url ? this.fmStreamEpisodeData.included[0].attributes.url : null,
-              onTodaysShowHeadline: this.fmStreamEpisodeData.included[0].attributes ? this.fmStreamEpisodeData.included[0].attributes.title : null,
-              onTodaysShowHeadlineLink: this.fmStreamEpisodeData.included[0].attributes ? this.fmStreamEpisodeData.included[0].attributes.url : null,
-              onTodaysShowImage: this.fmStreamEpisodeData.included[0].attributes && this.fmStreamEpisodeData.included[0].attributes['image-main'] ? this.fmStreamEpisodeData.included[0].attributes['image-main'].url : null,
-              onTodaysShowImageAltText: this.fmStreamEpisodeData.included[0].attributes && this.fmStreamEpisodeData.included[0].attributes['image-main'] ? this.fmStreamEpisodeData.included[0].attributes['image-main']['alt-text'] : null,
-              onTodaysShowImageCaption: this.fmStreamEpisodeData.included[0].attributes && this.fmStreamEpisodeData.included[0].attributes['image-main'] ? this.fmStreamEpisodeData.included[0].attributes['image-main'].caption : null,
-              onTodaysShowImageCredits: this.fmStreamEpisodeData.included[0].attributes && this.fmStreamEpisodeData.included[0].attributes['image-main'] ? this.fmStreamEpisodeData.included[0].attributes['image-main']['credits-name'] : null,
-              onTodaysShowImageCreditsUrl: this.fmStreamEpisodeData.included[0].attributes && this.fmStreamEpisodeData.included[0].attributes['image-main'] ? this.fmStreamEpisodeData.included[0].attributes['image-main']['credits-url'] : null,
-              onTodaysShowSegments: this.streams[0].onTodaysShowSegments ? this.streams[0].onTodaysShowSegments : null
-            }
-          )
-        ))
-      // fm stream segments
-      await this.$axios.get('/?filter[slug]=wnyc-fm939&include=current-episode.segments')
-        .then(response => (
-          this.fmStreamSegments = response.data.included ? response.data.included : null
-        ))
-        .catch(function (error) {
-          console.log(error)
-        })
-        .then(response => (
-          this.$store.commit(
-            'whatsOnNow/updateOnTodaysShowSegmentsFm',
-            this.fmStreamSegments
-          )
-        ))
       // am stream
-      await this.$axios.get('/?filter[slug]=wnyc-am820&include=current-airing,current-show.show.image')
+      await this.$axios.get('/?filter[slug]=wnyc-am820&include=current-airing.image,current-show.show.image,current-episode.segments')
         .then(response => (
-          this.amStream = response.data
+          this.setTheState(response.data, 1)
         ))
         .catch(function (error) {
           console.log(error)
         })
-        .then(response => (
-          this.amStreamFormatted = {
-            index: 1,
-            active: this.streams[1].active,
-            details: this.amStream.included[1].attributes.tease ? this.amStream.included[1].attributes.tease : null,
-            detailsLink: this.amStream.included[1].attributes ? this.amStream.included[1].attributes.url : null,
-            episodeTitle: this.streams[1].episodeTitle ? this.streams[1].episodeTitle : null,
-            episodeLink: this.streams[1].episodeLink ? this.streams[1].episodeLink : null,
-            file: this.amStream.data[0].attributes.aac,
-            image: this.amStream.included[0].attributes.name ? 'https://media.wnyc.org/i/480/480/l/80/' + this.amStream.included[0].attributes.name : this.amStream.data[0].attributes['image-logo'],
-            playing: this.streams[1].playing,
-            slug: this.amStream.data[0].attributes.slug,
-            station: this.amStream.data[0].attributes.name,
-            timeStart: this.amStream.included[2].attributes['iso-start-time'],
-            timeEnd: this.amStream.included[2].attributes['iso-end-time'],
-            title: this.amStream.included[1].attributes.title ? this.amStream.included[1].attributes.title : this.amStream.data[0].attributes.name,
-            titleLink: this.amStream.included[1].attributes ? this.amStream.included[1].attributes.url : null,
-            upNextTitle: this.streams[1].upNextTitle ? this.streams[1].upNextTitle : null,
-            onTodaysShowHeadline: this.streams[1].onTodaysShowHeadline ? this.streams[1].onTodaysShowHeadline : null,
-            onTodaysShowHeadlineLink: this.streams[1].onTodaysShowHeadlineLink ? this.streams[1].onTodaysShowHeadlineLink : null,
-            onTodaysShowHosts: this.amStream.included[1].attributes.about ? this.amStream.included[1].attributes.about.roles.host : null,
-            onTodaysShowImage: this.streams[1].onTodaysShowImage ? this.streams[1].onTodaysShowImage : null,
-            onTodaysShowImageAltText: this.streams[1].onTodaysShowImageAltText ? this.streams[1].onTodaysShowImageAltText : null,
-            onTodaysShowImageCaption: this.streams[1].onTodaysShowImageCaption ? this.streams[1].onTodaysShowImageCaption : null,
-            onTodaysShowImageCredits: this.streams[1].onTodaysShowImageCredits ? this.streams[1].onTodaysShowImageCredits : null,
-            onTodaysShowImageCreditsUrl: this.streams[1].onTodaysShowImageCreditsUrl ? this.streams[1].onTodaysShowImageCreditsUrl : null,
-            onTodaysShowSegments: this.streams[1].onTodaysShowSegments ? this.streams[1].onTodaysShowSegments : null,
-            onTodaysShowSocial: this.amStream.included[1].attributes.about ? this.amStream.included[1].attributes.about.social : null
-          }
-        ))
-        .then(response => (
-          this.$store.commit(
-            'whatsOnNow/setStream',
-            this.amStreamFormatted
-          )
-        ))
-        .then(response => (
-          this.$store.commit(
-            'whatsOnNow/setTheState',
-            this.amStreamFormatted
-          )
-        ))
-      // am stream episode data
-      await this.$axios.get('/?filter[slug]=wnyc-am820&&include=current-show,current-airing,current-episode,current-episode.segments,current-show.show.image')
-        .then(response => (
-          this.amStreamEpisodeData = response.data
-        ))
-        .catch(function (error) {
-          console.log(error)
-        })
-        .then(response => (
-          this.$store.commit(
-            'whatsOnNow/updateOnTodaysShow',
+    },
+    setTheState (apiResponse, index) {
+      const showData = apiResponse.included.find((obj) => {
+        return obj.type === 'show'
+      })
+      const scheduleData = apiResponse.included.find((obj) => {
+        return obj.type === 'show-schedule'
+      })
+      const imageData = apiResponse.included.find((obj) => {
+        return obj.type === 'image'
+      })
+      const episodeData = apiResponse.included.find((obj) => {
+        return obj.type === 'episode'
+      })
+      const airingData = apiResponse.included.find((obj) => {
+        return obj.type === 'airing'
+      })
+      const segmentData = apiResponse.included.filter(item => item.type === 'segment')
+      const formattedSegments = []
+      if (segmentData !== null) {
+        segmentData.forEach(function (value) {
+          formattedSegments.push(
             {
-              index: 1,
-              episodeTitle: this.amStreamEpisodeData.included[0].attributes && this.amStreamEpisodeData.included[0].attributes.title ? this.amStreamEpisodeData.included[0].attributes.title : null,
-              episodeLink: this.amStreamEpisodeData.included[0].attributes && this.amStreamEpisodeData.included[0].attributes.url ? this.amStreamEpisodeData.included[0].attributes.url : null,
-              onTodaysShowHeadline: this.amStreamEpisodeData.included[0].attributes ? this.amStreamEpisodeData.included[0].attributes.title : null,
-              onTodaysShowHeadlineLink: this.amStreamEpisodeData.included[0].attributes ? this.amStreamEpisodeData.included[0].attributes.url : null,
-              onTodaysShowImage: this.amStreamEpisodeData.included[0].attributes['image-main'] ? this.amStreamEpisodeData.included[0].attributes['image-main'].url : null,
-              onTodaysShowImageAltText: this.amStreamEpisodeData.included[0].attributes['image-main'] ? this.amStreamEpisodeData.included[0].attributes['image-main']['alt-text'] : null,
-              onTodaysShowImageCaption: this.amStreamEpisodeData.included[0].attributes['image-main'] ? this.amStreamEpisodeData.included[0].attributes['image-main'].caption : null,
-              onTodaysShowImageCredits: this.amStreamEpisodeData.included[0].attributes['image-main'] ? this.amStreamEpisodeData.included[0].attributes['image-main']['credits-name'] : null,
-              onTodaysShowImageCreditsUrl: this.amStreamEpisodeData.included[0].attributes['image-main'] ? this.amStreamEpisodeData.included[0].attributes['image-main']['credits-url'] : null,
-              onTodaysShowSegments: this.streams[1].onTodaysShowSegments ? this.streams[1].onTodaysShowSegments : null
+              title: value.attributes.title,
+              url: 'https://www.wnyc.org/story/' + value.attributes.slug,
+              newWindow: true
             }
           )
-        ))
-      // am stream segments
-      await this.$axios.get('/?filter[slug]=wnyc-am820&include=current-episode.segments')
-        .then(response => (
-          this.amStreamSegments = response.data.included ? response.data.included : null
-        ))
-        .catch(function (error) {
-          console.log(error)
         })
-        .then(response => (
-          this.$store.commit(
-            'whatsOnNow/updateOnTodaysShowSegmentsAm',
-            this.amStreamSegments
-          )
-        ))
+      }
+      let title = showData ? showData.attributes.title : null
+      let details = showData ? showData.attributes.tease : null
+      // handle special airings
+      if (airingData) {
+        title = airingData.attributes.title
+        details = airingData.attributes.description
+      }
+      const formattedData = {
+        index,
+        active: this.streams[index].active,
+        details,
+        detailsLink: showData ? showData.attributes.url : null,
+        episodeTitle: episodeData ? episodeData.attributes.title : null,
+        episodeLink: episodeData ? episodeData.attributes.url : null,
+        file: apiResponse.data[0].attributes['mobile-aac'],
+        image: imageData ? 'https://media.wnyc.org/i/480/480/l/80/' + imageData.attributes.name : apiResponse.data[0].attributes['image-logo'],
+        playing: this.streams[index].playing,
+        slug: apiResponse.data[0].attributes.slug,
+        station: apiResponse.data[0].attributes.name,
+        timeStart: scheduleData ? scheduleData.attributes['iso-start-time'] : null,
+        timeEnd: scheduleData ? scheduleData.attributes['iso-end-time'] : null,
+        title,
+        titleLink: showData ? showData.attributes.url : null,
+        onTodaysShowHeadline: episodeData ? episodeData.attributes.title : null,
+        onTodaysShowHeadlineLink: episodeData ? episodeData.attributes.url : null,
+        onTodaysShowHosts: showData ? showData.attributes.about.roles.host : null,
+        onTodaysShowImage: episodeData ? episodeData.attributes['image-main'].url : null,
+        onTodaysShowImageAltText: episodeData ? episodeData.attributes['image-main']['alt-text'] : null,
+        onTodaysShowImageCaption: episodeData ? episodeData.attributes['image-main'].caption : null,
+        onTodaysShowImageCredits: episodeData ? episodeData.attributes['image-main']['credits-name'] : null,
+        onTodaysShowImageCreditsUrl: episodeData ? episodeData.attributes['image-main']['credits-url'] : null,
+        onTodaysShowSegments: formattedSegments || null,
+        onTodaysShowSocial: showData ? showData.attributes.about.social : null
+      }
+      this.$store.commit(
+        'whatsOnNow/setStream',
+        formattedData
+      )
+      this.$store.commit(
+        'whatsOnNow/setTheState',
+        formattedData
+      )
     }
   },
   computed: {
@@ -207,8 +103,8 @@ export default {
       .then(
         res => this.pollApi()
       )
-    // poll the API every 6 seconds
-    this.timer = setInterval(this.pollApi, 6000)
+    // poll the API every 8 seconds
+    this.timer = setInterval(this.pollApi, 8000)
   },
   beforeDestroy () {
     clearInterval(this.timer)

@@ -240,9 +240,11 @@ export const getters = {
 // A mutation is a reactive event - our app will know when something changes!
 
 export const mutations = {
+  // check if the API data has been loaded
   dataLoaded (state) {
     state.dataLoaded = true
   },
+  // check if something has been played yet
   somethingHasBeenPlayed (state) {
     state.hasSomethingBeenPlayedYet = true
   },
@@ -312,52 +314,5 @@ export const mutations = {
     }
     // tell the store the data has been loaded
     state.dataLoaded = true
-  },
-  // update the On Today's Show section of a stream
-  updateOnTodaysShow (state, data) {
-    state.streams[data.index].episodeTitle = data.episodeTitle
-    state.streams[data.index].episodeLink = data.episodeLink
-    state.streams[data.index].onTodaysShowHeadline = data.onTodaysShowHeadline
-    state.streams[data.index].onTodaysShowHeadlineLink = data.onTodaysShowHeadlineLink
-    state.streams[data.index].onTodaysShowImage = data.onTodaysShowImage
-    state.streams[data.index].onTodaysShowImageAltText = data.onTodaysShowImageAltText
-    state.streams[data.index].onTodaysShowImageCaption = data.onTodaysShowImageCaption
-    state.streams[data.index].onTodaysShowImageCredits = data.onTodaysShowImageCredits
-    state.streams[data.index].onTodaysShowImageCreditsUrl = data.onTodaysShowImageCreditsUrl
-  },
-  // update the On Today's Show segments
-  updateOnTodaysShowSegmentsFm (state, data) {
-    if (data !== null) {
-      const formattedSegments = []
-      // need to get rid of first item in array
-      const slicedData = data.slice(1)
-      slicedData.forEach(function (value) {
-        formattedSegments.push(
-          {
-            title: value.attributes.title,
-            url: 'https://www.wnyc.org/story/' + value.attributes.slug,
-            newWindow: true
-          }
-        )
-        state.streams[0].onTodaysShowSegments = formattedSegments
-      })
-    }
-  },
-  // update the On Today's Show segments
-  updateOnTodaysShowSegmentsAm (state, data) {
-    if (data !== null) {
-      const formattedSegments = []
-      const slicedData = data.slice(1)
-      slicedData.forEach(function (value) {
-        formattedSegments.push(
-          {
-            title: value.attributes.title,
-            url: 'https://www.wnyc.org/story/' + value.attributes.slug,
-            newWindow: true
-          }
-        )
-        state.streams[1].onTodaysShowSegments = formattedSegments
-      })
-    }
   }
 }

@@ -1,0 +1,73 @@
+{
+  "links": {
+    "first": "http://api.demo.nypr.digital/api/v4/whats_on/?filter%5Bslug%5D=wnyc-fm939&include=current-airing.image%2Ccurrent-show.show.image%2Ccurrent-episode.segments&page=1",
+    "last": "http://api.demo.nypr.digital/api/v4/whats_on/?filter%5Bslug%5D=wnyc-fm939&include=current-airing.image%2Ccurrent-show.show.image%2Ccurrent-episode.segments&page=1",
+    "next": null,
+    "prev": null
+  },
+  "data": [
+    {
+      "type": "whats-on-now",
+      "id": "1",
+      "attributes": {
+        "name": "WNYC 93.9 FM",
+        "slug": "wnyc-fm939",
+        "short-description": "News, Culture & Talk",
+        "has-playlists": false,
+        "image-logo": "https://media.demo.nypr.digital/i/500/500/c/80/1/wnyc_2_1.png",
+        "schedule-url": "http://wnyc.demo2.wnyc.net/schedule/?scheduleStation=wnyc-fm939",
+        "playlist-url": "http://wnyc.demo2.wnyc.net/playlist-daily/?scheduleStation=wnyc-fm939",
+        "whats-on": null,
+        "audio-bumper": "/streambumper/streambumper000001_wnycfm.mp3",
+        "aac": "http://fm939.wnyc.org/wnycfm.aac",
+        "mp3": "http://fm939.wnyc.org/wnycfm",
+        "mobile-aac": "https://fm939.wnyc.org/wnycfm-mobile.aac",
+        "mobile-mp3": "https://fm939.wnyc.org/wnycfm-web",
+        "hls": "https://hls-live.wnyc.org/wnycfm/playlist.m3u8",
+        "twitter-handle": "",
+        "site-id": 1,
+        "order": 1
+      },
+      "relationships": {
+        "current-show": {
+          "data": null
+        },
+        "current-airing": {
+          "data": {
+            "type": "airing",
+            "id": "8841"
+          }
+        },
+        "current-episode": {
+          "data": null
+        }
+      }
+    }
+  ],
+  "included": [
+    {
+      "type": "airing",
+      "id": "8841",
+      "attributes": {
+        "start": "2021-01-12T10:56:00",
+        "duration": 360,
+        "title": "Test Airing WNYC-FM 1/12/2021",
+        "description": "<p>(Description)&nbsp;Test Airing WNYC-FM 1/12/2021</p>",
+        "href": "",
+        "blackout-message": ""
+      },
+      "relationships": {
+        "image": {
+          "data": null
+        }
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pages": 1,
+      "count": 1
+    }
+  }
+}
