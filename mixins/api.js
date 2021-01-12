@@ -80,7 +80,7 @@ export default {
         onTodaysShowImageCaption: episodeData ? episodeData.attributes['image-main'].caption : null,
         onTodaysShowImageCredits: episodeData ? episodeData.attributes['image-main']['credits-name'] : null,
         onTodaysShowImageCreditsUrl: episodeData ? episodeData.attributes['image-main']['credits-url'] : null,
-        onTodaysShowSegments: formattedSegments || null,
+        onTodaysShowSegments: segmentData.length > 0 ? formattedSegments : null,
         onTodaysShowSocial: showData ? showData.attributes.about.social : null
       }
       this.$store.commit(
