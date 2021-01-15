@@ -21,12 +21,13 @@
               :title="segment.title"
               :url="segment.url"
               :new-window="segment.newWindow"
+              @componentEvent="gaEvent('Non-Player','Segment List', ...arguments)"
             />
             <v-button
               v-if="segments.length > segmentsToShow"
               label="show more"
               class="u-space--top"
-              @click="segmentsToShow=segments.length"
+              @click="showMoreSegments"
             />
             <v-button
               v-else
@@ -47,6 +48,7 @@
             caption="This is the caption lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elitlorem ipsum dolor sit amet, consectetur adipiscing elit"
             credit="( AP Photo/Carolyn Kaster )"
             credit-url="http:///www.google.com"
+            @componentEvent="gaEvent('Non-Player','Photo Caption', ...arguments)"
           />
         </lazy-hydrate>
         <div class="dots" />
@@ -66,10 +68,26 @@
         </li>
       </ul>
       <share-tools class="on-todays-show-social" label="Connect with the show!" layout="vertical">
-        <share-tools-item service="facebook" username="WNYC" />
-        <share-tools-item service="twitter" username="WNYC" />
-        <share-tools-item service="instagram" username="WNYC" />
-        <share-tools-item service="youtube" username="UCbysmY4hyViQAAYEzOR-uCQ" />
+        <share-tools-item
+          service="facebook"
+          username="WNYC"
+          @componentEvent="gaEvent('Non-Player','Social Follow', ...arguments)"
+        />
+        <share-tools-item
+          service="twitter"
+          username="WNYC"
+          @componentEvent="gaEvent('Non-Player','Social Follow', ...arguments)"
+        />
+        <share-tools-item
+          service="instagram"
+          username="WNYC"
+          @componentEvent="gaEvent('Non-Player','Social Follow', ...arguments)"
+        />
+        <share-tools-item
+          service="youtube"
+          username="UCbysmY4hyViQAAYEzOR-uCQ"
+          @componentEvent="gaEvent('Non-Player','Social Follow', ...arguments)"
+        />
       </share-tools>
     </div>
   </div>
@@ -78,6 +96,7 @@
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
 import whatsOnNow from '@/mixins/whatsOnNow'
+import helpers from '@/mixins/helpers'
 
 export default {
   name: 'OnTodaysShow',
@@ -92,7 +111,7 @@ export default {
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
     VPerson: () => import('nypr-design-system-vue/src/components/VPerson')
   },
-  mixins: [whatsOnNow],
+  mixins: [whatsOnNow, helpers],
   data () {
     return {
       segments: [
@@ -183,9 +202,11 @@ export default {
       } else {
         this.segmentsToShow = 3
       }
+      this.gaEvent('Non-Player', 'Segment List', 'Show Less')
     },
-    formatSocialLinks () {
-
+    showMoreSegments () {
+      this.segmentsToShow = this.segments.length
+      this.gaEvent('Non-Player', 'Segment List', 'Show More')
     }
   }
 }

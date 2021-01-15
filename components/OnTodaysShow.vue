@@ -9,7 +9,14 @@
     <div class="l-grid l-grid--2up l-grid--1up--large l-grid--large-gutters">
       <div v-if="headline" class="on-todays-show-left l-grid--order-1-large">
         <p class="on-todays-show-headline">
-          <a v-if="headlineLink" :href="headlineLink" target="_blank" rel="noopener" v-html="headline" />
+          <a
+            v-if="headlineLink"
+            :href="headlineLink"
+            target="_blank"
+            rel="noopener"
+            @click="gaEvent('Non-Player','On Todays Show', headlineLink)"
+            v-html="headline"
+          />
           <span v-if="!headlineLink" v-html="headline" />
         </p>
         <template v-if="segments">
@@ -21,12 +28,13 @@
               :title="segment.title"
               :url="segment.url"
               :new-window="segment.newWindow"
+              @componentEvent="gaEvent('Non-Player','Segment List', ...arguments)"
             />
             <v-button
               v-if="segments.length > segmentsToShow"
               label="show more"
               class="u-space--top"
-              @click="segmentsToShow=segments.length"
+              @click="showMoreSegments"
             />
           </segment-list>
         </template>
@@ -40,6 +48,7 @@
           :caption="imageCaption"
           :credit="imageCredits"
           :credit-url="imageCreditsUrl"
+          @componentEvent="gaEvent('Non-Player','Photo Caption', ...arguments)"
         />
         <div class="dots" />
       </div>
@@ -49,7 +58,7 @@
       <div class="on-todays-show-person-social-wrapper">
         <ul v-if="hosts" class="on-todays-show-person-list">
           <li v-for="(host, index) in hosts" :key="index" class="on-todays-show-person-item">
-            <a :href="'https://www.wnyc.org'+host.url" target="_blank" rel="noopener" class="on-todays-show-person-link">
+            <a :href="'https://www.wnyc.org'+host.url" @click="gaEvent('Non-Player','Host', host['first-name'] + ' ' + host['last-name'])" target="_blank" rel="noopener" class="on-todays-show-person-link">
               <v-person
                 class="on-todays-show-person"
                 role="host"
@@ -64,16 +73,19 @@
             v-if="social.twitter"
             :username="social.twitter"
             service="twitter"
+            @componentEvent="gaEvent('Non-Player','Social Follow', ...arguments)"
           />
           <share-tools-item
             v-if="social.instagram"
             :username="social.instagram"
             service="instagram"
+            @componentEvent="gaEvent('Non-Player','Social Follow', ...arguments)"
           />
           <share-tools-item
             v-if="social.facebook"
             :username="social.facebook"
             service="facebook"
+            @componentEvent="gaEvent('Non-Player','Social Follow', ...arguments)"
           />
         </share-tools>
       </div>
@@ -83,6 +95,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import helpers from '@/mixins/helpers'
 import whatsOnNow from '@/mixins/whatsOnNow'
 
 export default {
@@ -97,7 +110,7 @@ export default {
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
     VPerson: () => import('nypr-design-system-vue/src/components/VPerson')
   },
-  mixins: [whatsOnNow],
+  mixins: [whatsOnNow, helpers],
   data () {
     return {
       segmentsToShow: 3
@@ -131,6 +144,10 @@ export default {
       } else {
         this.segmentsToShow = 3
       }
+    },
+    showMoreSegments () {
+      this.segmentsToShow = this.segments.length
+      this.gaEvent('Non-Player', 'Segment List', 'Show More')
     }
   }
 }

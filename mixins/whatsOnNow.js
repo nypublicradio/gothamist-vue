@@ -51,6 +51,11 @@ export default {
           'whatsOnNow/setWhatsOnNow', stream
         )
       }
+      this.gaEvent(
+        'Non-Player',
+        'Stream Switcher',
+        'User switched to the ' + stream.station + ' stream'
+      )
     },
     toggleAudioPlayback (stream) {
       this.$store.commit(
@@ -101,7 +106,16 @@ export default {
         )
       }
     },
-    playButtonClicked (stream) {
+    playButtonClicked (stream, component) {
+      let action = 'play'
+      if (stream.playing) {
+        action = 'pause'
+      }
+      this.gaEvent(
+        'WNYC Player',
+        action,
+        component
+      )
       this.toggleAudioPlayback(stream)
     },
     setVolume (volume) {

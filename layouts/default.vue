@@ -30,7 +30,7 @@
           :should-show-cta="!hasSomethingBeenPlayedYet"
           class="u-color-group-dark"
           aria-live="polite"
-          @togglePlay="playButtonClicked(whatsOnNow)"
+          @togglePlay="playButtonClicked(whatsOnNow, 'Persistent Player')"
           @volume-toggle-mute="toggleMute"
           @volume-change="setVolume($event)"
         />
@@ -41,6 +41,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import helpers from '@/mixins/helpers'
 import whatsOnNow from '@/mixins/whatsOnNow'
 import api from '@/mixins/api'
 import vueHifi from '../node_modules/vue-hifi/src/mixins/vue-hifi'
@@ -54,7 +55,7 @@ export default {
     WnycHeader: () => import('../components/WnycHeader'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
-  mixins: [whatsOnNow, vueHifi, api],
+  mixins: [whatsOnNow, vueHifi, api, helpers],
   computed: {
     ...mapState('whatsOnNow', {
       dataLoaded: state => state.dataLoaded,
