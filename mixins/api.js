@@ -8,9 +8,6 @@ export default {
         .then(response => (
           this.setTheState(response.data, 0)
         ))
-        .catch(function (error) {
-          console.log(error)
-        })
       // am stream
       await this.$axios.get('/?filter[slug]=wnyc-am820&include=current-airing.image,current-show.show.image,current-episode.segments')
         .then(response => (
@@ -51,10 +48,12 @@ export default {
       }
       let title = showData ? showData.attributes.title : null
       let details = showData ? showData.attributes.tease : null
+      let titleLink = showData ? showData.attributes.url : null
       // handle special airings
       if (airingData) {
         title = airingData.attributes.title
         details = airingData.attributes.description
+        titleLink = airingData.attributes.href
       }
       const formattedData = {
         index,
@@ -71,7 +70,7 @@ export default {
         timeStart: scheduleData ? scheduleData.attributes['iso-start-time'] : null,
         timeEnd: scheduleData ? scheduleData.attributes['iso-end-time'] : null,
         title,
-        titleLink: showData ? showData.attributes.url : null,
+        titleLink,
         onTodaysShowHeadline: episodeData ? episodeData.attributes.title : null,
         onTodaysShowHeadlineLink: episodeData ? episodeData.attributes.url : null,
         onTodaysShowHosts: showData ? showData.attributes.about.roles.host : null,
