@@ -74,11 +74,11 @@ export default {
         onTodaysShowHeadline: episodeData ? episodeData.attributes.title : null,
         onTodaysShowHeadlineLink: episodeData ? episodeData.attributes.url : null,
         onTodaysShowHosts: showData ? showData.attributes.about.roles.host : null,
-        onTodaysShowImage: episodeData ? episodeData.attributes['image-main'].url : null,
-        onTodaysShowImageAltText: episodeData ? episodeData.attributes['image-main']['alt-text'] : null,
-        onTodaysShowImageCaption: episodeData ? episodeData.attributes['image-main'].caption : null,
-        onTodaysShowImageCredits: episodeData ? episodeData.attributes['image-main']['credits-name'] : null,
-        onTodaysShowImageCreditsUrl: episodeData ? episodeData.attributes['image-main']['credits-url'] : null,
+        onTodaysShowImage: episodeData && episodeData.attributes['image-main'] ? episodeData.attributes['image-main'].url : null,
+        onTodaysShowImageAltText: episodeData && episodeData.attributes['image-main'] ? episodeData.attributes['image-main']['alt-text'] : null,
+        onTodaysShowImageCaption: episodeData && episodeData.attributes['image-main'] ? episodeData.attributes['image-main'].caption : null,
+        onTodaysShowImageCredits: episodeData && episodeData.attributes['image-main'] ? episodeData.attributes['image-main']['credits-name'] : null,
+        onTodaysShowImageCreditsUrl: episodeData && episodeData.attributes['image-main'] ? episodeData.attributes['image-main']['credits-url'] : null,
         onTodaysShowSegments: segmentData.length > 0 ? formattedSegments : null,
         onTodaysShowSocial: showData ? showData.attributes.about.social : null
       }
