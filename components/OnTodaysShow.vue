@@ -14,7 +14,7 @@
             :href="headlineLink"
             target="_blank"
             rel="noopener"
-            @click="gaEvent('Non-Player','On Todays Show', headlineLink)"
+            @click="gaEvent('Non-Player','Episode Headline', headlineLink)"
             v-html="headline"
           />
           <span v-if="!headlineLink" v-html="headline" />
@@ -58,7 +58,7 @@
       <div class="on-todays-show-person-social-wrapper">
         <ul v-if="hosts" class="on-todays-show-person-list">
           <li v-for="(host, index) in hosts" :key="index" class="on-todays-show-person-item">
-            <a :href="'https://www.wnyc.org'+host.url" @click="gaEvent('Non-Player','Host', host['first-name'] + ' ' + host['last-name'])" target="_blank" rel="noopener" class="on-todays-show-person-link">
+            <a :href="'https://www.wnyc.org'+host.url" @click="gaEvent('Non-Player','Host Name', host['first-name'] + ' ' + host['last-name'])" target="_blank" rel="noopener" class="on-todays-show-person-link">
               <v-person
                 class="on-todays-show-person"
                 role="host"
