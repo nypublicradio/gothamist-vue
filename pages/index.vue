@@ -28,7 +28,7 @@
           <v-button
             v-if="$store.getters['whatsOnNow/dataLoaded']"
             label="Listen Live"
-            @click="playButtonClicked(selectedStream)"
+            @click="playButtonClicked(selectedStream, 'Main Player')"
           >
             <pause-icon v-show="!vueHifiIsLoading && selectedStreamPlaying" />
             <loading-icon v-show="vueHifiIsLoading && selectedStreamPlaying" />

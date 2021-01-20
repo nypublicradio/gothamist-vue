@@ -128,7 +128,8 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+    '@nuxtjs/google-analytics'
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -152,6 +153,10 @@ export default {
   gtm: {
     pageTracking: true,
     pageViewEventName: 'Page View'
+  },
+
+  googleAnalytics: {
+    id: 'UA-283599-78'
   },
 
   sentry: {
