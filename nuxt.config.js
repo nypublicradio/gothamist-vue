@@ -136,7 +136,8 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/gtm'
+    '@nuxtjs/gtm',
+    '@nuxtjs/sentry'
   ],
 
   publicRuntimeConfig: {
@@ -156,6 +157,13 @@ export default {
 
   googleAnalytics: {
     id: 'UA-283599-78'
+  },
+
+  sentry: {
+    dsn: 'https://0d0ae255a7da4d529aa44343b0e75b81@sentry.wnyc.org/77',
+    config: {
+      lazy: true
+    }
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
