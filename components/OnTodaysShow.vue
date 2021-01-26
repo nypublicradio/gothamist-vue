@@ -58,7 +58,13 @@
       <div class="on-todays-show-person-social-wrapper">
         <ul v-if="hosts" class="on-todays-show-person-list">
           <li v-for="(host, index) in hosts" :key="index" class="on-todays-show-person-item">
-            <a :href="'https://www.wnyc.org'+host.url" @click="gaEvent('Non-Player','Host Name', host['first-name'] + ' ' + host['last-name'], 'https://www.wnyc.org'+host.url)" target="_blank" rel="noopener" class="on-todays-show-person-link">
+            <a
+              target="_blank"
+              rel="noopener"
+              class="on-todays-show-person-link"
+              :href="'https://www.wnyc.org'+host.url"
+              @click="gaEvent('Non-Player','Host Name', host['first-name'] + ' ' + host['last-name'], 'event', 'https://www.wnyc.org'+host.url)"
+            >
               <v-person
                 class="on-todays-show-person"
                 role="host"

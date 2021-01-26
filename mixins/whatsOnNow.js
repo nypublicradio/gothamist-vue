@@ -115,6 +115,7 @@ export default {
         'WNYC Player',
         action,
         component,
+        'event',
         stream
       )
       this.toggleAudioPlayback(stream)

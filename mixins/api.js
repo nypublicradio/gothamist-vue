@@ -14,6 +14,7 @@ export default {
           this.setTheState(response.data, 1)
         ))
         .catch(function (error) {
+          // eslint-disable-next-line no-console
           console.log(error)
         })
     },
