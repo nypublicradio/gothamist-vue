@@ -152,6 +152,7 @@ export default {
 
   gtm: {
     pageTracking: true,
+    debug: true,
     pageViewEventName: 'Page View'
   },
 
