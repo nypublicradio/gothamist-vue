@@ -31,7 +31,7 @@ export default {
     }
   },
   mounted () {
-    this.gaEvent('Non-Player', 'URL Error', '404', 'exception', $nuxt.$route.path)
+    this.gaEvent('Non-Player', 'URL Error', '404', 'exception', window.location.href)
   }
 }
 </script>

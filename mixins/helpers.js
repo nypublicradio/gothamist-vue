@@ -23,9 +23,7 @@ export default {
         eventCategory: category,
         eventAction: action,
         eventLabel: label,
-        hitTimeStamp: new Date(),
-        template: 'Homepage',
-        component: 'Homepage'
+        hitTimeStamp: new Date().toISOString()
       }
       if (action === 'Host Name' || action === 'URL Error') {
         data = {
@@ -34,8 +32,6 @@ export default {
           eventAction: action,
           eventLabel: label,
           hitTimeStamp: new Date(),
-          template: 'Homepage',
-          component: 'Homepage',
           intendedUrl: custom
         }
       }
@@ -46,8 +42,6 @@ export default {
           eventAction: action,
           eventLabel: label,
           hitTimeStamp: new Date(),
-          template: 'Homepage',
-          component: 'Homepage',
           streamName: custom.station,
           showName: custom.episodeTitle,
           hostName: custom.onTodaysShowHosts
