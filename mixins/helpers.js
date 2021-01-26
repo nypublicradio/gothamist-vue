@@ -43,7 +43,7 @@ export default {
           eventLabel: label,
           hitTimeStamp: new Date(),
           streamName: custom.station,
-          showName: custom.episodeTitle,
+          showName: custom.title,
           hostName: custom.onTodaysShowHosts
         }
       }
