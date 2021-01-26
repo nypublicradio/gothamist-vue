@@ -18,7 +18,13 @@ export default {
   methods: {
     // fire google analytics event
     gaEvent (category, action, label, hitType) {
-      this.$ga.event({
+      // this.$ga.event({
+      //   hitType: hitType || 'event',
+      //   eventCategory: category,
+      //   eventAction: action,
+      //   eventLabel: label
+      // })
+      this.$gtm.push({
         hitType: hitType || 'event',
         eventCategory: category,
         eventAction: action,
