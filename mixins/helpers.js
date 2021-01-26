@@ -17,19 +17,53 @@ export default {
   },
   methods: {
     // fire google analytics event
-    gaEvent (category, action, label, hitType) {
-      // this.$ga.event({
-      //   hitType: hitType || 'event',
-      //   eventCategory: category,
-      //   eventAction: action,
-      //   eventLabel: label
-      // })
-      this.$gtm.push({
+    gaEvent (category, action, label, hitType, custom) {
+      let data = {
         hitType: hitType || 'event',
         eventCategory: category,
         eventAction: action,
-        eventLabel: label
-      })
+        eventLabel: label,
+        hitTimeStamp: new Date(),
+        template: 'Homepage',
+        component: 'Homepage'
+      }
+      if (action === 'Host Name' || action === 'URL Error') {
+        data = {
+          hitType: hitType || 'event',
+          eventCategory: category,
+          eventAction: action,
+          eventLabel: label,
+          hitTimeStamp: new Date(),
+          template: 'Homepage',
+          component: 'Homepage',
+          intendedUrl: custom
+        }
+      }
+      if (category === 'WNYC Player') {
+        data = {
+          hitType: hitType || 'event',
+          eventCategory: category,
+          eventAction: action,
+          eventLabel: label,
+          hitTimeStamp: new Date(),
+          template: 'Homepage',
+          component: 'Homepage',
+          streamName: custom.station,
+          showName: custom.episodeTitle,
+          hostName: custom.onTodaysShowHosts
+        }
+      }
+      if (action === 'Host Name') {
+        data = {
+          hitType: hitType || 'event',
+          eventCategory: category,
+          eventAction: action,
+          eventLabel: label,
+          hitTimeStamp: new Date(),
+          intendedUrl: custom
+        }
+      }
+      this.$gtm.push(data)
     },
     // formats an ISO date to display the time e.g. 6:00pm
     formatTime (time) {

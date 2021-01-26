@@ -114,7 +114,8 @@ export default {
       this.gaEvent(
         'WNYC Player',
         action,
-        component
+        component,
+        stream
       )
       this.toggleAudioPlayback(stream)
     },
