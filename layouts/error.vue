@@ -17,13 +17,14 @@
 
 <script>
 import helpers from '@/mixins/helpers'
+import gtm from '@/mixins/gtm'
 
 export default {
   name: '404',
   components: {
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
-  mixins: [helpers],
+  mixins: [helpers, gtm],
   props: {
     error: {
       type: Object,
@@ -31,7 +32,7 @@ export default {
     }
   },
   mounted () {
-    this.gaEvent('Non-Player', 'URL Error', '404', 'exception', window.location.href)
+    this.gaEvent('Non-Player', 'URL Error', '404', window.location.href)
   }
 }
 </script>

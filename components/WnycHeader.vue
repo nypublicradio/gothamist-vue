@@ -1,7 +1,7 @@
 <template>
   <the-header
     :donate-url="donateUrl"
-    @componentEvent="gaEvent('Non-Player','Donate', ...arguments)"
+    @componentEvent="gaEvent('Non-Player','Donate')"
   >
     <template v-slot:menu>
       <the-menu
@@ -39,6 +39,7 @@
 <script>
 import { mapState } from 'vuex'
 import helpers from '@/mixins/helpers'
+import gtm from '@/mixins/gtm'
 
 export default {
   name: 'WnycHeader',
@@ -48,7 +49,7 @@ export default {
     TheMenu: () => import('nypr-design-system-vue/src/components/TheMenu'),
     WnycLogo: () => import('nypr-design-system-vue/src/components/icons/wnyc/WnycLogo')
   },
-  mixins: [helpers],
+  mixins: [helpers, gtm],
   computed: {
     ...mapState('global', {
       donateUrl: state => state.donateUrl,

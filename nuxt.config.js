@@ -158,11 +158,11 @@ export default {
   },
 
   googleAnalytics: {
-    id: 'UA-283599-78'
+    id: process.env.GA_ID
   },
 
   sentry: {
-    dsn: 'https://0d0ae255a7da4d529aa44343b0e75b81@sentry.wnyc.org/77',
+    dsn: process.env.SENTRY_DSN,
     config: {
       lazy: true
     }
