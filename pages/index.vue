@@ -48,6 +48,7 @@ import whatsOnNow from '@/mixins/whatsOnNow'
 import vueHifi from 'vue-hifi/src/mixins/vue-hifi'
 import api from '~/mixins/api'
 import helpers from '~/mixins/helpers'
+import gtm from '~/mixins/gtm'
 
 export default {
   name: 'HomePage',
@@ -62,7 +63,7 @@ export default {
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
-  mixins: [whatsOnNow, vueHifi, api, helpers],
+  mixins: [whatsOnNow, vueHifi, api, helpers, gtm],
   computed: {
     ...mapState('whatsOnNow', {
       streams: state => state.streams,

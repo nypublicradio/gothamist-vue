@@ -1,63 +1,10 @@
 import moment from 'moment'
-import { mapState } from 'vuex'
 
 export default {
-  data () {
-    return {
-      timer: null
-    }
-  },
-  mounted () {
-    // send a google analytics event every 2 minutes if a stream is playing
-    this.timer = window.setInterval(() => {
-      if (this.vueHifiIsPlaying) {
-        this.gaEvent('WNYC Player', 'ping', this.station)
-      }
-    }, 120000)
-  },
   methods: {
-    // fire google analytics event
-    gaEvent (category, action, label, hitType, custom) {
-      let data = {
-        hitType: hitType || 'event',
-        eventCategory: category,
-        eventAction: action,
-        eventLabel: label,
-        hitTimeStamp: new Date().toISOString()
-      }
-      if (action === 'Host Name' || action === 'URL Error') {
-        data = {
-          hitType: hitType || 'event',
-          eventCategory: category,
-          eventAction: action,
-          eventLabel: label,
-          hitTimeStamp: new Date(),
-          intendedUrl: custom
-        }
-      }
-      if (category === 'WNYC Player') {
-        data = {
-          hitType: hitType || 'event',
-          eventCategory: category,
-          eventAction: action,
-          eventLabel: label,
-          hitTimeStamp: new Date(),
-          streamName: custom.station,
-          showName: custom.title,
-          hostName: custom.onTodaysShowHosts
-        }
-      }
-      if (action === 'Host Name') {
-        data = {
-          hitType: hitType || 'event',
-          eventCategory: category,
-          eventAction: action,
-          eventLabel: label,
-          hitTimeStamp: new Date(),
-          intendedUrl: custom
-        }
-      }
-      this.$gtm.push(data)
+    // capitalize the first letter of a string
+    capitalize (string) {
+      return string[0].toUpperCase() + string.substring(1)
     },
     // formats an ISO date to display the time e.g. 6:00pm
     formatTime (time) {
@@ -67,16 +14,5 @@ export default {
       }
       return null
     }
-  },
-  computed: {
-    ...mapState('whatsOnNow', {
-      station: state => state.whatsOnNow.station
-    }),
-    ...mapState('vue-hifi', {
-      vueHifiIsPlaying: state => state.isPlaying
-    })
-  },
-  beforeDestroy () {
-    clearInterval(this.timer)
   }
 }

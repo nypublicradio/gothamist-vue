@@ -42,6 +42,7 @@
 <script>
 import { mapState } from 'vuex'
 import helpers from '@/mixins/helpers'
+import gtm from '@/mixins/gtm'
 import whatsOnNow from '@/mixins/whatsOnNow'
 import api from '@/mixins/api'
 import vueHifi from '../node_modules/vue-hifi/src/mixins/vue-hifi'
@@ -55,7 +56,12 @@ export default {
     WnycHeader: () => import('../components/WnycHeader'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
-  mixins: [whatsOnNow, vueHifi, api, helpers],
+  data () {
+    return {
+      timer: null
+    }
+  },
+  mixins: [whatsOnNow, vueHifi, api, helpers, gtm],
   computed: {
     ...mapState('whatsOnNow', {
       dataLoaded: state => state.dataLoaded,
@@ -76,6 +82,19 @@ export default {
       vueHifiIsMuted: state => state.isMuted,
       vueHifiIsPlaying: state => state.isPlaying
     })
+  },
+  mounted () {
+    // send a google analytics event every 2 minutes if a stream is playing
+    this.timer = window.setInterval(() => {
+      if (this.vueHifiIsPlaying) {
+        this.gaEvent('WNYC Player', 'Ping', this.station)
+      } else {
+        clearInterval(this.timer)
+      }
+    }, 120000)
+  },
+  beforeDestroy () {
+    clearInterval(this.timer)
   }
 }
 </script>

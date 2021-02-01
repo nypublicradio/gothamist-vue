@@ -54,7 +54,8 @@ export default {
       this.gaEvent(
         'Non-Player',
         'Stream Switcher',
-        'User switched to the ' + stream.station + ' stream'
+        stream.station,
+        stream
       )
     },
     toggleAudioPlayback (stream) {
@@ -107,15 +108,14 @@ export default {
       }
     },
     playButtonClicked (stream, component) {
-      let action = 'play'
+      let action = 'Play'
       if (stream.playing) {
-        action = 'pause'
+        action = 'Pause'
       }
       this.gaEvent(
         'WNYC Player',
         action,
         component,
-        'event',
         stream
       )
       this.toggleAudioPlayback(stream)

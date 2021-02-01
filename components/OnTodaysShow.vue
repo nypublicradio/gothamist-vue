@@ -14,7 +14,6 @@
             :href="headlineLink"
             target="_blank"
             rel="noopener"
-            @click="gaEvent('Non-Player','Episode Headline', headlineLink)"
             v-html="headline"
           />
           <span v-if="!headlineLink" v-html="headline" />
@@ -63,7 +62,6 @@
               rel="noopener"
               class="on-todays-show-person-link"
               :href="'https://www.wnyc.org'+host.url"
-              @click="gaEvent('Non-Player','Host Name', host['first-name'] + ' ' + host['last-name'], 'event', 'https://www.wnyc.org'+host.url)"
             >
               <v-person
                 class="on-todays-show-person"
@@ -102,6 +100,7 @@
 <script>
 import { mapState } from 'vuex'
 import helpers from '@/mixins/helpers'
+import gtm from '@/mixins/gtm'
 import whatsOnNow from '@/mixins/whatsOnNow'
 
 export default {
@@ -116,7 +115,7 @@ export default {
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
     VPerson: () => import('nypr-design-system-vue/src/components/VPerson')
   },
-  mixins: [whatsOnNow, helpers],
+  mixins: [whatsOnNow, helpers, gtm],
   data () {
     return {
       segmentsToShow: 3
