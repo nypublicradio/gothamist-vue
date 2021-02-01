@@ -16,7 +16,7 @@ export default {
       const eventLabel = gaLabel ? this.capitalize(gaLabel) : null
       const hitTimeStamp = new Date().toISOString()
       const clientID = this.clientID
-      const sessionID = this.clientID
+      const sessionID = this.sessionID
       let template = 'Home Page'
       let component = null
       let streamName = this.whatsOnNow.station
