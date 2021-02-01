@@ -84,7 +84,7 @@ export default {
   mounted () {
     // set GTM cookies
     if (this.getCookie('_wnycClientID') === '') {
-      document.cookie = '_wnycSessionID=' + this.generateId() + '; expires=0; path=/'
+      document.cookie = '_wnycClientID=' + this.generateId() + '; expires=0; path=/'
     }
     if (this.getCookie('_wnycClientID') === '') {
       const cookieDate = new Date()
