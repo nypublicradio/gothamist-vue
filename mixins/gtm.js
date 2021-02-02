@@ -83,13 +83,11 @@ export default {
   },
   mounted () {
     // set GTM cookies
+    document.cookie = '_wnycSessionID=' + this.generateId() + '; expires=0; path=/'
     if (this.getCookie('_wnycClientID') === '') {
-      document.cookie = '_wnycClientID=' + this.generateId() + '; expires=0; path=/'
-    }
-    if (this.getCookie('_wnycSessionID') === '') {
       const cookieDate = new Date()
       cookieDate.setFullYear(cookieDate.getFullYear() + 10)
-      document.cookie = '_wnycSessionID=' + this.generateId() + '; expires=' + cookieDate.toUTCString() + '; path=/'
+      document.cookie = '_wnycClientID=' + this.generateId() + '; expires=' + cookieDate.toUTCString() + '; path=/'
     }
     this.clientID = this.getCookie('_wnycClientID')
     this.sessionID = this.getCookie('_wnycSessionID')
