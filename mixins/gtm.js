@@ -10,7 +10,8 @@ export default {
   methods: {
     // google analytics events
     gaEvent (gaCategory, gaAction, gaLabel, custom) {
-      let event = 'eventTracking'
+      const event = 'eventTracking'
+      const eventValue = gaCategory
       let hitType = 'event'
       const eventCategory = gaCategory
       const eventAction = gaAction
@@ -38,6 +39,7 @@ export default {
       }
       const data = {
         event,
+        eventValue,
         clientID,
         sessionID,
         hitType,
