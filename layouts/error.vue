@@ -20,7 +20,7 @@ import helpers from '@/mixins/helpers'
 import gtm from '@/mixins/gtm'
 
 export default {
-  name: '404',
+  name: 'ErrorPage',
   components: {
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },

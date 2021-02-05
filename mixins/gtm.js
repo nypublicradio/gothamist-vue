@@ -11,7 +11,6 @@ export default {
     // google analytics events
     gaEvent (gaCategory, gaAction, gaLabel, custom) {
       const event = 'eventTracking'
-      const eventValue = gaCategory
       let hitType = 'event'
       const eventCategory = gaCategory
       const eventAction = gaAction
@@ -36,6 +35,17 @@ export default {
         template = 'Error Page'
         streamName = null
         component = null
+      }
+      const eventValue = {
+        clientID,
+        sessionID,
+        hitTimeStamp,
+        template,
+        component,
+        streamName,
+        showName,
+        hostName,
+        intendedUrl
       }
       const data = {
         event,

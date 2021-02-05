@@ -56,12 +56,12 @@ export default {
     WnycHeader: () => import('../components/WnycHeader'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
+  mixins: [whatsOnNow, vueHifi, api, helpers, gtm],
   data () {
     return {
       timer: null
     }
   },
-  mixins: [whatsOnNow, vueHifi, api, helpers, gtm],
   computed: {
     ...mapState('whatsOnNow', {
       dataLoaded: state => state.dataLoaded,
