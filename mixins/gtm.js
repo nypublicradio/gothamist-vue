@@ -25,9 +25,11 @@ export default {
       const hostNameArray = this.whatsOnNow.onTodaysShowHosts
       let hostName = []
       // format hostName
-      hostNameArray.forEach(function (host) {
-        hostNameArray.forEach(host => (hostName.push(host['first-name'] + ' ' + host['last-name'])))
-      })
+      if (hostNameArray) {
+        hostNameArray.forEach(function (host) {
+          hostName.push(host['first-name'] + ' ' + host['last-name'])
+        })
+      }
       hostName = hostName.join()
       let intendedUrl = null
       if (gaCategory === 'WNYC Player') {
