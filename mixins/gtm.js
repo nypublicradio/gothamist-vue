@@ -36,20 +36,8 @@ export default {
         streamName = null
         component = null
       }
-      const eventValue = {
-        clientID,
-        sessionID,
-        hitTimeStamp,
-        template,
-        component,
-        streamName,
-        showName,
-        hostName,
-        intendedUrl
-      }
       const data = {
         event,
-        eventValue,
         clientID,
         sessionID,
         hitType,
