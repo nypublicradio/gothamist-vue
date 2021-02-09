@@ -22,7 +22,13 @@ export default {
       let component = null
       let streamName = this.whatsOnNow.station
       const showName = this.whatsOnNow.title
-      const hostName = this.whatsOnNow.onTodaysShowHosts
+      const hostNameArray = this.whatsOnNow.onTodaysShowHosts
+      let hostName = []
+      // format hostName
+      hostNameArray.forEach(function (host) {
+        hostNameArray.forEach(host => (hostName.push(host['first-name'] + ' ' + host['last-name'])))
+      })
+      hostName = hostName.join()
       let intendedUrl = null
       if (gaCategory === 'WNYC Player') {
         component = gaLabel
