@@ -24,10 +24,7 @@
         </div>
       </template>
       <template v-slot:search>
-        <search-icon
-          class="u-icon--xs"
-          @click.native="searchIsActive = true"
-        />
+        <search-icon class="u-icon--xs" />
         <div v-if="searchIsActive">
           <v-search />
         </div>
