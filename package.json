@@ -1,6 +1,6 @@
 {
-  "name": "wnyc-vue",
-  "version": "1.0.0",
+  "name": "gothamist-vue",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "nuxt",
@@ -22,9 +22,7 @@
     "gulp": "^4.0.2",
     "gulp-awspublish": "^4.1.2",
     "gulp-cloudfront-invalidate-aws-publish": "^1.0.0",
-    "moment": "^2.29.1",
-    "nuxt": "^2.14.12",
-    "vue-hifi": "0.0.6"
+    "nuxt": "^2.14.12"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.12",
@@ -40,8 +38,9 @@
     "eslint": "^7.18.0",
     "eslint-plugin-nuxt": "^1.0.0",
     "jest": "^26.6.3",
+    "moment": "^2.29.1",
     "node-sass": "^4.14.1",
-    "nypr-design-system-vue": "1.0.7",
+    "nypr-design-system-vue": "nypublicradio/nypr-design-system-vue#97e6c18244f6107fe89cbd99368576e72a570cef",
     "sass-loader": "^10.1.1",
     "vue-jest": "^3.0.4",
     "vue-lazy-hydration": "^1.0.0-beta.14",

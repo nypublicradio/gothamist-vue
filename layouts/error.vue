@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import helpers from '@/mixins/helpers'
 import gtm from '@/mixins/gtm'
 
 export default {
@@ -24,7 +23,7 @@ export default {
   components: {
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
-  mixins: [helpers, gtm],
+  mixins: [gtm],
   props: {
     error: {
       type: Object,
@@ -36,9 +35,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.error-page h1 {
-  color: RGB(var(--color-white));
-}
-</style>

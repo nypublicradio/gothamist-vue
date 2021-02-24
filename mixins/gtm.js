@@ -1,5 +1,3 @@
-import { mapState } from 'vuex'
-
 export default {
   data () {
     return {
@@ -19,29 +17,12 @@ export default {
       const clientID = this.clientID
       const sessionID = this.sessionID
       let template = 'Home Page'
-      let component = null
-      let streamName = this.whatsOnNow.station
-      const showName = this.whatsOnNow.title
-      const hostNameArray = this.whatsOnNow.onTodaysShowHosts
-      let hostName = []
-      // format hostName
-      if (hostNameArray) {
-        hostNameArray.forEach(function (host) {
-          hostName.push(host['first-name'] + ' ' + host['last-name'])
-        })
-      }
-      hostName = hostName.join()
+      let component = gaAction
       let intendedUrl = null
-      if (gaCategory === 'WNYC Player') {
-        component = gaLabel
-      } else {
-        component = gaAction
-      }
       if (gaAction === 'URL Error') {
         intendedUrl = custom
         hitType = 'exception'
         template = 'Error Page'
-        streamName = null
         component = null
       }
       const data = {
@@ -58,9 +39,6 @@ export default {
         hitTimeStamp,
         template,
         component,
-        streamName,
-        showName,
-        hostName,
         intendedUrl
       }
       this.$gtm.push(data)
@@ -85,24 +63,15 @@ export default {
       return ''
     }
   },
-  computed: {
-    ...mapState('whatsOnNow', {
-      station: state => state.whatsOnNow.station,
-      whatsOnNow: state => state.whatsOnNow
-    }),
-    ...mapState('vue-hifi', {
-      vueHifiIsPlaying: state => state.isPlaying
-    })
-  },
   mounted () {
     // set GTM cookies
-    document.cookie = '_wnycSessionID=' + this.generateId() + '; expires=0; path=/'
-    if (this.getCookie('_wnycClientID') === '') {
+    document.cookie = '_gothamistSessionID=' + this.generateId() + '; expires=0; path=/'
+    if (this.getCookie('_gothamistClientID') === '') {
       const cookieDate = new Date()
       cookieDate.setFullYear(cookieDate.getFullYear() + 10)
-      document.cookie = '_wnycClientID=' + this.generateId() + '; expires=' + cookieDate.toUTCString() + '; path=/'
+      document.cookie = '_gothamistClientID=' + this.generateId() + '; expires=' + cookieDate.toUTCString() + '; path=/'
     }
-    this.clientID = this.getCookie('_wnycClientID')
-    this.sessionID = this.getCookie('_wnycSessionID')
+    this.clientID = this.getCookie('_gothamistClientID')
+    this.sessionID = this.getCookie('_gothamistSessionID')
   }
 }

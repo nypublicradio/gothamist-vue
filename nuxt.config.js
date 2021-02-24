@@ -1,13 +1,13 @@
 export default {
   router: {
-    base: '/radio/'
+    base: '/'
   },
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     htmlAttrs: {
       lang: 'en'
     },
-    title: 'WNYC | New York Public Radio, Podcasts, Live Streaming Radio, News',
+    title: 'Gothamist: New York City Local News, Food, Arts & Events',
     meta: [
       { charset: 'utf-8' },
       {
@@ -17,17 +17,17 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: "WNYC is America's most listened-to public radio station and the producer of award-winning programs and podcasts like Radiolab, On the Media, and The Brian Lehrer Show."
+        content: 'Gothamist is a website about New York City news, arts and events, and food, brought to you by New York Public Radio.'
       },
       {
         hid: 'og_site_name',
         name: 'og:site_name',
-        content: 'WNYC'
+        content: 'Gothamist'
       },
       {
         hid: 'og_url',
         name: 'og:url',
-        content: 'https://www.wnyc.org/radio'
+        content: 'https://gothamist.com'
       },
       {
         hid: 'og_type',
@@ -42,17 +42,17 @@ export default {
       {
         hid: 'og_title',
         name: 'og:title',
-        content: 'WNYC | New York Public Radio, Podcasts, Live Streaming Radio, News'
+        content: 'Gothamist: New York City Local News, Food, Arts & Events'
       },
       {
         hid: 'og_description',
         name: 'og:description',
-        content: "WNYC is America's most listened-to public radio station and the producer of award-winning programs and podcasts like Radiolab, On the Media, and The Brian Lehrer Show."
+        content: 'Gothamist is a website about New York City news, arts and events, and food, brought to you by New York Public Radio.'
       },
       {
         hid: 'og_image',
         name: 'og:image',
-        content: 'https://media.wnyc.org/i/1200/1200/c/80/1/wnyc_square_logo.png'
+        content: 'https://gothamist.com/static-images/home_og_1200x650.png'
       },
       {
         hid: 'og_image_width',
@@ -62,12 +62,12 @@ export default {
       {
         hid: 'og_image_height',
         name: 'og:image:height',
-        content: '1200'
+        content: '650'
       },
       {
         hid: 'og_image_alt',
         name: 'og:image:alt',
-        content: 'WNYC'
+        content: 'Gothamist'
       },
       {
         hid: 'fb_app_id',
@@ -77,42 +77,43 @@ export default {
       {
         hid: 'twitter_title',
         name: 'twitter:title',
-        content: 'WNYC'
+        content: 'Gothamist: New York City Local News, Food, Arts & Events'
       },
       {
         hid: 'twitter_description',
         name: 'twitter:description',
-        content: 'WNYC | New York Public Radio, Podcasts, Live Streaming Radio, News'
+        content: 'Gothamist is a website about New York City news, arts and events, and food, brought to you by New York Public Radio.'
       },
       {
         hid: 'twitter_url',
         name: 'twitter:url',
-        content: 'https://www.wnyc.org/radio'
+        content: 'https://gothamist.com'
       },
       {
         hid: 'twitter_site',
         name: 'twitter:site',
-        content: '@WNYC'
+        content: '@gothamist'
       },
       {
         hid: 'twitter_image',
         name: 'twitter:image',
-        content: 'https://media.wnyc.org/i/1200/1200/c/80/1/wnyc_square_logo.png'
+        content: 'https://gothamist.com/static-images/home_og_1200x650.png'
       },
       {
         hid: 'twitter_alt',
         name: 'twitter:alt',
-        content: 'WNYC'
-      }
-    ],
-    link: [
-      {
-        rel: 'icon',
-        type: 'image/x-icon',
-        href: 'https://media.wnyc.org/static/img/favicon_wnyc.ico?_=1553611630'
+        content: 'Gothamist'
       }
     ]
   },
+
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/x-icon',
+      href: '/favicon.ico'
+    }
+  ],
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
@@ -141,39 +142,38 @@ export default {
   ],
 
   publicRuntimeConfig: {
-    gtm: {
-      id: process.env.GTM_ID
-    },
+    // gtm: {
+    //   id: process.env.GTM_ID
+    // },
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {
-      baseURL: process.env.WHATS_ON_API
+      baseURL: process.env.API
     }
   },
 
-  gtm: {
-    pageTracking: true,
-    enabled: true,
-    debug: false, // set this to true when you are testing to get console logs
-    pageViewEventName: 'Page View'
-  },
-
-  googleAnalytics: {
-    id: process.env.GA_ID
-  },
-
-  sentry: {
-    dsn: process.env.SENTRY_DSN,
-    config: {
-      lazy: true
-    }
-  },
+  // gtm: {
+  //   pageTracking: true,
+  //   enabled: true,
+  //   debug: false, // set this to true when you are testing to get console logs
+  //   pageViewEventName: 'Page View'
+  // },
+  //
+  // googleAnalytics: {
+  //   id: process.env.GA_ID
+  // },
+  //
+  // sentry: {
+  //   dsn: process.env.SENTRY_DSN,
+  //   config: {
+  //     lazy: true
+  //   }
+  // },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     // this is needed to transpile es6 modules imported from radial
     transpile: [
-      'nypr-design-system-vue',
-      'vue-hifi'
+      'nypr-design-system-vue'
     ]
   }
 }

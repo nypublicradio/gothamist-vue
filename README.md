@@ -1,4 +1,4 @@
-# wnyc-vue
+# gothamist-vue
 
 ## Build Setup
 
@@ -46,7 +46,5 @@ For SSR, this app uses Nuxt. Nuxt runs within a Docker container deployed to our
 ### Notes
 
 Set the theme in the assets/main.scss file
-
-This project is optimized with lazy hydration (see https://github.com/maoberlehner/vue-lazy-hydration). Lazy hydration does not seem to play well with slots, so remove it from a component with slots if you're having issues.
 
 Having issues with PostCSS or NodeSass? npm rebuild node-sass

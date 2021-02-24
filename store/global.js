@@ -1,5 +1,5 @@
 export const state = () => ({
-  donateUrl: 'https://pledge3.wnyc.org/donate/main/onestep/?utm_medium=partnersite&utm_source=w3k&utm_campaign=brandheader',
+  donateUrl: 'https://pledge3.wnyc.org/donate/gothamist/onestep/?utm_medium=partnersite&utm_source=gothamist&utm_campaign=brandheader',
   headerNav: [
     {
       url: 'https://www.wnyc.org/schedule/',
