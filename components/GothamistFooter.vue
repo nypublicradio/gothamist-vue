@@ -2,7 +2,7 @@
   <div>
     <the-footer
       slogan="Gothamist is a website about New York City news, arts and events, and food, brought to you by New York Public Radio. Gothamist is supported by the American Express Foundation."
-      :primary-nav="$store.getters['global/footerNav']"
+      :primary-nav="footerNav"
       subheader1="About Us"
     >
       <template v-slot:logo>
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'GothamistFooter',
   components: {
@@ -50,6 +52,11 @@ export default {
     ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
     GothamistLogoStacked: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogoStacked'),
     TheFooter: () => import('nypr-design-system-vue/src/components/TheFooter')
+  },
+  computed: {
+    ...mapState('global', {
+      footerNav: state => state.footerNav
+    })
   }
 }
 </script>

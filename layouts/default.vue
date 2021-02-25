@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <gothamist-header v-once />
+  <div :class="$route.name">
+    <gothamist-header />
     <main>
       <Nuxt />
     </main>
-    <gothamist-footer v-once />
+    <gothamist-footer />
   </div>
 </template>
 

@@ -142,9 +142,9 @@ export default {
   ],
 
   publicRuntimeConfig: {
-    // gtm: {
-    //   id: process.env.GTM_ID
-    // },
+    gtm: {
+      id: process.env.GTM_ID
+    },
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {
       baseURL: process.env.API

@@ -1,5 +1,6 @@
 export const state = () => ({
   donateUrl: 'https://pledge3.wnyc.org/donate/gothamist/onestep/?utm_medium=partnersite&utm_source=gothamist&utm_campaign=brandheader',
+  tipsEmail: 'tips@gothamist.com',
   headerNav: [
     {
       url: '/news',
@@ -45,6 +46,9 @@ export const state = () => ({
 export const getters = {
   donateUrl (state) {
     return state.donateUrl
+  },
+  tipsEmail (state) {
+    return state.tipsEmail
   },
   headerNav (state) {
     return state.headerNav
