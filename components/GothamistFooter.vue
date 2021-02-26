@@ -36,7 +36,9 @@
         </div>
       </template>
       <template v-slot:rightComponent>
-        <p><em>slot for footer newsletter component</em></p>
+        <div>
+          <gothamist-footer-newsletter />
+        </div>
       </template>
     </the-footer>
   </div>
@@ -51,7 +53,8 @@ export default {
     ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
     ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
     GothamistLogoStacked: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogoStacked'),
-    TheFooter: () => import('nypr-design-system-vue/src/components/TheFooter')
+    TheFooter: () => import('nypr-design-system-vue/src/components/TheFooter'),
+    GothamistFooterNewsletter: () => import('../components/GothamistFooterNewsletter')
   },
   computed: {
     ...mapState('global', {

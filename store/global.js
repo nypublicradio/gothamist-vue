@@ -16,7 +16,8 @@ export const state = () => ({
     },
     {
       url: '/newsletter',
-      text: 'Newsletter'
+      text: 'Newsletter',
+      icon: 'EmailIcon'
     }
   ],
   footerNav: [
