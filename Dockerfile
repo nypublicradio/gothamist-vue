@@ -1,4 +1,4 @@
-FROM node:10
+FROM node:14
 
 RUN apt-get update \
     && apt-get install -y \
@@ -14,7 +14,7 @@ RUN apt-get update \
 WORKDIR /code
 
 COPY package.json ./
-COPY package-lock.json ./
+
 RUN npm install 
 
 COPY . ./

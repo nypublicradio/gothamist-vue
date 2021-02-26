@@ -7,7 +7,7 @@ templates:
           JOBS: 2
 
   node_key: &node_key
-    key: node-deps-{{ checksum "package-lock.json" }}-{{ checksum "circle.yml" }}
+    key: node-deps-{{ checksum "circle.yml" }}
 
   restore_node: &restore_node
     restore_cache:
@@ -23,6 +23,7 @@ templates:
           command: |
             env | sed -n "s/^${ENV}_//p" >> .env
             set -o allexport && source .env && set +o allexport
+            npm install
             npm run generate
             npm run deploy
 
@@ -31,7 +32,8 @@ templates:
       - image: circleci/python:3.6
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 19.03.13
       - restore_cache:
           key: deploy-{{ checksum "circle.yml" }}
       - run:
@@ -51,10 +53,10 @@ templates:
               --fargate \
               --cpu=1024 \
               --memory-reservation=2048 \
-              --ecr-repository=wnyc-3000-vue \
+              --ecr-repository=gothamist-vue \
               --ecs-cluster=fastboot \
-              --execution-role=wnyc-3000-vue-$ENV \
-              --task-role=wnyc-3000-vue-$ENV \
+              --execution-role=gothamist-vue-$ENV \
+              --task-role=gothamist-vue-$ENV \
               --ports=80 \
               --environment=$ENV \
               --tag=$TAG \
