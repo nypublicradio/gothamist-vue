@@ -23,12 +23,12 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 To run this app in a production-like setup, use docker.
 The basic dev container can be run with the following commands:
 ```bash
-docker build -t wnyc-3000-vue:latest
-docker run -it -p 3000:3000 -e ENV=dev wnyc-3000-vue
+docker build . -t gothamist-vue:latest
+docker run -it -p 3000:3000 -e ENV=dev gothamist-vue
 ```
 If you'd like to run the app behind nginx, instead change the ENV variable
 ```bash
-docker run -it -p 80:80 -e ENV=demo wnyc-3000-vue
+docker run -it -p 80:80 -e ENV=demo gothamist-vue
 ```
 
 ## Deployment
