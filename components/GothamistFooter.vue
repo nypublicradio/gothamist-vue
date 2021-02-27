@@ -1,5 +1,6 @@
 <template>
   <div>
+    <back-to-top />
     <the-footer
       slogan="Gothamist is a website about New York City news, arts and events, and food, brought to you by New York Public Radio. Gothamist is supported by the American Express Foundation."
       :primary-nav="footerNav"
@@ -54,7 +55,8 @@ export default {
     ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
     GothamistLogoStacked: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogoStacked'),
     TheFooter: () => import('nypr-design-system-vue/src/components/TheFooter'),
-    GothamistFooterNewsletter: () => import('../components/GothamistFooterNewsletter')
+    GothamistFooterNewsletter: () => import('../components/GothamistFooterNewsletter'),
+    BackToTop: () => import('../components/BackToTop')
   },
   computed: {
     ...mapState('global', {
