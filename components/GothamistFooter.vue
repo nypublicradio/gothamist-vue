@@ -38,7 +38,7 @@
       </template>
       <template v-slot:rightComponent>
         <div>
-          <gothamist-footer-newsletter />
+          newsletter goes here
         </div>
       </template>
     </the-footer>
@@ -55,7 +55,6 @@ export default {
     ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
     GothamistLogoStacked: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogoStacked'),
     TheFooter: () => import('nypr-design-system-vue/src/components/TheFooter'),
-    GothamistFooterNewsletter: () => import('../components/GothamistFooterNewsletter'),
     BackToTop: () => import('../components/BackToTop')
   },
   computed: {

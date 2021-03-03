@@ -1,25 +1,9 @@
+// import pages from '~/mixins/pages'
+
 export const state = () => ({
   donateUrl: 'https://pledge3.wnyc.org/donate/gothamist/onestep/?utm_medium=partnersite&utm_source=gothamist&utm_campaign=brandheader',
   tipsEmail: 'tips@gothamist.com',
-  headerNav: [
-    {
-      url: '/news',
-      text: 'News'
-    },
-    {
-      url: '/arts-entertainment',
-      text: 'Arts & Entertainment'
-    },
-    {
-      url: '/food',
-      text: 'Food'
-    },
-    {
-      url: '/newsletter',
-      text: 'Newsletter',
-      icon: 'EmailIcon'
-    }
-  ],
+  headerNav: [],
   footerNav: [
     {
       url: 'https://www.gothamistllc.com',
@@ -56,5 +40,39 @@ export const getters = {
   },
   footerNav (state) {
     return state.footerNav
+  }
+}
+
+// Actions commit mutations and can contain arbitrary asynchronous operations
+
+export const actions = {
+  setNavigation ({ commit }) {
+    this.$axios
+      .get('navigation/1/')
+      .then(response => (
+        commit('setHeaderNav', response.data)
+      ))
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+}
+
+// Mutations change the state of the store
+
+export const mutations = {
+  setHeaderNav (state, data) {
+    const headerNav = []
+    data.primary_navigation.forEach(function (item) {
+      headerNav.push(
+        {
+          text: item.value.title,
+          url: item.value.url,
+          newWindow: false
+        }
+      )
+    })
+    console.log(headerNav)
+    state.headerNav = headerNav
   }
 }

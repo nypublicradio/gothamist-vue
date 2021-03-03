@@ -20,6 +20,14 @@ export default {
         return formattedTime.utc().local().format('h:mm a')
       }
       return null
+    },
+    getSection (path) {
+      const pathArray = path.split('/')
+      return pathArray[pathArray.length - 2]
+    },
+    getSlug (path) {
+      const pathArray = path.split('/')
+      return pathArray[pathArray.length - 1]
     }
   }
 }

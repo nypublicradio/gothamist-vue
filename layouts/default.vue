@@ -14,6 +14,9 @@ export default {
   components: {
     GothamistFooter: () => import('../components/GothamistFooter'),
     GothamistHeader: () => import('../components/GothamistHeader')
+  },
+  async mounted () {
+    await this.$store.dispatch('global/setNavigation')
   }
 }
 </script>
