@@ -108,7 +108,6 @@ export default {
     SecondaryNavigation: () => import('nypr-design-system-vue/src/components/SecondaryNavigation'),
     TheHeader: () => import('nypr-design-system-vue/src/components/TheHeader'),
     GothamistLogo: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogo'),
-    // GothamistLogoStacked: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogoStacked'),
     SearchIcon: () => import('nypr-design-system-vue/src/components/icons/SearchIcon'),
     VSearch: () => import('nypr-design-system-vue/src/components/VSearch'),
     TheMenu: () => import('nypr-design-system-vue/src/components/TheMenu'),
@@ -139,21 +138,5 @@ export default {
 </script>
 
 <style lang="scss">
-// home page header logo
-//.index .c-main-header {
-//  padding-top: 50px;
-//  background: RGB(var(--color-background-darker));
-//}
-//
-//.index .c-main-header__logo,
-//.index .c-main-header__logo svg {
-//  position: absolute;
-//  width: 135px;
-//  height: 142px;
-//  top: -15px;
-//}
-//
-//.index .c-main-header__logo .gothamist-logo-icon--stacked .gothamist-letters path {
-//  fill: RGB(var(--color-black));
-//}
+
 </style>

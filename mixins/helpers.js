@@ -21,13 +21,15 @@ export default {
       }
       return null
     },
-    getSection (path) {
-      const pathArray = path.split('/')
-      return pathArray[pathArray.length - 2]
+    // gets the section (i.e.,"news") for the current route
+    getSection (route) {
+      const routeArray = route.split('/')
+      return routeArray[routeArray.length - 2]
     },
-    getSlug (path) {
-      const pathArray = path.split('/')
-      return pathArray[pathArray.length - 1]
+    // gets the slug for the current route
+    getSlug (route) {
+      const routeArray = route.split('/')
+      return routeArray[routeArray.length - 1]
     }
   }
 }

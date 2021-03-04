@@ -21,7 +21,7 @@
       class="l-container"
     >
       <v-spacer size="quad" />
-      <p>show skeleton component</p>
+      <p>skeleton component goes here</p>
       <v-spacer size="quad" />
     </div>
   </div>
@@ -51,12 +51,18 @@ export default {
     }
   },
   async mounted () {
-    await this.getID(this.articleSlug).then(id => (
-      this.articleID = id
-    ))
-    await this.getData(this.articleID).then(data => (
-      this.articleData = data
-    ))
+    await this.getID(this.articleSlug)
+      .then(id => (
+        this.articleID = id
+      ))
+      .catch(() => {
+        // handle 404 errors
+        this.$router.push('/notfound')
+      })
+    await this.getData(this.articleID)
+      .then(data => (
+        this.articleData = data
+      ))
   },
   head: {
     title: 'Article Page Title',

@@ -1,29 +1,12 @@
-// import pages from '~/mixins/pages'
+import navigation from '~/mixins/navigation'
 
 export const state = () => ({
   donateUrl: 'https://pledge3.wnyc.org/donate/gothamist/onestep/?utm_medium=partnersite&utm_source=gothamist&utm_campaign=brandheader',
-  tipsEmail: 'tips@gothamist.com',
   headerNav: [],
-  footerNav: [
-    {
-      url: 'https://www.gothamistllc.com',
-      text: 'Advertising',
-      newWindow: true
-    },
-    {
-      url: '/contact',
-      text: 'Contact Us'
-    },
-    {
-      url: 'https://gothamist.com/feed/',
-      text: 'RSS Feed',
-      newWindow: true
-    },
-    {
-      url: '/staff',
-      text: 'Staff'
-    }
-  ]
+  footerNav: [],
+  footerSlogan: '',
+  legalNav: [],
+  tipsEmail: 'tips@gothamist.com'
 })
 
 // Getters read the current state of the store module and return something
@@ -32,14 +15,20 @@ export const getters = {
   donateUrl (state) {
     return state.donateUrl
   },
-  tipsEmail (state) {
-    return state.tipsEmail
-  },
   headerNav (state) {
     return state.headerNav
   },
   footerNav (state) {
     return state.footerNav
+  },
+  footerSlogan (state) {
+    return state.footerSlogan
+  },
+  legalNav (state) {
+    return state.legalNav
+  },
+  tipsEmail (state) {
+    return state.tipsEmail
   }
 }
 
@@ -49,9 +38,12 @@ export const actions = {
   setNavigation ({ commit }) {
     this.$axios
       .get('navigation/1/')
-      .then(response => (
-        commit('setHeaderNav', response.data)
-      ))
+      .then((response) => {
+        commit('setHeaderNav', response.data.primary_navigation)
+        commit('setFooterNav', response.data.secondary_navigation)
+        commit('setFooterSlogan', response.data.property_description)
+        commit('setLegalNav', response.data.legal_links)
+      })
       .catch((error) => {
         console.log(error)
       })
@@ -62,17 +54,15 @@ export const actions = {
 
 export const mutations = {
   setHeaderNav (state, data) {
-    const headerNav = []
-    data.primary_navigation.forEach(function (item) {
-      headerNav.push(
-        {
-          text: item.value.title,
-          url: item.value.url,
-          newWindow: false
-        }
-      )
-    })
-    console.log(headerNav)
-    state.headerNav = headerNav
+    state.headerNav = navigation.methods.formatNavigationArray(data)
+  },
+  setFooterNav (state, data) {
+    state.footerNav = navigation.methods.formatNavigationArray(data)
+  },
+  setFooterSlogan (state, data) {
+    state.footerSlogan = data
+  },
+  setLegalNav (state, data) {
+    state.legalNav = navigation.methods.formatNavigationArray(data)
   }
 }

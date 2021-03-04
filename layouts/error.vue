@@ -1,8 +1,11 @@
 <template>
   <div class="error-page l-container l-container--11col">
     <v-spacer size="quad" />
-    <strong class="c-basic__header-kicker u-font--secondary-style u-font--xs">
+    <strong v-if="error.statusCode === 404" class="c-basic__header-kicker u-font--secondary-style u-font--xs">
       404 Page Error
+    </strong>
+    <strong v-else class="c-basic__header-kicker u-font--secondary-style u-font--xs">
+      500 Server Error
     </strong>
     <h1
       v-if="error.statusCode === 404"

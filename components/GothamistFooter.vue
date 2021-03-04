@@ -2,8 +2,9 @@
   <div>
     <back-to-top />
     <the-footer
-      slogan="Gothamist is a website about New York City news, arts and events, and food, brought to you by New York Public Radio. Gothamist is supported by the American Express Foundation."
+      :slogan="footerSlogan"
       :primary-nav="footerNav"
+      :legal-nav="legalNav"
       subheader1="About Us"
     >
       <template v-slot:logo>
@@ -59,7 +60,9 @@ export default {
   },
   computed: {
     ...mapState('global', {
-      footerNav: state => state.footerNav
+      footerNav: state => state.footerNav,
+      footerSlogan: state => state.footerSlogan,
+      legalNav: state => state.legalNav
     })
   }
 }
