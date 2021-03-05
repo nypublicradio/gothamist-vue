@@ -1,10 +1,10 @@
 <template>
   <div class="error-page l-container l-container--11col">
     <v-spacer size="quad" />
-    <strong v-if="error.statusCode === 404" class="c-basic__header-kicker u-font--secondary-style u-font--xs">
+    <strong v-if="error.statusCode === 404" class="c-basic__header-kicker">
       404 Page Error
     </strong>
-    <strong v-else class="c-basic__header-kicker u-font--secondary-style u-font--xs">
+    <strong v-else class="c-basic__header-kicker">
       500 Server Error
     </strong>
     <h1
@@ -22,6 +22,7 @@
     </h1>
     <v-spacer size="double" />
     <image-with-caption
+      variation="gothamist"
       alt-text="Realize the key to Zubaz is wearing them high. No need to rock these low. They do the work for you."
       image="/404.jpg"
       caption="Realize the key to Zubaz is wearing them high. No need to rock these low. They do the work for you."
@@ -38,7 +39,7 @@
       </nuxt-link>
       for what you're looking for.
     </p>
-    <v-spacer size="double" />
+    <v-spacer size="quad" />
   </div>
 </template>
 

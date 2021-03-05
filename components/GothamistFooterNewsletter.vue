@@ -1,76 +1,67 @@
 <template>
   <div class="c-newsletter-form">
-<!--    <div class="c-newsletter-form__graphic">-->
-<!--      <party-confetti />-->
-<!--    </div>-->
-
-<!--    <div class="c-newsletter-form__inner u-spacing">-->
-
-<!--      <div class="c-newsletter-form__text">-->
-<!--        <p>-->
-<!--          <span class="c-newsletter-form__icon o-icon o-icon&#45;&#45;newsletter-form u-icon&#45;&#45;s"><gothamist-arrow /></span>-->
-<!--          <span>Sign up for our newsletter! Share your email address to get our top stories each day.</span>-->
-<!--        </p>-->
-<!--      </div>-->
-
-<!--      <form-->
-<!--        id="ember662"-->
-<!--        class="c-newsletter-form__concrete ember-view u-spacing gtm__click-tracking"-->
-<!--      >-->
-<!--        <div class="c-newsletter-form__field-group">-->
-<!--          <label-->
-<!--            for="newsletter"-->
-<!--            class="is-vishidden"-->
-<!--          />-->
-<!--          <input-->
-<!--            name="newsletter"-->
-<!--            required=""-->
-<!--            placeholder="your@email.com"-->
-<!--            id="ember663"-->
-<!--            class="c-newsletter-form__input ember-text-field ember-view"-->
-<!--            type="email"-->
-<!--          >-->
-<!--          <button-->
-<!--            data-action="Newsletter Signup"-->
-<!--            data-category="Click Tracking"-->
-<!--            data-test-newsletter-submit=""-->
-<!--            id="ember664"-->
-<!--            class="o-button c-newsletter-form__button gtm__click-tracking ember-view o-button&#45;&#45;c-quarternary"-->
-<!--            data-label="Footer"-->
-<!--            type="submit"-->
-<!--          >-->
-<!--            <span class="c-newsletter-form__submit-icon o-icon o-icon&#45;&#45;newsletter-form"><gothamist-arrow /></span>-->
-<!--            <span class="is-vishidden">Submit email</span>-->
-<!--          </button>-->
-<!--        </div>-->
-<!--        <div-->
-<!--          class="c-newsletter-form__message"-->
-<!--          aria-live="polite"-->
-<!--        />-->
-<!--        <div class="c-newsletter-form__terms">-->
-<!--          <label class="c-newsletter-form__terms-checkbox">-->
-<!--            <input-->
-<!--              name="newsletterCheckbox"-->
-<!--              id="ember666"-->
-<!--              class="o-checkbox ember-checkbox ember-view"-->
-<!--              type="checkbox"-->
-<!--            >-->
-<!--            <p-->
-<!--              class="u-font&#45;&#45;xs"-->
-<!--              data-test-newsletter-tout-legal=""-->
-<!--            >-->
-<!--              By submitting your information, you're agreeing to receive communications from New York Public Radio in accordance with our-->
-<!--              <a-->
-<!--                href="https://www.wnyc.org/terms/"-->
-<!--                target="_blank"-->
-<!--                rel="noopener"-->
-<!--                class="u-has-accent"-->
-<!--              >Terms</a>.-->
-<!--            </p>-->
-<!--          </label>-->
-<!--        </div>-->
-<!--      </form>-->
-<!--    </div>-->
+    <div class="c-newsletter-form__graphic">
+      <party-confetti />
+    </div>
+    <div class="c-newsletter-form__inner">
+      <div class="c-newsletter-form__text">
+        <gothamist-arrow />
+        Sign up for our newsletter! Share your email address to get our top stories each day.
+      </div>
+      <form
+        class="gtm__click-tracking"
+        @submit.prevent="submitForm"
+      >
+        <label
+          for="newsletter"
+          class="is-vishidden"
+        >
+          newsletter signup
+        </label>
+        <div class="inline-button">
+          <input
+            id="newsletter"
+            v-model="email"
+            name="newsletter"
+            placeholder="your@email.com"
+            class="c-newsletter-form__input"
+            required
+            type="email"
+          >
+          <button
+            class="c-newsletter-form__button"
+            data-label="Footer"
+            data-action="Newsletter Signup"
+            data-category="Click Tracking"
+            data-test-newsletter-submit=""
+            type="submit"
+          >
+            <gothamist-arrow />
+          </button>
+        </div>
+        <div class="c-newsletter-form__terms">
+          <fieldset>
+            <legend class="is-vishidden">
+              Terms
+            </legend>
+            <label>
+              <input
+                type="checkbox"
+                required
+                checked
+              >
+              By submitting your information, you're agreeing to receive communications from New York Public Radio in accordance with our
+              <a
+                href="https://www.wnyc.org/terms/"
+                target="_blank"
+                rel="noopener"
+                class="u-has-accent"
+              >Terms</a>.
+            </label>
+          </fieldset>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -78,36 +69,143 @@
 export default {
   name: 'GothamistFooterNewsletter',
   components: {
-    // GothamistArrow: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistArrow'),
-    // PartyConfetti: () => import('nypr-design-system-vue/src/components/icons/gothamist/PartyConfetti')
+    GothamistArrow: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistArrow'),
+    PartyConfetti: () => import('nypr-design-system-vue/src/components/icons/gothamist/PartyConfetti')
+  },
+  data () {
+    return {
+      email: ''
+    }
+  },
+  methods: {
+    submitForm () {
+      // eslint-disable-next-line no-console
+      console.log('form was submitted: ' + this.email)
+    }
   }
 }
 </script>
 
 <style lang="scss">
-.c-newsletter-form__button :hover {
-  background-color: RGB(var(--color-form-button));
+.c-newsletter-form {
+  position: relative;
+  width: 100%;
+  @include typeface(body, 4);
+  @include media(">medium") {
+    max-width: 375px;
+    margin: 0 0 0 auto;
+  }
 }
 
-.c-newsletter-form__button {
-  background-color: RGB(var(--color-reddish-orange));
+.c-newsletter-form .c-newsletter-form__graphic {
+  z-index: 1;
+  position: absolute;
+  width: 130px;
+  height: 170px;
+  top: -50px;
+  left: -10px;
+  mix-blend-mode: difference;
+  @include media(">xlarge") {
+    z-index: 0;
+    mix-blend-mode: normal;
+    top: 50px;
+    left: -120px;
+  }
+}
+
+.c-newsletter-form .c-newsletter-form__graphic .party-confetti-icon path {
+  fill: RGB(var(--color-background-highlight));
+}
+
+.c-newsletter-form .c-newsletter-form__inner {
+  z-index: 0;
+  position: relative;
+  background-color: RGB(var(--color-background-highlight));
+  border: 3px solid RGB(var(--color-dark-gray));
+  padding: var(--space-5) var(--space-4);
+  @include media(">xlarge") {
+    z-index: 1;
+  }
+}
+
+.c-newsletter-form .c-newsletter-form__inner .c-newsletter-form__text {
+  margin-left: 90px;
+  @include media(">xlarge") {
+    margin-left: 0;
+  }
+}
+
+.c-newsletter-form .c-newsletter-form__inner .o-gothamist-arrow-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: var(--space-2);
+  vertical-align: text-top;
+}
+
+.c-newsletter-form .inline-button {
+  border: solid 2px RGB(var(--color-dark-gray));
+  margin: var(--space-3) 0;
+}
+
+.c-newsletter-form .c-newsletter-form__input {
+  border-radius: 0!important;
+  height: 60px;
+  position: relative;
+  z-index: 2;
 }
 
 .c-newsletter-form .c-newsletter-form__button {
   background-color: RGB(var(--color-dark-gray));
+  border: none;
+  height: 60px;
+  width: 70px;
+  padding: 0;
+
+  &:hover {
+    background-color: RGB(var(--color-reddish-orange));
+    transform: none;
+
+    .o-gothamist-arrow-icon {
+      animation: bounce .8s 0s ease-in-out infinite;
+    }
+  }
+
+  &::before,
+  &::after {
+    display: none;
+  }
 }
 
-.c-newsletter-tout .c-newsletter-form__terms input[type="checkbox"] {
-  border: 2px solid;
-  border-color: RGB(var(--color-white));
+.c-newsletter-form .c-newsletter-form__button .o-gothamist-arrow-icon {
+  width: 24px;
+  margin: 0;
+
+  path {
+    fill: RGB(var(--color-white));
+  }
 }
 
-.c-newsletter-tout .c-newsletter-form__terms input[type="checkbox"]:checked {
-  border: 2px solid;
-  border-color: RGB(var(--color-white));
+.c-newsletter-form .c-newsletter-form__terms {
+  padding-left: 25px;
+  position: relative;
 }
 
-.c-newsletter-form__terms a {
+.c-newsletter-form .c-newsletter-form__terms input[type="checkbox"] {
+  position: absolute;
+  left: -25px;
+  top: 2px;
+  background-color: RGB(var(--color-dark-gray));
+  border: none;
+  width: 17px;
+  height: 17px;
+  background-size: 10px;
+}
+
+.c-newsletter-form .c-newsletter-form__terms label {
+  @include typeface(body, 3);
+}
+
+.c-newsletter-form .c-newsletter-form__terms a {
   color: RGB(var(--color-text));
   border-bottom: 2px dotted RGB(var(--color-text));
 
@@ -116,27 +214,15 @@ export default {
   }
 }
 
-.c-newsletter-form .c-newsletter-form__button:hover[disabled] {
-  background-color: RGB(var(--color-dark-gray));
-}
-
-.c-newsletter-form .c-newsletter-form__button {
-  background-color: RGB(var(--color-dark-gray));
-}
-
-.c-newsletter-form__terms a {
-  color: RGB(var(--color-text));
-  border-bottom: 2px dotted RGB(var(--color-text));
-
-  &:hover {
-    background-color: RGB(var(--color-reddish-orange));
-    color: RGB(var(--color-text-inverse));
+@keyframes bounce {
+  0%, 100% {
+    transform: translateX(0);
   }
-}
-
-.c-newsletter-form__button svg,
-.c-newsletter-form__button svg path,
-.c-newsletter-form__button svg rect {
-  fill: RGB(var(--color-footer-text));
+  20% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
 }
 </style>

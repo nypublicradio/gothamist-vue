@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="article">
     <div
       v-if="dataLoaded"
-      class="l-container"
+      class="l-container l-container--12col"
     >
       <v-spacer size="quad" />
       <h1 v-html="articleData.title" />
