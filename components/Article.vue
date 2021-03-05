@@ -18,7 +18,7 @@
     </div>
     <div
       v-else
-      class="l-container"
+      class="l-container l-container--12col"
     >
       <v-spacer size="quad" />
       <p>skeleton component goes here</p>
