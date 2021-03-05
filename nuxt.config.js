@@ -107,10 +107,6 @@ export default {
     ]
   },
 
-  env: {
-    API: process.env.API
-  },
-
   link: [
     {
       rel: 'icon',
