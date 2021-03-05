@@ -45,6 +45,7 @@ export const actions = {
         commit('setLegalNav', response.data.legal_links)
       })
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.log(error)
       })
   }

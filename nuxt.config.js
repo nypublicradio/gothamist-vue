@@ -107,17 +107,29 @@ export default {
     ]
   },
 
+  env: {
+    API: process.env.API
+  },
+
   link: [
     {
       rel: 'icon',
       type: 'image/x-icon',
       href: '/favicon.ico'
+    },
+    {
+      rel: 'preconnect',
+      href: process.env.API,
+      crossorigin: true
     }
   ],
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
-    { lang: 'scss', src: './assets/main.scss' }
+    {
+      lang: 'scss',
+      src: './assets/main.scss'
+    }
   ],
 
   styleResources: { scss: './assets/*.scss' },

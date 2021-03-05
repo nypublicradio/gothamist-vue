@@ -5,7 +5,7 @@ export default {
     // get the page data for the given ID
     getData (id) {
       return axios
-        .get('https://cms.demo.nypr.digital/api/v2/pages/' + id)
+        .get(process.env.API + 'pages/' + id)
         .then(function (response) {
           return response.data
         })
@@ -13,7 +13,7 @@ export default {
     // get the page ID for the given slug
     getID (slug) {
       return axios
-        .get('https://cms.demo.nypr.digital/api/v2/pages/?slug=' + slug)
+        .get(process.env.API + 'pages/?slug=' + slug)
         .then(function (response) {
           return response.data.items[0].id
         })
@@ -21,7 +21,7 @@ export default {
     // get the slug for the given page ID
     getSlug (id) {
       return axios
-        .get('https://cms.demo.nypr.digital/api/v2/pages/' + id)
+        .get(process.env.API + 'pages/' + id)
         .then(function (response) {
           return response.data.meta.slug
         })
