@@ -208,13 +208,14 @@ export default {
   height: 60px;
   width: 70px;
   padding: 0;
+  cursor: pointer;
 
   &:hover {
     background-color: RGB(var(--color-reddish-orange));
     transform: none;
 
     .o-gothamist-arrow-icon {
-      animation: bounce .8s 0s ease-in-out infinite;
+      animation: bounceHorizontal .8s 0s ease-in-out infinite;
     }
   }
 
@@ -271,7 +272,7 @@ export default {
   max-width: 30px;
 }
 
-@keyframes bounce {
+@keyframes bounceHorizontal {
   0%, 100% {
     transform: translateX(0);
   }

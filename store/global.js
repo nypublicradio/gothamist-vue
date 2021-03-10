@@ -1,20 +1,24 @@
 import navigation from '~/mixins/navigation'
 
 export const state = () => ({
+  dailyNewsletter: '65dbec786b',
   donateUrl: 'https://pledge3.wnyc.org/donate/gothamist/onestep/?utm_medium=partnersite&utm_source=gothamist&utm_campaign=brandheader',
-  headerNav: [],
   footerNav: [],
   footerSlogan: '',
+  headerNav: [],
   legalNav: [],
+  mailchimpAPI: process.env.MAILCHIMP_API,
+  navigationAPI: 'navigation/1/',
   tipsEmail: 'tips@gothamist.com',
-  wtcNewsletter: '8c376c6dff',
-  dailyNewsletter: '65dbec786b',
-  mailchimpAPI: process.env.MAILCHIMP_API
+  wtcNewsletter: '8c376c6dff'
 })
 
 // Getters read the current state of the store module and return something
 
 export const getters = {
+  dailyNewsletter (state) {
+    return state.dailyNewsletter
+  },
   donateUrl (state) {
     return state.donateUrl
   },
@@ -30,17 +34,26 @@ export const getters = {
   legalNav (state) {
     return state.legalNav
   },
+  mailchimpAPI (state) {
+    return state.mailchimpAPI
+  },
+  navigationAPI (state) {
+    return state.navigationAPI
+  },
   tipsEmail (state) {
     return state.tipsEmail
+  },
+  wtcNewsletter (state) {
+    return state.wtcNewsletter
   }
 }
 
 // Actions commit mutations and can contain arbitrary asynchronous operations
 
 export const actions = {
-  setNavigation ({ commit }) {
+  setNavigation ({ commit, state }) {
     this.$axios
-      .get('navigation/1/')
+      .get(state.navigationAPI)
       .then((response) => {
         commit('setHeaderNav', response.data.primary_navigation)
         commit('setFooterNav', response.data.secondary_navigation)

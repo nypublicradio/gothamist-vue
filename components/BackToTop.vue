@@ -46,27 +46,30 @@ export default {
     text-decoration: none;
     color: RGB(var(--color-reddish-orange));
 
-    .back-to-top-icon {
-      animation: bounce .8s 0s ease-in-out infinite;
+    .back-to-top-icon svg {
+      animation: bounceVertical .8s 0s ease-in-out infinite;
     }
   }
 }
 
-.back-to-top svg {
-  margin-right: var(--space-1);
-  height: 30px;
+.back-to-top-icon {
   transform: rotate(-90deg);
 }
 
-@keyframes bounce {
-  0% {
-    transform: translateY(0);
+.back-to-top svg {
+  margin: 0 var(--space-1);
+  height: 30px;
+}
+
+@keyframes bounceVertical {
+  0%, 100% {
+    transform: translateX(0);
   }
-  50% {
-    transform: translateY(-6px);
+  20% {
+    transform: translateX(-3px);
   }
-  100% {
-    transform: translateY(0);
+  80% {
+    transform: translateX(3px);
   }
 }
 </style>
