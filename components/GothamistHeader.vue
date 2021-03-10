@@ -9,6 +9,7 @@
           class="not-fixed u-color-group-dark"
           :primary-nav="headerNav"
           :secondary-nav="footerNav"
+          :legal-nav="legalNav"
         >
           <template v-slot:logo>
             <nuxt-link
@@ -126,7 +127,8 @@ export default {
       donateUrl: state => state.donateUrl,
       tipsEmail: state => state.tipsEmail,
       footerNav: state => state.footerNav,
-      headerNav: state => state.headerNav
+      headerNav: state => state.headerNav,
+      legalNav: state => state.legalNav
     })
   },
   mounted () {

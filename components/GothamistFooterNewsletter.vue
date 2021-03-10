@@ -18,7 +18,10 @@
         >
           newsletter signup
         </label>
-        <div class="inline-button">
+        <div
+          v-if="status !== 'success'"
+          class="inline-button"
+        >
           <input
             id="newsletter"
             v-model="email"
@@ -36,10 +39,26 @@
             data-test-newsletter-submit=""
             type="submit"
           >
-            <gothamist-arrow />
+            <gothamist-arrow v-if="!submitted" />
+            <loading-icon v-else />
           </button>
         </div>
-        <div class="c-newsletter-form__terms">
+        <div
+          v-if="status === 'success'"
+          class="c-newsletter-form__submit"
+        >
+          Thanks for signing up!
+        </div>
+        <div
+          v-if="status === 'error'"
+          class="c-newsletter-form__submit"
+        >
+          Sorry, there was an error with your submission. Please try again!
+        </div>
+        <div
+          v-if="status !== 'success'"
+          class="c-newsletter-form__terms"
+        >
           <fieldset>
             <legend class="is-vishidden">
               Terms
@@ -66,21 +85,50 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'GothamistFooterNewsletter',
   components: {
     GothamistArrow: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistArrow'),
+    LoadingIcon: () => import('nypr-design-system-vue/src/components/animations/LoadingIcon'),
     PartyConfetti: () => import('nypr-design-system-vue/src/components/icons/gothamist/PartyConfetti')
   },
   data () {
     return {
-      email: ''
+      email: '',
+      status: '',
+      submitted: false
     }
+  },
+  computed: {
+    ...mapState('global', {
+      dailyNewsletter: state => state.dailyNewsletter,
+      mailchimpAPI: state => state.mailchimpAPI
+    })
   },
   methods: {
     submitForm () {
-      // eslint-disable-next-line no-console
-      console.log('form was submitted: ' + this.email)
+      this.submitted = true
+      this.$axios
+        .post(
+          this.mailchimpAPI,
+          {
+            list: this.dailyNewsletter,
+            email: this.email,
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*'
+            }
+          }
+        )
+        .then(() => {
+          this.status = 'success'
+        })
+        .catch(() => {
+          this.status = 'error'
+          this.submitted = false
+        })
     }
   }
 }
@@ -148,7 +196,7 @@ export default {
 }
 
 .c-newsletter-form .c-newsletter-form__input {
-  border-radius: 0!important;
+  border-radius: 0 !important;
   height: 60px;
   position: relative;
   z-index: 2;
@@ -212,6 +260,15 @@ export default {
   &:hover {
     background-color: RGB(var(--color-reddish-orange));
   }
+}
+
+.c-newsletter-form .c-newsletter-form__submit {
+  margin: var(--space-3) 0;
+  font-weight: bold;
+}
+
+.c-newsletter-form .loading-icon {
+  max-width: 30px;
 }
 
 @keyframes bounce {

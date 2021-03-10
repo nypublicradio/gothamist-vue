@@ -21,7 +21,7 @@
       class="l-container l-container--12col"
     >
       <v-spacer size="quad" />
-      <p>skeleton component goes here</p>
+      <p>skeleton loading component goes here</p>
       <v-spacer size="quad" />
     </div>
   </div>

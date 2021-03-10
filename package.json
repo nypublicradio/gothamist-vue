@@ -16,15 +16,15 @@
     "@nuxtjs/axios": "^5.12.5",
     "@nuxtjs/gtm": "^2.4.0",
     "concurrent-transform": "^1.0.0",
-    "core-js": "^3.8.3",
+    "core-js": "^3.9.1",
     "focus-visible": "^5.2.0",
     "gulp": "^4.0.2",
     "gulp-awspublish": "^4.1.2",
     "gulp-cloudfront-invalidate-aws-publish": "^1.0.0",
-    "nuxt": "^2.14.12"
+    "nuxt": "^2.15.3"
   },
   "devDependencies": {
-    "@nuxt/types": "^2.14.12",
+    "@nuxt/types": "^2.15.3",
     "@nuxtjs/eslint-config": "^3.1.0",
     "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/google-analytics": "^2.4.0",
@@ -34,14 +34,15 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
-    "eslint": "^7.18.0",
+    "eslint": "^7.21.0",
     "eslint-plugin-nuxt": "^1.0.0",
     "jest": "^26.6.3",
     "moment": "^2.29.1",
     "node-sass": "^4.14.1",
-    "nypr-design-system-vue": "nypublicradio/nypr-design-system-vue#c2be1c5f160d4c2bb07dcd886fb404bfd078d2ec",
+    "nypr-design-system-vue": "github:nypublicradio/nypr-design-system-vue#a6fb814930b611e52ff4a94d28187f00a823003c",
     "sass-loader": "^10.1.1",
-    "vue-jest": "^3.0.4"
+    "vue-jest": "^3.0.4",
+    "vue-lottie": "^0.2.1"
   },
   "gitHooks": {
     "pre-commit": "lint && jest"

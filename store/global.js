@@ -6,7 +6,10 @@ export const state = () => ({
   footerNav: [],
   footerSlogan: '',
   legalNav: [],
-  tipsEmail: 'tips@gothamist.com'
+  tipsEmail: 'tips@gothamist.com',
+  wtcNewsletter: '8c376c6dff',
+  dailyNewsletter: '65dbec786b',
+  mailchimpAPI: process.env.MAILCHIMP_API
 })
 
 // Getters read the current state of the store module and return something
