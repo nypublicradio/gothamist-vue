@@ -84,7 +84,9 @@
       <template v-slot:search>
         <search-icon
           class="u-icon--xs"
+          tabindex="0"
           @click.native="searchIsActive = true"
+          @keypress.native.enter.space.prevent="searchIsActive = true"
         />
         <transition name="slide-left">
           <v-search
@@ -138,3 +140,7 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+
+</style>
