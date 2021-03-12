@@ -13,7 +13,7 @@
       <v-spacer size="quad" />
       Slug: {{ articleSlug }}
       <v-spacer size="quad" />
-      {{ articleData }}
+      <v-streamfield :streamfield="articleData.body" />
       <v-spacer size="quad" />
     </div>
     <div
@@ -34,7 +34,8 @@ import helpers from '~/mixins/helpers'
 export default {
   name: 'Article',
   components: {
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
+    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
+    VStreamfield: () => import('./VStreamfield')
   },
   mixins: [pages, helpers],
   data () {
