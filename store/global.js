@@ -9,6 +9,24 @@ export const state = () => ({
   legalNav: [],
   mailchimpAPI: process.env.MAILCHIMP_API,
   navigationAPI: 'navigation/1/',
+  readMoreNav: [
+    {
+      text: 'News',
+      url: '/news'
+    },
+    {
+      text: 'Arts & Entertainment',
+      url: '/arts-entertainment'
+    },
+    {
+      text: 'Food',
+      url: '/food'
+    },
+    {
+      text: 'Election 2021',
+      url: '/election-2021'
+    }
+  ],
   tipsEmail: 'tips@gothamist.com',
   wtcNewsletter: '8c376c6dff'
 })

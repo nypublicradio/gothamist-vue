@@ -166,7 +166,6 @@ export default {
 }
 
 .c-newsletter-form .c-newsletter-form__inner {
-  z-index: 0;
   position: relative;
   background-color: RGB(var(--color-background-highlight));
   border: 3px solid RGB(var(--color-dark-gray));
@@ -193,13 +192,13 @@ export default {
 .c-newsletter-form .inline-button {
   border: solid 2px RGB(var(--color-dark-gray));
   margin: var(--space-3) 0;
+  position: relative;
+  z-index: 3;
 }
 
 .c-newsletter-form .c-newsletter-form__input {
   border-radius: 0 !important;
   height: 60px;
-  position: relative;
-  z-index: 2;
 }
 
 .c-newsletter-form .c-newsletter-form__button {
