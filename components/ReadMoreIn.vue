@@ -4,25 +4,29 @@
       Read More In:
     </div>
     <ul class="read-more-in-links">
-      <li class="read-more-in-links-item">
-        <a href="/news">News</a>
-      </li>
-      <li class="read-more-in-links-item">
-        <a href="/arts-entertainment/">Arts & Entertainment</a>
-      </li>
-      <li class="read-more-in-links-item">
-        <a href="/food">Food</a>
-      </li>
-      <li class="read-more-in-links-item">
-        <a href="/election-2021">Election 2021</a>
+      <li
+        v-for="(item, key) in readMoreNav"
+        :key="key"
+        class="read-more-in-links-item"
+      >
+        <nuxt-link :to="item.url">
+          {{ item.text }}
+        </nuxt-link>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  name: 'ReadMoreIn'
+  name: 'ReadMoreIn',
+  computed: {
+    ...mapState('global', {
+      readMoreNav: state => state.readMoreNav
+    })
+  }
 }
 </script>
 
