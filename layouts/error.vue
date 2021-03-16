@@ -7,6 +7,7 @@
     <strong v-else class="c-basic__header-kicker">
       500 Server Error
     </strong>
+    <v-spacer />
     <h1
       v-if="error.statusCode === 404"
       class="c-basic__heading o-3d-heading"
@@ -20,7 +21,7 @@
     >
       Sorry, an error occurred.
     </h1>
-    <v-spacer size="double" />
+    <v-spacer size="triple" />
     <image-with-caption
       variation="gothamist"
       alt-text="Realize the key to Zubaz is wearing them high. No need to rock these low. They do the work for you."
