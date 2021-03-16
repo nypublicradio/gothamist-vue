@@ -82,21 +82,16 @@
         />
       </template>
       <template v-slot:search>
-        <search-icon
-          class="u-icon--xs"
-          tabindex="0"
-          @click.native="searchIsActive = true"
-          @keypress.native.enter.space.prevent="searchIsActive = true"
+        <v-search
+          class="header-search-bar"
+          action="/search"
+          show-search-icon
+          show-close-icon
+          closed-on-load
+          :search-is-active="false"
+          transition="slide-left"
+          :donate-url="donateUrl"
         />
-        <transition name="slide-left">
-          <v-search
-            v-if="searchIsActive"
-            class="header-search-bar"
-            show-close-icon
-            action="/search"
-            @searchBarClose="searchIsActive = false"
-          />
-        </transition>
       </template>
     </the-header>
   </div>
@@ -111,7 +106,6 @@ export default {
     SecondaryNavigation: () => import('nypr-design-system-vue/src/components/SecondaryNavigation'),
     TheHeader: () => import('nypr-design-system-vue/src/components/TheHeader'),
     GothamistLogo: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogo'),
-    SearchIcon: () => import('nypr-design-system-vue/src/components/icons/SearchIcon'),
     VSearch: () => import('nypr-design-system-vue/src/components/VSearch'),
     TheMenu: () => import('nypr-design-system-vue/src/components/TheMenu'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
@@ -120,7 +114,6 @@ export default {
   },
   data () {
     return {
-      searchIsActive: false,
       isHomepage: false
     }
   },
@@ -140,3 +133,21 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.c-main-header .header-search-bar .search-bar-search-icon {
+  background: none !important;
+  position: absolute;
+  right: 0;
+  top: 4px;
+
+  &:hover {
+    background: none !important;
+  }
+
+  &::before,
+  &::after {
+    display: none;
+  }
+}
+</style>
