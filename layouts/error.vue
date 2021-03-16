@@ -40,6 +40,12 @@
       </nuxt-link>
       for what you're looking for.
     </p>
+    <v-spacer size="triple" />
+    <h2 class="o-section__heading o-bg-text-accent">
+      Recent Stories
+    </h2>
+    <v-spacer />
+    <recent-stories />
     <v-spacer size="quad" />
   </div>
 </template>
@@ -51,6 +57,7 @@ export default {
   name: 'ErrorPage',
   components: {
     ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
+    RecentStories: () => import('../components/RecentStories'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
   mixins: [gtm],
