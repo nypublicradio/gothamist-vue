@@ -4,7 +4,7 @@
       v-for="(story, index) in recentStories"
       :key="index"
       class="gothamist mod-small"
-      :image="story.lead_asset[0]?.value.default_image ? story.lead_asset[0].value.default_image.file : defaultImage"
+      :image="story.lead_asset[0] && story.lead_asset[0].value.default_image ? story.lead_asset[0].value.default_image.file : defaultImage"
       :image-height="150"
       :image-width="150"
       :title="story.title"
