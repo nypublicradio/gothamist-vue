@@ -23,7 +23,6 @@ templates:
           command: |
             env | sed -n "s/^${ENV}_//p" >> .env
             set -o allexport && source .env && set +o allexport
-            npm install
             npm run generate
             npm run deploy
 
@@ -91,7 +90,7 @@ jobs:
           name: Install node dependencies
           command: |
             if [ ! -d node_modules ]; then
-              npm install 
+              npm install
             fi
       - save_cache:
           <<: *node_key
