@@ -2,6 +2,7 @@ import navigation from '~/mixins/navigation'
 
 export const state = () => ({
   dailyNewsletter: '65dbec786b',
+  defaultImage: '/images/news-tile.png',
   donateUrl: 'https://pledge3.wnyc.org/donate/gothamist/onestep/?utm_medium=partnersite&utm_source=gothamist&utm_campaign=brandheader',
   footerNav: [],
   footerSlogan: '',
@@ -36,6 +37,9 @@ export const state = () => ({
 export const getters = {
   dailyNewsletter (state) {
     return state.dailyNewsletter
+  },
+  defaultImage (state) {
+    return state.defaultImage
   },
   donateUrl (state) {
     return state.donateUrl
