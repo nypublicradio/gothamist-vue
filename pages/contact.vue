@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="contactPage" class="l-container">
+    <div v-if="contactPage" class="l-container l-container--14col">
       <v-spacer size="quad" />
       <header class="c-basic__header u-spacing">
         <h1 class="c-basic__heading o-3d-heading">
@@ -8,7 +8,9 @@
         </h1>
       </header>
       <v-spacer size="quad" />
-      <div class="contact-page" v-html="contactPage.body[0].value" />
+      <div class="contact-page">
+        <v-streamfield :streamfield="contactPage.body" />
+      </div>
       <v-spacer size="quad" />
     </div>
   </div>
@@ -18,7 +20,8 @@
 export default {
   name: 'ContactPage',
   components: {
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
+    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
+    VStreamfield: () => import('../components/VStreamfield')
   },
   data () {
     return {
@@ -37,6 +40,9 @@ export default {
 
 <style lang="scss">
 
+.u-padding--quad--top {
+  padding-top: calc(var(--space-3) * 3);
+}
 .contact-page p, .contact-page h2 {
   margin-bottom: var(--space-3);
 }
