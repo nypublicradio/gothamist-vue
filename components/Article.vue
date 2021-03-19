@@ -5,15 +5,15 @@
       class="l-container l-container--12col"
     >
       <v-spacer size="quad" />
-      <h1 v-html="articleData.title" />
+      <h1 v-html="article.title" />
       <v-spacer size="quad" />
-      ID: {{ articleID }}
+      ID: {{ article.id }}
       <v-spacer size="quad" />
-      Section: {{ articleSection }}
+      Section: {{ article.meta.parent.title }}
       <v-spacer size="quad" />
-      Slug: {{ articleSlug }}
+      Slug: {{ article.meta.slug }}
       <v-spacer size="quad" />
-      {{ articleData }}
+      <v-streamfield :streamfield="article.body" />
       <v-spacer size="quad" />
     </div>
     <div
@@ -28,41 +28,22 @@
 </template>
 
 <script>
-import pages from '@/mixins/pages'
-import helpers from '~/mixins/helpers'
-
 export default {
   name: 'Article',
   components: {
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
+    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
+    VStreamfield: () => import('./VStreamfield')
   },
-  mixins: [pages, helpers],
-  data () {
-    return {
-      articleSection: this.getSection(this.$route.path),
-      articleSlug: this.getSlug(this.$route.path),
-      articleID: null,
-      articleData: null
+  props: {
+    article: {
+      type: Object,
+      default: () => {}
     }
   },
   computed: {
     dataLoaded () {
-      return this.articleData !== null
+      return this.article.body !== null
     }
-  },
-  async mounted () {
-    await this.getID(this.articleSlug)
-      .then(id => (
-        this.articleID = id
-      ))
-      .catch(() => {
-        // handle 404 errors
-        this.$router.push('/notfound')
-      })
-    await this.getData(this.articleID)
-      .then(data => (
-        this.articleData = data
-      ))
   },
   head: {
     title: 'Article Page Title',
