@@ -32,7 +32,7 @@ export default {
   name: 'Article',
   components: {
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
-    VStreamfield: () => import('./VStreamfield')
+    VStreamfield: () => import('../components/VStreamfield')
   },
   props: {
     article: {
