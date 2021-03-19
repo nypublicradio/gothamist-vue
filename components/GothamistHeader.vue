@@ -23,6 +23,7 @@
             <div>
               <v-button
                 :href="donateUrl"
+                target="_blank"
                 class="c-main-header__donate"
                 label="Donate"
               />
