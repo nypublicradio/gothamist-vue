@@ -6,6 +6,10 @@
       <v-spacer size="quad" />
       <Breadcrumbs :breadcrumbs="[{title: 'News', url:'/news'},{title: 'Opinion', url:'/opinion'}]" />
       <v-spacer size="quad" />
+      <do-you-know-the-scoop />
+      <v-spacer size="quad" />
+      <article-page-newsletter />
+      <v-spacer size="quad" />
       <v-card
         show-gallery-icon
         class="gothamist mod-vertical mod-large"
@@ -63,6 +67,8 @@ export default {
   name: 'KimTestPage',
   components: {
     Breadcrumbs: () => import('../components/Breadcrumbs'),
+    DoYouKnowTheScoop: () => import('../components/DoYouKnowTheScoop'),
+    ArticlePageNewsletter: () => import('../components/ArticlePageNewsletter'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
     ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
     VCard: () => import('nypr-design-system-vue/src/components/VCard'),
