@@ -48,11 +48,12 @@
 </template>
 
 <script>
+import PullQuote from 'nypr-design-system-vue/src/components/PullQuote'
 export default {
   name: 'Streamfield',
   components: {
     ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
-    PullQuote: () => import('nypr-design-system-vue/src/components/PullQuote')
+    PullQuote
   },
   props: {
     streamfield: {
