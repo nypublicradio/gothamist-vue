@@ -20,7 +20,7 @@
         </label>
         <div
           v-if="status !== 'success'"
-          class="inline-button"
+          class="inline-button c-newsletter-form__inline-button"
         >
           <input
             id="newsletter"
@@ -40,7 +40,10 @@
             type="submit"
           >
             <gothamist-arrow v-if="!submitted" />
-            <loading-icon v-else />
+            <loading-icon
+              v-else
+              class="c-newsletter-form__loading-icon"
+            />
           </button>
         </div>
         <div
@@ -85,52 +88,14 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import newsletter from '../mixins/newsletter'
 
 export default {
   name: 'GothamistFooterNewsletter',
   components: {
-    GothamistArrow: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistArrow'),
-    LoadingIcon: () => import('nypr-design-system-vue/src/components/animations/LoadingIcon'),
     PartyConfetti: () => import('nypr-design-system-vue/src/components/icons/gothamist/PartyConfetti')
   },
-  data () {
-    return {
-      email: '',
-      status: '',
-      submitted: false
-    }
-  },
-  computed: {
-    ...mapState('global', {
-      dailyNewsletter: state => state.dailyNewsletter,
-      mailchimpAPI: state => state.mailchimpAPI
-    })
-  },
-  methods: {
-    submitForm () {
-      this.submitted = true
-      this.$axios
-        .post(
-          this.mailchimpAPI,
-          {
-            list: this.dailyNewsletter,
-            email: this.email,
-            headers: {
-              'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': '*'
-            }
-          }
-        )
-        .then(() => {
-          this.status = 'success'
-        })
-        .catch(() => {
-          this.status = 'error'
-          this.submitted = false
-        })
-    }
-  }
+  mixins: [newsletter]
 }
 </script>
 
@@ -189,19 +154,19 @@ export default {
   vertical-align: text-top;
 }
 
-.c-newsletter-form .inline-button {
+.c-newsletter-form__inline-button {
   border: solid 2px RGB(var(--color-dark-gray));
   margin: var(--space-3) 0;
   position: relative;
   z-index: 3;
 }
 
-.c-newsletter-form .c-newsletter-form__input {
+.c-newsletter-form__input {
   border-radius: 0 !important;
   height: 60px;
 }
 
-.c-newsletter-form .c-newsletter-form__button {
+.c-newsletter-form__button {
   background-color: RGB(var(--color-dark-gray));
   border: none;
   height: 60px;
@@ -224,7 +189,8 @@ export default {
   }
 }
 
-.c-newsletter-form .c-newsletter-form__button .o-gothamist-arrow-icon {
+.c-newsletter-form .c-newsletter-form__button .o-gothamist-arrow-icon,
+.c-newsletter-form__button .o-gothamist-arrow-icon {
   width: 24px;
   margin: 0;
 
@@ -233,27 +199,28 @@ export default {
   }
 }
 
-.c-newsletter-form .c-newsletter-form__terms {
+.c-newsletter-form__terms {
   padding-left: 25px;
   position: relative;
 }
 
-.c-newsletter-form .c-newsletter-form__terms input[type="checkbox"] {
+.c-newsletter-form .c-newsletter-form__terms input[type="checkbox"],
+.c-newsletter-form__terms input[type="checkbox"] {
   position: absolute;
   left: -25px;
   top: 2px;
-  background-color: RGB(var(--color-dark-gray));
-  border: none;
+  border: none !important;
   width: 17px;
   height: 17px;
-  background-size: 10px;
+  background-color: RGB(var(--color-dark-gray));
+  background-size: 10px !important;
 }
 
-.c-newsletter-form .c-newsletter-form__terms label {
+.c-newsletter-form__terms label {
   @include typeface(body, 3);
 }
 
-.c-newsletter-form .c-newsletter-form__terms a {
+.c-newsletter-form__terms a {
   color: RGB(var(--color-text));
   border-bottom: 2px dotted RGB(var(--color-text));
 
@@ -262,12 +229,12 @@ export default {
   }
 }
 
-.c-newsletter-form .c-newsletter-form__submit {
+.c-newsletter-form__submit {
   margin: var(--space-3) 0;
   font-weight: bold;
 }
 
-.c-newsletter-form .loading-icon {
+.c-newsletter-form__loading-icon {
   max-width: 30px;
 }
 
