@@ -134,21 +134,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.c-main-header .header-search-bar .search-bar-search-icon {
-  background: none !important;
-  position: absolute;
-  right: 0;
-  top: 4px;
-
-  &:hover {
-    background: none !important;
-  }
-
-  &::before,
-  &::after {
-    display: none;
-  }
-}
-</style>
