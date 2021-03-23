@@ -6,9 +6,10 @@ RUN apt-get update \
         netcat \
         nginx-extras \
         python \
+        python-pip \
         python-setuptools \
         unzip \
-    && python -m easy_install supervisor \
+    && pip install supervisor \
     && mkdir -p /code
 
 WORKDIR /code
