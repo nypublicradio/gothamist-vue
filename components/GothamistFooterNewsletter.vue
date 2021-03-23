@@ -38,7 +38,7 @@
             data-category="Click Tracking"
             data-test-newsletter-submit=""
             type="submit"
-            :disabled="termsCheckbox ? false : true"
+            :disabled="!termsCheckbox"
           >
             <gothamist-arrow v-if="!submitted" />
             <loading-icon
