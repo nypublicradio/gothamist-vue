@@ -31,6 +31,7 @@
           data-category="Click Tracking"
           data-test-newsletter-submit=""
           type="submit"
+          :disabled="!termsCheckbox"
         >
           <gothamist-arrow v-if="!submitted" />
           <loading-icon
@@ -61,6 +62,7 @@
           </legend>
           <label>
             <input
+              v-model="termsCheckbox"
               type="checkbox"
               required
               checked

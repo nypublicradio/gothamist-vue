@@ -5,7 +5,8 @@ export default {
     return {
       email: '',
       status: '',
-      submitted: false
+      submitted: false,
+      termsCheckbox: true
     }
   },
   components: {
