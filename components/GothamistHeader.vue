@@ -33,6 +33,7 @@
             <div>
               <v-button
                 :href="'mailto:' + tipsEmail"
+                target="_blank"
                 label="Send A Story Idea"
                 class="c-main-header__send-story"
               />
