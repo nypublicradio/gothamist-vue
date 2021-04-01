@@ -38,7 +38,7 @@
     "eslint-plugin-nuxt": "^1.0.0",
     "jest": "^26.6.3",
     "node-sass": "^4.14.1",
-    "nypr-design-system-vue": "github:nypublicradio/nypr-design-system-vue#122ade69a8ef4bcff94fb96da3cf3cd33f6f9357",
+    "nypr-design-system-vue": "github:nypublicradio/nypr-design-system-vue#2bebb352a641c61c1bc032a3993b16a56a7cf748",
     "sass-loader": "^10.1.1",
     "vue-jest": "^3.0.4",
     "vue-lottie": "^0.2.1"
