@@ -123,6 +123,7 @@
           </template>
         </article-metadata>
       </v-card>
+      <donate-banner />
     </div>
   </div>
 </template>
@@ -141,6 +142,7 @@ export default {
     ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
     ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
     GalleryPreview: () => import('nypr-design-system-vue/src/components/GalleryPreview'),
+    DonateBanner: () => import('../components/DonateBanner'),
     VCounter: () => import('nypr-design-system-vue/src/components/VCounter')
   }
 }
