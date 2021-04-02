@@ -1,6 +1,8 @@
 <template>
   <div class="article-page-newsletter l-container l-container--6col">
-    <h3>NYC news never sleeps. Get the Gothamist Daily newsletter and don't miss a moment.</h3>
+    <h3 v-if="title">
+      {{ title }}
+    </h3>
     <form
       class="gtm__click-tracking"
       @submit.prevent="submitForm"
@@ -86,7 +88,13 @@ import newsletter from '../mixins/newsletter'
 
 export default {
   name: 'ArticlePageNewsletter',
-  mixins: [newsletter]
+  mixins: [newsletter],
+  props: {
+    title: {
+      type: String,
+      default: null
+    }
+  }
 }
 </script>
 

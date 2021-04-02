@@ -73,6 +73,8 @@
         </div>
       </div>
       <v-spacer size="quad" />
+      <article-page-newsletter title="NYC news never sleeps. Get the Gothamist Daily newsletter and don't miss a moment." />
+      <v-spacer size="quad" />
       <article-page-newsletter />
       <v-spacer size="quad" />
       <v-card
@@ -123,6 +125,23 @@
           </template>
         </article-metadata>
       </v-card>
+      <v-spacer size="quad" />
+      <div class="l-grid l-grid--2up l-grid--large-gutters">
+        <div>
+          <h2 class="o-section__heading o-bg-text-accent">
+            Recent Stories
+          </h2>
+          <v-spacer />
+          <recent-stories />
+        </div>
+        <div>
+          <h2 class="o-section__heading o-bg-text-accent">
+            Recent Stories
+          </h2>
+          <v-spacer />
+          <recent-stories />
+        </div>
+      </div>
       <donate-banner />
     </div>
   </div>
@@ -143,6 +162,7 @@ export default {
     ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
     GalleryPreview: () => import('nypr-design-system-vue/src/components/GalleryPreview'),
     DonateBanner: () => import('../components/DonateBanner'),
+    RecentStories: () => import('../components/RecentStories'),
     VCounter: () => import('nypr-design-system-vue/src/components/VCounter')
   }
 }
