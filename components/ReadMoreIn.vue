@@ -1,5 +1,5 @@
 <template>
-  <div class="read-more-in l-container l-container--14col">
+  <div class="read-more-in">
     <div class="read-more-in-text">
       Read More In:
     </div>
