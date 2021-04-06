@@ -4,7 +4,9 @@
       <v-spacer size="quad" />
       <p>kim's test page</p>
       <v-spacer size="quad" />
-      <Breadcrumbs :breadcrumbs="[{title: 'News', url:'/news'},{title: 'Opinion', url:'/opinion'}]" />
+      <do-you-know-the-scoop />
+      <v-spacer size="quad" />
+      <Breadcrumbs :breadcrumbs="[{name: 'News', slug:'news'},{name: 'Opinion', slug:'opinion'}]" />
       <v-spacer size="quad" />
       <div class="l-container l-container--12col">
         <h1 class="c-article__headline o-headline">
@@ -27,8 +29,6 @@
               />
             </template>
           </article-metadata>
-          <v-spacer size="double" />
-          <do-you-know-the-scoop />
         </div>
       </div>
       <v-spacer size="quad" />
@@ -47,18 +47,18 @@
         subtitle="Here's what the latest Campaign Finance Board filings tell us."
         :tags="[{'name': 'news','slug': 'news'},{'name': 'sponsored','slug': ''}]"
       >
-        <article-metadata
-          publish-date="Jan 1, 2020 1:25PM"
-          updated-date="Mar 2, 2020 10:08AM"
-        >
-          <template v-slot:comments>
-            <v-counter
-              icon="comment"
-              value="40"
-              href="http://www.google.com"
-            />
-          </template>
-        </article-metadata>
+        <!--        <article-metadata-->
+        <!--          publish-date="Jan 1, 2020 1:25PM"-->
+        <!--          updated-date="Mar 2, 2020 10:08AM"-->
+        <!--        >-->
+        <!--          <template v-slot:comments>-->
+        <!--            <v-counter-->
+        <!--              icon="comment"-->
+        <!--              value="40"-->
+        <!--              href="http://www.google.com"-->
+        <!--            />-->
+        <!--          </template>-->
+        <!--        </article-metadata>-->
       </v-card>
       <v-spacer size="quad" />
       <v-card
@@ -75,13 +75,13 @@
           publish-date="Jan 1, 2020 1:25PM"
           updated-date="Mar 2, 2020 10:08AM"
         >
-          <template v-slot:comments>
-            <v-counter
-              icon="comment"
-              value="40"
-              href="http://www.google.com"
-            />
-          </template>
+<!--          <template v-slot:comments>-->
+<!--            <v-counter-->
+<!--              icon="comment"-->
+<!--              value="40"-->
+<!--              href="http://www.google.com"-->
+<!--            />-->
+<!--          </template>-->
         </article-metadata>
       </v-card>
       <v-spacer size="quad" />
@@ -95,10 +95,9 @@
         </div>
         <div>
           <h2 class="o-section__heading o-bg-text-accent">
-            Recent Stories
+            Featured In News
           </h2>
           <v-spacer />
-          <recent-stories />
         </div>
       </div>
       <donate-banner />
@@ -119,6 +118,7 @@ export default {
     VByline: () => import('nypr-design-system-vue/src/components/VByline'),
     DonateBanner: () => import('../components/DonateBanner'),
     RecentStories: () => import('../components/RecentStories'),
+    // FeaturedInNews: () => import('../components/FeaturedInNews'),
     VCounter: () => import('nypr-design-system-vue/src/components/VCounter')
   }
 }
