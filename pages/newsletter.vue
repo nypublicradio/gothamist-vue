@@ -61,7 +61,8 @@
 export default {
   name: 'Newsletter',
   components: {
-    ArticlePageNewsletter: () => import('../components/ArticlePageNewsletter')
+    ArticlePageNewsletter: () => import('../components/ArticlePageNewsletter'),
+    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   }
 }
 </script>
