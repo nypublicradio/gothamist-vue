@@ -162,7 +162,7 @@ export default {
   gtm: {
     pageTracking: true,
     enabled: true,
-    debug: false, // set this to true when you are testing to get console logs
+    debug: true, // set this to true when you are testing to get console logs
     pageViewEventName: 'Page View'
   },
 
