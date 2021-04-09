@@ -108,9 +108,20 @@ export default {
   color: RGB(var(--color-text));
 }
 
+.article-page-newsletter .c-newsletter-form__inline-button {
+  border: none;
+}
+
 .article-page-newsletter .c-newsletter-form__input,
 .article-page-newsletter .c-newsletter-form__button {
   height: 40px;
+}
+
+.article-page-newsletter .c-newsletter-form__input {
+  border: solid 2px RGB(var(--color-dark-gray));
+  &::placeholder {
+    font-size: var(--font-size-5);
+  }
 }
 
 .article-page-newsletter .c-newsletter-form__button {
