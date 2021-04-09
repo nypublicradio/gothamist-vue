@@ -21,18 +21,22 @@
             <share-tools-item
               service="facebook"
               username="gothamist"
+              @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
             />
             <share-tools-item
               service="twitter"
               username="gothamist"
+              @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
             />
             <share-tools-item
               service="instagram"
               username="gothamist"
+              @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
             />
             <share-tools-item
               service="youtube"
               username="UCY_2VeS5Q9_sMZRhtvF0c5Q"
+              @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
             />
           </share-tools>
         </div>
@@ -48,6 +52,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import gtm from '@/mixins/gtm'
 
 export default {
   name: 'GothamistFooter',
@@ -65,6 +70,7 @@ export default {
       footerSlogan: state => state.footerSlogan,
       legalNav: state => state.legalNav
     })
-  }
+  },
+  mixins: [gtm]
 }
 </script>
