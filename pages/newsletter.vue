@@ -23,7 +23,7 @@
                 </p>
                 <p>
                   <a
-                    href='https://us5.campaign-archive.com/?u=4109fdd323aaac7078eadaa8f&id=8c5254d6a1'
+                    href='https://us5.campaign-archive.com/?e=40257345f9&u=4109fdd323aaac7078eadaa8f&id=82ecfc8061'
                     target='_blank'
                     rel='noopener'
                   >
