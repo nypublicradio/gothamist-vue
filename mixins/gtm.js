@@ -2,7 +2,9 @@ export default {
   data () {
     return {
       clientID: null,
-      sessionID: null
+      sessionID: null,
+      template: this.$options.name,
+      previousPath: null
     }
   },
   methods: {
@@ -14,12 +16,10 @@ export default {
       const eventAction = gaAction
       const eventLabel = gaLabel
       const hitTimeStamp = new Date().toISOString()
-      const clientID = this.clientID
+      const IDCustomEvents = this.clientID
       const sessionID = this.sessionID
-      let template = this.$route.name
-      if (template === 'index') {
-        template = 'homepage'
-      }
+      const previousPath = this.previousPath
+      let template = this.template
       let component = gaAction
       let intendedUrl = null
       if (gaAction === 'URL Error') {
@@ -30,8 +30,9 @@ export default {
       }
       const data = {
         event,
-        clientID,
         sessionID,
+        previousPath,
+        IDCustomEvents,
         hitType,
         category: eventCategory,
         eventCategory,
@@ -43,7 +44,8 @@ export default {
         template,
         component,
         intendedUrl,
-        custom
+        custom,
+        Vue: true
       }
       this.$gtm.push(data)
     },
@@ -67,15 +69,30 @@ export default {
       return ''
     }
   },
-  mounted () {
-    // set GTM cookies
-    document.cookie = '_gothamistSessionID=' + this.generateId() + '; expires=0; path=/'
-    if (this.getCookie('_gothamistClientID') === '') {
-      const cookieDate = new Date()
-      cookieDate.setFullYear(cookieDate.getFullYear() + 10)
-      document.cookie = '_gothamistClientID=' + this.generateId() + '; expires=' + cookieDate.toUTCString() + '; path=/'
-    }
-    this.clientID = this.getCookie('_gothamistClientID')
-    this.sessionID = this.getCookie('_gothamistSessionID')
+  beforeRouteEnter (to, from, next) {
+    next((vm) => {
+      // set cookies for client and session ID
+      if (vm.getCookie('_gothamistSessionID') === '') {
+        document.cookie = '_gothamistSessionID=' + vm.generateId() + '; expires=0; path=/'
+      }
+      if (vm.getCookie('_gothamistClientID') === '') {
+        const cookieDate = new Date()
+        cookieDate.setFullYear(cookieDate.getFullYear() + 10)
+        document.cookie = '_gothamistClientID=' + vm.generateId() + '; expires=' + cookieDate.toUTCString() + '; path=/'
+      }
+      vm.clientID = vm.getCookie('_gothamistClientID')
+      vm.sessionID = vm.getCookie('_gothamistSessionID')
+      // push page view to GTM
+      vm.template = vm.$options.name
+      vm.previousPath = from.fullPath
+      const data = {
+        event: 'Page View',
+        sessionID: vm.sessionID,
+        previousPath: vm.previousPath,
+        IDCustomEvents: vm.clientID,
+        template: vm.template
+      }
+      vm.$gtm.push(data)
+    })
   }
 }

@@ -64,13 +64,13 @@ export default {
     GothamistFooterNewsletter: () => import('../components/GothamistFooterNewsletter'),
     BackToTop: () => import('../components/BackToTop')
   },
+  mixins: [gtm],
   computed: {
     ...mapState('global', {
       footerNav: state => state.footerNav,
       footerSlogan: state => state.footerSlogan,
       legalNav: state => state.legalNav
     })
-  },
-  mixins: [gtm]
+  }
 }
 </script>

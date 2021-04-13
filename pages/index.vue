@@ -11,11 +11,13 @@
 </template>
 
 <script>
+import gtm from '@/mixins/gtm'
 export default {
-  name: 'HomePage',
+  name: 'HomePage', // this is the template name which is used for GTM
   components: {
     ReadMoreIn: () => import('../components/ReadMoreIn'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
-  }
+  },
+  mixins: [gtm]
 }
 </script>

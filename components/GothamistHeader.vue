@@ -2,8 +2,8 @@
   <div>
     <the-header
       :donate-url="donateUrl"
-      @componentEvent="gaEvent('Click Tracking','Donate', 'Header')"
       class="u-color-group-dark"
+      @componentEvent="gaEvent('Click Tracking','Donate', 'Header')"
     >
       <template v-slot:menu>
         <the-menu
@@ -23,22 +23,22 @@
           <template v-slot:button>
             <div>
               <v-button
-                @componentEvent="gaEvent('Click Tracking','Donate', 'Side Menu')"
                 :href="donateUrl"
                 target="_blank"
                 class="c-main-header__donate"
                 label="Donate"
+                @componentEvent="gaEvent('Click Tracking','Donate', 'Side Menu')"
               />
             </div>
           </template>
           <template v-slot:component>
             <div>
               <v-button
-                @click="gaEvent('Click Tracking','Send A Story Idea', 'Side Menu')"
                 :href="'mailto:' + tipsEmail"
                 target="_blank"
                 label="Send A Story Idea"
                 class="c-main-header__send-story"
+                @click="gaEvent('Click Tracking','Send A Story Idea', 'Side Menu')"
               />
             </div>
           </template>
@@ -89,9 +89,9 @@
       </template>
       <template v-slot:navigation>
         <secondary-navigation
-          @componentEvent="gaEvent('Click Tracking', ...arguments, 'Header')"
           orientation="horizontal"
           :nav-items="headerNav"
+          @componentEvent="gaEvent('Click Tracking', ...arguments, 'Header')"
         />
       </template>
       <template v-slot:search>
