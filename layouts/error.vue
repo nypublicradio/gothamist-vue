@@ -1,10 +1,16 @@
 <template>
   <div class="error-page l-container l-container--11col">
     <v-spacer size="quad" />
-    <strong v-if="error.statusCode === 404" class="c-basic__header-kicker">
+    <strong
+      v-if="error.statusCode === 404"
+      class="c-basic__header-kicker"
+    >
       404 Page Error
     </strong>
-    <strong v-else class="c-basic__header-kicker">
+    <strong
+      v-else
+      class="c-basic__header-kicker"
+    >
       500 Server Error
     </strong>
     <v-spacer />
@@ -54,7 +60,7 @@
 import gtm from '@/mixins/gtm'
 
 export default {
-  name: 'ErrorPage',
+  name: 'ErrorPage', // this is the template name which is used for GTM
   components: {
     ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
     RecentStories: () => import('../components/RecentStories'),

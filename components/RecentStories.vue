@@ -11,17 +11,17 @@
       :title-link="story.url"
       :tags="story.tags"
     >
-<!--      <article-metadata-->
-<!--        :publish-date="story.meta.first_published_at"-->
-<!--      >-->
-<!--        <template v-slot:comments>-->
-<!--          <v-counter-->
-<!--            icon="comment"-->
-<!--            value="40"-->
-<!--            href="http://www.google.com"-->
-<!--          />-->
-<!--        </template>-->
-<!--      </article-metadata>-->
+      <!--      <article-metadata-->
+      <!--        :publish-date="story.meta.first_published_at"-->
+      <!--      >-->
+      <!--        <template v-slot:comments>-->
+      <!--          <v-counter-->
+      <!--            icon="comment"-->
+      <!--            value="40"-->
+      <!--            href="http://www.google.com"-->
+      <!--          />-->
+      <!--        </template>-->
+      <!--      </article-metadata>-->
     </v-card>
   </div>
 </template>

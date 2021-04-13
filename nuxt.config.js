@@ -160,7 +160,7 @@ export default {
   },
 
   gtm: {
-    pageTracking: true,
+    // pageTracking: true, // using custom page tracking instead
     enabled: true,
     debug: true, // set this to true when you are testing to get console logs
     pageViewEventName: 'Page View'
