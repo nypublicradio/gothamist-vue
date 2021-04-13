@@ -168,41 +168,4 @@ export default {
 .c-featured-blocks {
   padding: 50px;
 }
-
-.featured-stories {
-  display: flex;
-  background: pink;
-  flex-direction: column;
-}
-
-.big-stories {
-  flex-direction: column;
-  background:green;
-}
-
-.small-cards {
-  background: purple;
-  color: purple;
-  flex:1;
-  display: flex;
-}
-
-.c-featured-blocks__inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.c-featured-blocks__col1 {
-    max-width: 620px;
-    padding: 0 var(--space-3);
-    margin-bottom: -100px;
-    margin-right: var(--space-5);
-}
-
-.c-featured-blocks__col2 {
-    width: 380px;
-    margin-right: var(--space-5);
-}
-
 </style>
