@@ -45,7 +45,7 @@ export default {
         component,
         intendedUrl,
         custom,
-        Vue: true
+        vue: true
       }
       this.$gtm.push(data)
     },
@@ -90,7 +90,8 @@ export default {
         sessionID: vm.sessionID,
         previousPath: vm.previousPath,
         IDCustomEvents: vm.clientID,
-        template: vm.template
+        template: vm.template,
+        vue: true
       }
       vm.$gtm.push(data)
     })
