@@ -10,7 +10,7 @@
       </div>
       <form
         class="gtm__click-tracking"
-        @submit.prevent="submitForm('footer_newsl')"
+        @submit.prevent="submitForm('footer')"
       >
         <label
           for="newsletter"

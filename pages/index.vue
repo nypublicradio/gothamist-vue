@@ -2,7 +2,12 @@
   <div>
     <div class="l-container">
       <v-spacer size="quad" />
-      <p>home page</p>
+      <p>
+        home page
+        <nuxt-link to="kim">
+          kim's test page
+        </nuxt-link>
+      </p>
       <v-spacer size="quad" />
       <read-more-in />
       <v-spacer size="quad" />
@@ -12,6 +17,7 @@
 
 <script>
 import gtm from '@/mixins/gtm'
+
 export default {
   name: 'HomePage', // this is the template name which is used for GTM
   components: {

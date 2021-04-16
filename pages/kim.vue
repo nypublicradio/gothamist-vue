@@ -106,6 +106,8 @@
 </template>
 
 <script>
+import gtm from '@/mixins/gtm'
+
 export default {
   name: 'KimTestPage',
   components: {
@@ -120,6 +122,7 @@ export default {
     RecentStories: () => import('../components/RecentStories'),
     // FeaturedInNews: () => import('../components/FeaturedInNews'),
     VCounter: () => import('nypr-design-system-vue/src/components/VCounter')
-  }
+  },
+  mixins: [gtm]
 }
 </script>

@@ -1,11 +1,17 @@
+import { mapState } from 'vuex'
+
 export default {
   data () {
     return {
       clientID: null,
       sessionID: null,
-      template: this.$options.name,
-      previousPath: null
+      template: this.$options.name
     }
+  },
+  computed: {
+    ...mapState('global', {
+      previousPath: state => state.previousPath
+    })
   },
   methods: {
     // google analytics events
@@ -16,23 +22,18 @@ export default {
       const eventAction = gaAction
       const eventLabel = gaLabel
       const hitTimeStamp = new Date().toISOString()
-      const IDCustomEvents = this.clientID
-      const sessionID = this.sessionID
-      const previousPath = this.previousPath
-      let template = this.template
       let component = gaAction
       let intendedUrl = null
       if (gaAction === 'URL Error') {
         intendedUrl = custom
         hitType = 'exception'
-        template = 'Error Page'
         component = null
       }
       const data = {
         event,
-        sessionID,
-        previousPath,
-        IDCustomEvents,
+        sessionID: this.sessionID,
+        previousPath: this.previousPath,
+        IDCustomEvents: this.clientID,
         hitType,
         category: eventCategory,
         eventCategory,
@@ -41,7 +42,7 @@ export default {
         label: eventLabel,
         eventLabel,
         hitTimeStamp,
-        template,
+        template: this.template,
         component,
         intendedUrl,
         custom,
@@ -69,9 +70,13 @@ export default {
       return ''
     }
   },
+  mounted () {
+    this.clientID = this.getCookie('_gothamistClientID')
+    this.sessionID = this.getCookie('_gothamistSessionID')
+  },
   beforeRouteEnter (to, from, next) {
     next((vm) => {
-      // set cookies for client and session ID
+      // set cookies for client and session ID if they don't already exist
       if (vm.getCookie('_gothamistSessionID') === '') {
         document.cookie = '_gothamistSessionID=' + vm.generateId() + '; expires=0; path=/'
       }
@@ -80,20 +85,22 @@ export default {
         cookieDate.setFullYear(cookieDate.getFullYear() + 10)
         document.cookie = '_gothamistClientID=' + vm.generateId() + '; expires=' + cookieDate.toUTCString() + '; path=/'
       }
-      vm.clientID = vm.getCookie('_gothamistClientID')
-      vm.sessionID = vm.getCookie('_gothamistSessionID')
-      // push page view to GTM
-      vm.template = vm.$options.name
-      vm.previousPath = from.fullPath
+      // push page view data to GTM
       const data = {
         event: 'Page View',
-        sessionID: vm.sessionID,
+        sessionID: vm.getCookie('_gothamistSessionID'),
         previousPath: vm.previousPath,
-        IDCustomEvents: vm.clientID,
-        template: vm.template,
+        IDCustomEvents: vm.getCookie('_gothamistClientID'),
+        template: vm.$options.name,
         vue: true
       }
       vm.$gtm.push(data)
     })
+  },
+  beforeRouteLeave (to, from, next) {
+    // set previous path
+    this.$store.commit('global/setPreviousPath', this.$route.fullPath)
+    // go to the next route
+    next()
   }
 }
