@@ -10,6 +10,7 @@ export const state = () => ({
   legalNav: [],
   mailchimpAPI: process.env.MAILCHIMP_API,
   navigationAPI: 'navigation/1/',
+  previousPath: 'none',
   readMoreNav: [
     {
       text: 'News',
@@ -62,6 +63,9 @@ export const getters = {
   navigationAPI (state) {
     return state.navigationAPI
   },
+  previousPath (state) {
+    return state.previousPath
+  },
   tipsEmail (state) {
     return state.tipsEmail
   },
@@ -73,7 +77,10 @@ export const getters = {
 // Actions commit mutations and can contain arbitrary asynchronous operations
 
 export const actions = {
-  setNavigation ({ commit, state }) {
+  setNavigation ({
+    commit,
+    state
+  }) {
     this.$axios
       .get(state.navigationAPI)
       .then((response) => {
@@ -103,5 +110,8 @@ export const mutations = {
   },
   setLegalNav (state, data) {
     state.legalNav = navigation.methods.formatNavigationArray(data)
+  },
+  setPreviousPath (state, path) {
+    state.previousPath = path
   }
 }
