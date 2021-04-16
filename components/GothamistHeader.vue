@@ -27,7 +27,7 @@
                 target="_blank"
                 class="c-main-header__donate"
                 label="Donate"
-                @componentEvent="gaEvent('Click Tracking','Donate', 'Side Menu')"
+                @click="gaEvent('Click Tracking','Donate', 'Side Menu')"
               />
             </div>
           </template>

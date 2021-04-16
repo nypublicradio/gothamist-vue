@@ -5,7 +5,7 @@
     </h3>
     <form
       class="gtm__click-tracking"
-      @submit.prevent="submitForm('interruptor_newsl')"
+      @submit.prevent="submitForm('article')"
     >
       <label
         for="newsletter"
