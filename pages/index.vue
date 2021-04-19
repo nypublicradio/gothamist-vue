@@ -1,6 +1,6 @@
 <template>
   <div v-if="homepageData">
-    <div class="l-container">
+    <div class="l-container l-container--xl">
       <v-spacer size="quad" />
       <div class="c-home__content-top u-section-spacing--wide l-container l-container--xl l-wrap">
         <section class="c-featured-blocks o-section u-breakout">
@@ -22,16 +22,17 @@
             </span>
             Featured
           </h2>
-          <div class="l-grid l-grid--2x3 u-space--bottom">
+          <!-- big feature -->
+          <div class="l-grid l-grid--2up l-grid--large-gutters u-space--bottom">
             <v-card
               show-gallery-icon
               class="gothamist mod-vertical mod-large"
-              image="http://placehold.it/640x430"
+              :image="featuredShows[0].lead_asset[0].value.image.file"
               :image-height="150"
               :image-width="150"
               :title="featuredShows[0].title"
-              title-link="http://www.google.com"
-              subtitle="Here's what the latest Campaign Finance Board filings tell us."
+              :title-link="`/${featuredShows[0].ancestry[0].slug}/${featuredShows[0].meta.slug}`"
+              :subtitle="featuredShows[0].description"
               :tags="[{'name': 'news','slug': 'news'},{'name': 'sponsored','slug': ''}]"
             >
               <article-metadata
@@ -54,11 +55,11 @@
                 <v-card
                   show-gallery-icon
                   class="gothamist mod-small"
-                  image="http://placehold.it/150x150"
+                  :image="feature.lead_asset[0].value.image.file"
                   :image-height="150"
                   :image-width="150"
                   :title="feature.title"
-                  title-link="http://www.google.com"
+                  :title-link="`/${feature.ancestry[0].slug}/${feature.meta.slug}`"
                   :tags="[{'name': 'news','slug': 'news'},{'name': 'sponsored','slug': ''}]"
                 >
                   <article-metadata
@@ -85,11 +86,12 @@
             <v-card
               show-gallery-icon
               class="gothamist mod-small"
-              image="http://placehold.it/150x150"
+              :image="story.listing_image.file"
               :image-height="150"
               :image-width="150"
               :title="story.title"
-              title-link="http://www.google.com"
+              :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
+              :subtitle="story.description"
               :tags="[{'name': 'news','slug': 'news'},{'name': 'sponsored','slug': ''}]"
             >
               <article-metadata
@@ -161,11 +163,7 @@ export default {
 </script>
 
 <style lang="scss">
-.l-container--xl {
-    max-width: var(--max-width-xl);
-    position: relative;
-}
 .c-featured-blocks {
-  padding: 50px;
+  padding: var(--space-7) var(--space-5);
 }
 </style>
