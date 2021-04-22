@@ -183,6 +183,14 @@ export default {
     // this is needed to transpile es6 modules imported from radial
     transpile: [
       'nypr-design-system-vue'
-    ]
+    ],
+    extend (config, ctx) {
+      config.module.rules.push({
+        resolve: { symlinks: false }
+      })
+      if (ctx.isDev) {
+        config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
+      }
+    }
   }
 }

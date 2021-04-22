@@ -15,12 +15,15 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.12.5",
     "@nuxtjs/gtm": "^2.4.0",
+    "camelcase-keys": "^2.1.0",
     "concurrent-transform": "^1.0.0",
     "core-js": "^3.10.1",
+    "date-fns": "^2.19.0",
     "focus-visible": "^5.2.0",
     "gulp": "^4.0.2",
     "gulp-awspublish": "^4.1.2",
     "gulp-cloudfront-invalidate-aws-publish": "^1.0.0",
+    "humps": "^2.0.1",
     "nuxt": "^2.15.4"
   },
   "devDependencies": {

@@ -1,19 +1,64 @@
 <template>
-  <div class="article">
+  <div class="article l-container l-wrap">
     <div
-      v-if="dataLoaded"
+      v-if="article.body"
       class="l-container l-container--12col"
     >
+      <breadcrumbs :breadcrumbs="[{name: section, slug: section}]" />
+      <h1 class="article-title">
+        {{ article.title }}
+      </h1>
+      <article-metadata
+        :publish-date="article.formattedPublishDate"
+        :updated-date="article.formattedUpdatedDate"
+        class="l-container l-container--10col"
+      >
+        <template v-slot:authors>
+          <v-byline :authors="article.authors" />
+        </template>
+        <template v-slot:comments>
+          <v-counter
+            v-if="article.commentCount > 0"
+            icon="comment"
+            text="Comments"
+            :value="article.commentCount"
+            href="#comments"
+          />
+        </template>
+        <template v-slot:photos>
+          <v-counter
+            v-if="article.gallery"
+            icon="gallery"
+            text="Photos"
+            :value="slideImages.length"
+            :href="`/gallery/${leadAsset.section}/${leadAsset.slug}`"
+          />
+        </template>
+      </article-metadata>
+      <div class="article-lead-asset l-container l-container--10col">
+        <div v-if="leadAsset.type === 'lead_image'" class="article-lead-image">
+          <image-with-caption
+            variation="gothamist"
+            alt-text="image alt text"
+            :url-template="`https://cms.demo.nypr.digital/images/${leadAsset.value.image.id}/fill-%width%x%height%/`"
+            :aspect-ratio="4/3"
+            :width-in-viewport="96"
+            credit="AP Photo/Carolyn Kaster"
+            caption="This is the caption lorem ipsum dolor sit amet, consectetur adipiscing elit"
+          />
+        </div>
+        <div
+          v-if="article.gallery"
+          class="article-lead-image"
+        >
+          <gallery-preview
+            :count="slideImages.length"
+            :images="slideImages"
+          />
+        </div>
+      </div>
       <v-spacer size="quad" />
-      <h1 v-html="article.title" />
-      <v-spacer size="quad" />
-      ID: {{ article.id }}
-      <v-spacer size="quad" />
-      Section: {{ article.meta.parent.title }}
-      <v-spacer size="quad" />
-      Slug: {{ article.meta.slug }}
-      <v-spacer size="quad" />
-      <v-streamfield :streamfield="article.body" />
+      <v-streamfield :streamfield="article.body" class="l-container l-container--10col" />
       <v-spacer size="quad" />
     </div>
     <div
@@ -31,8 +76,14 @@
 export default {
   name: 'Article',
   components: {
+    VStreamfield: () => import('./VStreamfield'),
+    Breadcrumbs: () => import('./Breadcrumbs'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
-    VStreamfield: () => import('../components/VStreamfield')
+    ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
+    VCounter: () => import('nypr-design-system-vue/src/components/VCounter'),
+    VByline: () => import('nypr-design-system-vue/src/components/VByline'),
+    ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
+    GalleryPreview: () => import('nypr-design-system-vue/src/components/GalleryPreview')
   },
   props: {
     article: {
@@ -41,19 +92,84 @@ export default {
     }
   },
   computed: {
-    dataLoaded () {
-      return this.article.body !== null
+    leadAsset () {
+      return this.article.leadAsset[0]
+    },
+    section () {
+      return this.article.meta.parent.title
+    },
+    slideImages () {
+      if (this.article.gallery) {
+        return this.article.gallery.slides
+          .slice(4)
+          .map((slide) => {
+            const image = slide.value.slideImage.image
+            return {
+              url: image.file,
+              thumbnail: image.file,
+              alt: image.alt,
+              credit: image.credit,
+              creditUrl: image.creditLink,
+              caption: slide.value.slideImage.caption,
+              title: slide.slideTitle,
+              description: ''
+            }
+          })
+      } else {
+        return []
+      }
     }
   },
-  head: {
-    title: 'Article Page Title',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'Article Page Description'
-      }
-    ]
+  head () {
+    return {
+      title: `${this.article?.title} - Gothamist`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Article Page Description'
+        }
+      ]
+    }
   }
 }
 </script>
+
+<style lang="scss">
+  .article-breadcrumbs {
+    position: relative;
+    display: flex;
+    margin-bottom: var(--space-4);
+  }
+  .article-breadcrumbs:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    left: -4px;
+    top: calc(50% + 1px);
+    background-image: linear-gradient(to right, transparent 50%, RGB(var(--color-gray)) 50%);
+    background-position: right bottom;
+    background-repeat: repeat-x;
+    background-size: 16px 1px;
+  }
+  .article-metadata {
+    margin-bottom: var(--space-4);
+  }
+  .article-title {
+    font-family: var(--font-family-header);
+    letter-spacing: var(--letter-spacing-header);
+    font-weight: var(--font-weight-header);
+    line-height: var(--line-height-13);
+    font-size: var(--font-size-13);
+    margin-bottom: var(--space-4);
+    @media all and (min-width: $medium) {
+      line-height: var(--line-height-16);
+      font-size: var(--font-size-16);
+    }
+  }
+  .article-lead-image {
+    margin-left: calc(var(--space-3) * -1);
+    margin-right: calc(var(--space-3) * -1);
+  }
+</style>
