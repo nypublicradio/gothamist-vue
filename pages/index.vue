@@ -4,7 +4,7 @@
       <v-spacer size="quad" />
       <p>
         home page
-        <nuxt-link to="kim">
+        <nuxt-link to="test-kim">
           kim's test page
         </nuxt-link>
       </p>
