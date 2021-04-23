@@ -30,7 +30,7 @@
             v-if="article.gallery"
             icon="gallery"
             text="Photos"
-            :value="slideImages.length"
+            :value="galleryImages.length"
             :href="`/gallery/${leadAsset.section}/${leadAsset.slug}`"
           />
         </template>
@@ -52,8 +52,8 @@
           class="article-lead-image"
         >
           <gallery-preview
-            :count="slideImages.length"
-            :images="slideImages"
+            :count="galleryImages.length"
+            :images="galleryImages"
           />
         </div>
       </div>
@@ -98,7 +98,7 @@ export default {
     section () {
       return this.article.meta.parent.title
     },
-    slideImages () {
+    galleryImages () {
       if (this.article.gallery) {
         return this.article.gallery.slides
           .slice(4)
