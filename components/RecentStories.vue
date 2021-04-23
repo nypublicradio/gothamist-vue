@@ -13,7 +13,8 @@
       :tags="story.tags"
     >
       <article-metadata
-        :publish-date="fuzzyDateTime(story.meta.first_published_at)"
+        :publish-date="story.updated_date ? null : fuzzyDateTime(story.meta.first_published_at)"
+        :updated-date="story.updated_date ? fuzzyDateTime(story.updated_date) : null"
       >
         <template
           v-if="disqusData && disqusData.data.response[index]"
