@@ -8,8 +8,7 @@ export default {
     })
   },
   methods: {
-    // accepts an array of disqus thread IDs
-    // returns an array of comment counts
+    // accepts an array of disqus thread IDs & returns the response from the disqus API
     getCommentCount (threadIdArray) {
       try {
         let threadIdString = ''
