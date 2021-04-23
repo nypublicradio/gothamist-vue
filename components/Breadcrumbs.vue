@@ -40,4 +40,11 @@ export default {
     background-image: linear-gradient(to right, transparent 50%, RGB(var(--color-gray)) 50%);
   }
 }
+
+.breadcrumbs > .tag {
+  @media all and (min-width: $medium) {
+    font-size: var(--font-size-3);
+    line-height: var(--line-height-3);
+  }
+}
 </style>

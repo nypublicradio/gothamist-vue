@@ -60,6 +60,17 @@
       <v-spacer size="quad" />
       <v-streamfield :streamfield="article.body" class="l-container l-container--10col" />
       <v-spacer size="quad" />
+      <article-page-newsletter class="article-newsletter" />
+      <div class="article-tag-list">
+        <v-tag v-for="tag, index in article.tags" :key="index" :slug="tag.slug" :name="`#${tag.name}`" />
+      </div>
+      <do-you-know-the-scoop class="article-scoop" />
+      <!-- AD -->
+      <!-- DISQUS -->
+
+      <!-- <donate-banner /> -->
+      <!-- recent and featured -->
+      <read-more-in class="article-read-more-in" />
     </div>
     <div
       v-else
@@ -83,7 +94,12 @@ export default {
     VCounter: () => import('nypr-design-system-vue/src/components/VCounter'),
     VByline: () => import('nypr-design-system-vue/src/components/VByline'),
     ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
-    GalleryPreview: () => import('nypr-design-system-vue/src/components/GalleryPreview')
+    GalleryPreview: () => import('nypr-design-system-vue/src/components/GalleryPreview'),
+    ReadMoreIn: () => import('./ReadMoreIn'),
+    VTag: () => import('nypr-design-system-vue/src/components/VTag'),
+    DoYouKnowTheScoop: () => import('./DoYouKnowTheScoop'),
+    // DonateBanner: () => import('./DonateBanner'),
+    ArticlePageNewsletter: () => import('../components/ArticlePageNewsletter')
   },
   props: {
     article: {
@@ -171,5 +187,17 @@ export default {
   .article-lead-image {
     margin-left: calc(var(--space-3) * -1);
     margin-right: calc(var(--space-3) * -1);
+  }
+  .article-tag-list {
+    margin-bottom: var(--space-6);
+  }
+  .article-scoop {
+    margin-bottom: var(--space-6);
+  }
+  .article-newsletter {
+    margin-bottom: var(--space-5);
+  }
+  .article-read-more-in {
+    margin-bottom: var(--space-6);
   }
 </style>
