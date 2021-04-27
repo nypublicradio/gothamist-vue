@@ -1,25 +1,15 @@
 <template>
-  <div
-    v-if="active"
-    class="donate-banner"
-    :class="{'donate-banner-active': active}"
-  >
-    <div class="donate-banner-graphic">
-      <nyc-love />
-    </div>
-    <div
-      class="donate-banner-close"
-      @click="active=false"
-    >
-      <close-icon />
-    </div>
-    <div class="donate-banner-content">
+  <div class="homepage-donate-banner">
+    <div class="homepage-donate-banner-content">
+      <div class="homepage-donate-banner-graphic">
+        <nyc-love />
+      </div>
       <p>Help fund the local coverage you rely on. Back the extra reporting you need during this global pandemic.</p>
       <v-button
         :href="donateUrl"
         target="_blank"
-        class="donate-banner-button"
-        label="Donate Now"
+        class="homepage-donate-banner-button"
+        label="Donate"
       />
     </div>
   </div>
@@ -31,14 +21,8 @@ import { mapState } from 'vuex'
 export default {
   name: 'DonateBanner',
   components: {
-    CloseIcon: () => import('nypr-design-system-vue/src/components/icons/CloseIcon'),
     NycLove: () => import('nypr-design-system-vue/src/components/icons/gothamist/NycLove'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton')
-  },
-  data () {
-    return {
-      active: true
-    }
   },
   computed: {
     ...mapState('global', {
@@ -49,18 +33,16 @@ export default {
 </script>
 
 <style lang="scss">
-.donate-banner {
+.homepage-donate-banner {
+  position: relative;
   padding: var(--space-5);
   width: 100%;
-  max-width: 270px;
-  position: fixed;
-  z-index: 9999;
-  right: 20px;
-  bottom: 50px;
   background-color: RGB(var(--color-background-highlight));
   align-items: center;
   box-shadow: 0 0 10px RGB(0 0 0 / 20%);
   border: var(--border-standard);
+  border-left: none;
+  border-right: none;
 
   &::before {
     content: "";
@@ -73,57 +55,48 @@ export default {
   }
 
   @include media(">large") {
-    width: 980px;
-    max-width: calc(100% - var(--space-6));
+    &::before {
+      display: none;
+    }
   }
 }
 
-.donate-banner .donate-banner-content {
+.homepage-donate-banner .homepage-donate-banner-content {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   @include media(">large") {
+    max-width: 895px;
+    margin: auto;
     padding: 0 var(--space-3) 0 100px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
   }
 }
 
-.donate-banner .donate-banner-content p {
+.homepage-donate-banner .homepage-donate-banner-content p {
   width: 100%;
   position: relative;
+  text-align: left;
   @include media(">large") {
     width: calc(65% - var(--space-3));
   }
 }
 
-.donate-banner .donate-banner-close {
-  position: absolute;
-  cursor: pointer;
-  top: var(--space-1);
-  right: var(--space-1);
-  width: 30px;
-  height: 30px;
-  padding: 6px;
-  transition: var(--animation-duration-standard);
-
-  &:hover {
-    opacity: var(--opacity-hover);
-  }
-}
-
-.donate-banner .donate-banner-graphic {
+.homepage-donate-banner .homepage-donate-banner-graphic {
   width: 120px;
   height: 133px;
+  margin-left: -32px;
+  margin-top: -105px;
   position: relative;
-  margin-left: -55px;
-  margin-top: -95px;
-  margin-right: var(--space-2);
   float: left;
   @include media(">large") {
-    float: none;
-    margin: 0;
     position: absolute;
-    left: calc(var(--space-3) * -1);
-    top: calc(var(--space-3) * -1);
+    float: none;
+    top: -55px;
+    left: -32px;
+    margin: 0;
   }
 
   svg {
@@ -135,12 +108,13 @@ export default {
   }
 }
 
-.donate-banner .donate-banner-button {
+.homepage-donate-banner .homepage-donate-banner-button {
   background-color: RGB(var(--color-reddish-orange));
   border: 0;
   margin-top: var(--space-3);
   height: 60px;
   width: 100%;
+  max-width: 400px;
   @include media(">large") {
     width: calc(35% - var(--space-3));
     margin-top: 0;
@@ -171,7 +145,7 @@ export default {
   }
 }
 
-.donate-banner .donate-banner-button .button-label {
+.homepage-donate-banner .homepage-donate-banner-button .button-label {
   font-weight: bold !important;
   font-size: 18px !important;
   letter-spacing: 2px;
