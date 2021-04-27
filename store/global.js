@@ -3,6 +3,8 @@ import navigation from '~/mixins/navigation'
 export const state = () => ({
   dailyNewsletter: '65dbec786b',
   defaultImage: '/images/news-tile.png',
+  disqusAPI: process.env.DISQUS_API,
+  disqusPublicKey: process.env.DISQUS_PUBLIC_KEY,
   donateUrl: 'https://pledge3.wnyc.org/donate/gothamist/onestep/?utm_medium=partnersite&utm_source=gothamist&utm_campaign=brandheader',
   footerNav: [],
   footerSlogan: '',
@@ -41,6 +43,12 @@ export const getters = {
   },
   defaultImage (state) {
     return state.defaultImage
+  },
+  disqusAPI (state) {
+    return state.disqusAPI
+  },
+  disqusPublicKey (state) {
+    return state.disqusPublicKey
   },
   donateUrl (state) {
     return state.donateUrl

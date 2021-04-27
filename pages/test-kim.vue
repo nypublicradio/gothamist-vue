@@ -125,6 +125,7 @@
 
 <script>
 import gtm from '@/mixins/gtm'
+import disqus from '@/mixins/disqus'
 
 export default {
   name: 'KimTestPage',
@@ -144,6 +145,6 @@ export default {
     FeaturedIn: () => import('../components/FeaturedIn'),
     VCounter: () => import('nypr-design-system-vue/src/components/VCounter')
   },
-  mixins: [gtm]
+  mixins: [gtm, disqus]
 }
 </script>
