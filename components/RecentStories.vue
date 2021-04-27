@@ -34,7 +34,8 @@
 <script>
 import { mapState } from 'vuex'
 import disqus from '~/mixins/disqus'
-import helpers from '~/mixins/helpers'
+
+const { fuzzyDateTime } = require('~/mixins/helpers')
 
 export default {
   name: 'RecentStories',
@@ -43,12 +44,22 @@ export default {
     VCounter: () => import('nypr-design-system-vue/src/components/VCounter'),
     VCard: () => import('nypr-design-system-vue/src/components/VCard')
   },
-  mixins: [disqus, helpers],
+  mixins: [disqus],
   props: {
     type: {
       type: String,
       default: 'news'
     }
+  },
+  async fetch () {
+    await this.$axios
+      .get('/pages/?type=' + this.type + '.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=4')
+      .then((response) => {
+        this.recentStories = response.data.items
+        response.data.items.forEach((item) => {
+          this.disqusThreadIds.push(item.uuid)
+        })
+      })
   },
   data () {
     return {
@@ -63,16 +74,11 @@ export default {
     })
   },
   async mounted () {
-    await this.$axios
-      .get('/pages/?type=' + this.type + '.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=4')
-      .then((response) => {
-        this.recentStories = response.data.items
-        response.data.items.forEach((item) => {
-          this.disqusThreadIds.push(item.uuid)
-        })
-      })
     // get disqus comment counts
     this.disqusData = await this.getCommentCount(this.disqusThreadIds)
+  },
+  methods: {
+    fuzzyDateTime
   }
 }
 </script>
