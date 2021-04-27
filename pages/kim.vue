@@ -1,8 +1,25 @@
 <template>
   <div>
-    <div class="l-container">
+    <div class="l-container l-container--16col">
       <v-spacer size="quad" />
       <p>kim's test page</p>
+      <v-spacer size="quad" />
+      <v-banner
+        tag="Breaking News"
+        headline="Red Hook Tavern Is A Cozy Neighborhood Gathering Spot (With $22 Burgers)"
+        description="<p>full description test with more text that <a href='http://www.google.com'>links</a> and has <i>other</i> <b>formatting.</b></p>"
+      />
+      <v-spacer size="quad" />
+      <product-marketing-banner
+        title="Support Gothamist Today"
+        description="Reader support makes Gothamist’s local journalism possible. For our spring membership campaign, we’re looking for 250 new Gothamist members by the end of the month. Make a donation to support Gothamist and local news today."
+        cta="donate now"
+        link="https://pledge3.wnyc.org/donate/gothamist/onestep/?utm_medium=partnersite&utm_source=gothamist&utm_campaign=prodmktgbanner"
+      />
+      <v-spacer size="quad" />
+    </div>
+    <homepage-donate-banner />
+    <div class="l-container">
       <v-spacer size="quad" />
       <do-you-know-the-scoop />
       <v-spacer size="quad" />
@@ -24,7 +41,7 @@
             <template v-slot:comments>
               <v-counter
                 text="comments"
-                value="40"
+                :value="40"
                 href="http://www.google.com"
               />
             </template>
@@ -54,7 +71,7 @@
         <!--          <template v-slot:comments>-->
         <!--            <v-counter-->
         <!--              icon="comment"-->
-        <!--              value="40"-->
+        <!--              :value="40"-->
         <!--              href="http://www.google.com"-->
         <!--            />-->
         <!--          </template>-->
@@ -75,13 +92,13 @@
           publish-date="Jan 1, 2020 1:25PM"
           updated-date="Mar 2, 2020 10:08AM"
         >
-          <!--          <template v-slot:comments>-->
-          <!--            <v-counter-->
-          <!--              icon="comment"-->
-          <!--              value="40"-->
-          <!--              href="http://www.google.com"-->
-          <!--            />-->
-          <!--          </template>-->
+          <template v-slot:comments>
+            <v-counter
+              icon="comment"
+              :value="40"
+              href="http://www.google.com"
+            />
+          </template>
         </article-metadata>
       </v-card>
       <v-spacer size="quad" />
@@ -98,6 +115,7 @@
             Featured In News
           </h2>
           <v-spacer />
+          <featured-in />
         </div>
       </div>
       <donate-banner />
@@ -117,10 +135,13 @@ export default {
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
     ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
     VCard: () => import('nypr-design-system-vue/src/components/VCard'),
+    VBanner: () => import('nypr-design-system-vue/src/components/VBanner'),
     VByline: () => import('nypr-design-system-vue/src/components/VByline'),
+    HomepageDonateBanner: () => import('../components/HomepageDonateBanner'),
     DonateBanner: () => import('../components/DonateBanner'),
     RecentStories: () => import('../components/RecentStories'),
-    // FeaturedInNews: () => import('../components/FeaturedInNews'),
+    ProductMarketingBanner: () => import('../components/ProductMarketingBanner'),
+    FeaturedIn: () => import('../components/FeaturedIn'),
     VCounter: () => import('nypr-design-system-vue/src/components/VCounter')
   },
   mixins: [gtm]

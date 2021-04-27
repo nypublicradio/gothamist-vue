@@ -1,5 +1,6 @@
 <template>
-  <div class="featured-in-news">
+  <div class="featured-in">
+    {{ featuredStory }}
     <v-card
       v-if="featuredStory"
       class="gothamist mod-vertical mod-large"
@@ -29,7 +30,7 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'FeaturedInNews',
+  name: 'FeaturedIn',
   components: {
     ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
     VCounter: () => import('nypr-design-system-vue/src/components/VCounter'),
@@ -47,9 +48,9 @@ export default {
   }
   // async mounted () {
   //   await this.$axios
-  //     .get('/pages/?type=' + this.type + '.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=4')
+  //     .get('/pages/?type=' + this.type + '.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=1')
   //     .then(response => (
-  //       this.recentStories = response.data.items
+  //       this.featuredStory = response.data.items
   //     ))
   // }
 }
