@@ -149,6 +149,10 @@ export default {
     '@nuxtjs/gtm'
   ],
 
+  plugins: [
+    '~/plugins/axios'
+  ],
+
   publicRuntimeConfig: {
     gtm: {
       id: process.env.GTM_ID

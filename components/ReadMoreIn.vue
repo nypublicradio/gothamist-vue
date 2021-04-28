@@ -32,8 +32,8 @@ export default {
 
 <style lang="scss">
 .read-more-in {
-  border-top: 2px dashed rgb(var(--color-border-subtle));
-  border-bottom: 2px dashed rgb(var(--color-border-subtle));
+  border-top: 2px dashed RGB(var(--color-border-subtle));
+  border-bottom: 2px dashed RGB(var(--color-border-subtle));
   padding: var(--space-5) var(--space-3);
   display: flex;
   text-align: center;

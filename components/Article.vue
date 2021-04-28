@@ -69,7 +69,7 @@
       <!-- DISQUS -->
 
       <!-- <donate-banner /> -->
-      <!-- recent and featured -->
+      <recirculation-module :related-article="article" />
       <read-more-in class="article-read-more-in" />
     </div>
     <div
@@ -99,7 +99,8 @@ export default {
     VTag: () => import('nypr-design-system-vue/src/components/VTag'),
     DoYouKnowTheScoop: () => import('./DoYouKnowTheScoop'),
     // DonateBanner: () => import('./DonateBanner'),
-    ArticlePageNewsletter: () => import('../components/ArticlePageNewsletter')
+    ArticlePageNewsletter: () => import('./ArticlePageNewsletter'),
+    RecirculationModule: () => import('./RecirculationModule')
   },
   props: {
     article: {
