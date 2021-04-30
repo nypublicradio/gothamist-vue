@@ -170,12 +170,12 @@ export default {
     id: process.env.GA_ID
   },
 
-  // sentry: {
-  //   dsn: process.env.SENTRY_DSN,
-  //   config: {
-  //     lazy: true
-  //   }
-  // },
+  sentry: {
+    dsn: process.env.SENTRY_DSN,
+    config: {
+      lazy: true
+    }
+  },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
