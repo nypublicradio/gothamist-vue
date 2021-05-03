@@ -145,6 +145,9 @@ export default {
     FeaturedIn: () => import('../components/FeaturedIn'),
     VCounter: () => import('nypr-design-system-vue/src/components/VCounter')
   },
-  mixins: [gtm, disqus]
+  mixins: [gtm, disqus],
+  mounted () {
+    myUndefinedFunction()
+  }
 }
 </script>
