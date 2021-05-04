@@ -147,6 +147,7 @@ export default {
   },
   mixins: [gtm, disqus],
   mounted () {
+    // eslint-disable-next-line no-undef
     myUndefinedFunction()
   }
 }
