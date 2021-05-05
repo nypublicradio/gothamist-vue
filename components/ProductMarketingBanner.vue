@@ -75,6 +75,7 @@ export default {
   position: relative;
   width: 100%;
   align-items: center;
+  padding-right: var(--space-3);
 
   &::after {
     background-color: RGB(var(--color-background-highlight)) !important;

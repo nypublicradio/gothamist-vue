@@ -3,35 +3,39 @@
     <gothamist-header />
     <main>
       <v-spacer size="quad" />
-      <div
-        v-for="(banner, index) in breakingNewsBanner"
-        :key="index"
-        class="l-container l-container--16col"
-      >
-        <template v-if="banner.value && banner.value.is_live_eligible">
-          <v-spacer size="double" />
-          <v-banner
-            tag="Breaking News"
-            :headline="banner.value.title"
-            :headline-link="banner.value.link"
-            :description="banner.value.description"
-          />
-        </template>
+      <div>
+        <div
+          v-for="(banner, index) in breakingNewsBanner"
+          :key="index"
+          class="l-container l-container--xl l-wrap"
+        >
+          <template v-if="banner.value">
+            <v-spacer size="double" />
+            <v-banner
+              tag="Breaking News"
+              :headline="banner.value.title"
+              :headline-link="banner.value.link"
+              :description="banner.value.description"
+            />
+          </template>
+        </div>
       </div>
-      <div
-        v-for="(banner, index) in productMarketingBanner"
-        :key="index"
-        class="l-container l-container--xl"
-      >
-        <template v-if="banner.value && banner.value.is_live_eligible">
-          <v-spacer size="double" />
-          <product-marketing-banner
-            :title="banner.value.title"
-            :description="banner.value.description"
-            :cta="banner.value.button_text"
-            :link="banner.value.button_link"
-          />
-        </template>
+      <div>
+        <div
+          v-for="(banner, index) in productMarketingBanner"
+          :key="index"
+          class="l-container l-container--xl l-wrap"
+        >
+          <template v-if="banner.value">
+            <v-spacer size="double" />
+            <product-marketing-banner
+              :title="banner.value.title"
+              :description="banner.value.description"
+              :cta="banner.value.button_text"
+              :link="banner.value.button_link"
+            />
+          </template>
+        </div>
       </div>
       <Nuxt />
     </main>
