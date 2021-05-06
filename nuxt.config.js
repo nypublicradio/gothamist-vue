@@ -172,7 +172,7 @@ export default {
 
   sentry: {
     dsn: process.env.SENTRY_DSN,
-    environment: process.env.SENTRY_ENVIRONMENT_NAME,
+    environment: process.env.SENTRY_ENVIRONMENT,
     config: {
       lazy: true
     }
