@@ -94,9 +94,7 @@ export default {
 
 .error-page .image-with-caption-container figure,
 .error-page .image-with-caption-container img {
-  @include media("<medium") {
-    width: 100%;
-  }
+  width: 100%;
 }
 
 .error-page .image-with-caption-container figcaption {
