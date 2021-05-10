@@ -3,6 +3,8 @@ import navigation from '~/mixins/navigation'
 export const state = () => ({
   dailyNewsletter: '65dbec786b',
   defaultImage: '/images/news-tile.png',
+  disqusAPI: process.env.DISQUS_API,
+  disqusPublicKey: process.env.DISQUS_PUBLIC_KEY,
   donateUrl: 'https://pledge3.wnyc.org/donate/gothamist/onestep/?utm_medium=partnersite&utm_source=gothamist&utm_campaign=brandheader',
   footerNav: [],
   footerSlogan: '',
@@ -10,6 +12,7 @@ export const state = () => ({
   legalNav: [],
   mailchimpAPI: process.env.MAILCHIMP_API,
   navigationAPI: 'navigation/1/',
+  previousPath: 'none',
   readMoreNav: [
     {
       text: 'News',
@@ -41,6 +44,12 @@ export const getters = {
   defaultImage (state) {
     return state.defaultImage
   },
+  disqusAPI (state) {
+    return state.disqusAPI
+  },
+  disqusPublicKey (state) {
+    return state.disqusPublicKey
+  },
   donateUrl (state) {
     return state.donateUrl
   },
@@ -62,6 +71,9 @@ export const getters = {
   navigationAPI (state) {
     return state.navigationAPI
   },
+  previousPath (state) {
+    return state.previousPath
+  },
   tipsEmail (state) {
     return state.tipsEmail
   },
@@ -73,7 +85,10 @@ export const getters = {
 // Actions commit mutations and can contain arbitrary asynchronous operations
 
 export const actions = {
-  setNavigation ({ commit, state }) {
+  setNavigation ({
+    commit,
+    state
+  }) {
     this.$axios
       .get(state.navigationAPI)
       .then((response) => {
@@ -103,5 +118,8 @@ export const mutations = {
   },
   setLegalNav (state, data) {
     state.legalNav = navigation.methods.formatNavigationArray(data)
+  },
+  setPreviousPath (state, path) {
+    state.previousPath = path
   }
 }
