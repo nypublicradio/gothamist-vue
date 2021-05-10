@@ -12,11 +12,14 @@ export default {
       let hitType = 'event'
       const eventCategory = gaCategory
       const eventAction = gaAction
-      const eventLabel = gaLabel ? this.capitalize(gaLabel) : null
+      const eventLabel = gaLabel
       const hitTimeStamp = new Date().toISOString()
       const clientID = this.clientID
       const sessionID = this.sessionID
-      let template = 'Home Page'
+      let template = this.$route.name
+      if (template === 'index') {
+        template = 'homepage'
+      }
       let component = gaAction
       let intendedUrl = null
       if (gaAction === 'URL Error') {
@@ -39,7 +42,8 @@ export default {
         hitTimeStamp,
         template,
         component,
-        intendedUrl
+        intendedUrl,
+        custom
       }
       this.$gtm.push(data)
     },

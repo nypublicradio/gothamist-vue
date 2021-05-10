@@ -1,58 +1,84 @@
 <template>
-  <div>
-    <div class="l-container">
+  <div v-if="homepageData">
+    <div class="l-container l-container--xl">
       <v-spacer size="quad" />
-      <div class="feature-border">
-        <h2 class="c-featured-blocks__heading">
-          <span class="c-featured-blocks__heading-icon o-icon u-icon--s u-path-fill--quaternary">
-            <svg
-              role="img"
-              class="o-arrow-stylish-arrow-icon"
-              viewBox="3 3 18 18"
-              width="40"
-              height="40"
-              preserveAspectRatio="xMidYMid meet"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>arrow</title>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M13.236 5L19.836 7.736L21 8.906L14.772 15.128L16.884 17.24L6.174 19.04L5.01 17.894L3 10.232L6.552 11.702L13.236 5ZM5.898 17L13.416 15.71L11.214 14.792L17.886 8.126L13.5 6.326L6.816 12.986L4.614 12.062L5.898 17.006V17Z" fill="black" />
-            </svg>
-
-          </span>
-          Featured
-        </h2>
-        <div v-if="homepageData">
-          <ul>
-            <li v-for="(feature, index) in featuredShows" :key="index">
-              <br>
-              <v-card
-                show-gallery-icon
-                class="gothamist mod-small"
-                image="http://placehold.it/150x150"
-                :image-height="150"
-                :image-width="150"
-                :title="feature.title"
-                title-link="http://www.google.com"
-                :tags="[{'name': 'news','slug': 'news'},{'name': 'sponsored','slug': ''}]"
+      <div class="c-home__content-top u-section-spacing--wide l-container l-container--xl l-wrap">
+        <section class="c-featured-blocks o-section u-breakout">
+          <h2 class="c-featured-blocks__heading">
+            <span class="c-featured-blocks__heading-icon o-icon u-icon--s u-path-fill--quaternary">
+              <svg
+                role="img"
+                class="o-arrow-stylish-arrow-icon"
+                viewBox="3 3 18 18"
+                width="40"
+                height="40"
+                preserveAspectRatio="xMidYMid meet"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <article-metadata
-                  publish-date="Jan 1, 2020 1:25PM"
-                  updated-date="Mar 2, 2020 10:08AM"
+                <title>arrow</title>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M13.236 5L19.836 7.736L21 8.906L14.772 15.128L16.884 17.24L6.174 19.04L5.01 17.894L3 10.232L6.552 11.702L13.236 5ZM5.898 17L13.416 15.71L11.214 14.792L17.886 8.126L13.5 6.326L6.816 12.986L4.614 12.062L5.898 17.006V17Z" fill="black" />
+              </svg>
+            </span>
+            Featured
+          </h2>
+          <!-- big feature -->
+          <div class="l-grid l-grid--2up l-grid--large-gutters u-space--bottom">
+            <v-card
+              show-gallery-icon
+              class="gothamist mod-vertical mod-large"
+              :image="featuredShows[0].lead_asset[0].value.image.file"
+              :image-height="150"
+              :image-width="150"
+              :title="featuredShows[0].title"
+              :title-link="`/${featuredShows[0].ancestry[0].slug}/${featuredShows[0].meta.slug}`"
+              :subtitle="featuredShows[0].description"
+              :tags="[{'name': 'news','slug': 'news'},{'name': 'sponsored','slug': ''}]"
+            >
+              <article-metadata
+                publish-date="Jan 1, 2020 1:25PM"
+                updated-date="Mar 2, 2020 10:08AM"
+              >
+                <template v-slot:comments>
+                  <v-counter
+                    icon="comment"
+                    value="40"
+                    href="http://www.google.com"
+                  />
+                </template>
+              </article-metadata>
+            </v-card>
+            <!--- small featureds -->
+            <ul>
+              <li v-for="(feature, index) in featuredShows.slice(1,featuredShows.length)" :key="index">
+                <br>
+                <v-card
+                  show-gallery-icon
+                  class="gothamist mod-small"
+                  :image="feature.lead_asset[0].value.image.file"
+                  :image-height="150"
+                  :image-width="150"
+                  :title="feature.title"
+                  :title-link="`/${feature.ancestry[0].slug}/${feature.meta.slug}`"
+                  :tags="[{'name': 'news','slug': 'news'},{'name': 'sponsored','slug': ''}]"
                 >
-                  <template v-slot:comments>
-                    <v-counter
-                      icon="comment"
-                      value="40"
-                      href="http://www.google.com"
-                    />
-                  </template>
-                </article-metadata>
-              </v-card>
-            </li>
-          </ul>
-        </div>
-        <v-spacer size="quad" />
+                  <article-metadata
+                    publish-date="Jan 1, 2020 1:25PM"
+                    updated-date="Mar 2, 2020 10:08AM"
+                  >
+                    <template v-slot:comments>
+                      <v-counter
+                        icon="comment"
+                        value="40"
+                        href="http://www.google.com"
+                      />
+                    </template>
+                  </article-metadata>
+                </v-card>
+              </li>
+            </ul>
+          </div>
+        </section>
         <!-- news river -->
         <ul>
           <li v-for="(story, index) in nonFeaturedShows" :key="index">
@@ -60,11 +86,12 @@
             <v-card
               show-gallery-icon
               class="gothamist mod-small"
-              image="http://placehold.it/150x150"
+              :image="story.listing_image.file"
               :image-height="150"
               :image-width="150"
               :title="story.title"
-              title-link="http://www.google.com"
+              :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
+              :subtitle="story.description"
               :tags="[{'name': 'news','slug': 'news'},{'name': 'sponsored','slug': ''}]"
             >
               <article-metadata
@@ -82,10 +109,10 @@
             </v-card>
           </li>
         </ul>
+        <v-spacer size="quad" />
+        <read-more-in />
+        <v-spacer size="quad" />
       </div>
-      <v-spacer size="quad" />
-      <read-more-in />
-      <v-spacer size="quad" />
     </div>
   </div>
 </template>
@@ -107,14 +134,22 @@ export default {
   },
   computed: {
     featuredShows () {
-      return this.homepageData.items.filter((feature) => {
-        return feature.show_as_feature
-      }).slice(0, 4)
+      if (this.homepageData) {
+        return this.homepageData.items.filter((feature) => {
+          return feature.show_as_feature
+        }).slice(0, 4)
+      } else {
+        return null
+      }
     },
     nonFeaturedShows () {
-      return this.homepageData.items.filter((feature) => {
-        return !feature.show_as_feature
-      })
+      if (this.homepageData) {
+        return this.homepageData.items.filter((feature) => {
+          return !feature.show_as_feature
+        })
+      } else {
+        return null
+      }
     }
   },
   async mounted () {
@@ -128,7 +163,7 @@ export default {
 </script>
 
 <style lang="scss">
-.feature-border {
-  border: var(--border-standard);
+.c-featured-blocks {
+  padding: var(--space-7) var(--space-5);
 }
 </style>

@@ -68,7 +68,7 @@ export default {
     }
   },
   mounted () {
-    // this.gaEvent('Non-Player', 'URL Error', '404', window.location.href)
+    this.gaEvent('URL Error', 'URL Error', this.error.statusCode, window.location.href)
   }
 }
 </script>

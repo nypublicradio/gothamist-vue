@@ -11,17 +11,17 @@
       :title-link="story.url"
       :tags="story.tags"
     >
-      <article-metadata
-        :publish-date="story.meta.first_published_at"
-      >
-        <template v-slot:comments>
-          <v-counter
-            icon="comment"
-            value="40"
-            href="http://www.google.com"
-          />
-        </template>
-      </article-metadata>
+<!--      <article-metadata-->
+<!--        :publish-date="story.meta.first_published_at"-->
+<!--      >-->
+<!--        <template v-slot:comments>-->
+<!--          <v-counter-->
+<!--            icon="comment"-->
+<!--            value="40"-->
+<!--            href="http://www.google.com"-->
+<!--          />-->
+<!--        </template>-->
+<!--      </article-metadata>-->
     </v-card>
   </div>
 </template>
@@ -32,8 +32,8 @@ import { mapState } from 'vuex'
 export default {
   name: 'RecentStories',
   components: {
-    ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
-    VCounter: () => import('nypr-design-system-vue/src/components/VCounter'),
+    // ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
+    // VCounter: () => import('nypr-design-system-vue/src/components/VCounter'),
     VCard: () => import('nypr-design-system-vue/src/components/VCard')
   },
   props: {

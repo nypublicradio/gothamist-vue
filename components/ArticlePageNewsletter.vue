@@ -1,9 +1,11 @@
 <template>
   <div class="article-page-newsletter l-container l-container--6col">
-    <h3>NYC news never sleeps. Get the Gothamist Daily newsletter and don't miss a moment.</h3>
+    <h3 v-if="title">
+      {{ title }}
+    </h3>
     <form
       class="gtm__click-tracking"
-      @submit.prevent="submitForm"
+      @submit.prevent="submitForm('interruptor_newsl')"
     >
       <label
         for="newsletter"
@@ -31,6 +33,7 @@
           data-category="Click Tracking"
           data-test-newsletter-submit=""
           type="submit"
+          :disabled="!termsCheckbox"
         >
           <gothamist-arrow v-if="!submitted" />
           <loading-icon
@@ -61,6 +64,7 @@
           </legend>
           <label>
             <input
+              v-model="termsCheckbox"
               type="checkbox"
               required
               checked
@@ -84,7 +88,13 @@ import newsletter from '../mixins/newsletter'
 
 export default {
   name: 'ArticlePageNewsletter',
-  mixins: [newsletter]
+  mixins: [newsletter],
+  props: {
+    title: {
+      type: String,
+      default: null
+    }
+  }
 }
 </script>
 
@@ -98,9 +108,20 @@ export default {
   color: RGB(var(--color-text));
 }
 
+.article-page-newsletter .c-newsletter-form__inline-button {
+  border: none;
+}
+
 .article-page-newsletter .c-newsletter-form__input,
 .article-page-newsletter .c-newsletter-form__button {
   height: 40px;
+}
+
+.article-page-newsletter .c-newsletter-form__input {
+  border: solid 2px RGB(var(--color-dark-gray));
+  &::placeholder {
+    font-size: var(--font-size-5);
+  }
 }
 
 .article-page-newsletter .c-newsletter-form__button {

@@ -10,7 +10,7 @@
       </div>
       <form
         class="gtm__click-tracking"
-        @submit.prevent="submitForm"
+        @submit.prevent="submitForm('footer_newsl')"
       >
         <label
           for="newsletter"
@@ -38,6 +38,7 @@
             data-category="Click Tracking"
             data-test-newsletter-submit=""
             type="submit"
+            :disabled="!termsCheckbox"
           >
             <gothamist-arrow v-if="!submitted" />
             <loading-icon
@@ -68,6 +69,7 @@
             </legend>
             <label>
               <input
+                v-model="termsCheckbox"
                 type="checkbox"
                 required
                 checked
@@ -187,6 +189,11 @@ export default {
   &::after {
     display: none;
   }
+}
+
+.c-newsletter-form__button[disabled] {
+  cursor: not-allowed;
+  opacity: .6;
 }
 
 .c-newsletter-form .c-newsletter-form__button .o-gothamist-arrow-icon,

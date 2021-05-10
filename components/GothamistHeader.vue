@@ -2,6 +2,7 @@
   <div>
     <the-header
       :donate-url="donateUrl"
+      @componentEvent="gaEvent('Click Tracking','Donate', 'Header')"
       class="u-color-group-dark"
     >
       <template v-slot:menu>
@@ -22,6 +23,7 @@
           <template v-slot:button>
             <div>
               <v-button
+                @componentEvent="gaEvent('Click Tracking','Donate', 'Side Menu')"
                 :href="donateUrl"
                 target="_blank"
                 class="c-main-header__donate"
@@ -32,7 +34,9 @@
           <template v-slot:component>
             <div>
               <v-button
+                @click="gaEvent('Click Tracking','Send A Story Idea', 'Side Menu')"
                 :href="'mailto:' + tipsEmail"
+                target="_blank"
                 label="Send A Story Idea"
                 class="c-main-header__send-story"
               />
@@ -40,7 +44,10 @@
           </template>
           <template v-slot:search>
             <div>
-              <v-search action="/search" />
+              <v-search
+                action="/search"
+                @searchBarSubmit="gaEvent('Side Menu','user_search')"
+              />
             </div>
           </template>
           <template v-slot:social>
@@ -49,18 +56,22 @@
                 <share-tools-item
                   service="facebook"
                   username="gothamist"
+                  @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
                 />
                 <share-tools-item
                   service="twitter"
                   username="gothamist"
+                  @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
                 />
                 <share-tools-item
                   service="instagram"
                   username="gothamist"
+                  @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
                 />
                 <share-tools-item
                   service="youtube"
                   username="UCY_2VeS5Q9_sMZRhtvF0c5Q"
+                  @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
                 />
               </share-tools>
             </div>
@@ -78,6 +89,7 @@
       </template>
       <template v-slot:navigation>
         <secondary-navigation
+          @componentEvent="gaEvent('Click Tracking', ...arguments, 'Header')"
           orientation="horizontal"
           :nav-items="headerNav"
         />
@@ -92,6 +104,8 @@
           :search-is-active="false"
           transition="slide-left"
           :donate-url="donateUrl"
+          @searchBarOpen="gaEvent('Click Tracking', 'user_search_open', 'Side Menu')"
+          @searchBarSubmit="gaEvent('Click Tracking','user_search', 'Side Menu')"
         />
       </template>
     </the-header>
@@ -100,6 +114,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import gtm from '@/mixins/gtm'
 
 export default {
   name: 'GothamistHeader',
@@ -113,6 +128,7 @@ export default {
     ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
     ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem')
   },
+  mixins: [gtm],
   data () {
     return {
       isHomepage: false
@@ -134,21 +150,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.c-main-header .header-search-bar .search-bar-search-icon {
-  background: none !important;
-  position: absolute;
-  right: 0;
-  top: 4px;
-
-  &:hover {
-    background: none !important;
-  }
-
-  &::before,
-  &::after {
-    display: none;
-  }
-}
-</style>
