@@ -61,6 +61,7 @@ templates:
               --environment=$ENV \
               --tag=$TAG \
               --wait=300 \
+              --enable-execute-command \
       - save_cache:
           key: deploy-{{ checksum "circle.yml" }}
           paths:
