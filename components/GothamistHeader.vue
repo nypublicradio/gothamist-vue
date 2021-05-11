@@ -19,8 +19,7 @@
                 to="/"
                 aria-label="gothamist home page"
               >
-                <gothamist-logo-stacked v-if="isHomepage" />
-                <gothamist-logo v-else />
+                <gothamist-logo />
               </nuxt-link>
             </div>
           </template>
@@ -126,7 +125,7 @@ export default {
     SecondaryNavigation: () => import('nypr-design-system-vue/src/components/SecondaryNavigation'),
     TheHeader: () => import('nypr-design-system-vue/src/components/TheHeader'),
     GothamistLogo: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogo'),
-    GothamistLogoStacked: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogoStacked'),
+    // GothamistLogoStacked: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogoStacked'),
     VSearch: () => import('nypr-design-system-vue/src/components/VSearch'),
     TheMenu: () => import('nypr-design-system-vue/src/components/TheMenu'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
@@ -158,20 +157,20 @@ export default {
 
 <style lang="scss">
 // home page header logo
-.home-page-header.c-main-header {
-  padding-top: 50px;
-  background: RGB(var(--color-background-darker));
-}
-
-.home-page-header .c-main-header__logo,
-.home-page-header .c-main-header__logo svg {
-  position: absolute;
-  width: 135px;
-  height: 142px;
-  top: -15px;
-}
-
-.home-page-header .c-main-header__logo .gothamist-logo-icon--stacked .gothamist-letters path {
-  fill: RGB(var(--color-black));
-}
+//.home-page-header.c-main-header {
+//  padding-top: 50px;
+//  background: RGB(var(--color-background-darker));
+//}
+//
+//.home-page-header .c-main-header__logo,
+//.home-page-header .c-main-header__logo svg {
+//  position: absolute;
+//  width: 135px;
+//  height: 142px;
+//  top: -15px;
+//}
+//
+//.home-page-header .c-main-header__logo .gothamist-logo-icon--stacked .gothamist-letters path {
+//  fill: RGB(var(--color-black));
+//}
 </style>

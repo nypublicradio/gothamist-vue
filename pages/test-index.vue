@@ -316,7 +316,7 @@
 import gtm from '@/mixins/gtm'
 import { mapState } from 'vuex'
 
-const { fuzzyDateTime } = require('~/mixins/helpers')
+const { formatTags, fuzzyDateTime, getArticleImage, hasGallery } = require('~/mixins/helpers')
 export default {
   name: 'HomePage', // this is the template name which is used for GTM
   components: {
@@ -380,44 +380,9 @@ export default {
       ))
   },
   methods: {
-    formatTags (name, slug, sponsored, tags) {
-      const tagArray = [{
-        name,
-        slug
-      }]
-      if (sponsored) {
-        return [{ name: 'sponsored' }]
-      }
-      if (tags.find(x => x.name === 'opinion')) {
-        tagArray.push({
-          name: 'opinion',
-          slug: 'opinion'
-        })
-      }
-      return tagArray
-    },
+    formatTags,
     fuzzyDateTime,
-    getArticleImage (asset, ancestry) {
-      if (asset !== undefined && asset.length > 0) {
-        if (asset[0].value.image) {
-          return asset[0].value.image.file
-        }
-        if (asset[0].value.default_image) {
-          return asset[0].value.default_image.file
-        }
-      } else {
-        switch (ancestry) {
-          case 'arts-entertainment':
-            return this.defaultImageArts
-          case 'food':
-            return this.defaultImageFood
-          case 'news':
-            return this.defaultImageNews
-          default:
-            return this.defaultImage
-        }
-      }
-    },
+    getArticleImage,
     async getMoreResults () {
       this.moreResultsLoaded = false
       await this.$axios
@@ -428,14 +393,7 @@ export default {
           this.moreResultsLoaded = true
         })
     },
-    hasGallery (asset) {
-      if (asset !== undefined && asset.length > 0) {
-        if (asset[0].type === 'lead_gallery') {
-          return true
-        }
-      }
-      return false
-    }
+    hasGallery
   }
 }
 </script>
