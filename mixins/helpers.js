@@ -1,5 +1,6 @@
 import { format, differenceInMinutes, differenceInHours, getYear, isValid } from 'date-fns'
 
+// formats a utc timestamp
 export const fuzzyDateTime = function (utcTimestamp) {
   const JUST_NOW = 'Just now'
   const TIMESTAMP_FORMAT = 'MMMM d, yyyy h:mm aaaa'
@@ -22,4 +23,61 @@ export const fuzzyDateTime = function (utcTimestamp) {
   } else {
     return format(time, TIMESTAMP_FORMAT)
   }
+}
+
+// formats tags into the correct format for radial (for article listing pages)
+// name = the article's ancestry's title 'ancestry[0].title' from the CMS API
+// slug = the article's ancestry's slug 'ancestry[0].slug' from the CMS API
+// sponsored = boolean 'sponsored_content' from the CMS API
+// tags = 'tags' array from the CMS API
+export const formatTags = function (name, slug, sponsored, tags) {
+  const tagArray = [{
+    name,
+    slug
+  }]
+  if (sponsored) {
+    return [{ name: 'sponsored' }]
+  }
+  if (tags.find(x => x.name === 'opinion')) {
+    tagArray.push({
+      name: 'opinion',
+      slug: 'opinion'
+    })
+  }
+  return tagArray
+}
+
+// returns the article image
+// asset = the article's 'lead_asset' from the CMS API
+// slug = the article's ancestry's slug 'ancestry[0].slug' from the CMS API
+export const getArticleImage = function (asset, slug) {
+  if (asset !== undefined && asset.length > 0) {
+    if (asset[0].value.image) {
+      return asset[0].value.image.file
+    }
+    if (asset[0].value.default_image) {
+      return asset[0].value.default_image.file
+    }
+  } else {
+    switch (slug) {
+      case 'arts-entertainment':
+        return this.defaultImageArts
+      case 'food':
+        return this.defaultImageFood
+      case 'news':
+        return this.defaultImageNews
+      default:
+        return this.defaultImage
+    }
+  }
+}
+// checks if the asset has a gallery or not and return true/false
+// asset = the story's 'lead_asset' from the CMS API
+export const hasGallery = function (asset) {
+  if (asset !== undefined && asset.length > 0) {
+    if (asset[0].type === 'lead_gallery') {
+      return true
+    }
+  }
+  return false
 }

@@ -3,6 +3,7 @@
     <the-header
       :donate-url="donateUrl"
       class="u-color-group-dark"
+      :class="{'home-page-header' : isHomepage}"
       @componentEvent="gaEvent('Click Tracking','Donate', 'Header')"
     >
       <template v-slot:menu>
@@ -13,12 +14,14 @@
           :legal-nav="legalNav"
         >
           <template v-slot:logo>
-            <nuxt-link
-              to="/"
-              aria-label="gothamist home page"
-            >
-              <gothamist-logo />
-            </nuxt-link>
+            <div>
+              <nuxt-link
+                to="/"
+                aria-label="gothamist home page"
+              >
+                <gothamist-logo />
+              </nuxt-link>
+            </div>
           </template>
           <template v-slot:button>
             <div>
@@ -122,6 +125,7 @@ export default {
     SecondaryNavigation: () => import('nypr-design-system-vue/src/components/SecondaryNavigation'),
     TheHeader: () => import('nypr-design-system-vue/src/components/TheHeader'),
     GothamistLogo: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogo'),
+    // GothamistLogoStacked: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogoStacked'),
     VSearch: () => import('nypr-design-system-vue/src/components/VSearch'),
     TheMenu: () => import('nypr-design-system-vue/src/components/TheMenu'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
@@ -144,9 +148,29 @@ export default {
     })
   },
   mounted () {
-    if (this.$route.name === 'index') {
+    if (this.$nuxt.$route.name === 'test') {
       this.isHomepage = true
     }
   }
 }
 </script>
+
+<style lang="scss">
+// home page header logo
+//.home-page-header.c-main-header {
+//  padding-top: 50px;
+//  background: RGB(var(--color-background-darker));
+//}
+//
+//.home-page-header .c-main-header__logo,
+//.home-page-header .c-main-header__logo svg {
+//  position: absolute;
+//  width: 135px;
+//  height: 142px;
+//  top: -15px;
+//}
+//
+//.home-page-header .c-main-header__logo .gothamist-logo-icon--stacked .gothamist-letters path {
+//  fill: RGB(var(--color-black));
+//}
+</style>

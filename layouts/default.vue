@@ -1,5 +1,5 @@
 <template>
-  <div :class="$route.name">
+  <div>
     <gothamist-header />
     <main>
       <v-spacer size="quad" />
