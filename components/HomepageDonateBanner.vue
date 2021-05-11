@@ -35,6 +35,7 @@ export default {
 <style lang="scss">
 .homepage-donate-banner {
   position: relative;
+  margin-top: var(--space-8);
   padding: var(--space-5);
   width: 100%;
   background-color: RGB(var(--color-background-highlight));
@@ -55,6 +56,7 @@ export default {
   }
 
   @include media(">large") {
+    margin-top: var(--space-4);
     &::before {
       display: none;
     }
