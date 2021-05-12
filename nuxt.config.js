@@ -146,11 +146,13 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/sentry',
-    '@nuxtjs/gtm'
+    '@nuxtjs/gtm',
+    'cookie-universal-nuxt'
   ],
 
   plugins: [
-    '~/plugins/axios'
+    '~/plugins/axios',
+    '~/plugins/observe-visibility'
   ],
 
   publicRuntimeConfig: {

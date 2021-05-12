@@ -36,6 +36,35 @@
         </template>
       </article-metadata>
       <div class="article-lead-asset l-container l-container--10col">
+        <share-tools class="article-share-tools mod-vertical">
+          <share-tools-item
+            action="share"
+            service="facebook"
+            :url="article.url"
+            :utm-parameters="{medium: 'social', source: 'facebook', campaign: 'shared_facebook'}"
+          />
+          <share-tools-item
+            action="share"
+            service="twitter"
+            :url="article.url"
+            :share-parameters="{text: article.title, via: 'gothamist'}"
+            :utm-parameters="{medium: 'social', source: 'twitter', campaign: 'shared_twitter'}"
+          />
+          <share-tools-item
+            action="share"
+            service="reddit"
+            :url="article.url"
+            :share-parameters="{title: article.title}"
+            :utm-parameters="{medium: 'social', source: 'reddit', campaign: 'shared_reddit'}"
+          />
+          <share-tools-item
+            action="share"
+            service="email"
+            :url="article.url"
+            :share-parameters="{body: article.title + ' - %URL%'}"
+            :utm-parameters="{medium: 'social', source: 'email', campaign: 'shared_email'}"
+          />
+        </share-tools>
         <div v-if="leadAsset.type === 'lead_image'" class="article-lead-image">
           <image-with-caption
             variation="gothamist"
