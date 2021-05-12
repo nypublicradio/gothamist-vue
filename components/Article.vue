@@ -68,9 +68,16 @@
       <!-- AD -->
       <!-- DISQUS -->
 
-      <!-- <donate-banner /> -->
-      <recirculation-module :related-article="article" />
-      <read-more-in class="article-read-more-in" />
+      <div
+        v-if="showDonateBanner"
+        v-observe-visibility="{callback: bannerVisibilityChanged, once: true}"
+      >
+        <donate-banner
+          :class="{'is-onscreen': bannerOnscreen}"
+          @close="bannerClosed"
+          @donate-click="bannerDonateClicked"
+        />
+      </div>
     </div>
     <div
       v-else
@@ -98,7 +105,7 @@ export default {
     ReadMoreIn: () => import('./ReadMoreIn'),
     VTag: () => import('nypr-design-system-vue/src/components/VTag'),
     DoYouKnowTheScoop: () => import('./DoYouKnowTheScoop'),
-    // DonateBanner: () => import('./DonateBanner'),
+    DonateBanner: () => import('./DonateBanner'),
     ArticlePageNewsletter: () => import('./ArticlePageNewsletter'),
     RecirculationModule: () => import('./RecirculationModule')
   },
@@ -106,6 +113,12 @@ export default {
     article: {
       type: Object,
       default: () => {}
+    }
+  },
+  data () {
+    return {
+      bannerOnscreen: false,
+      showDonateBanner: !this.$cookies.donateBannerDismissed && this.$cookies.articleViews < 3
     }
   },
   computed: {
@@ -134,6 +147,23 @@ export default {
           })
       } else {
         return []
+      }
+    }
+  },
+  methods: {
+    bannerClosed () {
+      // only show the banner once a day
+      const tomorrow = new Date()
+      tomorrow.setDate(tomorrow.getDate() + 1)
+      this.$cookies.set('donateBannerClosed', true, { expires: tomorrow })
+    },
+    bannerDonateClicked () {
+      // track a ga event here
+    },
+    bannerVisibilityChanged (isVisible) {
+      if (isVisible) {
+        this.bannerOnscreen = true
+        // track a ga impression event here
       }
     }
   },

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Article :article="page" />
+    <Article :article="page" :show-donate-banner="!cookies.donateBannerDismissed && cookies.articlesViewed >= 3" />
   </div>
 </template>
 
@@ -13,7 +13,16 @@ export default {
   components: {
     Article: () => import('../../components/Article')
   },
-  async asyncData ({ $axios, params, error }) {
+  async asyncData ({ $axios, $cookies, params, error }) {
+    const donateBannerDismissed = $cookies.get('donateBannerDismissed') || false
+    let articleViews = Number($cookies.get('articleViews')) || 0
+    articleViews += 1
+    $cookies.set('articleViews', articleViews)
+    const cookies = {
+      articleViews,
+      donateBannerDismissed
+    }
+
     const path = `${params.section}/${params.article}`
     const requestOptions = {
       transformResponse: [
@@ -45,7 +54,7 @@ export default {
       page.data.gallery = gallery.data
     }
 
-    return { page: page?.data }
+    return { page: page?.data, cookies }
   }
 }
 </script>
