@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import humps from 'humps'
 import { fuzzyDateTime } from '../../mixins/helpers'
 
 export default {
@@ -25,9 +24,9 @@ export default {
 
     const path = `${params.section}/${params.article}`
     const requestOptions = {
-      transformResponse: [
+      transformResponse: $axios.defaults.transformResponse.concat(
         (data) => {
-          const transformedData = humps.camelizeKeys(JSON.parse(data))
+          const transformedData = data
           transformedData.authors = transformedData.relatedAuthors.map(author => ({
             firstName: author.firstName,
             lastName: author.lastName,
@@ -39,7 +38,7 @@ export default {
           transformedData.formattedUpdatedDate = fuzzyDateTime(transformedData.updatedDate)
           return transformedData
         }
-      ]
+      )
     }
 
     const page = await $axios.get(`/pages/find/?html_path=${path}`, requestOptions)
@@ -47,10 +46,8 @@ export default {
         error({ statusCode: 404, message: 'Page not found' })
       })
 
-    if (page.data.leadAsset[0].type === 'lead_gallery') {
-      const gallery = await $axios.get(`/pages/${page.data.leadAsset[0].value.gallery}`, {
-        transformResponse: data => humps.camelizeKeys(JSON.parse(data))
-      })
+    if (page?.data.leadAsset[0].type === 'leadGallery') {
+      const gallery = await $axios.get(`/pages/${page.data.leadAsset[0].value.gallery}`)
       page.data.gallery = gallery.data
     }
 

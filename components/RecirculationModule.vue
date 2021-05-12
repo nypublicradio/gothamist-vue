@@ -1,32 +1,59 @@
 <template>
-  <div class="c-block-group">
-    <div class="c-block-group__col c-block-group__col1">
-      <h2>Recent in {{ relatedArticle.ancestry[0].title }}</h2>
+  <div class="recirculation-module l-grid l-grid--2up">
+    <div class="recirculation-module-group  recirculation-module-group-1">
+      <h2 class="recirculation-module-header">
+        Recent in {{ relatedArticle.ancestry[0].title }}
+      </h2>
       <v-card
         v-for="(story, index) in recentStories"
         :key="index"
         class="gothamist mod-small"
-        :image="story.leadAsset[0] && story.leadAsset[0].value.defaultImage ? story.leadAsset[0].value.defaultImage.file : defaultImage"
+        :image="
+          story.leadAsset[0] && story.leadAsset[0].value.image && story.leadAsset[0].value.image.file ||
+            story.leadAsset[0] && story.leadAsset[0].value.defaultImage && story.leadAsset[0].value.defaultImage.file ||
+            defaultImage"
         :image-height="150"
         :image-width="150"
         :title="story.title"
         :title-link="story.url"
-        :tags="story.tags"
-      />
+      >
+        <article-metadata>
+          <template v-slot:authors>
+            <v-byline
+              prefix=""
+              :authors="story.relatedAuthors"
+            />
+          </template>
+        </article-metadata>
+      </v-card>
     </div>
-    <div class="c-block-group__col c-block-group__col2">
-      <h2>Featured in {{ relatedArticle.ancestry[0].title }}</h2>
+    <div class="recirculation-module-group recirculation-module-group-2">
+      <h2 class="recirculation-module-header">
+        Featured in {{ relatedArticle.ancestry[0].title }}
+      </h2>
       <v-card
         v-for="(story, index) in featuredStories"
         :key="index"
-        class="gothamist mod-small"
-        :image="story.leadAsset[0] && story.leadAsset[0].value.defaultImage ? story.leadAsset[0].value.default_image.file : defaultImage"
+        class="gothamist mod-large mod-vertical"
+        :image="
+          story.leadAsset[0] && story.leadAsset[0].value.image && story.leadAsset[0].value.image.file ||
+            story.leadAsset[0] && story.leadAsset[0].value.defaultImage && story.leadAsset[0].value.defaultImage.file ||
+            defaultImage"
         :image-height="150"
         :image-width="150"
         :title="story.title"
         :title-link="story.url"
-        :tags="story.tags"
-      />
+        :subtitle="story.listingSummary || story.description"
+      >
+        <article-metadata>
+          <template v-slot:authors>
+            <v-byline
+              prefix=""
+              :authors="story.relatedAuthors"
+            />
+          </template>
+        </article-metadata>
+      </v-card>
     </div>
   </div>
 </template>
@@ -41,7 +68,9 @@ function dedupeStories (needle, haystack) {
 export default {
   name: 'RecirculationModule',
   components: {
-    VCard: () => import('nypr-design-system-vue/src/components/VCard')
+    VCard: () => import('nypr-design-system-vue/src/components/VCard'),
+    VByline: () => import('nypr-design-system-vue/src/components/VByline'),
+    ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata')
   },
   props: {
     relatedArticle: {
@@ -78,3 +107,29 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.recirculation-module-group-1 > div:not(:last-of-type) {
+  margin-bottom: var(--space-4);
+}
+
+.recirculation-module-header {
+  display: inline-block;
+  line-height: var(--line-height-9);
+  font-size: var(--font-size-9);
+  font-family: var(--font-family-header);
+  letter-spacing: var(--letter-spacing-header);
+  font-weight: var(--font-weight-header);
+  background-image: linear-gradient(rgba(var(--color-text-muted),.2),rgba(var(--color-text-muted),.2));
+  background-position: center bottom .2em;
+  background-size: 100% .55em;
+  background-repeat: no-repeat;
+  padding: 0 var(--space-2);
+  margin-bottom: var(--space-3);
+  margin-left: calc(var(--space-2) * -1);
+  @media all and (min-width: $medium) {
+    line-height: var(--line-height-11);
+    font-size: var(--font-size-11);
+  }
+}
+</style>

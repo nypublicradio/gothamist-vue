@@ -4,7 +4,7 @@
       v-if="article.body"
       class="l-container l-container--12col"
     >
-      <breadcrumbs :breadcrumbs="[{name: section, slug: section}]" />
+      <breadcrumbs class="article-breadcrumbs" :breadcrumbs="[{name: section, slug: section}]" />
       <h1 class="article-title">
         {{ article.title }}
       </h1>
@@ -87,7 +87,10 @@
         </div>
       </div>
       <v-spacer size="quad" />
-      <v-streamfield :streamfield="article.body" class="l-container l-container--10col" />
+      <v-streamfield
+        class="l-container l-container--10col article-body"
+        :streamfield="article.body"
+      />
       <v-spacer size="quad" />
       <article-page-newsletter class="article-newsletter" />
       <div class="article-tag-list">
@@ -116,6 +119,10 @@
       <p>skeleton loading component goes here</p>
       <v-spacer size="quad" />
     </div>
+    <div class="l-container l-container--14col">
+      <recirculation-module :related-article="article" class="article-recirculation" />
+      <read-more-in class="article-read-more-in" />
+    </div>
   </div>
 </template>
 
@@ -127,6 +134,8 @@ export default {
     Breadcrumbs: () => import('./Breadcrumbs'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
     ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
+    ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
+    ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
     VCounter: () => import('nypr-design-system-vue/src/components/VCounter'),
     VByline: () => import('nypr-design-system-vue/src/components/VByline'),
     ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
@@ -244,18 +253,32 @@ export default {
       font-size: var(--font-size-16);
     }
   }
-  .article-lead-image {
-    margin-left: calc(var(--space-3) * -1);
-    margin-right: calc(var(--space-3) * -1);
+  .article-share-tools {
+    width: 48.5px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: -61px;
+    background-size: 1px 16px;
+    background-image: linear-gradient(to bottom,transparent 50%,RGB(var(--color-gray)) 50%);
+    background-repeat: repeat-y;
+    background-position: right bottom;
   }
   .article-tag-list {
     margin-bottom: var(--space-6);
+    .tag {
+      display: inline-block;
+      margin: 0 var(--space-2) var(--space-3) 0;
+    }
   }
   .article-scoop {
     margin-bottom: var(--space-6);
   }
   .article-newsletter {
     margin-bottom: var(--space-5);
+  }
+  .article-recirculation {
+    margin-bottom: var(--space-8);
   }
   .article-read-more-in {
     margin-bottom: var(--space-6);

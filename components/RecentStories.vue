@@ -4,17 +4,19 @@
       v-for="(story, index) in recentStories"
       :key="index"
       class="gothamist mod-small"
-      :image="story.lead_asset[0] && story.lead_asset[0].value.image ? story.lead_asset[0].value.image.file : defaultImage"
+      :image="story.leadAsset[0] && story.leadAsset[0].value.image && story.leadAsset[0].value.image.file ||
+        story.leadAsset[0] && story.leadAsset[0].value.defaultImage && story.leadAsset[0].value.defaultImage.file ||
+        defaultImage"
       :image-height="150"
       :image-width="150"
-      :sponsored="story.sponsored_content"
+      :sponsored="story.sponsoredContent"
       :title="story.title"
       :title-link="story.url"
       :tags="story.tags"
     >
       <article-metadata
-        :publish-date="story.updated_date ? null : fuzzyDateTime(story.meta.first_published_at)"
-        :updated-date="story.updated_date ? fuzzyDateTime(story.updated_date) : null"
+        :publish-date="story.updatedDate ? null : fuzzyDateTime(story.meta.firstPublishedAt)"
+        :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
       >
         <template
           v-if="disqusData && disqusData.data.response[index]"
