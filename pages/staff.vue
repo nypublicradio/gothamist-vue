@@ -13,7 +13,7 @@
         :key="index"
         :name="person.name"
         :title="person.title"
-        :article-link="'/staff/' + person.slug"
+        :article-link="person.slug"
         :image="person.image"
         :description="person.bio"
         class="u-space--double--bottom"

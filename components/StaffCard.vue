@@ -7,7 +7,7 @@
           {{ name }}
         </h3>
         <p class="staff-card-title">
-          {{ title }}<span class="staff-card-articles"><a :href="articleLink" class="staff-card-link">Articles</a></span>
+          {{ title }}<span v-if="articleLink" class="staff-card-articles"><a :href="/staff/ + articleLink" class="staff-card-link">Articles</a></span>
         </p>
         <div class="staff-card-sharelinks">
           <slot />
