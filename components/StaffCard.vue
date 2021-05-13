@@ -1,18 +1,30 @@
 <template>
   <div class="staff-card">
     <div class="l-grid l-grid--2x3 u-space--bottom">
-      <img :src="image" :alt="name">
+      <img
+        :src="image"
+        :alt="name"
+      >
       <div>
         <h3 class="staff-card-name">
           {{ name }}
         </h3>
         <p class="staff-card-title">
-          {{ title }}<span v-if="articleLink" class="staff-card-articles"><a :href="/staff/ + articleLink" class="staff-card-link">Articles</a></span>
+          {{ title }}<span
+          v-if="articleLink"
+          class="staff-card-articles"
+        ><a
+          :href="/staff/ + articleLink"
+          class="staff-card-link"
+        >Articles</a></span>
         </p>
         <div class="staff-card-sharelinks">
           <slot />
         </div>
-        <p class="staff-card-description" v-html="description" />
+        <p
+          class="staff-card-description"
+          v-html="description"
+        />
       </div>
     </div>
   </div>
@@ -53,34 +65,53 @@ export default {
 
 <style lang="scss">
 .staff-card-name {
-    @include typeface(header, 10);
-    margin-bottom: var(--space-2);
+  @include typeface(header, 10);
+  margin-bottom: var(--space-2);
 }
 
 .staff-card-title {
-    @include typeface(small, 3);
-    text-transform: uppercase;
-    font-weight: bold;
-    color: RGB(var(--color-gray));
-    margin: var(--space-3) 0;
+  @include typeface(small, 3);
+  text-transform: uppercase;
+  font-weight: bold;
+  color: RGB(var(--color-gray));
+  margin: var(--space-3) 0;
 }
 
 .staff-card-link {
-    padding-bottom: 2px;
-    border-bottom: 2px dotted RGB(var(--color-border-standard));
-    text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px dotted RGB(var(--color-border-standard));
+  text-decoration: none;
+  font-weight: normal;
+
+  &:hover {
+    background-color: RGB(var(--color-reddish-orange));
+  }
 }
 
 .staff-card-articles {
-    &::before {
-        content: "•";
-        color: RGB(var(--color-text));
-        display: inline-block;
-        line-height: 1;
-        margin: 0 var(--space-2);
-    }
+  &::before {
+    content: "•";
+    color: RGB(var(--color-text));
+    display: inline-block;
+    line-height: 1;
+    margin: 0 var(--space-2);
+  }
 }
+
 .staff-card-sharelinks {
   margin: var(--space-4) 0;
+}
+
+.staff-card-description a,
+.staff-card-description a:visited,
+.staff-card-description a:active {
+  padding-bottom: 2px;
+  border-bottom: 2px dotted RGB(var(--color-border-standard));
+  text-decoration: none;
+  font-weight: normal;
+
+  &:hover {
+    background-color: RGB(var(--color-reddish-orange));
+  }
 }
 </style>
