@@ -4,7 +4,9 @@
     <v-card
       v-if="featuredStory"
       class="gothamist mod-vertical mod-large"
-      :image="featuredStory.story.lead_asset[0] && featuredStory.story.lead_asset[0].value.default_image ? featuredStory.story.lead_asset[0].value.default_image.file : defaultImage"
+      :image="featuredStory.story.leadAsset[0] && featuredStory.story.leadAsset[0].value.image && featuredStory.story.leadAsset[0].value.image.file ||
+        featuredStory.story.leadAsset[0] && featuredStory.story.leadAsset[0].value.defaultImage && featuredStory.story.leadAsset[0].value.defaultImage.file ||
+        defaultImage"
       :image-height="150"
       :image-width="150"
       :title="featuredStory.story.title"
@@ -12,7 +14,7 @@
       :tags="featuredStory.story.tags"
     >
       <article-metadata
-        :publish-date="featuredStory.story.meta.first_published_at"
+        :publish-date="featuredStory.story.meta.firstPublishedAt"
       >
         <template v-slot:comments>
           <v-counter
