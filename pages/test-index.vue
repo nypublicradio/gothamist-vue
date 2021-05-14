@@ -33,19 +33,19 @@
         <div class="l-grid l-grid--2up l-grid--large-gutters">
           <!-- left column / large featured card -->
           <v-card
-            :show-gallery-icon="hasGallery(featuredStories[0].lead_asset)"
+            :show-gallery-icon="hasGallery(featuredStories[0].leadAsset)"
             :title="featuredStories[0].title"
             :title-link="`/${featuredStories[0].ancestry[0].slug}/${featuredStories[0].meta.slug}`"
             :subtitle="featuredStories[0].description"
-            :image="getArticleImage(featuredStories[0].lead_asset, featuredStories[0].ancestry[0].slug)"
+            :image="getArticleImage(featuredStories[0].leadAsset, featuredStories[0].ancestry[0].slug)"
             :image-height="533"
             :image-width="800"
             class="gothamist mod-vertical mod-large"
-            :tags="formatTags(featuredStories[0].ancestry[0].title, featuredStories[0].ancestry[0].slug, featuredStories[0].sponsored_content, featuredStories[0].tags)"
+            :tags="formatTags(featuredStories[0].ancestry[0].title, featuredStories[0].ancestry[0].slug, featuredStories[0].sponsoredContent, featuredStories[0].tags)"
           >
             <article-metadata
-              :publish-date="!featuredStories[0].updated_date ? fuzzyDateTime(featuredStories[0].meta.first_published_at) : null"
-              :updated-date="featuredStories[0].updated_date ? fuzzyDateTime(featuredStories[0].updated_date) : null"
+              :publish-date="!featuredStories[0].updatedDate ? fuzzyDateTime(featuredStories[0].meta.firstPublishedAt) : null"
+              :updated-date="featuredStories[0].updatedDate ? fuzzyDateTime(featuredStories[0].updatedDate) : null"
             >
               <template v-slot:comments>
                 <v-counter
@@ -63,18 +63,18 @@
               :key="index"
             >
               <v-card
-                :show-gallery-icon="hasGallery(story.lead_asset)"
+                :show-gallery-icon="hasGallery(story.leadAsset)"
                 class="gothamist mod-small u-space--double--bottom"
-                :image="getArticleImage(story.lead_asset, story.ancestry[0].slug)"
+                :image="getArticleImage(story.leadAsset, story.ancestry[0].slug)"
                 :image-height="150"
                 :image-width="150"
                 :title="story.title"
                 :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-                :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsored_content, story.tags)"
+                :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
               >
                 <article-metadata
-                  :publish-date="!story.updated_date ? fuzzyDateTime(story.meta.first_published_at) : null"
-                  :updated-date="story.updated_date ? fuzzyDateTime(story.updated_date) : null"
+                  :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                  :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
                 >
                   <template v-slot:comments>
                     <v-counter
@@ -103,19 +103,19 @@
               v-for="(story, index) in filteredRiver.slice(0,7)"
               :key="index"
               class="gothamist u-space--double--bottom"
-              :class="story.sponsored_content ? 'mod-vertical mod-large' : 'mod-small'"
-              :show-gallery-icon="hasGallery(story.lead_asset)"
-              :image="getArticleImage(story.lead_asset, story.ancestry[0].slug)"
+              :class="story.sponsoredContent ? 'mod-vertical mod-large' : 'mod-small'"
+              :show-gallery-icon="hasGallery(story.leadAsset)"
+              :image="getArticleImage(story.leadAsset, story.ancestry[0].slug)"
               :image-height="150"
               :image-width="150"
               :title="story.title"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
               :subtitle="story.description"
-              :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsored_content, story.tags)"
+              :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
             >
               <article-metadata
-                :publish-date="!story.updated_date ? fuzzyDateTime(story.meta.first_published_at) : null"
-                :updated-date="story.updated_date ? fuzzyDateTime(story.updated_date) : null"
+                :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template v-slot:comments>
                   <v-counter
@@ -143,19 +143,19 @@
           v-for="(story, index) in filteredRiver.slice(7,14)"
           :key="index"
           class="gothamist u-space--double--bottom"
-          :class="story.sponsored_content ? 'mod-vertical mod-large' : 'mod-small'"
-          :show-gallery-icon="hasGallery(story.lead_asset)"
-          :image="getArticleImage(story.lead_asset, story.ancestry[0].slug)"
+          :class="story.sponsoredContent ? 'mod-vertical mod-large' : 'mod-small'"
+          :show-gallery-icon="hasGallery(story.leadAsset)"
+          :image="getArticleImage(story.leadAsset, story.ancestry[0].slug)"
           :image-height="150"
           :image-width="150"
           :title="story.title"
           :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
           :subtitle="story.description"
-          :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsored_content, story.tags)"
+          :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
         >
           <article-metadata
-            :publish-date="!story.updated_date ? fuzzyDateTime(story.meta.first_published_at) : null"
-            :updated-date="story.updated_date ? fuzzyDateTime(story.updated_date) : null"
+            :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+            :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
           >
             <template v-slot:comments>
               <v-counter
@@ -180,19 +180,19 @@
               v-for="(story, index) in filteredRiver.slice(14,21)"
               :key="index"
               class="gothamist u-space--double--bottom"
-              :class="story.sponsored_content ? 'mod-vertical mod-large' : 'mod-small'"
-              :show-gallery-icon="hasGallery(story.lead_asset)"
-              :image="getArticleImage(story.lead_asset, story.ancestry[0].slug)"
+              :class="story.sponsoredContent ? 'mod-vertical mod-large' : 'mod-small'"
+              :show-gallery-icon="hasGallery(story.leadAsset)"
+              :image="getArticleImage(story.leadAsset, story.ancestry[0].slug)"
               :image-height="150"
               :image-width="150"
               :title="story.title"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
               :subtitle="story.description"
-              :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsored_content, story.tags)"
+              :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
             >
               <article-metadata
-                :publish-date="!story.updated_date ? fuzzyDateTime(story.meta.first_published_at) : null"
-                :updated-date="story.updated_date ? fuzzyDateTime(story.updated_date) : null"
+                :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template v-slot:comments>
                   <v-counter
@@ -219,19 +219,19 @@
               v-for="(story, index) in filteredRiver.slice(21,28)"
               :key="index"
               class="gothamist u-space--double--bottom"
-              :class="story.sponsored_content ? 'mod-vertical mod-large' : 'mod-small'"
-              :show-gallery-icon="hasGallery(story.lead_asset)"
-              :image="getArticleImage(story.lead_asset, story.ancestry[0].slug)"
+              :class="story.sponsoredContent ? 'mod-vertical mod-large' : 'mod-small'"
+              :show-gallery-icon="hasGallery(story.leadAsset)"
+              :image="getArticleImage(story.leadAsset, story.ancestry[0].slug)"
               :image-height="150"
               :image-width="150"
               :title="story.title"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
               :subtitle="story.description"
-              :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsored_content, story.tags)"
+              :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
             >
               <article-metadata
-                :publish-date="!story.updated_date ? fuzzyDateTime(story.meta.first_published_at) : null"
-                :updated-date="story.updated_date ? fuzzyDateTime(story.updated_date) : null"
+                :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template v-slot:comments>
                   <v-counter
@@ -263,19 +263,19 @@
                 v-for="(story, index) in moreResultsChunks[chunkIndex]"
                 :key="index"
                 class="gothamist u-space--double--bottom"
-                :class="story.sponsored_content ? 'mod-vertical mod-large' : 'mod-small'"
-                :show-gallery-icon="hasGallery(story.lead_asset)"
-                :image="getArticleImage(story.lead_asset, story.ancestry[0].slug)"
+                :class="story.sponsoredContent ? 'mod-vertical mod-large' : 'mod-small'"
+                :show-gallery-icon="hasGallery(story.leadAsset)"
+                :image="getArticleImage(story.leadAsset, story.ancestry[0].slug)"
                 :image-height="150"
                 :image-width="150"
                 :title="story.title"
                 :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
                 :subtitle="story.description"
-                :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsored_content, story.tags)"
+                :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
               >
                 <article-metadata
-                  :publish-date="!story.updated_date ? fuzzyDateTime(story.meta.first_published_at) : null"
-                  :updated-date="story.updated_date ? fuzzyDateTime(story.updated_date) : null"
+                  :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                  :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
                 >
                   <template v-slot:comments>
                     <v-counter

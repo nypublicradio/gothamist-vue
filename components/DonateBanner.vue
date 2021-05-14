@@ -2,14 +2,14 @@
   <div
     v-if="active"
     class="donate-banner"
-    :class="{'donate-banner-active': active}"
+    :class="{'is-active': active}"
   >
     <div class="donate-banner-graphic">
       <nyc-love />
     </div>
     <div
       class="donate-banner-close"
-      @click="active=false"
+      @click="closeBanner"
     >
       <close-icon />
     </div>
@@ -20,6 +20,7 @@
         target="_blank"
         class="donate-banner-button"
         label="Donate Now"
+        @click="donateClick"
       />
     </div>
   </div>
@@ -35,6 +36,12 @@ export default {
     NycLove: () => import('nypr-design-system-vue/src/components/icons/gothamist/NycLove'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton')
   },
+  props: {
+    onscreen: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       active: true
@@ -44,6 +51,15 @@ export default {
     ...mapState('global', {
       donateUrl: state => state.donateUrl
     })
+  },
+  methods: {
+    closeBanner () {
+      this.active = false
+      this.$emit('close')
+    },
+    donateClick () {
+      this.$emit('donate-click')
+    }
   }
 }
 </script>
@@ -62,6 +78,10 @@ export default {
   box-shadow: 0 0 10px RGB(0 0 0 / 20%);
   border: var(--border-standard);
 
+  right: calc(-1 * ((var(--grid-col-width) * 15) + (var(--grid-gutter) * 13)));
+  transform: translateX(0);
+  transition: transform .2s cubic-bezier(.86,0,.07,1);
+
   &::before {
     content: "";
     position: absolute;
@@ -76,6 +96,10 @@ export default {
     width: 980px;
     max-width: calc(100% - var(--space-6));
   }
+}
+
+.donate-banner.is-onscreen {
+    transform: translateX(calc(-1 * (var(--grid-col-width) * 15 + var(--grid-gutter) * 13 + var(--space-3))));
 }
 
 .donate-banner .donate-banner-content {

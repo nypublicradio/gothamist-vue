@@ -32,8 +32,8 @@ export default {
 
 <style lang="scss">
 .read-more-in {
-  border-top: 2px dashed RGB(var(--color-border-standard));
-  border-bottom: 2px dashed RGB(var(--color-border-standard));
+  border-top: 2px dashed RGB(var(--color-border-subtle));
+  border-bottom: 2px dashed RGB(var(--color-border-subtle));
   padding: var(--space-5) var(--space-3);
   display: flex;
   text-align: center;
@@ -42,6 +42,8 @@ export default {
   flex-direction: column;
   @include media(">medium") {
     flex-direction: row;
+    border-top: 2px dashed RGB(var(--color-border-standard));
+    border-bottom: 2px dashed RGB(var(--color-border-standard));
     border: 2px dashed RGB(var(--color-border-standard));
   }
 }

@@ -146,7 +146,13 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/sentry',
-    '@nuxtjs/gtm'
+    '@nuxtjs/gtm',
+    'cookie-universal-nuxt'
+  ],
+
+  plugins: [
+    '~/plugins/axios',
+    '~/plugins/observe-visibility'
   ],
 
   publicRuntimeConfig: {
@@ -183,6 +189,14 @@ export default {
     // this is needed to transpile es6 modules imported from radial
     transpile: [
       'nypr-design-system-vue'
-    ]
+    ],
+    extend (config, ctx) {
+      config.module.rules.push({
+        resolve: { symlinks: false }
+      })
+      if (ctx.isDev) {
+        config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
+      }
+    }
   }
 }

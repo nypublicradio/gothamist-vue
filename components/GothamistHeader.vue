@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="gothamist-header">
     <the-header
       :donate-url="donateUrl"
       class="u-color-group-dark"
@@ -111,6 +111,12 @@
           @searchBarSubmit="gaEvent('Click Tracking','user_search', 'Side Menu')"
         />
       </template>
+      <template v-slot:bottom>
+        <scroll-meter
+          v-if="scrollMeterTarget"
+          :scroll-target-selector="scrollMeterTarget"
+        />
+      </template>
     </the-header>
   </div>
 </template>
@@ -130,12 +136,14 @@ export default {
     TheMenu: () => import('nypr-design-system-vue/src/components/TheMenu'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
     ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
-    ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem')
+    ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
+    ScrollMeter: () => import('./ScrollMeter')
   },
   mixins: [gtm],
   data () {
     return {
-      isHomepage: false
+      isHomepage: false,
+      scrollMeterTarget: null
     }
   },
   computed: {
@@ -150,27 +158,20 @@ export default {
   mounted () {
     if (this.$nuxt.$route.name === 'test') {
       this.isHomepage = true
+    } else if (this.$route.name === 'section-article') {
+      this.scrollMeterTarget = '.article-body'
     }
   }
 }
 </script>
 
 <style lang="scss">
-// home page header logo
-//.home-page-header.c-main-header {
-//  padding-top: 50px;
-//  background: RGB(var(--color-background-darker));
-//}
-//
-//.home-page-header .c-main-header__logo,
-//.home-page-header .c-main-header__logo svg {
-//  position: absolute;
-//  width: 135px;
-//  height: 142px;
-//  top: -15px;
-//}
-//
-//.home-page-header .c-main-header__logo .gothamist-logo-icon--stacked .gothamist-letters path {
-//  fill: RGB(var(--color-black));
-//}
+.gothamist-header {
+  position:relative;
+}
+.progress-bar {
+  position: absolute;
+  width: 100%;
+}
+
 </style>
