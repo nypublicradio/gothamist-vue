@@ -1,9 +1,10 @@
 <template>
   <div class="gothamist-header">
     <the-header
+      ref="header"
       :donate-url="donateUrl"
       class="u-color-group-dark"
-      :class="{'home-page-header' : isHomepage}"
+      :class="{'sticky' : isScrolled}"
       @componentEvent="gaEvent('Click Tracking','Donate', 'Header')"
     >
       <template v-slot:menu>
@@ -87,6 +88,7 @@
           class="c-main-header__logo"
           aria-label="gothamist home page"
         >
+          <gothamist-logo-stacked title="Gothamist" />
           <gothamist-logo title="Gothamist" />
         </nuxt-link>
       </template>
@@ -131,7 +133,7 @@ export default {
     SecondaryNavigation: () => import('nypr-design-system-vue/src/components/SecondaryNavigation'),
     TheHeader: () => import('nypr-design-system-vue/src/components/TheHeader'),
     GothamistLogo: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogo'),
-    // GothamistLogoStacked: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogoStacked'),
+    GothamistLogoStacked: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogoStacked'),
     VSearch: () => import('nypr-design-system-vue/src/components/VSearch'),
     TheMenu: () => import('nypr-design-system-vue/src/components/TheMenu'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
@@ -142,6 +144,7 @@ export default {
   mixins: [gtm],
   data () {
     return {
+      isScrolled: false
       isHomepage: false,
       scrollMeterTarget: null
     }
@@ -160,6 +163,18 @@ export default {
       this.isHomepage = true
     } else if (this.$route.name === 'section-article') {
       this.scrollMeterTarget = '.article-body'
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
+  methods: {
+    handleScroll (e) {
+      if (window.innerWidth < 850) {
+        this.isScrolled = e.target.documentElement.scrollTop > 60
+      } else {
+        this.isScrolled = e.target.documentElement.scrollTop > 100
+      }
     }
   }
 }
@@ -174,4 +189,58 @@ export default {
   width: 100%;
 }
 
+//home page header logo
+.home-page .c-main-header {
+  --home-page-header-padding: 20px;
+  --home-page-header-padding-desktop: 50px;
+  padding-top: var(--home-page-header-padding);
+  transition: var(--animation-duration-standard);
+  background: RGB(var(--color-background-darker));
+  @include media(">medium") {
+    padding-top: var(--home-page-header-padding-desktop);
+  }
+}
+
+.home-page .c-main-header.sticky {
+  padding-top: 0;
+}
+
+.c-main-header .c-main-header__logo .gothamist-logo-icon--stacked {
+  display: none;
+}
+
+.home-page .c-main-header .c-main-header__logo .gothamist-logo-icon--stacked {
+  display: block;
+}
+
+.home-page .c-main-header .c-main-header__logo .gothamist-logo-icon {
+  display: none;
+}
+
+.home-page .c-main-header.sticky .c-main-header__logo .gothamist-logo-icon {
+  display: inline-block;
+}
+
+.home-page .c-main-header.sticky .c-main-header__logo .gothamist-logo-icon--stacked {
+  display: none;
+}
+
+.home-page .c-main-header:not(.sticky) .c-main-header__logo,
+.home-page .c-main-header .gothamist-logo-icon--stacked {
+  position: absolute;
+  width: 110px;
+  height: 115px;
+  top: -5px;
+  left: 30px;
+  @include media(">medium") {
+    width: 135px;
+    height: 142px;
+    top: -15px;
+    margin-left: calc(50% - var(--xl-container) / 2 + var(--space-5));
+  }
+}
+
+.home-page .c-main-header__logo .gothamist-logo-icon--stacked .gothamist-letters path {
+  fill: RGB(var(--color-black));
+}
 </style>

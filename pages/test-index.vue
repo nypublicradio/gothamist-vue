@@ -30,7 +30,7 @@
           </span>
           Featured
         </h2>
-        <div class="l-grid l-grid--2up l-grid--large-gutters">
+        <div class="l-grid featured-grid">
           <!-- left column / large featured card -->
           <v-card
             :show-gallery-icon="hasGallery(featuredStories[0].leadAsset)"
@@ -40,18 +40,21 @@
             :image="getArticleImage(featuredStories[0].leadAsset, featuredStories[0].ancestry[0].slug)"
             :image-height="533"
             :image-width="800"
-            class="gothamist mod-vertical mod-large"
-            :tags="formatTags(featuredStories[0].ancestry[0].title, featuredStories[0].ancestry[0].slug, featuredStories[0].sponsoredContent, featuredStories[0].tags)"
+            class="featured-grid-col1 gothamist mod-vertical mod-large"
+            :tags="formatTags(featuredStories[0].ancestry[0].title, featuredStories[0].ancestry[0].slug, featuredStories[0].sponsored_content, featuredStories[0].tags)"
           >
             <article-metadata
               :publish-date="!featuredStories[0].updatedDate ? fuzzyDateTime(featuredStories[0].meta.firstPublishedAt) : null"
               :updated-date="featuredStories[0].updatedDate ? fuzzyDateTime(featuredStories[0].updatedDate) : null"
             >
-              <template v-slot:comments>
+              <template
+                v-if="featuredStoriesDisqusData && featuredStoriesDisqusData.data.response[0]"
+                v-slot:comments
+              >
                 <v-counter
                   icon="comment"
-                  :value="40"
-                  href="http://www.google.com"
+                  :value="featuredStoriesDisqusData.data.response[0].posts"
+                  :href="`/${featuredStories[0].ancestry[0].slug}/${featuredStories[0].meta.slug}?to=comments`"
                 />
               </template>
             </article-metadata>
@@ -80,7 +83,7 @@
                     <v-counter
                       icon="comment"
                       :value="40"
-                      href="http://www.google.com"
+                      :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                     />
                   </template>
                 </article-metadata>
@@ -121,7 +124,7 @@
                   <v-counter
                     icon="comment"
                     :value="40"
-                    href="http://www.google.com"
+                    :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                   />
                 </template>
               </article-metadata>
@@ -161,7 +164,7 @@
               <v-counter
                 icon="comment"
                 :value="40"
-                href="http://www.google.com"
+                :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
               />
             </template>
           </article-metadata>
@@ -198,7 +201,7 @@
                   <v-counter
                     icon="comment"
                     :value="40"
-                    href="http://www.google.com"
+                    :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                   />
                 </template>
               </article-metadata>
@@ -237,7 +240,7 @@
                   <v-counter
                     icon="comment"
                     :value="40"
-                    href="http://www.google.com"
+                    :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                   />
                 </template>
               </article-metadata>
@@ -281,7 +284,7 @@
                     <v-counter
                       icon="comment"
                       :value="40"
-                      href="http://www.google.com"
+                      :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                     />
                   </template>
                 </article-metadata>
@@ -313,10 +316,16 @@
 </template>
 
 <script>
+import disqus from '@/mixins/disqus'
 import gtm from '@/mixins/gtm'
 import { mapState } from 'vuex'
 
-const { formatTags, fuzzyDateTime, getArticleImage, hasGallery } = require('~/mixins/helpers')
+const {
+  formatTags,
+  fuzzyDateTime,
+  getArticleImage,
+  hasGallery
+} = require('~/mixins/helpers')
 export default {
   name: 'HomePage', // this is the template name which is used for GTM
   components: {
@@ -329,10 +338,29 @@ export default {
     VCounter: () => import('nypr-design-system-vue/src/components/VCounter'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
-  mixins: [gtm],
+  mixins: [disqus, gtm],
+  async fetch () {
+    // get featured stories
+    await this.$axios
+      .get('/pages/?type=news.ArticlePage&fields=ancestry%2Cdescription%2Clead_asset%2Clegacy_id%2Clisting_image%2Cpublication_date%2Cshow_as_feature%2Csponsored_content%2Ctags%2Cupdated_date%2Curl%2Cuuid&order=-publication_date&show_on_index_listing=true&limit=4&show_as_feature=true&sponsored_content=false')
+      .then((response) => {
+        this.featuredStories = response.data.items
+        response.data.items.forEach((item) => {
+          this.featuredStoriesDisqusThreadIds.push(item.uuid)
+        })
+      })
+    // get the article river
+    await this.$axios
+      .get('/pages/?type=news.ArticlePage&fields=ancestry%2Cdescription%2Clead_asset%2Clegacy_id%2Clisting_image%2Cpublication_date%2Cshow_as_feature%2Csponsored_content%2Ctags%2Cupdated_date%2Curl%2Cuuid&order=-publication_date&show_on_index_listing=true&limit=32')
+      .then(response => (
+        this.river = response.data.items
+      ))
+  },
   data () {
     return {
       featuredStories: null,
+      featuredStoriesDisqusThreadIds: [],
+      featuredStoriesDisqusData: null,
       moreResults: [],
       moreResultsLoaded: true,
       offset: 32,
@@ -366,18 +394,8 @@ export default {
     }
   },
   async mounted () {
-    // get featured stories
-    await this.$axios
-      .get('/pages/?type=news.ArticlePage&fields=ancestry%2Cdescription%2Clead_asset%2Clegacy_id%2Clisting_image%2Cpublication_date%2Cshow_as_feature%2Csponsored_content%2Ctags%2Cupdated_date%2Curl%2Cuuid&order=-publication_date&show_on_index_listing=true&limit=4&show_as_feature=true&sponsored_content=false')
-      .then(response => (
-        this.featuredStories = response.data.items
-      ))
-    // get the article river
-    await this.$axios
-      .get('/pages/?type=news.ArticlePage&fields=ancestry%2Cdescription%2Clead_asset%2Clegacy_id%2Clisting_image%2Cpublication_date%2Cshow_as_feature%2Csponsored_content%2Ctags%2Cupdated_date%2Curl%2Cuuid&order=-publication_date&show_on_index_listing=true&limit=32')
-      .then(response => (
-        this.river = response.data.items
-      ))
+    // get disqus comment counts
+    this.featuredStoriesDisqusData = await this.getCommentCount(this.featuredStoriesDisqusThreadIds)
   },
   methods: {
     formatTags,
@@ -402,8 +420,20 @@ export default {
 .c-featured-blocks {
   padding: var(--space-7) 0 0;
   @include media(">medium") {
-    padding: var(--space-7);
+    padding: var(--space-7) var(--space-5) var(--space-4);
   }
+}
+
+.featured-grid {
+  @include media(">large") {
+    grid-template-columns: 1fr 380px;
+  }
+}
+
+.featured-grid-col1 {
+  margin-bottom: -100px;
+  padding: 0 var(--space-3);
+  background-color: RGB(var(--color-background));
 }
 
 .ad-container {

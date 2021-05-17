@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div :class="{'home-page' : isHomepage}">
     <gothamist-header />
-    <main>
+    <main :class="$route.name">
       <v-spacer size="quad" />
       <div>
         <div
@@ -56,10 +56,14 @@ export default {
   data () {
     return {
       breakingNewsBanner: null,
+      isHomepage: false,
       productMarketingBanner: null
     }
   },
   async mounted () {
+    if (this.$nuxt.$route.name === 'test') {
+      this.isHomepage = true
+    }
     // set the navigation
     await this.$store.dispatch('global/setNavigation')
     // check for breaking news banner
@@ -77,3 +81,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.home-page main {
+  margin-top: 80px;
+  @include media(">medium") {
+    margin-top: 120px;
+  }
+}
+</style>
