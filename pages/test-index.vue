@@ -78,15 +78,7 @@
                 <article-metadata
                   :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
                   :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
-                >
-                  <template v-slot:comments>
-                    <v-counter
-                      icon="comment"
-                      :value="40"
-                      :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
-                    />
-                  </template>
-                </article-metadata>
+                />
               </v-card>
             </li>
           </ul>
@@ -420,22 +412,34 @@ export default {
 .c-featured-blocks {
   padding: var(--space-7) 0 0;
   @include media(">medium") {
-    padding: var(--space-7) var(--space-5) 0;
+    padding: var(--space-7) var(--space-7) 0;
   }
 }
 
 .featured-grid {
+  grid-template-columns: 1fr;
+  @media all and (min-width: 1100px) {
+    grid-gap: 50px;
+    grid-template-columns: 1fr 360px;
+  }
+}
+
+.featured-grid .card.featured-grid-col1 {
   @include media(">large") {
-    grid-template-columns: 1fr 380px;
+    width: 590px;
+    max-width: 590px;
   }
 }
 
 .card.gothamist.mod-large .card-image-wrapper {
   width: 100%;
   min-width: 100%;
+  @include media("<large") {
+    height: 300px;
+  }
   @include media(">large") {
     width: 560px;
-    max-width: 560px;
+    max-width: 100%;
   }
 }
 
@@ -452,12 +456,12 @@ export default {
 
 .ad-container {
   padding: var(--space-4);
-  background-color: #f0f0f0;
+  font-style: italic;
 }
 
 .homepage .l-grid--right-rail {
   display: none;
-  @include media(">medium") {
+  @include media(">large") {
     display: grid;
   }
 }
