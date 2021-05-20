@@ -144,8 +144,7 @@ export default {
   mixins: [gtm],
   data () {
     return {
-      isScrolled: false
-      isHomepage: false,
+      isScrolled: false,
       scrollMeterTarget: null
     }
   },
@@ -163,6 +162,7 @@ export default {
       this.isHomepage = true
     } else if (this.$route.name === 'section-article') {
       this.scrollMeterTarget = '.article-body'
+    }
     window.addEventListener('scroll', this.handleScroll)
   },
   destroyed () {

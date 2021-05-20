@@ -4,6 +4,7 @@
       v-for="(story, index) in recentStories"
       :key="index"
       class="gothamist mod-small"
+      :show-gallery-icon="hasGallery(story.leadAsset)"
       :image="story.leadAsset[0] && story.leadAsset[0].value.image && story.leadAsset[0].value.image.file ||
         story.leadAsset[0] && story.leadAsset[0].value.defaultImage && story.leadAsset[0].value.defaultImage.file ||
         defaultImage"
@@ -12,7 +13,7 @@
       :sponsored="story.sponsoredContent"
       :title="story.title"
       :title-link="story.url"
-      :tags="story.tags"
+      :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsored_content, story.tags)"
     >
       <article-metadata
         :publish-date="story.updatedDate ? null : fuzzyDateTime(story.meta.firstPublishedAt)"
@@ -37,7 +38,7 @@
 import { mapState } from 'vuex'
 import disqus from '~/mixins/disqus'
 
-const { fuzzyDateTime } = require('~/mixins/helpers')
+const { formatTags, fuzzyDateTime, hasGallery } = require('~/mixins/helpers')
 
 export default {
   name: 'RecentStories',
@@ -80,7 +81,9 @@ export default {
     this.disqusData = await this.getCommentCount(this.disqusThreadIds)
   },
   methods: {
-    fuzzyDateTime
+    formatTags,
+    fuzzyDateTime,
+    hasGallery
   }
 }
 </script>

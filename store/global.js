@@ -104,10 +104,10 @@ export const actions = {
     this.$axios
       .get(state.navigationAPI)
       .then((response) => {
-        commit('setHeaderNav', response.data.primary_navigation)
-        commit('setFooterNav', response.data.secondary_navigation)
-        commit('setFooterSlogan', response.data.property_description)
-        commit('setLegalNav', response.data.legal_links)
+        commit('setHeaderNav', response.data.primaryNavigation)
+        commit('setFooterNav', response.data.secondaryNavigation)
+        commit('setFooterSlogan', response.data.propertyDescription)
+        commit('setLegalNav', response.data.legalLinks)
       })
       .catch((error) => {
         // eslint-disable-next-line no-console

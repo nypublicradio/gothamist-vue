@@ -25,25 +25,28 @@ export const formatTags = function (name, slug, sponsored, tags) {
 // returns the article image
 // asset = the article's 'lead_asset' from the CMS API
 // slug = the article's ancestry's slug 'ancestry[0].slug' from the CMS API
-export const getArticleImage = function (asset, slug) {
+// listingImage = the article's 'listing_image' from the CMS API
+export const getArticleImage = function (asset, slug, listingImage) {
+  if (listingImage !== undefined && listingImage !== null) {
+    return listingImage.file
+  }
   if (asset !== undefined && asset.length > 0) {
     if (asset[0].value.image) {
       return asset[0].value.image.file
     }
-    if (asset[0].value.default_image) {
-      return asset[0].value.default_image.file
+    if (asset[0].value.defaultImage) {
+      return asset[0].value.defaultImage.file
     }
-  } else {
-    switch (slug) {
-      case 'arts-entertainment':
-        return this.defaultImageArts
-      case 'food':
-        return this.defaultImageFood
-      case 'news':
-        return this.defaultImageNews
-      default:
-        return this.defaultImage
-    }
+  }
+  switch (slug) {
+    case 'arts-entertainment':
+      return this.defaultImageArts
+    case 'food':
+      return this.defaultImageFood
+    case 'news':
+      return this.defaultImageNews
+    default:
+      return this.defaultImage
   }
 }
 // checks if the asset has a gallery or not and return true/false
@@ -106,7 +109,10 @@ export default {
   methods: {
     amountScrolled,
     capitalize,
+    formatTags,
     formatTime,
-    fuzzyDateTime
+    fuzzyDateTime,
+    getArticleImage,
+    hasGallery
   }
 }

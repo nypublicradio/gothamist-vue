@@ -41,7 +41,7 @@
             :image-height="533"
             :image-width="800"
             class="featured-grid-col1 gothamist mod-vertical mod-large"
-            :tags="formatTags(featuredStories[0].ancestry[0].title, featuredStories[0].ancestry[0].slug, featuredStories[0].sponsored_content, featuredStories[0].tags)"
+            :tags="formatTags(featuredStories[0].ancestry[0].title, featuredStories[0].ancestry[0].slug, featuredStories[0].sponsoredContent, featuredStories[0].tags)"
           >
             <article-metadata
               :publish-date="!featuredStories[0].updatedDate ? fuzzyDateTime(featuredStories[0].meta.firstPublishedAt) : null"
@@ -99,7 +99,7 @@
       v-if="river"
     >
       <!-- section 1 -->
-      <div class="l-container l-container--14col">
+      <div class="l-container l-container--14col l-wrap">
         <div class="l-grid l-grid--large-gutters l-grid--right-rail">
           <div>
             <v-card
@@ -140,7 +140,7 @@
         ad goes here
       </div>
       <!-- section 2 -->
-      <div class="l-container l-container--10col">
+      <div class="l-container l-container--10col l-wrap">
         <v-spacer size="triple" />
         <v-card
           v-for="(story, index) in filteredRiver.slice(7,14)"
@@ -175,7 +175,7 @@
         ad goes here
       </div>
       <!-- section 3 -->
-      <div class="l-container l-container--14col">
+      <div class="l-container l-container--14col l-wrap">
         <v-spacer size="triple" />
         <div class="l-grid l-grid--large-gutters l-grid--right-rail">
           <div>
@@ -214,7 +214,7 @@
         <v-spacer />
       </div>
       <homepage-donate-banner />
-      <div class="l-container l-container--14col">
+      <div class="l-container l-container--14col l-wrap">
         <v-spacer size="triple" />
         <div class="l-grid l-grid--large-gutters l-grid--right-rail">
           <div>
@@ -224,7 +224,7 @@
               class="gothamist u-space--double--bottom"
               :class="story.sponsoredContent ? 'mod-vertical mod-large' : 'mod-small'"
               :show-gallery-icon="hasGallery(story.leadAsset)"
-              :image="getArticleImage(story.leadAsset, story.ancestry[0].slug)"
+              :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
               :image-height="150"
               :image-width="150"
               :title="story.title"
@@ -254,7 +254,7 @@
       </div>
       <!-- more results -->
       <template v-if="moreResults.length > 0">
-        <div class="l-container l-container--14col">
+        <div class="l-container l-container--14col l-wrap">
           <v-spacer size="triple" />
           <div
             v-for="(chunk, chunkIndex) in moreResultsChunks"
@@ -299,7 +299,7 @@
       </template>
     </section>
     <v-spacer size="quad" />
-    <div class="l-container l-container--14col u-align-center">
+    <div class="l-container l-container--14col l-wrap u-align-center">
       <v-button
         class="more-results"
         :disabled="!moreResultsLoaded"
@@ -420,7 +420,7 @@ export default {
 .c-featured-blocks {
   padding: var(--space-7) 0 0;
   @include media(">medium") {
-    padding: var(--space-7) var(--space-5) var(--space-4);
+    padding: var(--space-7) var(--space-5) 0;
   }
 }
 
@@ -430,11 +430,25 @@ export default {
   }
 }
 
-.featured-grid-col1 {
-  margin-bottom: -100px;
-  padding: 0 var(--space-3);
-  background-color: RGB(var(--color-background));
+.card.gothamist.mod-large .card-image-wrapper {
+  width: 100%;
+  min-width: 100%;
+  @include media(">large") {
+    width: 560px;
+    max-width: 560px;
+  }
 }
+
+.featured-grid .card.gothamist.mod-large .card-title .o-gallery-icon {
+  height: 20px;
+  margin: 0 0 -2px;
+}
+
+//.featured-grid-col1 {
+//  margin-bottom: -100px;
+//  padding: 0 var(--space-3);
+//  background-color: RGB(var(--color-background));
+//}
 
 .ad-container {
   padding: var(--space-4);
