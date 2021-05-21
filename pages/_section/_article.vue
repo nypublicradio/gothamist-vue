@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { fuzzyDateTime } from '../../mixins/helpers'
+import { fuzzyDateTime } from '~/mixins/helpers'
 
 export default {
   name: 'ArtsAndEntertainment',
@@ -46,10 +46,10 @@ export default {
         error({ statusCode: 404, message: 'Page not found' })
       })
 
-    if (page?.data.leadAsset[0].type === 'leadGallery') {
-      const gallery = await $axios.get(`/pages/${page.data.leadAsset[0].value.gallery}`)
-      page.data.gallery = gallery.data
-    }
+    // if (page?.data.leadAsset[0].type !== undefined && page?.data.leadAsset[0].type === 'leadGallery') {
+    //   const gallery = await $axios.get(`/pages/${page.data.leadAsset[0].value.gallery}`)
+    //   page.data.gallery = gallery.data
+    // }
 
     return { page: page?.data, cookies }
   }

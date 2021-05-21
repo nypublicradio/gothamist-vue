@@ -4,7 +4,10 @@
       v-if="article.body"
       class="l-container l-container--12col"
     >
-      <breadcrumbs class="article-breadcrumbs" :breadcrumbs="[{name: section, slug: section}]" />
+      <breadcrumbs
+        class="article-breadcrumbs"
+        :breadcrumbs="[{name: section, slug: section}]"
+      />
       <h1 class="article-title">
         {{ article.title }}
       </h1>
@@ -65,7 +68,10 @@
             :utm-parameters="{medium: 'social', source: 'email', campaign: 'shared_email'}"
           />
         </share-tools>
-        <div v-if="leadAsset.type === 'lead_image'" class="article-lead-image">
+        <div
+          v-if="leadAsset && leadAsset.type !== undefined && leadAsset.type === 'lead_image'"
+          class="article-lead-image"
+        >
           <image-with-caption
             variation="gothamist"
             alt-text="image alt text"
@@ -93,9 +99,9 @@
       />
       <v-spacer size="quad" />
       <article-page-newsletter class="article-newsletter" />
-      <div class="article-tag-list">
-        <v-tag v-for="tag, index in article.tags" :key="index" :slug="tag.slug" :name="`#${tag.name}`" />
-      </div>
+      <!--      <div class="article-tag-list">-->
+      <!--        <v-tag v-for="tag, index in article.tags" :key="index" :slug="tag.slug" :name="`#${tag.name}`" />-->
+      <!--      </div>-->
       <do-you-know-the-scoop class="article-scoop" />
       <!-- AD -->
       <!-- DISQUS -->
@@ -120,7 +126,10 @@
       <v-spacer size="quad" />
     </div>
     <div class="l-container l-container--14col">
-      <recirculation-module :related-article="article" class="article-recirculation" />
+      <recirculation-module
+        :related-article="article"
+        class="article-recirculation"
+      />
       <read-more-in class="article-read-more-in" />
     </div>
   </div>
@@ -141,7 +150,7 @@ export default {
     ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
     GalleryPreview: () => import('nypr-design-system-vue/src/components/GalleryPreview'),
     ReadMoreIn: () => import('./ReadMoreIn'),
-    VTag: () => import('nypr-design-system-vue/src/components/VTag'),
+    // VTag: () => import('nypr-design-system-vue/src/components/VTag'),
     DoYouKnowTheScoop: () => import('./DoYouKnowTheScoop'),
     DonateBanner: () => import('./DonateBanner'),
     ArticlePageNewsletter: () => import('./ArticlePageNewsletter'),
@@ -150,7 +159,8 @@ export default {
   props: {
     article: {
       type: Object,
-      default: () => {}
+      default: () => {
+      }
     }
   },
   data () {
@@ -221,66 +231,76 @@ export default {
 </script>
 
 <style lang="scss">
-  .article-breadcrumbs {
-    position: relative;
-    display: flex;
-    margin-bottom: var(--space-4);
+.article-breadcrumbs {
+  position: relative;
+  display: flex;
+  margin-bottom: var(--space-4);
+}
+
+.article-breadcrumbs:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  left: -4px;
+  top: calc(50% + 1px);
+  background-image: linear-gradient(to right, transparent 50%, RGB(var(--color-gray)) 50%);
+  background-position: right bottom;
+  background-repeat: repeat-x;
+  background-size: 16px 1px;
+}
+
+.article-metadata {
+  margin-bottom: var(--space-4);
+}
+
+.article-title {
+  font-family: var(--font-family-header);
+  letter-spacing: var(--letter-spacing-header);
+  font-weight: var(--font-weight-header);
+  line-height: var(--line-height-13);
+  font-size: var(--font-size-13);
+  margin-bottom: var(--space-4);
+  @media all and (min-width: $medium) {
+    line-height: var(--line-height-16);
+    font-size: var(--font-size-16);
   }
-  .article-breadcrumbs:before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 1px;
-    left: -4px;
-    top: calc(50% + 1px);
-    background-image: linear-gradient(to right, transparent 50%, RGB(var(--color-gray)) 50%);
-    background-position: right bottom;
-    background-repeat: repeat-x;
-    background-size: 16px 1px;
+}
+
+.article-share-tools {
+  width: 48.5px;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: -61px;
+  background-size: 1px 16px;
+  background-image: linear-gradient(to bottom, transparent 50%, RGB(var(--color-gray)) 50%);
+  background-repeat: repeat-y;
+  background-position: right bottom;
+}
+
+.article-tag-list {
+  margin-bottom: var(--space-6);
+
+  .tag {
+    display: inline-block;
+    margin: 0 var(--space-2) var(--space-3) 0;
   }
-  .article-metadata {
-    margin-bottom: var(--space-4);
-  }
-  .article-title {
-    font-family: var(--font-family-header);
-    letter-spacing: var(--letter-spacing-header);
-    font-weight: var(--font-weight-header);
-    line-height: var(--line-height-13);
-    font-size: var(--font-size-13);
-    margin-bottom: var(--space-4);
-    @media all and (min-width: $medium) {
-      line-height: var(--line-height-16);
-      font-size: var(--font-size-16);
-    }
-  }
-  .article-share-tools {
-    width: 48.5px;
-    text-align: center;
-    position: absolute;
-    top: 0;
-    left: -61px;
-    background-size: 1px 16px;
-    background-image: linear-gradient(to bottom,transparent 50%,RGB(var(--color-gray)) 50%);
-    background-repeat: repeat-y;
-    background-position: right bottom;
-  }
-  .article-tag-list {
-    margin-bottom: var(--space-6);
-    .tag {
-      display: inline-block;
-      margin: 0 var(--space-2) var(--space-3) 0;
-    }
-  }
-  .article-scoop {
-    margin-bottom: var(--space-6);
-  }
-  .article-newsletter {
-    margin-bottom: var(--space-5);
-  }
-  .article-recirculation {
-    margin-bottom: var(--space-8);
-  }
-  .article-read-more-in {
-    margin-bottom: var(--space-6);
-  }
+}
+
+.article-scoop {
+  margin-bottom: var(--space-6);
+}
+
+.article-newsletter {
+  margin-bottom: var(--space-5);
+}
+
+.article-recirculation {
+  margin-bottom: var(--space-8);
+}
+
+.article-read-more-in {
+  margin-bottom: var(--space-6);
+}
 </style>
