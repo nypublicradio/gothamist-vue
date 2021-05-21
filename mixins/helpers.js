@@ -19,8 +19,7 @@ export const formatTags = function (name, slug, sponsored, tags) {
       slug: 'opinion'
     })
   }
-  // return tagArray
-  return []
+  return tagArray
 }
 
 // returns the article image
