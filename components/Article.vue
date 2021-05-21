@@ -4,10 +4,10 @@
       v-if="article.body"
       class="l-container l-container--12col"
     >
-      <!--      <breadcrumbs-->
-      <!--        class="article-breadcrumbs"-->
-      <!--        :breadcrumbs="[{name: section, slug: section}]"-->
-      <!--      />-->
+      <breadcrumbs
+        class="article-breadcrumbs"
+        :breadcrumbs="[{name: section, slug: article.ancestry[0].slug}]"
+      />
       <h1 class="article-title">
         {{ article.title }}
       </h1>
@@ -99,9 +99,14 @@
       />
       <v-spacer size="quad" />
       <article-page-newsletter class="article-newsletter" />
-      <!--      <div class="article-tag-list">-->
-      <!--        <v-tag v-for="tag, index in article.tags" :key="index" :slug="tag.slug" :name="`#${tag.name}`" />-->
-      <!--      </div>-->
+      <div class="article-tag-list">
+        <v-tag
+          v-for="(tag, index) in article.tags"
+          :key="index"
+          :slug="tag.slug"
+          :name="`#${tag.name}`"
+        />
+      </div>
       <do-you-know-the-scoop class="article-scoop" />
       <!-- AD -->
       <!-- DISQUS -->
@@ -140,7 +145,7 @@ export default {
   name: 'Article',
   components: {
     VStreamfield: () => import('./VStreamfield'),
-    // Breadcrumbs: () => import('./Breadcrumbs'),
+    Breadcrumbs: () => import('./Breadcrumbs'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
     ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
     ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
@@ -150,7 +155,7 @@ export default {
     ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
     GalleryPreview: () => import('nypr-design-system-vue/src/components/GalleryPreview'),
     ReadMoreIn: () => import('./ReadMoreIn'),
-    // VTag: () => import('nypr-design-system-vue/src/components/VTag'),
+    VTag: () => import('nypr-design-system-vue/src/components/VTag'),
     DoYouKnowTheScoop: () => import('./DoYouKnowTheScoop'),
     DonateBanner: () => import('./DonateBanner'),
     ArticlePageNewsletter: () => import('./ArticlePageNewsletter'),
