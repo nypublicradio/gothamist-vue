@@ -402,6 +402,7 @@ export default {
           this.offset += 32
           this.moreResultsLoaded = true
         })
+      this.gaEvent('Click Tracking', 'Load More Results', 'HomePage', this.offset + ' articles loaded')
     },
     hasGallery
   }
