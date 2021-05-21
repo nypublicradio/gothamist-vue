@@ -4,10 +4,10 @@
       v-if="article.body"
       class="l-container l-container--12col"
     >
-      <breadcrumbs
-        class="article-breadcrumbs"
-        :breadcrumbs="[{name: section, slug: section}]"
-      />
+      <!--      <breadcrumbs-->
+      <!--        class="article-breadcrumbs"-->
+      <!--        :breadcrumbs="[{name: section, slug: section}]"-->
+      <!--      />-->
       <h1 class="article-title">
         {{ article.title }}
       </h1>
@@ -140,7 +140,7 @@ export default {
   name: 'Article',
   components: {
     VStreamfield: () => import('./VStreamfield'),
-    Breadcrumbs: () => import('./Breadcrumbs'),
+    // Breadcrumbs: () => import('./Breadcrumbs'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
     ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
     ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
