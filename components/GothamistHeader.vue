@@ -189,6 +189,11 @@ export default {
   width: 100%;
 }
 
+.gothamist-header .c-side-menu {
+  margin-right: var(--space-4);
+  margin-left: var(--space-2);
+}
+
 //home page header logo
 .home-page .c-main-header {
   --home-page-header-padding: 20px;
@@ -231,7 +236,7 @@ export default {
   width: 110px;
   height: 115px;
   top: -5px;
-  left: 30px;
+  left: 40px;
   @include media(">medium") {
     width: 135px;
     height: 142px;
