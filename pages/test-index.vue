@@ -444,6 +444,10 @@ export default {
   }
 }
 
+.card.gothamist .card-subtitle {
+  line-height: var(--line-height-4) !important;
+}
+
 .featured-grid .card.gothamist.mod-large .card-title .o-gallery-icon {
   height: 20px;
   margin: 0 0 -2px;
