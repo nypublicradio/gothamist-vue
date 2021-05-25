@@ -199,7 +199,7 @@ export default {
   --home-page-header-padding: 20px;
   --home-page-header-padding-desktop: 50px;
   padding-top: var(--home-page-header-padding);
-  transition: var(--animation-duration-standard);
+  transition: padding var(--animation-duration-standard);
   background: RGB(var(--color-background-darker));
   @include media(">medium") {
     padding-top: var(--home-page-header-padding-desktop);
