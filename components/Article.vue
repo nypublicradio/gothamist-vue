@@ -98,7 +98,7 @@
         :streamfield="article.body"
       />
       <v-spacer size="quad" />
-      <article-page-newsletter class="article-newsletter" />
+      <article-page-newsletter title="NYC news never sleeps. Get the Gothamist Daily newsletter and don't miss a moment." class="article-newsletter" />
       <div class="article-tag-list">
         <v-tag
           v-for="(tag, index) in article.tags"
