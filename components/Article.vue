@@ -6,7 +6,10 @@
     >
       <breadcrumbs
         class="article-breadcrumbs"
-        :breadcrumbs="[{name: section, slug: article.ancestry[0].slug}]"
+        :breadcrumbs="
+          [{name: section, slug: article.ancestry[0].slug}]
+            .concat(article.sponsoredContent ? {name: 'Sponsored'} : [])
+        "
       />
       <h1 class="article-title">
         {{ article.title }}
