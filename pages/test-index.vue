@@ -48,12 +48,12 @@
               :updated-date="featuredStories[0].updatedDate ? fuzzyDateTime(featuredStories[0].updatedDate) : null"
             >
               <template
-                v-if="featuredStoriesDisqusData && featuredStoriesDisqusData.data.response[0]"
+                v-if="featuredStories[0].legacyId"
                 v-slot:comments
               >
                 <v-counter
                   icon="comment"
-                  :value="featuredStoriesDisqusData.data.response[0].posts"
+                  :value="getCommentCountById(featuredStories[0].legacyId, featuredStoriesDisqusData)"
                   :href="`/${featuredStories[0].ancestry[0].slug}/${featuredStories[0].meta.slug}?to=comments`"
                 />
               </template>
@@ -78,15 +78,26 @@
                 <article-metadata
                   :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
                   :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
-                />
+                >
+                  <template
+                    v-if="story.legacyId"
+                    v-slot:comments
+                  >
+                    <v-counter
+                      icon="comment"
+                      :value="getCommentCountById(story.legacyId, featuredStoriesDisqusData)"
+                      :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
+                    />
+                  </template>
+                </article-metadata>
               </v-card>
             </li>
           </ul>
         </div>
       </section>
       <v-spacer />
-      <!-- news river -->
     </div>
+    <!-- news river -->
     <section
       v-if="river"
     >
@@ -112,10 +123,13 @@
                 :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
-                <template v-slot:comments>
+                <template
+                  v-if="story.legacyId"
+                  v-slot:comments
+                >
                   <v-counter
                     icon="comment"
-                    :value="40"
+                    :value="getCommentCountById(story.legacyId, riverDisqusData)"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                   />
                 </template>
@@ -152,10 +166,13 @@
             :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
             :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
           >
-            <template v-slot:comments>
+            <template
+              v-if="story.legacyId"
+              v-slot:comments
+            >
               <v-counter
                 icon="comment"
-                :value="40"
+                :value="getCommentCountById(story.legacyId, riverDisqusData)"
                 :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
               />
             </template>
@@ -189,10 +206,13 @@
                 :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
-                <template v-slot:comments>
+                <template
+                  v-if="story.legacyId"
+                  v-slot:comments
+                >
                   <v-counter
                     icon="comment"
-                    :value="40"
+                    :value="getCommentCountById(story.legacyId, riverDisqusData)"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                   />
                 </template>
@@ -228,10 +248,13 @@
                 :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
-                <template v-slot:comments>
+                <template
+                  v-if="story.legacyId"
+                  v-slot:comments
+                >
                   <v-counter
                     icon="comment"
-                    :value="40"
+                    :value="getCommentCountById(story.legacyId, riverDisqusData)"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                   />
                 </template>
@@ -245,7 +268,7 @@
         <v-spacer />
       </div>
       <!-- more results -->
-      <template v-if="moreResults.length > 0">
+      <template v-if="filteredMoreResults.length > 0">
         <div class="l-container l-container--14col l-wrap">
           <v-spacer size="triple" />
           <div
@@ -272,10 +295,13 @@
                   :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
                   :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
                 >
-                  <template v-slot:comments>
+                  <template
+                    v-if="story.legacyId"
+                    v-slot:comments
+                  >
                     <v-counter
                       icon="comment"
-                      :value="40"
+                      :value="getCommentCountById(story.legacyId, moreResultsDisqusData)"
                       :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                     />
                   </template>
@@ -338,15 +364,18 @@ export default {
       .then((response) => {
         this.featuredStories = response.data.items
         response.data.items.forEach((item) => {
-          this.featuredStoriesDisqusThreadIds.push(item.uuid)
+          this.featuredStoriesDisqusThreadIds.push(item.legacyId)
         })
       })
     // get the article river
     await this.$axios
       .get('/pages/?type=news.ArticlePage&fields=ancestry%2Cdescription%2Clead_asset%2Clegacy_id%2Clisting_image%2Cpublication_date%2Cshow_as_feature%2Csponsored_content%2Ctags%2Cupdated_date%2Curl%2Cuuid&order=-publication_date&show_on_index_listing=true&limit=32')
-      .then(response => (
+      .then((response) => {
         this.river = response.data.items
-      ))
+        response.data.items.forEach((item) => {
+          this.riverDisqusThreadIds.push(item.legacyId)
+        })
+      })
   },
   data () {
     return {
@@ -354,9 +383,13 @@ export default {
       featuredStoriesDisqusThreadIds: [],
       featuredStoriesDisqusData: null,
       moreResults: [],
+      moreResultsDisqusThreadIds: [],
+      moreResultsDisqusData: null,
       moreResultsLoaded: true,
       offset: 32,
-      river: null
+      river: null,
+      riverDisqusThreadIds: [],
+      riverDisqusData: null
     }
   },
   computed: {
@@ -366,6 +399,14 @@ export default {
       defaultImageFood: state => state.defaultImageFood,
       defaultImageNews: state => state.defaultImageNews
     }),
+    filteredMoreResults () {
+      // de-dupe the river: take out the 4 featured stories
+      let tempArray = this.moreResults
+      tempArray = tempArray.filter((item) => {
+        return (item.id !== this.featuredStories[0].id && item.id !== this.featuredStories[1].id && item.id !== this.featuredStories[2].id && item.id !== this.featuredStories[3].id)
+      })
+      return tempArray
+    },
     filteredRiver () {
       // de-dupe the river: take out the 4 featured stories
       let tempArray = this.river
@@ -378,8 +419,8 @@ export default {
       const chunkedArray = []
       const chunkSize = 8
       let index = 0
-      while (index < this.moreResults.length) {
-        chunkedArray.push(this.moreResults.slice(index, chunkSize + index))
+      while (index < this.filteredMoreResults.length) {
+        chunkedArray.push(this.filteredMoreResults.slice(index, chunkSize + index))
         index += chunkSize
       }
       return chunkedArray
@@ -388,6 +429,7 @@ export default {
   async mounted () {
     // get disqus comment counts
     this.featuredStoriesDisqusData = await this.getCommentCount(this.featuredStoriesDisqusThreadIds)
+    this.riverDisqusData = await this.getCommentCount(this.riverDisqusThreadIds)
   },
   methods: {
     formatTags,
@@ -401,7 +443,11 @@ export default {
           this.moreResults = this.moreResults.concat(response.data.items)
           this.offset += 32
           this.moreResultsLoaded = true
+          response.data.items.forEach((item) => {
+            this.moreResultsDisqusThreadIds.push(item.legacyId)
+          })
         })
+      this.moreResultsDisqusData = await this.getCommentCount(this.moreResultsDisqusThreadIds)
       this.gaEvent('Click Tracking', 'Load More Results', 'HomePage', this.offset + ' articles loaded')
     },
     hasGallery
@@ -452,12 +498,6 @@ export default {
   height: 20px;
   margin: 0 0 -2px;
 }
-
-//.featured-grid-col1 {
-//  margin-bottom: -100px;
-//  padding: 0 var(--space-3);
-//  background-color: RGB(var(--color-background));
-//}
 
 .ad-container {
   padding: var(--space-4);
