@@ -56,8 +56,7 @@ export default {
           message: 'Page not found'
         })
       })
-
-    if (page?.data.leadAsset.length > 0 && page?.data.leadAsset[0].type === 'leadGallery') {
+    if (page?.data.leadAsset.length > 0 && page?.data.leadAsset[0].type === 'lead_gallery') {
       const gallery = await $axios.get(`/pages/${page.data.leadAsset[0].value.gallery}`)
       page.data.gallery = gallery.data
     }

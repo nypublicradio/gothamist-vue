@@ -205,7 +205,7 @@ export default {
     galleryImages () {
       if (this.article.gallery) {
         return this.article.gallery.slides
-          .slice(4)
+          .slice(0, 4)
           .map((slide) => {
             const image = slide.value.slideImage.image
             return {
