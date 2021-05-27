@@ -77,12 +77,13 @@
         >
           <image-with-caption
             variation="gothamist"
-            alt-text="image alt text"
+            :alt-text="leadAsset.value.image.alt"
             :url-template="`https://cms.demo.nypr.digital/images/${leadAsset.value.image.id}/fill-%width%x%height%/`"
             :aspect-ratio="4/3"
             :width-in-viewport="96"
-            credit="AP Photo/Carolyn Kaster"
-            caption="This is the caption lorem ipsum dolor sit amet, consectetur adipiscing elit"
+            :credit="leadAsset.value.image.credit"
+            :caption="leadAsset.value.caption || leadAsset.value.image.caption"
+            :credit-url="leadAsset.value.image.creditLink"
           />
         </div>
         <div
