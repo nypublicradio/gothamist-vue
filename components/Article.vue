@@ -6,10 +6,7 @@
     >
       <breadcrumbs
         class="article-breadcrumbs"
-        :breadcrumbs="
-          [{name: section, slug: article.ancestry[0].slug}]
-            .concat(article.sponsoredContent ? {name: 'Sponsored'} : [])
-        "
+        :breadcrumbs="breadcrumbs"
       />
       <h1 class="article-title">
         {{ article.title }}
@@ -188,6 +185,22 @@ export default {
     },
     section () {
       return this.article.meta.parent.title
+    },
+    breadcrumbs () {
+      const breadcrumbs = [{ name: this.section, slug: this.article.ancestry[0].slug }]
+      if (this.article.sponsoredContent) {
+        breadcrumbs.push({ name: 'Sponsored' })
+      }
+      if (this.article.tags.find(tag => tag.name === 'opinion' || tag.name === '@opinion')) {
+        breadcrumbs.push({ name: 'Opinion', slug: 'opinion' })
+      }
+      if (this.article.tags.find(tag => tag.name === 'analysis' || tag.name === '@analysis')) {
+        breadcrumbs.push({ name: 'Analysis', slug: 'analysis' })
+      }
+      if (this.article.tags.find(tag => tag.name === 'we the commuters')) {
+        breadcrumbs.push({ name: 'We The Commuters', slug: 'wethecommuters' })
+      }
+      return breadcrumbs
     },
     galleryImages () {
       if (this.article.gallery) {
