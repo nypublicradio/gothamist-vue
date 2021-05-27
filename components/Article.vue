@@ -102,16 +102,20 @@
         :streamfield="article.body"
       />
       <v-spacer size="quad" />
-      <article-page-newsletter title="NYC news never sleeps. Get the Gothamist Daily newsletter and don't miss a moment." class="article-newsletter" />
-      <div class="article-tag-list">
-        <v-tag
-          v-for="(tag, index) in article.tags"
-          :key="index"
-          :slug="tag.slug"
-          :name="`#${tag.name}`"
-        />
+      <div
+        class="l-container l-container--10col"
+      >
+        <article-page-newsletter title="NYC news never sleeps. Get the Gothamist Daily newsletter and don't miss a moment." class="article-newsletter" />
+        <div class="article-tag-list">
+          <v-tag
+            v-for="(tag, index) in article.tags"
+            :key="index"
+            :slug="tag.slug"
+            :name="`#${tag.name}`"
+          />
+        </div>
+        <do-you-know-the-scoop class="article-scoop" />
       </div>
-      <do-you-know-the-scoop class="article-scoop" />
       <!-- AD -->
       <!-- DISQUS -->
 
