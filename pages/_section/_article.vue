@@ -42,8 +42,10 @@ export default {
             organization: author.contributingOrganization?.name,
             organizationUrl: author.contributingOrganization?.url
           }))
-          transformedData.formattedPublishDate = fuzzyDateTime(transformedData.publicationDate)
-          transformedData.formattedUpdatedDate = fuzzyDateTime(transformedData.updatedDate)
+          transformedData.formattedPublishDate = fuzzyDateTime(data.publicationDate)
+          if (data.updatedDate) {
+            transformedData.formattedUpdatedDate = fuzzyDateTime(data.updatedDate)
+          }
           return transformedData
         }
       )
