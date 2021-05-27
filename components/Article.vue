@@ -42,7 +42,7 @@
         </template>
       </article-metadata>
       <div class="article-lead-asset l-container l-container--10col">
-        <share-tools class="article-share-tools mod-vertical">
+        <share-tools class="article-share-tools">
           <share-tools-item
             action="share"
             service="facebook"
@@ -278,13 +278,23 @@ export default {
 .article-share-tools {
   width: 48.5px;
   text-align: center;
-  position: absolute;
-  top: 0;
-  left: -61px;
-  background-size: 1px 16px;
-  background-image: linear-gradient(to bottom, transparent 50%, RGB(var(--color-gray)) 50%);
-  background-repeat: repeat-y;
-  background-position: right bottom;
+  margin-bottom: var(--space-4);
+  @media all and (min-width: $medium) {
+    position: absolute;
+    top: 0;
+    left: -61px;
+    background-image: linear-gradient(to bottom, transparent 50%, RGB(var(--color-gray)) 50%);
+    background-size: 1px 16px;
+    background-repeat: repeat-y;
+    background-position: right bottom;
+  }
+}
+
+.article-share-tools .c-share-tools__group {
+  flex-direction: row;
+  @media all and (min-width: $medium) {
+    flex-direction: column;
+  }
 }
 
 .article-tag-list {
