@@ -24,10 +24,11 @@
       <!-- image -->
       <div v-else-if="block.type === 'image'">
         <image-with-caption
+          variation="gothamist"
           :alt-text="block.value.image.alt"
           :caption="block.value.caption || block.value.image.caption"
           :credit="block.value.image.credit"
-          :credit-url="block.value.image.credit_link"
+          :credit-url="block.value.image.creditLink"
           :width="block.value.image.width"
           :height="block.value.image.height"
         />
