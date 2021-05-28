@@ -135,7 +135,7 @@ export default {
   mixins: [gtm, disqus],
   data () {
     return {
-      q: null,
+      q: '',
       moreResults: [],
       moreResultsDisqusThreadIds: [],
       moreResultsDisqusData: null,
@@ -165,10 +165,8 @@ export default {
   mounted () {
     if (this.$route.query.q) {
       this.q = this.$route.query.q
-      this.getMoreResults()
-    } else {
-      this.moreResultsLoaded = true
     }
+    this.getMoreResults()
   },
   methods: {
     formatTags,
