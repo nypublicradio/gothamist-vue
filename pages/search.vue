@@ -27,7 +27,7 @@
             v-model="q"
             name="q"
             placeholder="Search"
-            class="c-search__input ember-text-field ember-view"
+            class="c-search__input"
             type="search"
           >
           <button
@@ -247,6 +247,15 @@ export default {
 
   &:hover {
     background-color: RGB(var(--color-banana-yellow));
+  }
+}
+
+.search .card-image-wrapper,
+.search .card-image {
+  @include media("<medium") {
+    min-width: 100px;
+    width: 100px;
+    height: 100px;
   }
 }
 
