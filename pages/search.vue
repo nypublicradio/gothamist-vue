@@ -140,8 +140,8 @@ export default {
       moreResultsDisqusThreadIds: [],
       moreResultsDisqusData: null,
       moreResultsLoaded: false,
-      moreResultsOffset: 12,
-      totalCount: null
+      moreResultsOffset: 0,
+      totalCount: 0
     }
   },
   computed: {
@@ -165,8 +165,10 @@ export default {
   mounted () {
     if (this.$route.query.q) {
       this.q = this.$route.query.q
+      this.getMoreResults()
+    } else {
+      this.moreResultsLoaded = true
     }
-    this.getMoreResults()
   },
   methods: {
     formatTags,
@@ -174,8 +176,12 @@ export default {
     getArticleImage,
     async getMoreResults () {
       this.moreResultsLoaded = false
+      let endpoint = '/search/?limit=12&q=' + this.q
+      if (this.moreResultsOffset > 0) {
+        endpoint = '/search/?limit=12&offset=' + this.moreResultsOffset + '&q=' + this.q
+      }
       await this.$axios
-        .get('/search/?limit=12&offset=12&q=' + this.q)
+        .get(endpoint)
         .then((response) => {
           this.totalCount = response.data.meta.totalCount
           this.moreResults = this.moreResults.concat(response.data.items)
