@@ -93,6 +93,48 @@ export default {
     return {
       staff: staffData
     }
+  },
+  head () {
+    return {
+      title: 'Staff - Gothamist',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Staff - Gothamist'
+        },
+        {
+          hid: 'og_url',
+          name: 'og:url',
+          content: 'https://www.gothamist.com' + this.$route.fullPath
+        },
+        {
+          hid: 'og_title',
+          name: 'og:title',
+          content: 'Staff - Gothamist'
+        },
+        {
+          hid: 'og_description',
+          name: 'og:description',
+          content: 'Staff - Gothamist'
+        },
+        {
+          hid: 'twitter_title',
+          name: 'twitter:title',
+          content: 'Staff - Gothamist'
+        },
+        {
+          hid: 'twitter_description',
+          name: 'twitter:description',
+          content: 'Staff - Gothamist'
+        },
+        {
+          hid: 'twitter_url',
+          name: 'twitter:url',
+          content: 'https://www.gothamist.com' + this.$route.fullPath
+        }
+      ]
+    }
   }
 }
 </script>

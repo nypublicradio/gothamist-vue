@@ -46,6 +46,48 @@ export default {
       .then(response => (
         this.contactPage = response.data
       ))
+  },
+  head () {
+    return {
+      title: 'Contact Us - Gothamist',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Contact Us - Gothamist'
+        },
+        {
+          hid: 'og_url',
+          name: 'og:url',
+          content: 'https://www.gothamist.com' + this.$route.fullPath
+        },
+        {
+          hid: 'og_title',
+          name: 'og:title',
+          content: 'Contact Us - Gothamist'
+        },
+        {
+          hid: 'og_description',
+          name: 'og:description',
+          content: 'Contact Us - Gothamist'
+        },
+        {
+          hid: 'twitter_title',
+          name: 'twitter:title',
+          content: 'Contact Us - Gothamist'
+        },
+        {
+          hid: 'twitter_description',
+          name: 'twitter:description',
+          content: 'Contact Us - Gothamist'
+        },
+        {
+          hid: 'twitter_url',
+          name: 'twitter:url',
+          content: 'https://www.gothamist.com' + this.$route.fullPath
+        }
+      ]
+    }
   }
 }
 </script>
