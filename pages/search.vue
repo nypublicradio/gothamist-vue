@@ -58,7 +58,7 @@
             :key="index"
             class="gothamist u-space--double--bottom mod-large"
             :show-gallery-icon="hasGallery(story.result.leadAsset)"
-            :image="getArticleImage(story.result.leadAsset, story.result.ancestry[0].slug)"
+            :image="getArticleImage(story.result.leadAsset, story.result.ancestry[0].slug, story.listingImage)"
             :image-height="150"
             :image-width="150"
             :title="story.result.title"
@@ -200,6 +200,48 @@ export default {
       this.moreResultsOffset = 0
       this.getMoreResults()
     }
+  },
+  head () {
+    return {
+      title: 'Search Results - Gothamist',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Search Results - Gothamist'
+        },
+        {
+          hid: 'og_url',
+          name: 'og:url',
+          content: 'https://www.gothamist.com' + this.$route.fullPath
+        },
+        {
+          hid: 'og_title',
+          name: 'og:title',
+          content: 'Search Results - Gothamist'
+        },
+        {
+          hid: 'og_description',
+          name: 'og:description',
+          content: 'Search Results - Gothamist'
+        },
+        {
+          hid: 'twitter_title',
+          name: 'twitter:title',
+          content: 'Search Results - Gothamist'
+        },
+        {
+          hid: 'twitter_description',
+          name: 'twitter:description',
+          content: 'Search Results - Gothamist'
+        },
+        {
+          hid: 'twitter_url',
+          name: 'twitter:url',
+          content: 'https://www.gothamist.com' + this.$route.fullPath
+        }
+      ]
+    }
   }
 }
 </script>
@@ -266,5 +308,9 @@ export default {
 
 .search .loading-icon path {
   stroke: RGB(var(--color-gray));
+}
+
+.search .button .loading-icon path {
+  stroke: RGB(var(--color-text));
 }
 </style>
