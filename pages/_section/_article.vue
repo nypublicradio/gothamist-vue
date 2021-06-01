@@ -42,8 +42,10 @@ export default {
             organization: author.contributingOrganization?.name,
             organizationUrl: author.contributingOrganization?.url
           }))
-          transformedData.formattedPublishDate = fuzzyDateTime(transformedData.publicationDate)
-          transformedData.formattedUpdatedDate = fuzzyDateTime(transformedData.updatedDate)
+          transformedData.formattedPublishDate = fuzzyDateTime(data.publicationDate)
+          if (data.updatedDate) {
+            transformedData.formattedUpdatedDate = fuzzyDateTime(data.updatedDate)
+          }
           return transformedData
         }
       )
@@ -56,8 +58,7 @@ export default {
           message: 'Page not found'
         })
       })
-
-    if (page?.data.leadAsset.length > 0 && page?.data.leadAsset[0].type === 'leadGallery') {
+    if (page?.data.leadAsset.length > 0 && page?.data.leadAsset[0].type === 'lead_gallery') {
       const gallery = await $axios.get(`/pages/${page.data.leadAsset[0].value.gallery}`)
       page.data.gallery = gallery.data
     }

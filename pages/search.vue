@@ -94,7 +94,7 @@
             @click="getMoreResults"
           >
             <span v-if="moreResultsLoaded">More Results</span>
-            <loading-icon v-if="!moreResultsLoaded" />
+            <span v-if="!moreResultsLoaded">Loading...</span>
           </v-button>
         </div>
       </section>
