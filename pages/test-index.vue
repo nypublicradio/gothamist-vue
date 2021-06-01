@@ -324,7 +324,7 @@
         @click="getMoreResults"
       >
         <span v-if="moreResultsLoaded">More Results</span>
-        <loading-icon v-if="!moreResultsLoaded" />
+        <span v-if="!moreResultsLoaded">Loading...</span>
       </v-button>
       <v-spacer size="quad" />
       <read-more-in />
@@ -349,7 +349,6 @@ export default {
   components: {
     ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
     HomepageDonateBanner: () => import('../components/HomepageDonateBanner'),
-    LoadingIcon: () => import('nypr-design-system-vue/src/components/animations/LoadingIcon'),
     ReadMoreIn: () => import('../components/ReadMoreIn'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
     VCard: () => import('nypr-design-system-vue/src/components/VCard'),
@@ -476,22 +475,6 @@ export default {
     width: 590px;
     max-width: 590px;
   }
-}
-
-.card.gothamist.mod-large .card-image-wrapper {
-  width: 100%;
-  min-width: 100%;
-  @include media("<large") {
-    height: 300px;
-  }
-  @include media(">large") {
-    width: 560px;
-    max-width: 100%;
-  }
-}
-
-.card.gothamist .card-subtitle {
-  line-height: var(--line-height-4) !important;
 }
 
 .featured-grid .card.gothamist.mod-large .card-title .o-gallery-icon {
