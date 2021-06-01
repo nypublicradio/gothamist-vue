@@ -6,7 +6,7 @@
     >
       <breadcrumbs
         class="article-breadcrumbs"
-        :breadcrumbs="[{name: section, slug: article.ancestry[0].slug}]"
+        :breadcrumbs="breadcrumbs"
       />
       <h1 class="article-title">
         {{ article.title }}
@@ -39,7 +39,7 @@
         </template>
       </article-metadata>
       <div class="article-lead-asset l-container l-container--10col">
-        <share-tools class="article-share-tools mod-vertical">
+        <share-tools class="article-share-tools">
           <share-tools-item
             action="share"
             service="facebook"
@@ -74,12 +74,13 @@
         >
           <image-with-caption
             variation="gothamist"
-            alt-text="image alt text"
+            :alt-text="leadAsset.value.image.alt"
             :url-template="`https://cms.demo.nypr.digital/images/${leadAsset.value.image.id}/fill-%width%x%height%/`"
             :aspect-ratio="4/3"
             :width-in-viewport="96"
-            credit="AP Photo/Carolyn Kaster"
-            caption="This is the caption lorem ipsum dolor sit amet, consectetur adipiscing elit"
+            :credit="leadAsset.value.image.credit"
+            :caption="leadAsset.value.caption || leadAsset.value.image.caption"
+            :credit-url="leadAsset.value.image.creditLink"
           />
         </div>
         <div
@@ -98,16 +99,20 @@
         :streamfield="article.body"
       />
       <v-spacer size="quad" />
-      <article-page-newsletter class="article-newsletter" />
-      <div class="article-tag-list">
-        <v-tag
-          v-for="(tag, index) in article.tags"
-          :key="index"
-          :slug="tag.slug"
-          :name="`#${tag.name}`"
-        />
+      <div
+        class="l-container l-container--10col"
+      >
+        <article-page-newsletter title="NYC news never sleeps. Get the Gothamist Daily newsletter and don't miss a moment." class="article-newsletter" />
+        <div class="article-tag-list">
+          <v-tag
+            v-for="(tag, index) in article.tags"
+            :key="index"
+            :slug="tag.slug"
+            :name="`#${tag.name}`"
+          />
+        </div>
+        <do-you-know-the-scoop class="article-scoop" />
       </div>
-      <do-you-know-the-scoop class="article-scoop" />
       <!-- AD -->
       <!-- DISQUS -->
 
@@ -181,10 +186,26 @@ export default {
     section () {
       return this.article.meta.parent.title
     },
+    breadcrumbs () {
+      const breadcrumbs = [{ name: this.section, slug: this.article.ancestry[0].slug }]
+      if (this.article.sponsoredContent) {
+        breadcrumbs.push({ name: 'Sponsored' })
+      }
+      if (this.article.tags.find(tag => tag.name === 'opinion' || tag.name === '@opinion')) {
+        breadcrumbs.push({ name: 'Opinion', slug: 'opinion' })
+      }
+      if (this.article.tags.find(tag => tag.name === 'analysis' || tag.name === '@analysis')) {
+        breadcrumbs.push({ name: 'Analysis', slug: 'analysis' })
+      }
+      if (this.article.tags.find(tag => tag.name === 'we the commuters')) {
+        breadcrumbs.push({ name: 'We The Commuters', slug: 'wethecommuters' })
+      }
+      return breadcrumbs
+    },
     galleryImages () {
       if (this.article.gallery) {
         return this.article.gallery.slides
-          .slice(4)
+          .slice(0, 4)
           .map((slide) => {
             const image = slide.value.slideImage.image
             return {
@@ -275,13 +296,23 @@ export default {
 .article-share-tools {
   width: 48.5px;
   text-align: center;
-  position: absolute;
-  top: 0;
-  left: -61px;
-  background-size: 1px 16px;
-  background-image: linear-gradient(to bottom, transparent 50%, RGB(var(--color-gray)) 50%);
-  background-repeat: repeat-y;
-  background-position: right bottom;
+  margin-bottom: var(--space-4);
+  @media all and (min-width: $medium) {
+    position: absolute;
+    top: 0;
+    left: -61px;
+    background-image: linear-gradient(to bottom, transparent 50%, RGB(var(--color-gray)) 50%);
+    background-size: 1px 16px;
+    background-repeat: repeat-y;
+    background-position: right bottom;
+  }
+}
+
+.article-share-tools .c-share-tools__group {
+  flex-direction: row;
+  @media all and (min-width: $medium) {
+    flex-direction: column;
+  }
 }
 
 .article-tag-list {
