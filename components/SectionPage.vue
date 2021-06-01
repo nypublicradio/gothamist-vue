@@ -279,6 +279,12 @@ export default {
   }
 }
 
+.section .featured-stories .card.mod-vertical .card-image-wrapper {
+  @include media(">large") {
+    height: 285px;
+  }
+}
+
 .section .featured-stories .card.mod-vertical .card-details {
   @include media("<medium") {
     margin: 0 0 0 var(--space-3);
