@@ -94,7 +94,7 @@
             @click="getMoreResults"
           >
             <span v-if="moreResultsLoaded">More Results</span>
-            <loading-icon v-if="!moreResultsLoaded" />
+            <span v-if="!moreResultsLoaded">Loading...</span>
           </v-button>
         </div>
       </section>
@@ -274,21 +274,6 @@ export default {
   cursor: pointer;
   @include media(">medium") {
     width: 60px;
-  }
-}
-
-.button.more-results {
-  background-color: RGB(var(--color-banana-yellow));
-  max-width: 310px;
-  width: 100%;
-  height: 60px;
-  line-height: 60px;
-  font-size: var(--font-size-6);
-  font-weight: 700;
-  letter-spacing: 2px;
-
-  &:hover {
-    background-color: RGB(var(--color-banana-yellow));
   }
 }
 
