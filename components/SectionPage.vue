@@ -279,8 +279,17 @@ export default {
   }
 }
 
+.section .featured-stories .card.mod-vertical .card-image-wrapper,
+.section .featured-stories .card.mod-vertical .card-image {
+  @include media("<medium") {
+    min-width: 100px;
+    width: 100px;
+    height: 100px;
+  }
+}
+
 .section .featured-stories .card.mod-vertical .card-image-wrapper {
-  @include media(">large") {
+  @include media(">medium") {
     height: 285px;
   }
 }
@@ -293,8 +302,14 @@ export default {
 }
 
 .section .card.gothamist.mod-large .card-title {
-  @include media("<medium") {
+  @include media("<large") {
     margin: 0;
+  }
+}
+
+.section .card.gothamist.mod-large .card-tag {
+  @include media("<large") {
+    margin-bottom: var(--space-1);
   }
 }
 
