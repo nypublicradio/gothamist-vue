@@ -1,10 +1,10 @@
 <template>
   <div class="author-page">
-    <div class="l-container l-container--14col l-wrap">
-      <header
-        v-if="authorPage"
-        class="c-search-results__header--no-border u-spacing"
-      >
+    <div
+      v-if="authorPage && slug"
+      class="l-container l-container--14col l-wrap"
+    >
+      <header class="c-search-results__header--no-border u-spacing">
         <h1 class="is-vishidden">
           {{ authorPage.title }}
         </h1>

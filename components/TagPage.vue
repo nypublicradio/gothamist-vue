@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="slug"
     class="tags-page"
     :class="{'curated': designedHeader }"
   >
