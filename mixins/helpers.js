@@ -8,7 +8,7 @@ import { format, differenceInMinutes, differenceInHours, getYear, isValid } from
 export const formatTags = function (name, slug, sponsored, tags) {
   const tagArray = [{
     name,
-    slug
+    slug: '/' + slug
   }]
   if (sponsored) {
     return [{ name: 'sponsored' }]
@@ -16,7 +16,7 @@ export const formatTags = function (name, slug, sponsored, tags) {
   if (tags.find(x => x.name === 'opinion')) {
     tagArray.push({
       name: 'opinion',
-      slug: 'opinion'
+      slug: '/tags/opinion'
     })
   }
   return tagArray

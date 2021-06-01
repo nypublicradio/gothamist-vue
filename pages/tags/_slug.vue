@@ -1,42 +1,45 @@
 <template>
-  <section-page
-    v-if="page"
-    :name="slug"
-    :descendant-of="page.id"
-  />
+  <div>
+    <tag-page
+      v-if="page"
+      :designed-header="page.designedHeader"
+      :mid-page-zone="page.midpageZone"
+      :slug="slug"
+      :title="page.title"
+      :top-page-zone="page.topPageZone"
+    />
+    <tag-page
+      v-else
+      :slug="slug"
+      :title="slug"
+    />
+  </div>
 </template>
 
 <script>
 import gtm from '~/mixins/gtm'
 
 export default {
-  name: 'Section', // this is the template name which is used for GTM
+  name: 'Tag', // this is the template name which is used for GTM
   components: {
-    SectionPage: () => import('../components/SectionPage')
+    TagPage: () => import('../../components/TagPage')
   },
   mixins: [gtm],
-  async asyncData ({
-    $axios,
-    params,
-    error
-  }) {
-    const path = `${params.slug}`
-    const page = await $axios.get(`/pages/find/?html_path=${path}`)
-      .catch(() => {
-        error({
-          statusCode: 404,
-          message: 'Page not found'
-        })
-      })
-    return {
-      page: page?.data
-    }
-  },
   data () {
     return {
       page: null,
       slug: this.$route.params.slug
     }
+  },
+  async mounted () {
+    await this.$axios
+      .get(`/pages/find/?html_path=tags/${this.slug}`)
+      .then(response => (
+        this.page = response.data
+      ))
+      .catch(() => {
+        this.page = null
+      })
   },
   head () {
     return {
