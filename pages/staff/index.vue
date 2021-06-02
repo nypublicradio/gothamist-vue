@@ -77,13 +77,13 @@
 </template>
 
 <script>
-import gtm from '@/mixins/gtm'
-import staffData from '@/scripts/staff.json'
+import gtm from '~/mixins/gtm'
+import staffData from '~/scripts/staff.json'
 
 export default {
   name: 'StaffPage', // this is the template name which is used for GTM
   components: {
-    StaffCard: () => import('../components/StaffCard'),
+    StaffCard: () => import('../../components/StaffCard'),
     ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
     ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')

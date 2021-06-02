@@ -324,7 +324,7 @@
         @click="getMoreResults"
       >
         <span v-if="moreResultsLoaded">More Results</span>
-        <span v-if="!moreResultsLoaded">Loading...</span>
+        <loading-icon v-if="!moreResultsLoaded" />
       </v-button>
       <v-spacer size="quad" />
       <read-more-in />
@@ -349,6 +349,7 @@ export default {
   components: {
     ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
     HomepageDonateBanner: () => import('../components/HomepageDonateBanner'),
+    LoadingIcon: () => import('nypr-design-system-vue/src/components/animations/LoadingIcon'),
     ReadMoreIn: () => import('../components/ReadMoreIn'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
     VCard: () => import('nypr-design-system-vue/src/components/VCard'),
@@ -462,7 +463,7 @@ export default {
   }
 }
 
-.featured-grid {
+.c-featured-blocks .featured-grid {
   grid-template-columns: 1fr;
   @media all and (min-width: 1100px) {
     grid-gap: 50px;
@@ -470,14 +471,30 @@ export default {
   }
 }
 
-.featured-grid .card.featured-grid-col1 {
+.c-featured-blocks .featured-grid .card.featured-grid-col1 {
   @include media(">large") {
     width: 590px;
     max-width: 590px;
   }
 }
 
-.featured-grid .card.gothamist.mod-large .card-title .o-gallery-icon {
+.home-page .card.gothamist.mod-large .card-image-wrapper {
+  width: 100%;
+  min-width: 100%;
+  @include media("<large") {
+    height: 300px;
+  }
+  @include media(">large") {
+    width: 560px;
+    max-width: 100%;
+  }
+}
+
+.home-page .card.gothamist .card-subtitle {
+  line-height: var(--line-height-4) !important;
+}
+
+.home-page .featured-grid .card.gothamist.mod-large .card-title .o-gallery-icon {
   height: 20px;
   margin: 0 0 -2px;
 }
@@ -487,25 +504,10 @@ export default {
   font-style: italic;
 }
 
-.homepage .l-grid--right-rail {
+.home-page .l-grid--right-rail {
   display: none;
   @include media(">large") {
     display: grid;
-  }
-}
-
-.button.more-results {
-  background-color: RGB(var(--color-banana-yellow));
-  max-width: 310px;
-  width: 100%;
-  height: 60px;
-  line-height: 60px;
-  font-size: var(--font-size-6);
-  font-weight: 700;
-  letter-spacing: 2px;
-
-  &:hover {
-    background-color: RGB(var(--color-banana-yellow));
   }
 }
 </style>
