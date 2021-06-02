@@ -26,12 +26,12 @@
         v-if="moreResults"
       >
         <div
-          v-for="(chunk, chunkIndex) in moreResultsChunks"
-          :key="chunkIndex"
+          v-for="(nugget, nuggetIndex) in moreResultsNuggets"
+          :key="nuggetIndex"
           class="u-space--double--bottom"
         >
           <v-card
-            v-for="(story, index) in moreResultsChunks[chunkIndex]"
+            v-for="(story, index) in moreResultsNuggets[nuggetIndex]"
             :key="index"
             class="gothamist u-space--double--bottom mod-large"
             :show-gallery-icon="hasGallery(story.leadAsset)"
@@ -146,15 +146,15 @@ export default {
       defaultImageFood: state => state.defaultImageFood,
       defaultImageNews: state => state.defaultImageNews
     }),
-    moreResultsChunks () {
-      const chunkedArray = []
-      const chunkSize = 12
+    moreResultsNuggets () {
+      const nuggetArray = []
+      const nuggetSize = 6
       let index = 0
       while (index < this.moreResults.length) {
-        chunkedArray.push(this.moreResults.slice(index, chunkSize + index))
-        index += chunkSize
+        nuggetArray.push(this.moreResults.slice(index, nuggetSize + index))
+        index += nuggetSize
       }
-      return chunkedArray
+      return nuggetArray
     }
   },
   mounted () {
@@ -201,7 +201,7 @@ export default {
         {
           hid: 'og_url',
           name: 'og:url',
-          content: 'https://www.gothamist.com' + this.$route.fullPath
+          content: 'https://gothamist.com' + this.$route.fullPath
         },
         {
           hid: 'og_title',
@@ -212,21 +212,6 @@ export default {
           hid: 'og_description',
           name: 'og:description',
           content: this.authorPage.title + ' - Gothamist'
-        },
-        {
-          hid: 'twitter_title',
-          name: 'twitter:title',
-          content: this.authorPage.title + ' - Gothamist'
-        },
-        {
-          hid: 'twitter_description',
-          name: 'twitter:description',
-          content: this.authorPage.title + ' - Gothamist'
-        },
-        {
-          hid: 'twitter_url',
-          name: 'twitter:url',
-          content: 'https://www.gothamist.com' + this.$route.fullPath
         }
       ]
     }

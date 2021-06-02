@@ -53,7 +53,7 @@ export default {
         {
           hid: 'og_url',
           name: 'og:url',
-          content: 'https://www.gothamist.com' + this.$route.fullPath
+          content: 'https://gothamist.com' + this.$route.fullPath
         },
         {
           hid: 'og_title',
@@ -64,21 +64,6 @@ export default {
           hid: 'og_description',
           name: 'og:description',
           content: this.slug + ' - Gothamist'
-        },
-        {
-          hid: 'twitter_title',
-          name: 'twitter:title',
-          content: this.slug + ' - Gothamist'
-        },
-        {
-          hid: 'twitter_description',
-          name: 'twitter:description',
-          content: this.slug + ' - Gothamist'
-        },
-        {
-          hid: 'twitter_url',
-          name: 'twitter:url',
-          content: 'https://www.gothamist.com' + this.$route.fullPath
         }
       ]
     }

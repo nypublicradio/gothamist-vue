@@ -51,12 +51,12 @@
       <loading-icon v-if="!moreResultsLoaded" />
       <section v-if="filteredMoreResults">
         <div
-          v-for="(chunk, chunkIndex) in moreResultsChunks"
-          :key="chunkIndex"
+          v-for="(nugget, nuggetIndex) in moreResultsNuggets"
+          :key="nuggetIndex"
         >
           <div>
             <v-card
-              v-for="(story, index) in moreResultsChunks[chunkIndex].slice(0,4)"
+              v-for="(story, index) in moreResultsNuggets[nuggetIndex].slice(0,4)"
               :key="index"
               class="gothamist u-space--double--bottom mod-large"
               :show-gallery-icon="hasGallery(story.leadAsset)"
@@ -85,7 +85,7 @@
             </v-card>
           </div>
           <div
-            v-if="chunkIndex%2 === 0"
+            v-if="nuggetIndex%2 === 0"
             class="ad-container"
           >
             <hr
@@ -100,7 +100,7 @@
           </div>
           <div>
             <v-card
-              v-for="(story, index) in moreResultsChunks[chunkIndex].slice(4,11)"
+              v-for="(story, index) in moreResultsNuggets[nuggetIndex].slice(4,11)"
               :key="index"
               class="gothamist u-space--double--bottom mod-large"
               :show-gallery-icon="hasGallery(story.leadAsset)"
@@ -228,15 +228,15 @@ export default {
         return this.moreResults
       }
     },
-    moreResultsChunks () {
-      const chunkedArray = []
-      const chunkSize = 6
+    moreResultsNuggets () {
+      const nuggetArray = []
+      const nuggetSize = 6
       let index = 0
       while (index < this.filteredMoreResults.length) {
-        chunkedArray.push(this.filteredMoreResults.slice(index, chunkSize + index))
-        index += chunkSize
+        nuggetArray.push(this.filteredMoreResults.slice(index, nuggetSize + index))
+        index += nuggetSize
       }
-      return chunkedArray
+      return nuggetArray
     }
   },
   mounted () {

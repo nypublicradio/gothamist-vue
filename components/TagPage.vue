@@ -41,12 +41,12 @@
       <loading-icon v-if="!moreResultsLoaded" />
       <section v-if="moreResults">
         <div
-          v-for="(chunk, chunkIndex) in moreResultsChunks"
-          :key="chunkIndex"
+          v-for="(nugget, nuggetIndex) in moreResultsNuggets"
+          :key="nuggetIndex"
         >
           <div>
             <v-card
-              v-for="(story, index) in moreResultsChunks[chunkIndex].slice(0,3)"
+              v-for="(story, index) in moreResultsNuggets[nuggetIndex].slice(0,3)"
               :key="index"
               class="gothamist u-space--double--bottom mod-large"
               :show-gallery-icon="hasGallery(story.leadAsset)"
@@ -75,7 +75,7 @@
               </article-metadata>
             </v-card>
           </div>
-          <section v-if="midPageZone && chunkIndex === 0">
+          <section v-if="midPageZone && nuggetIndex === 0">
             <v-streamfield
               class="l-container l-container--10col article-body"
               :streamfield="midPageZone"
@@ -84,7 +84,7 @@
           </section>
           <div>
             <v-card
-              v-for="(story, index) in moreResultsChunks[chunkIndex].slice(3,6)"
+              v-for="(story, index) in moreResultsNuggets[nuggetIndex].slice(3,6)"
               :key="index"
               class="gothamist u-space--double--bottom mod-large"
               :show-gallery-icon="hasGallery(story.leadAsset)"
@@ -114,7 +114,7 @@
             </v-card>
           </div>
           <div
-            v-if="chunkIndex%2 === 0"
+            v-if="nuggetIndex%2 === 0"
             class="ad-container"
           >
             <hr
@@ -129,7 +129,7 @@
           </div>
           <div>
             <v-card
-              v-for="(story, index) in moreResultsChunks[chunkIndex].slice(6,13)"
+              v-for="(story, index) in moreResultsNuggets[nuggetIndex].slice(6,13)"
               :key="index"
               class="gothamist u-space--double--bottom mod-large"
               :show-gallery-icon="hasGallery(story.leadAsset)"
@@ -243,15 +243,15 @@ export default {
       defaultImageFood: state => state.defaultImageFood,
       defaultImageNews: state => state.defaultImageNews
     }),
-    moreResultsChunks () {
-      const chunkedArray = []
-      const chunkSize = 6
+    moreResultsNuggets () {
+      const nuggetArray = []
+      const nuggetSize = 6
       let index = 0
       while (index < this.moreResults.length) {
-        chunkedArray.push(this.moreResults.slice(index, chunkSize + index))
-        index += chunkSize
+        nuggetArray.push(this.moreResults.slice(index, nuggetSize + index))
+        index += nuggetSize
       }
-      return chunkedArray
+      return nuggetArray
     }
   },
   mounted () {

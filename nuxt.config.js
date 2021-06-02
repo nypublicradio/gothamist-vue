@@ -75,21 +75,6 @@ export default {
         content: '151261804904925'
       },
       {
-        hid: 'twitter_title',
-        name: 'twitter:title',
-        content: 'Gothamist: New York City Local News, Food, Arts & Events'
-      },
-      {
-        hid: 'twitter_description',
-        name: 'twitter:description',
-        content: 'Gothamist is a website about New York City news, arts and events, and food, brought to you by New York Public Radio.'
-      },
-      {
-        hid: 'twitter_url',
-        name: 'twitter:url',
-        content: 'https://gothamist.com'
-      },
-      {
         hid: 'twitter_site',
         name: 'twitter:site',
         content: '@gothamist'
