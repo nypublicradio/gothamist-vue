@@ -272,13 +272,13 @@
         <div class="l-container l-container--14col l-wrap">
           <v-spacer size="triple" />
           <div
-            v-for="(chunk, chunkIndex) in moreResultsChunks"
-            :key="chunkIndex"
+            v-for="(nugget, nuggetIndex) in moreResultsNuggets"
+            :key="nuggetIndex"
             class="l-grid l-grid--large-gutters l-grid--right-rail u-space--double--bottom"
           >
             <div>
               <v-card
-                v-for="(story, index) in moreResultsChunks[chunkIndex]"
+                v-for="(story, index) in moreResultsNuggets[nuggetIndex]"
                 :key="index"
                 class="gothamist u-space--double--bottom"
                 :class="story.sponsoredContent || story.show_as_feature ? 'mod-vertical mod-large' : 'mod-small'"
@@ -324,7 +324,7 @@
         @click="getMoreResults"
       >
         <span v-if="moreResultsLoaded">More Results</span>
-        <loading-icon v-if="!moreResultsLoaded" />
+        <span v-if="!moreResultsLoaded">Loading...</span>
       </v-button>
       <v-spacer size="quad" />
       <read-more-in />
@@ -349,7 +349,6 @@ export default {
   components: {
     ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
     HomepageDonateBanner: () => import('../components/HomepageDonateBanner'),
-    LoadingIcon: () => import('nypr-design-system-vue/src/components/animations/LoadingIcon'),
     ReadMoreIn: () => import('../components/ReadMoreIn'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
     VCard: () => import('nypr-design-system-vue/src/components/VCard'),
@@ -415,15 +414,15 @@ export default {
       })
       return tempArray
     },
-    moreResultsChunks () {
-      const chunkedArray = []
-      const chunkSize = 8
+    moreResultsNuggets () {
+      const nuggetArray = []
+      const nuggetSize = 8
       let index = 0
       while (index < this.filteredMoreResults.length) {
-        chunkedArray.push(this.filteredMoreResults.slice(index, chunkSize + index))
-        index += chunkSize
+        nuggetArray.push(this.filteredMoreResults.slice(index, nuggetSize + index))
+        index += nuggetSize
       }
-      return chunkedArray
+      return nuggetArray
     }
   },
   async mounted () {
