@@ -1,7 +1,7 @@
 <template>
   <div>
     <tag-page
-      v-if="page"
+      v-if="page && dataLoaded"
       :designed-header="page.designedHeader"
       :mid-page-zone="page.midpageZone"
       :slug="slug"
@@ -27,6 +27,7 @@ export default {
   mixins: [gtm],
   data () {
     return {
+      dataLoaded: false,
       page: null,
       slug: this.$route.params.slug
     }
@@ -34,9 +35,10 @@ export default {
   async mounted () {
     await this.$axios
       .get(`/pages/find/?html_path=tags/${this.slug}`)
-      .then(response => (
+      .then((response) => {
         this.page = response.data
-      ))
+        this.dataLoaded = true
+      })
       .catch(() => {
         this.page = null
       })

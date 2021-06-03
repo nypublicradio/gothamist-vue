@@ -48,7 +48,6 @@
         >
         <v-spacer size="triple" />
       </section>
-      <loading-icon v-if="!moreResultsLoaded" />
       <section v-if="filteredMoreResults">
         <div
           v-for="(nugget, nuggetIndex) in moreResultsNuggets"
@@ -130,6 +129,7 @@
             </v-card>
           </div>
         </div>
+        <loading-icon v-if="!moreResultsLoaded" />
         <v-spacer size="double" />
         <div
           v-if="moreResults && moreResults.length > 0"

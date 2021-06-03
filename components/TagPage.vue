@@ -15,6 +15,7 @@
       >
       <v-spacer size="triple" />
     </div>
+    <!-- header & top page zone -->
     <div class="l-container l-container--14col l-wrap">
       <header>
         <h1 class="tags-page-header">
@@ -31,6 +32,7 @@
       </section>
     </div>
     <!-- results -->
+    <loading-icon v-if="!moreResultsLoaded" />
     <div class="l-container l-container--14col l-wrap">
       <template v-if="!designedHeader">
         <hr
@@ -38,8 +40,7 @@
           aria-hidden="true"
         >
       </template>
-      <loading-icon v-if="!moreResultsLoaded" />
-      <section v-if="moreResults">
+      <section v-if="moreResults && moreResults.length > 0 && moreResultsNuggets">
         <div
           v-for="(nugget, nuggetIndex) in moreResultsNuggets"
           :key="nuggetIndex"
@@ -159,6 +160,7 @@
             </v-card>
           </div>
         </div>
+        <loading-icon v-if="!moreResultsLoaded && moreResults.length > 0" />
         <v-spacer size="double" />
         <div
           v-if="moreResults.length < totalCount && moreResults.length > 0"
