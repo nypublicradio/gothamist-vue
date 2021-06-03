@@ -3,6 +3,7 @@
     <div class="l-container l-container--xl l-wrap">
       <v-spacer />
       <!-- featured area -->
+      <loading-icon v-if="!featuredStoriesLoaded" />
       <section
         v-if="featuredStories"
         class="c-featured-blocks"
@@ -98,6 +99,7 @@
       <v-spacer />
     </div>
     <!-- news river -->
+    <loading-icon v-if="!riverLoaded" />
     <section
       v-if="river"
     >
@@ -315,16 +317,23 @@
           <v-spacer />
         </div>
       </template>
+      <loading-icon v-if="!moreResultsLoaded" />
     </section>
     <v-spacer size="quad" />
     <div class="l-container l-container--14col l-wrap u-align-center">
       <v-button
+        v-if="moreResultsLoaded"
         class="more-results"
-        :disabled="!moreResultsLoaded"
         @click="getMoreResults"
       >
-        <span v-if="moreResultsLoaded">More Results</span>
-        <span v-if="!moreResultsLoaded">Loading...</span>
+        <span>More Results</span>
+      </v-button>
+      <v-button
+        v-if="!moreResultsLoaded"
+        class="more-results"
+        disabled
+      >
+        <span>Loading...</span>
       </v-button>
       <v-spacer size="quad" />
       <read-more-in />
@@ -349,6 +358,7 @@ export default {
   components: {
     ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
     HomepageDonateBanner: () => import('../components/HomepageDonateBanner'),
+    LoadingIcon: () => import('nypr-design-system-vue/src/components/animations/LoadingIcon'),
     ReadMoreIn: () => import('../components/ReadMoreIn'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
     VCard: () => import('nypr-design-system-vue/src/components/VCard'),
@@ -365,6 +375,7 @@ export default {
         response.data.items.forEach((item) => {
           this.featuredStoriesDisqusThreadIds.push(item.legacyId)
         })
+        this.featuredStoriesLoaded = true
       })
     // get the article river
     await this.$axios
@@ -374,6 +385,7 @@ export default {
         response.data.items.forEach((item) => {
           this.riverDisqusThreadIds.push(item.legacyId)
         })
+        this.riverLoaded = true
       })
   },
   data () {
@@ -381,6 +393,7 @@ export default {
       featuredStories: null,
       featuredStoriesDisqusThreadIds: [],
       featuredStoriesDisqusData: null,
+      featuredStoriesLoaded: false,
       moreResults: [],
       moreResultsDisqusThreadIds: [],
       moreResultsDisqusData: null,
@@ -388,7 +401,8 @@ export default {
       offset: 32,
       river: null,
       riverDisqusThreadIds: [],
-      riverDisqusData: null
+      riverDisqusData: null,
+      riverLoaded: false
     }
   },
   computed: {
@@ -508,5 +522,18 @@ export default {
   @include media(">large") {
     display: grid;
   }
+}
+
+.home-page .loading-icon {
+  width: 75px !important;
+  margin: 0;
+}
+
+.home-page .loading-icon path {
+  stroke: RGB(var(--color-gray));
+}
+
+.home-page .button .loading-icon path {
+  stroke: RGB(var(--color-text));
 }
 </style>
