@@ -146,6 +146,7 @@
 </template>
 
 <script>
+import { getImagePath } from '~/mixins/image'
 export default {
   name: 'Article',
   components: {
@@ -176,7 +177,16 @@ export default {
   data () {
     return {
       bannerOnscreen: false,
-      showDonateBanner: !this.$cookies.donateBannerDismissed && this.$cookies.articleViews < 3
+      showDonateBanner: !this.$cookies.donateBannerDismissed && this.$cookies.articleViews < 3,
+      path: 'https://gothamist.com' + this.$route.fullPath,
+      ogImage: this.article.socialImage || (this.article.leadImage && this.article.leadImage.image),
+      baseMeta: [
+        { hid: 'description', name: 'description', content: this.article.description }
+      ],
+      twitterMeta: [
+        { hid: 'twitter_card', name: 'twitter:card', content: 'summary_large_image' },
+        { hid: 'twitter_site', name: 'twitter:site', content: '@gothamist' }
+      ]
     }
   },
   computed: {
@@ -222,6 +232,78 @@ export default {
       } else {
         return []
       }
+    },
+    imageMeta ({ $config: { imageBase } }) {
+      return this.ogImage ? [
+        { hid: 'og_image', property: 'og:image', content: imageBase + getImagePath(this.ogImage, 1200, 650) },
+        { hid: 'og_image_width', property: 'og:image:width', content: '1200' },
+        { hid: 'og_image_height', property: 'og:image:height"', content: '650' },
+        { hid: 'og_image_alt', property: 'og:image:alt"', content: this.ogImage.alt }
+      ] : []
+    },
+    ogMeta () {
+      return [
+        { hid: 'og_site_name', property: 'og:site_name', content: 'Gothamist' },
+        { hid: 'og_url', property: 'og:url"', content: this.url },
+        { hid: 'og_description', property: 'og:description', content: this.article.description },
+        { hid: 'og_title', property: 'og:title', content: this.article.title },
+        { hid: 'og_type', property: 'og:type', content: this.article.type },
+        { hid: 'og_locale', property: 'og:locale', content: 'en_US' }
+      ]
+    },
+    articleMeta () {
+      return [
+        {
+          hid: 'article_published_time',
+          property: 'article:published_time',
+          content: this.article.meta.firstPublishedAt?.toString()
+        }, {
+          hid: 'article_modified_time',
+          property: 'article:modified_time',
+          content: this.article.updatedDate?.toString()
+        }, {
+          hid: 'article_section', property: 'article:section', content: this.article.ancestry[0].name
+        }, {
+          hid: 'article_tag',
+          property: 'article:tag',
+          content: this.article.tags.map(tag => tag.name)
+        },
+        ...this.article.authors.map((author) => {
+          return {
+          // hid: 'article author', -- not unique
+            property: 'article:author',
+            content: 'https://gothamist.com' + author.url
+          }
+        })
+      ]
+    },
+    structuredData ({ $config: { imageBase } }) {
+      return {
+        '@context': 'http://schema.org',
+        '@type': 'NewsArticle',
+        mainEntityOfPage: 'https://gothamist.com' + this.$route.fullPath,
+        image: this.ogImage && imageBase + getImagePath(this.ogImage, 1200, 650),
+        headline: this.article.title,
+        description: this.article.description,
+        datePublished: this.article.meta.firstPublishedAt,
+        dateModified: this.article.updatedDate && this.article.updatedDate,
+        author: this.article.authors.map((author) => {
+          return {
+            '@type': 'Person',
+            name: `${author.firstName} ${author.lastName}`
+          }
+        }),
+        publisher: {
+          '@type': 'Organization',
+          name: 'Gothamist',
+          logo: {
+            '@type': 'ImageObject',
+            url: 'http://gothamist.com/static-images/home_og_1200x600.png',
+            width: '1200',
+            height: '600'
+          }
+        }
+      }
     }
   },
   methods: {
@@ -244,13 +326,13 @@ export default {
   head () {
     return {
       title: `${this.article?.title} - Gothamist`,
-      meta: [
+      script: [
         {
-          hid: 'description',
-          name: 'description',
-          content: 'Article Page Description'
+          type: 'application/ld+json',
+          json: this.structuredData
         }
-      ]
+      ],
+      meta: [].concat(this.baseMeta, this.imageMeta, this.twitterMeta, this.ogMeta, this.articleMeta)
     }
   }
 }

@@ -150,6 +150,7 @@ export default {
   ],
 
   publicRuntimeConfig: {
+    imageBase: process.env.IMAGE_BASE_URL,
     gtm: {
       id: process.env.GTM_ID
     },
