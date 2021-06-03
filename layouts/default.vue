@@ -61,7 +61,7 @@ export default {
     }
   },
   async mounted () {
-    if (this.$nuxt.$route.name === 'test') {
+    if (this.$nuxt.$route.name === 'index') {
       this.isHomepage = true
     }
     // set the navigation
