@@ -95,7 +95,7 @@
       </div>
       <v-spacer size="quad" />
       <v-streamfield
-        class="l-container l-container--10col article-body"
+        class="l-container l-container--10col article-body c-article__body"
         :streamfield="article.body"
       />
       <v-spacer size="quad" />
