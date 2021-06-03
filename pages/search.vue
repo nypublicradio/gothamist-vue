@@ -44,7 +44,6 @@
         </form>
       </header>
       <v-spacer size="quad" />
-      <loading-icon v-if="!moreResultsLoaded && moreResults.length === 0" />
       <section
         v-if="moreResults"
       >
@@ -98,6 +97,7 @@
           </v-button>
         </div>
       </section>
+      <loading-icon v-if="!moreResultsLoaded && moreResults.length === 0" />
       <p
         v-if="q && moreResults.length === 0 && moreResultsLoaded"
         class="c-listing__sections-title u-align--center u-space--double--bottom"

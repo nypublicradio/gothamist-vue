@@ -21,9 +21,8 @@
         aria-hidden="true"
       >
       <v-spacer size="double" />
-      <loading-icon v-if="!moreResultsLoaded && moreResults.length === 0" />
       <section
-        v-if="moreResults"
+        v-if="moreResults && moreResults.length > 0 && moreResultsNuggets"
       >
         <div
           v-for="(nugget, nuggetIndex) in moreResultsNuggets"
@@ -60,9 +59,10 @@
             </article-metadata>
           </v-card>
         </div>
+        <loading-icon v-if="!moreResultsLoaded" />
         <v-spacer size="double" />
         <div
-          v-if="moreResults.length < totalCount && moreResults.length > 0"
+          v-if="moreResults && moreResultsLoaded && moreResults.length < totalCount && moreResults.length > 0"
           class="l-container u-align-center"
         >
           <v-button
@@ -71,12 +71,12 @@
             @click="getMoreResults"
           >
             <span v-if="moreResultsLoaded">More Results</span>
-            <loading-icon v-if="!moreResultsLoaded" />
+            <span v-if="!moreResultsLoaded">Loading...</span>
           </v-button>
         </div>
       </section>
       <p
-        v-if="moreResults.length === 0 && moreResultsLoaded"
+        v-if="moreResults && moreResults.length === 0 && moreResultsLoaded"
         class="c-listing__sections-title u-align--center u-space--double--bottom"
       >
         No Results
@@ -129,7 +129,7 @@ export default {
   },
   data () {
     return {
-      authorPage: [],
+      authorPage: null,
       moreResults: [],
       moreResultsDisqusThreadIds: [],
       moreResultsDisqusData: null,
