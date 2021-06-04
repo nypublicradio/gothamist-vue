@@ -1,5 +1,8 @@
 <template>
-  <div class="streamfield">
+  <div
+    v-if="streamfield && streamfield.length > 0"
+    class="streamfield"
+  >
     <div
       v-for="block in streamfield"
       :key="block.id"
@@ -20,10 +23,36 @@
         v-html="block.value.code"
       />
 
+      <!-- content collection -->
+      <div
+        v-else-if="block.type === 'content_collection'"
+      >
+        <div class="featured-stories l-grid l-grid--2up l-grid--large-gutters">
+          <v-card
+            v-for="(story, index) in block.value.pages"
+            :key="index"
+            class="gothamist u-space--double--bottom mod-vertical mod-large"
+            :show-gallery-icon="hasGallery(story.leadAsset)"
+            :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
+            :image-height="150"
+            :image-width="150"
+            :title="story.title"
+            :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
+            :subtitle="story.description"
+            :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
+          >
+            <article-metadata
+              :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+              :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
+            />
+          </v-card>
+        </div>
+      </div>
+
       <!-- embed -->
       <div
         v-else-if="block.type === 'embed'"
-        v-html="block.value.code"
+        v-html="block.value.embed"
       />
 
       <!-- heading -->
@@ -63,27 +92,74 @@
 </template>
 
 <script>
+const {
+  formatTags,
+  fuzzyDateTime,
+  getArticleImage,
+  hasGallery
+} = require('~/mixins/helpers')
+
 export default {
   name: 'Streamfield',
   components: {
+    ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
     ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
-    PullQuote: () => import('nypr-design-system-vue/src/components/PullQuote')
+    PullQuote: () => import('nypr-design-system-vue/src/components/PullQuote'),
+    VCard: () => import('nypr-design-system-vue/src/components/VCard')
   },
   props: {
     streamfield: {
       type: Array,
       default: () => []
     }
+  },
+  mounted () {
+    // you can't have script tags in v-html
+    // so we need to load the twitter embeds script manually
+    if (window.twttr) {
+      // the script is already loaded, so just reload the embeds
+      window.twttr.widgets.load()
+    } else if (!document.getElementById('twttr-widgets')) {
+      const embed = document.createElement('script')
+      embed.id = 'twttr-widgets'
+      embed.src = 'https://platform.twitter.com/widgets.js'
+      document.body.appendChild(embed)
+    }
+  },
+  methods: {
+    formatTags,
+    fuzzyDateTime,
+    getArticleImage,
+    hasGallery
   }
 }
 </script>
 
 <style lang="scss">
 .streamfield-block {
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-4);
 
   &:last-of-type {
     margin-bottom: 0;
+  }
+}
+
+.streamfield-block .twitter-tweet {
+  margin: auto;
+}
+
+.streamfield-block .featured-stories .card.mod-vertical .card-image-wrapper,
+.streamfield-block .featured-stories .card.mod-vertical .card-image {
+  @include media("<medium") {
+    min-width: 100px;
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.streamfield-block .featured-stories .card.mod-vertical .card-image-wrapper {
+  @include media(">medium") {
+    height: 285px;
   }
 }
 </style>

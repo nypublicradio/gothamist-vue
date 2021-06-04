@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="slug">
     <tag-page
       v-if="page && dataLoaded"
       :designed-header="page.designedHeader"
@@ -11,7 +11,7 @@
     <tag-page
       v-else
       :slug="slug"
-      :title="formatTagTitle(slug)"
+      :title="title"
     />
   </div>
 </template>
@@ -34,6 +34,11 @@ export default {
       slug: this.$route.params.slug
     }
   },
+  computed: {
+    title () {
+      return formatTagTitle(this.slug)
+    }
+  },
   async mounted () {
     await this.$axios
       .get(`/pages/find/?html_path=tags/${this.slug}`)
@@ -50,12 +55,12 @@ export default {
   },
   head () {
     return {
-      title: this.slug + ' - Gothamist',
+      title: this.title + ' - Gothamist',
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.slug + ' - Gothamist'
+          content: this.title + ' - Gothamist'
         },
         {
           hid: 'og_url',
@@ -65,12 +70,12 @@ export default {
         {
           hid: 'og_title',
           name: 'og:title',
-          content: this.slug + ' - Gothamist'
+          content: this.title + ' - Gothamist'
         },
         {
           hid: 'og_description',
           name: 'og:description',
-          content: this.slug + ' - Gothamist'
+          content: this.title + ' - Gothamist'
         }
       ]
     }
