@@ -11,13 +11,15 @@
     <tag-page
       v-else
       :slug="slug"
-      :title="slug"
+      :title="formatTagTitle(slug)"
     />
   </div>
 </template>
 
 <script>
 import gtm from '~/mixins/gtm'
+
+const { formatTagTitle } = require('~/mixins/helpers')
 
 export default {
   name: 'Tag', // this is the template name which is used for GTM
@@ -42,6 +44,9 @@ export default {
       .catch(() => {
         this.page = null
       })
+  },
+  methods: {
+    formatTagTitle
   },
   head () {
     return {

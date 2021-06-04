@@ -74,6 +74,11 @@ export const capitalize = function (string) {
 }
 
 // formats an ISO date to display the time e.g. 6:00pm
+export const formatTagTitle = function (string) {
+  return string.replace(/-/g, ' ')
+}
+
+// formats an ISO date to display the time e.g. 6:00pm
 export const formatTime = function (time) {
   if (time !== undefined && time !== null) {
     return format(new Date(time), 'h:mm a')
@@ -110,6 +115,7 @@ export default {
     amountScrolled,
     capitalize,
     formatTags,
+    formatTagTitle,
     formatTime,
     fuzzyDateTime,
     getArticleImage,
