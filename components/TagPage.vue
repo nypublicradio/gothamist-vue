@@ -24,10 +24,7 @@
       </header>
       <v-spacer size="double" />
       <section v-if="topPageZone">
-        <v-streamfield
-          class="l-container l-container--10col article-body"
-          :streamfield="topPageZone"
-        />
+        <v-streamfield :streamfield="topPageZone" />
         <v-spacer size="double" />
       </section>
     </div>
