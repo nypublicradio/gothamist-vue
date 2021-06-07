@@ -19,7 +19,7 @@
 <script>
 import gtm from '~/mixins/gtm'
 
-const { formatTagTitle } = require('~/mixins/helpers')
+const { formatTitle } = require('~/mixins/helpers')
 
 export default {
   name: 'Tag', // this is the template name which is used for GTM
@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     title () {
-      return formatTagTitle(this.slug)
+      return formatTitle(this.slug)
     }
   },
   async mounted () {
@@ -51,7 +51,7 @@ export default {
       })
   },
   methods: {
-    formatTagTitle
+    formatTitle
   },
   head () {
     return {
