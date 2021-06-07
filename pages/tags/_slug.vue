@@ -5,7 +5,7 @@
       :designed-header="page.designedHeader"
       :mid-page-zone="page.midpageZone"
       :slug="slug"
-      :title="page.title"
+      :title="title"
       :top-page-zone="page.topPageZone"
     />
     <tag-page
@@ -31,12 +31,8 @@ export default {
     return {
       dataLoaded: false,
       page: null,
-      slug: this.$route.params.slug
-    }
-  },
-  computed: {
-    title () {
-      return formatTitle(this.slug)
+      slug: this.$route.params.slug,
+      title: ''
     }
   },
   async mounted () {
@@ -45,9 +41,12 @@ export default {
       .then((response) => {
         this.page = response.data
         this.dataLoaded = true
+        this.title = this.page.title
       })
-      .catch(() => {
+      .catch((e) => {
         this.page = null
+        this.dataLoaded = true
+        this.title = formatTitle(this.$route.params.slug)
       })
   },
   methods: {

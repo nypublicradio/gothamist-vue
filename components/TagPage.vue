@@ -17,7 +17,7 @@
     </div>
     <!-- header & top page zone -->
     <div class="l-container l-container--14col l-wrap">
-      <header>
+      <header v-if="title">
         <h1 class="tags-page-header">
           {{ title }}
         </h1>
