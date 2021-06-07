@@ -44,10 +44,9 @@ export default {
         this.title = this.page.title
       })
       .catch((e) => {
-        return this.$nuxt.error({
-          statusCode: 404,
-          message: e.message
-        })
+        this.page = null
+        this.dataLoaded = true
+        this.title = formatTitle(this.$route.params.slug)
       })
   },
   methods: {
