@@ -74,16 +74,16 @@ export const capitalize = function (string) {
 }
 
 // formats an ISO date to display the time e.g. 6:00pm
-export const formatTagTitle = function (string) {
-  return string.replace(/-/g, ' ')
-}
-
-// formats an ISO date to display the time e.g. 6:00pm
 export const formatTime = function (time) {
   if (time !== undefined && time !== null) {
     return format(new Date(time), 'h:mm a')
   }
   return null
+}
+
+// formats a slug and returns a title by removing dashes and capitalizing the given string
+export const formatTitle = function (string) {
+  return capitalize(string.replace(/-/g, ' '))
 }
 
 export const fuzzyDateTime = function (utcTimestamp) {
@@ -115,8 +115,8 @@ export default {
     amountScrolled,
     capitalize,
     formatTags,
-    formatTagTitle,
     formatTime,
+    formatTitle,
     fuzzyDateTime,
     getArticleImage,
     hasGallery

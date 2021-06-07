@@ -1,13 +1,15 @@
 <template>
   <section-page
     v-if="page"
-    :name="slug"
+    :name="title"
     :descendant-of="page.id"
   />
 </template>
 
 <script>
 import gtm from '~/mixins/gtm'
+
+const { formatTitle } = require('~/mixins/helpers')
 
 export default {
   name: 'Section', // this is the template name which is used for GTM
@@ -29,23 +31,28 @@ export default {
         })
       })
     return {
-      page: page?.data
+      page: page?.data,
+      title: page?.data.title
     }
   },
   data () {
     return {
       page: null,
-      slug: this.$route.params.slug
+      slug: this.$route.params.slug,
+      title: null
     }
+  },
+  methods: {
+    formatTitle
   },
   head () {
     return {
-      title: this.slug + ' - Gothamist',
+      title: this.title + ' - Gothamist',
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.slug + ' - Gothamist'
+          content: this.title + ' - Gothamist'
         },
         {
           hid: 'og_url',
@@ -55,12 +62,12 @@ export default {
         {
           hid: 'og_title',
           name: 'og:title',
-          content: this.slug + ' - Gothamist'
+          content: this.title + ' - Gothamist'
         },
         {
           hid: 'og_description',
           name: 'og:description',
-          content: this.slug + ' - Gothamist'
+          content: this.title + ' - Gothamist'
         }
       ]
     }
