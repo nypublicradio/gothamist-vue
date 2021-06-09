@@ -99,7 +99,7 @@ const {
 } = require('~/mixins/helpers')
 
 export default {
-  name: 'Search',
+  name: 'Author',
   components: {
     ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
     LoadingIcon: () => import('nypr-design-system-vue/src/components/animations/LoadingIcon'),
