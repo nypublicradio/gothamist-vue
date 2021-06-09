@@ -178,7 +178,7 @@ export default {
           })
         })
       this.moreResultsDisqusData = await this.getCommentCount(this.moreResultsDisqusThreadIds)
-      this.gaEvent('Click Tracking', 'Load More Results', 'StaffArticlesPage', this.moreResultsOffset + ' articles loaded')
+      this.gaEvent('Click Tracking', 'Load More Results', 'AuthorPage', this.moreResultsOffset + ' articles loaded')
     },
     hasGallery,
     search () {
