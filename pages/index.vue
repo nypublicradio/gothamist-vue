@@ -480,7 +480,7 @@ export default {
   grid-template-columns: 1fr;
   @media all and (min-width: 1100px) {
     grid-gap: 50px;
-    grid-template-columns: 1fr 360px;
+    grid-template-columns: 1fr 400px;
   }
 }
 
