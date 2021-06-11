@@ -171,9 +171,9 @@ export default {
   methods: {
     handleScroll (e) {
       if (window.innerWidth < 850) {
-        this.isScrolled = e.target.documentElement.scrollTop > 60
+        this.isScrolled = e.target.documentElement.scrollTop > 35
       } else {
-        this.isScrolled = e.target.documentElement.scrollTop > 100
+        this.isScrolled = e.target.documentElement.scrollTop > 45
       }
     }
   }
