@@ -8,9 +8,7 @@
         class="article-breadcrumbs"
         :breadcrumbs="breadcrumbs"
       />
-      <h1 class="article-title">
-        {{ article.title }}
-      </h1>
+      <h1 class="article-title" v-html="article.title" />
       <article-metadata
         :publish-date="article.formattedPublishDate"
         :updated-date="article.formattedUpdatedDate"
