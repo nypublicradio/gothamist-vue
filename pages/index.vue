@@ -54,7 +54,7 @@
               >
                 <v-counter
                   icon="comment"
-                  :value="getCommentCountById(featuredStories[0].legacyId, featuredStoriesDisqusData)"
+                  :value="getCommentCountById(featuredStories[0].legacyId, featuredStoriesDisqusData) || 0"
                   :href="`/${featuredStories[0].ancestry[0].slug}/${featuredStories[0].meta.slug}?to=comments`"
                 />
               </template>
@@ -86,7 +86,7 @@
                   >
                     <v-counter
                       icon="comment"
-                      :value="getCommentCountById(story.legacyId, featuredStoriesDisqusData)"
+                      :value="getCommentCountById(story.legacyId, featuredStoriesDisqusData) || 0"
                       :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                     />
                   </template>
@@ -170,7 +170,7 @@
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(story.legacyId, riverDisqusData)"
+                    :value="getCommentCountById(story.legacyId, riverDisqusData) || 0"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                   />
                 </template>
@@ -213,7 +213,7 @@
             >
               <v-counter
                 icon="comment"
-                :value="getCommentCountById(story.legacyId, riverDisqusData)"
+                :value="getCommentCountById(story.legacyId, riverDisqusData) || 0"
                 :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
               />
             </template>
@@ -253,7 +253,7 @@
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(story.legacyId, riverDisqusData)"
+                    :value="getCommentCountById(story.legacyId, riverDisqusData) || 0"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                   />
                 </template>
@@ -295,7 +295,7 @@
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(story.legacyId, riverDisqusData)"
+                    :value="getCommentCountById(story.legacyId, riverDisqusData) || 0"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                   />
                 </template>
@@ -342,7 +342,7 @@
                   >
                     <v-counter
                       icon="comment"
-                      :value="getCommentCountById(story.legacyId, moreResultsDisqusData)"
+                      :value="getCommentCountById(story.legacyId, moreResultsDisqusData) || 0"
                       :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                     />
                   </template>
