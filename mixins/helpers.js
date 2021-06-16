@@ -50,6 +50,20 @@ export const getArticleImage = function (asset, slug, listingImage) {
   }
 }
 
+// get the image object from an article
+export const getImageFromStory = function (story) {
+  if (!story) {
+    return null
+  }
+  const image = story.listingImage ||
+    story.leadAsset[0]?.value.image ||
+    story.leadAsset[0]?.value.defaultImage
+  if (image) {
+    return image
+  }
+  return null
+}
+
 // checks if the asset has a gallery or not and return true/false
 // asset = the story's 'lead_asset' from the CMS API
 export const hasGallery = function (asset) {
@@ -142,6 +156,7 @@ export default {
     formatTitle,
     fuzzyDateTime,
     getArticleImage,
+    getImageFromStory,
     hasGallery,
     isLessThan24Hours,
     isLessThan48Hours

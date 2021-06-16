@@ -141,7 +141,8 @@ export default {
 
   plugins: [
     '~/plugins/axios',
-    '~/plugins/observe-visibility'
+    '~/plugins/observe-visibility',
+    '~/plugins/vue-mq'
   ],
 
   serverMiddleware: [
@@ -151,6 +152,12 @@ export default {
 
   publicRuntimeConfig: {
     imageBase: process.env.IMAGE_BASE_URL,
+    defaultImages: {
+      default: '/images/defaults/no-category/no-category-tile.png',
+      'arts-entertainment': '/images/defaults/arts/arts-tile.png',
+      food: '/images/defaults/food/food-tile.png',
+      news: '/images/defaults/news/news-tile.png'
+    },
     gtm: {
       id: process.env.GTM_ID
     },
