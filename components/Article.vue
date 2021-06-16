@@ -73,9 +73,11 @@
           <image-with-caption
             variation="gothamist"
             :alt-text="leadAsset.value.image.alt"
-            :url-template="`https://cms.demo.nypr.digital/images/${leadAsset.value.image.id}/fill-%width%x%height%/`"
-            :aspect-ratio="4/3"
-            :width-in-viewport="96"
+            :image="`https://cms.demo.nypr.digital/images/${leadAsset.value.image.id}/fill-%width%x%height%/`"
+            :width="661"
+            :height="496"
+            :max-width="leadAsset.value.image.width || Infinity"
+            :max-height="leadAsset.value.image.height || Infinity"
             :credit="leadAsset.value.image.credit"
             :caption="leadAsset.value.caption || leadAsset.value.image.caption"
             :credit-url="leadAsset.value.image.creditLink"
@@ -88,6 +90,7 @@
           <gallery-preview
             :count="galleryImages.length"
             :images="galleryImages"
+            variation="gothamist"
           />
         </div>
       </div>
@@ -218,12 +221,15 @@ export default {
             const image = slide.value.slideImage.image
             return {
               url: image.file,
+              template: this.$config.imageBase + image.id + '/fill-%width%x%height%/',
               thumbnail: image.file,
               alt: image.alt,
               credit: image.credit,
               creditUrl: image.creditLink,
               caption: slide.value.slideImage.caption,
               title: slide.slideTitle,
+              width: image.width,
+              height: image.height,
               description: ''
             }
           })

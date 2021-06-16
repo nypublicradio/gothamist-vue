@@ -8,12 +8,11 @@
         v-for="(story, index) in recentStories"
         :key="index"
         class="gothamist mod-small"
-        :image="
-          story.leadAsset[0] && story.leadAsset[0].value.image && story.leadAsset[0].value.image.file ||
-            story.leadAsset[0] && story.leadAsset[0].value.defaultImage && story.leadAsset[0].value.defaultImage.file ||
-            defaultImage"
-        :image-height="150"
-        :image-width="150"
+        :image="imageUrl(story)"
+        :image-width="$mq | mq({small: 100, medium: 150})"
+        :image-height="100"
+        :image-max-width="getImageFromStory(story) && getImageFromStory(story).width || Infinity"
+        :image-max-height="getImageFromStory(story) && getImageFromStory(story).height || Infinity"
         :title="story.title"
         :title-link="story.url"
       >
@@ -35,12 +34,11 @@
         v-for="(story, index) in featuredStories"
         :key="index"
         class="gothamist mod-large mod-vertical"
-        :image="
-          story.leadAsset[0] && story.leadAsset[0].value.image && story.leadAsset[0].value.image.file ||
-            story.leadAsset[0] && story.leadAsset[0].value.defaultImage && story.leadAsset[0].value.defaultImage.file ||
-            defaultImage"
-        :image-height="150"
-        :image-width="150"
+        :image="imageUrl(story)"
+        :image-width="$mq | mq({small: 600, medium: 378})"
+        :image-height="$mq | mq({small: 430, medium: 252})"
+        :image-max-width="getImageFromStory(story).width || Infinity"
+        :image-max-height="getImageFromStory(story).height || Infinity"
         :title="story.title"
         :title-link="story.url"
         :subtitle="story.listingSummary || story.description"
@@ -57,9 +55,8 @@
     </div>
   </div>
 </template>
-
 <script>
-import { mapState } from 'vuex'
+import { getImageFromStory } from '~/mixins/helpers'
 
 function dedupeStories (needle, haystack) {
   return haystack.filter(article => article.id !== needle.id)
@@ -100,10 +97,17 @@ export default {
       featuredStories: null
     }
   },
-  computed: {
-    ...mapState('global', {
-      defaultImage: state => state.defaultImage
-    })
+  methods: {
+    getImageFromStory,
+    imageUrl (story) {
+      const image = getImageFromStory(story)
+      if (image) {
+        return this.$config.imageBase + image.id + '/fill-%width%x%height%/'
+      } else {
+        return this.$config.defaultImages[story.ancestry[0].slug] ||
+          this.$config.defaultImages.default || ''
+      }
+    }
   }
 }
 </script>
