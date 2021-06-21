@@ -104,7 +104,9 @@ export default {
       return (this.page.relatedArticles[0].path).replace('/home/', '/')
     },
     ogImage () {
-      if (this.page && this.page.slides.length > 0) {
+      if (this.page && this.page.socialImage) {
+        return this.page.socialImage
+      } else if (this.page && this.page.slides.length > 0) {
         return this.page.slides[0].value.slideImage.image.file
       } else {
         return 'https://gothamist.com/static-images/home_og_1200x650.png'
