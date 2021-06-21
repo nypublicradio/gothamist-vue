@@ -92,14 +92,20 @@
           <gothamist-logo title="Gothamist" />
         </nuxt-link>
       </template>
-      <template v-if="!gallery" v-slot:navigation>
+      <template
+        v-if="!gallery"
+        v-slot:navigation
+      >
         <secondary-navigation
           orientation="horizontal"
           :nav-items="headerNav"
           @componentEvent="gaEvent('Click Tracking', ...arguments, 'Header')"
         />
       </template>
-      <template v-if="!gallery" v-slot:search>
+      <template
+        v-if="!gallery"
+        v-slot:search
+      >
         <v-search
           class="header-search-bar"
           action="/search"
@@ -113,7 +119,10 @@
           @searchBarSubmit="gaEvent('Click Tracking','user_search', 'Side Menu')"
         />
       </template>
-      <template v-if="gallery" v-slot:social>
+      <template
+        v-if="gallery"
+        v-slot:social
+      >
         <share-tools label="Share">
           <share-tools-item
             action="share"
@@ -297,5 +306,12 @@ export default {
 
 .home-page .c-main-header__logo .gothamist-logo-icon--stacked .gothamist-letters path {
   fill: RGB(var(--color-black));
+}
+
+.c-main-header .c-share-tools__label {
+  display: none;
+  @include media(">large") {
+    display: block;
+  }
 }
 </style>
