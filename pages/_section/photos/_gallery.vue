@@ -1,19 +1,24 @@
 <template>
-  <div class="gallery">
+  <div
+    v-if="page"
+    class="gallery"
+  >
+    <div class="gallery-close">
+      <nuxt-link :to="articleLink">
+        <close-icon />
+      </nuxt-link>
+    </div>
     <v-spacer size="triple" />
-    <div
-      v-if="page"
-      class="l-wrap l-container--content"
-    >
-      <a
-        :href="articleLink"
+    <div class="l-wrap l-container l-container--xl">
+      <nuxt-link
+        :to="articleLink"
         class="gallery-back-to-link"
       >
         <simple-arrow-left />
         <span>
           {{ page.relatedArticles[0].title }}
         </span>
-      </a>
+      </nuxt-link>
       <v-spacer size="double" />
       <div
         v-for="(slide, index) in page.slides"
@@ -36,17 +41,17 @@
         <v-spacer size="triple" />
       </div>
       <div>ad goes here</div>
+    </div>
+    <v-spacer size="triple" />
+    <div class="gallery-footer">
+      <gothamist-arrow />
+      <div>End</div>
       <v-spacer size="triple" />
-      <div class="gallery-footer">
-        <gothamist-arrow />
-        <div>End</div>
-        <v-spacer size="triple" />
-        <nuxt-link :to="articleLink">
-          <v-button class="back-to-article">
-            Back To Article
-          </v-button>
-        </nuxt-link>
-      </div>
+      <nuxt-link :to="articleLink">
+        <v-button class="back-to-article">
+          Back To Article
+        </v-button>
+      </nuxt-link>
     </div>
     <v-spacer size="quad" />
   </div>
@@ -61,6 +66,7 @@ export default {
   layout: 'gallery',
   name: 'Photos', // this is the template name which is used for GTM
   components: {
+    CloseIcon: () => import('nypr-design-system-vue/src/components/icons/CloseIcon'),
     ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
     GothamistArrow: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistArrow'),
     SimpleArrowLeft: () => import('nypr-design-system-vue/src/components/icons/SimpleArrowLeft'),
@@ -95,7 +101,14 @@ export default {
   },
   computed: {
     articleLink () {
-      return (this.page.relatedArticles[0].path).replace('/home', '')
+      return (this.page.relatedArticles[0].path).replace('/home/', '/')
+    },
+    ogImage () {
+      if (this.page && this.page.slides.length > 0) {
+        return this.page.slides[0].value.slideImage.image.file
+      } else {
+        return 'https://gothamist.com/static-images/home_og_1200x650.png'
+      }
     }
   },
   methods: {
@@ -124,6 +137,16 @@ export default {
           hid: 'og_description',
           name: 'og:description',
           content: this.title + ' - Gothamist'
+        },
+        {
+          hid: 'og_image',
+          name: 'og:image',
+          content: this.ogImage
+        },
+        {
+          hid: 'twitter_image',
+          name: 'twitter:image',
+          content: this.ogImage
         }
       ]
     }
@@ -132,6 +155,26 @@ export default {
 </script>
 
 <style lang="scss">
+.gallery .gallery-close {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: 9999;
+  width: 16px;
+
+  path {
+    fill: RGB(var(--color-white));
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    path {
+      fill: RGB(var(--color-reddish-orange));
+    }
+  }
+}
+
 .gallery a {
   text-decoration: none;
 }

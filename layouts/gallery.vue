@@ -1,6 +1,6 @@
 <template>
   <div class="gallery">
-    <gothamist-header />
+    <gothamist-header :gallery="true" />
     <main :class="$route.name">
       <Nuxt />
     </main>
