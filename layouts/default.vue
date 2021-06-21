@@ -56,14 +56,15 @@ export default {
   data () {
     return {
       breakingNewsBanner: null,
-      isHomepage: false,
       productMarketingBanner: null
     }
   },
-  async mounted () {
-    if (this.$nuxt.$route.name === 'index') {
-      this.isHomepage = true
+  computed: {
+    isHomepage () {
+      return this.$nuxt.$route.name === 'index'
     }
+  },
+  async mounted () {
     // set the navigation
     await this.$store.dispatch('global/setNavigation')
     // check for breaking news banner

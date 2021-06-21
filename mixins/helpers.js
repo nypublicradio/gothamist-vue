@@ -1,4 +1,4 @@
-import { format, differenceInMinutes, differenceInHours, getYear, isValid } from 'date-fns'
+import { addHours, compareAsc, format, differenceInMinutes, differenceInHours, getYear, isValid } from 'date-fns'
 
 // formats tags into the correct format for radial (for article listing pages)
 // name = the article's ancestry's title 'ancestry[0].title' from the CMS API
@@ -49,6 +49,7 @@ export const getArticleImage = function (asset, slug, listingImage) {
       return this.defaultImage
   }
 }
+
 // checks if the asset has a gallery or not and return true/false
 // asset = the story's 'lead_asset' from the CMS API
 export const hasGallery = function (asset) {
@@ -110,6 +111,28 @@ export const fuzzyDateTime = function (utcTimestamp) {
   }
 }
 
+// returns true if UTC date is less than 24 hours old
+export const isLessThan24Hours = function (utcStartTime) {
+  const now = new Date()
+  const then = addHours(now, -24)
+  const startTime = new Date(utcStartTime)
+  if (isValid(startTime)) {
+    return compareAsc(then, startTime) === -1 && compareAsc(startTime, now) === -1
+  }
+  return false
+}
+
+// returns true if UTC date is less than 48 hours old
+export const isLessThan48Hours = function (utcStartTime) {
+  const now = new Date()
+  const then = addHours(now, -48)
+  const startTime = new Date(utcStartTime)
+  if (isValid(startTime)) {
+    return compareAsc(then, startTime) === -1 && compareAsc(startTime, now) === -1
+  }
+  return false
+}
+
 export default {
   methods: {
     amountScrolled,
@@ -119,6 +142,8 @@ export default {
     formatTitle,
     fuzzyDateTime,
     getArticleImage,
-    hasGallery
+    hasGallery,
+    isLessThan24Hours,
+    isLessThan48Hours
   }
 }
