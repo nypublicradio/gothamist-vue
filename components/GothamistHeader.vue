@@ -158,9 +158,7 @@ export default {
     })
   },
   mounted () {
-    if (this.$nuxt.$route.name === 'test') {
-      this.isHomepage = true
-    } else if (this.$route.name === 'section-article') {
+    if (this.$route.name === 'section-article') {
       this.scrollMeterTarget = '.article-body'
     }
     window.addEventListener('scroll', this.handleScroll)
@@ -182,8 +180,9 @@ export default {
 
 <style lang="scss">
 .gothamist-header {
-  position:relative;
+  position: relative;
 }
+
 .progress-bar {
   position: absolute;
   width: 100%;

@@ -98,6 +98,45 @@
       </section>
       <v-spacer />
     </div>
+    <!-- sponsored story -->
+    <div
+      v-if="sponsoredStory && sponsoredStory.length > 0"
+      class="l-container l-container--16col"
+    >
+      <div class="c-sponsored-tout u-breakout o-border-accent">
+        <h2 class="c-sponsored-tout__heading">
+          Sponsored
+        </h2>
+        <v-card
+          :show-gallery-icon="hasGallery(sponsoredStory[0].leadAsset)"
+          :title="sponsoredStory[0].title"
+          :title-link="`/${sponsoredStory[0].ancestry[0].slug}/${sponsoredStory[0].meta.slug}`"
+          :subtitle="sponsoredStory[0].description"
+          :image="getArticleImage(sponsoredStory[0].leadAsset, sponsoredStory[0].ancestry[0].slug)"
+          :image-height="533"
+          :image-width="800"
+          class="gothamist mod-large"
+          :tags="formatTags(sponsoredStory[0].ancestry[0].title, sponsoredStory[0].ancestry[0].slug, sponsoredStory[0].sponsoredContent, sponsoredStory[0].tags)"
+        >
+          <article-metadata
+            :publish-date="!sponsoredStory[0].updatedDate ? fuzzyDateTime(sponsoredStory[0].meta.firstPublishedAt) : null"
+            :updated-date="sponsoredStory[0].updatedDate ? fuzzyDateTime(sponsoredStory[0].updatedDate) : null"
+          >
+            <template
+              v-if="sponsoredStory[0].legacyId"
+              v-slot:comments
+            >
+              <v-counter
+                icon="comment"
+                :value="getCommentCountById(sponsoredStory[0].legacyId, sponsoredStoryDisqusData)"
+                :href="`/${sponsoredStory[0].ancestry[0].slug}/${sponsoredStory[0].meta.slug}?to=comments`"
+              />
+            </template>
+          </article-metadata>
+        </v-card>
+      </div>
+      <v-spacer size="triple" />
+    </div>
     <!-- news river -->
     <loading-icon v-if="!riverLoaded" />
     <section
@@ -351,7 +390,9 @@ const {
   formatTags,
   fuzzyDateTime,
   getArticleImage,
-  hasGallery
+  hasGallery,
+  isLessThan24Hours,
+  isLessThan48Hours
 } = require('~/mixins/helpers')
 export default {
   name: 'HomePage', // this is the template name which is used for GTM
@@ -376,6 +417,31 @@ export default {
           this.featuredStoriesDisqusThreadIds.push(item.legacyId)
         })
         this.featuredStoriesLoaded = true
+      })
+    // get sponsored story & updated featured stories data
+    await this.$axios
+      .get('/pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=1&show_as_feature=true&sponsored_content=true')
+      .then((response) => {
+        this.sponsoredStory = response.data.items
+        response.data.items.forEach((item) => {
+          this.sponsoredStoryDisqusThreadIds.push(item.legacyId)
+        })
+        // if the story is more than 24 hours old and less than 48 hours old
+        // do nothing - keep it in the sponsoredStory array
+        if (this.sponsoredStory.length > 0 && !isLessThan24Hours(this.sponsoredStory[0].publicationDate) && isLessThan48Hours(this.sponsoredStory[0].publicationDate)) {
+          // if the story is more than 24 hours old and less than 48 hours old
+          // replace the 4th featured story with this sponsored story
+          this.featuredStories[3] = this.sponsoredStory[0]
+          this.featuredStoriesDisqusThreadIds[3] = this.sponsoredStoryDisqusThreadIds[0]
+          this.sponsoredStory = []
+        }
+        if (this.sponsoredStory.length > 0 && !isLessThan48Hours(this.sponsoredStory[0].publicationDate)) {
+          // if the story is more than 48 hours old
+          // it should appear in the river and not anywhere else
+          // remove it from the sponsoredStory array
+          this.sponsoredStory = []
+        }
+        this.sponsoredStoryLoaded = true
       })
     // get the article river
     await this.$axios
@@ -402,7 +468,11 @@ export default {
       river: null,
       riverDisqusThreadIds: [],
       riverDisqusData: null,
-      riverLoaded: false
+      riverLoaded: false,
+      sponsoredStory: null,
+      sponsoredStoryDisqusThreadIds: [],
+      sponsoredStoryDisqusData: null,
+      sponsoredStoryLoaded: false
     }
   },
   computed: {
@@ -421,10 +491,14 @@ export default {
       return tempArray
     },
     filteredRiver () {
-      // de-dupe the river: take out the 4 featured stories
+      // de-dupe the river: take out the 4 featured stories and the sponsored story
       let tempArray = this.river
       tempArray = tempArray.filter((item) => {
-        return (item.id !== this.featuredStories[0].id && item.id !== this.featuredStories[1].id && item.id !== this.featuredStories[2].id && item.id !== this.featuredStories[3].id)
+        if (this.sponsoredStory.length > 0) {
+          return (item.id !== this.sponsoredStory[0].id && item.id !== this.featuredStories[0].id && item.id !== this.featuredStories[1].id && item.id !== this.featuredStories[2].id && item.id !== this.featuredStories[3].id)
+        } else {
+          return (item.id !== this.featuredStories[0].id && item.id !== this.featuredStories[1].id && item.id !== this.featuredStories[2].id && item.id !== this.featuredStories[3].id)
+        }
       })
       return tempArray
     },
@@ -442,6 +516,7 @@ export default {
   async mounted () {
     // get disqus comment counts
     this.featuredStoriesDisqusData = await this.getCommentCount(this.featuredStoriesDisqusThreadIds)
+    this.sponsoredStoryDisqusData = await this.getCommentCount(this.sponsoredStoryDisqusThreadIds)
     this.riverDisqusData = await this.getCommentCount(this.riverDisqusThreadIds)
   },
   methods: {
@@ -492,8 +567,8 @@ export default {
 }
 
 .home-page .card.gothamist.mod-large .card-image-wrapper {
-  width: 100%;
-  min-width: 100%;
+  //width: 100%;
+  //min-width: 100%;
   @include media("<large") {
     height: 300px;
   }
@@ -535,5 +610,17 @@ export default {
 
 .home-page .button .loading-icon path {
   stroke: RGB(var(--color-text));
+}
+
+.home-page .c-sponsored-tout {
+  margin-top: var(--space-4);
+  @include media(">large") {
+    margin-top: 0;
+  }
+}
+
+.home-page .c-sponsored-tout .card.gothamist {
+  background: none;
+  margin-bottom: 0;
 }
 </style>
