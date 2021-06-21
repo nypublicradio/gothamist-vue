@@ -158,7 +158,7 @@ export default {
 .gallery .o-simple-arrow-left-icon {
   width: 16px;
   display: inline-block;
-  margin-right: var(--space-2);
+  margin-right: var(--space-3);
 }
 
 .gallery-footer {
