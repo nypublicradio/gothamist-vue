@@ -9,20 +9,21 @@
       </nuxt-link>
     </div>
     <v-spacer size="triple" />
-    <div class="l-wrap l-container l-container--xl">
+    <div v-if="page.slides.length > 0" class="l-wrap l-container l-container--xl">
       <nuxt-link
         :to="articleLink"
         class="gallery-back-to-link"
       >
         <simple-arrow-left />
         <span>
-          {{ page.relatedArticles[0].title }}
+          {{ articleTitle }}
         </span>
       </nuxt-link>
       <v-spacer size="double" />
       <div
         v-for="(slide, index) in page.slides"
         :key="index"
+        :ref="'image' + (index + 1)"
       >
         <div class="c-slide__count">
           Slide {{ index + 1 }} of {{ page.slides.length }}
@@ -101,17 +102,41 @@ export default {
   },
   computed: {
     articleLink () {
-      return (this.page.relatedArticles[0].path).replace('/home/', '/')
+      if (this.page.relatedArticles && this.page.relatedArticles.length > 0) {
+        return (this.page.relatedArticles[0].path).replace('/home/', '/')
+      } else {
+        return ''
+      }
+    },
+    articleTitle () {
+      if (this.page.relatedArticles && this.page.relatedArticles.length > 0) {
+        return this.page.relatedArticles[0].title
+      } else {
+        return ''
+      }
     },
     ogImage () {
       if (this.page && this.page.socialImage) {
         return this.page.socialImage
-      } else if (this.page && this.page.slides.length > 0) {
+      } else if (this.page && this.page.slides && this.page.slides.length > 0) {
         return this.page.slides[0].value.slideImage.image.file
       } else {
         return 'https://gothamist.com/static-images/home_og_1200x650.png'
       }
     }
+  },
+  mounted () {
+    // if the image url parameter exists, scroll to that id
+    // const imageElement = this.$refs['image' + this.$route.query.image]
+    // console.log(this.$route.query.image)
+    // console.log(this.$refs)
+    // console.log(imageElement[0])
+    // const top = element.offsetTop
+    // const imageElement = document.getElementById('image' + this.$route.query.image)
+    // imageElement[0].scrollIntoView()
+    // this.$refs['image' + this.$route.query.image].scrollTop = 0
+    // const a = document.getelementbyid('image' + this.$route.query.image)
+    // a.scrollTop = a.scrollHeight
   },
   methods: {
     formatTitle
