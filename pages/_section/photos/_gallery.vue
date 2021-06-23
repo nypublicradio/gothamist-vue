@@ -9,7 +9,10 @@
       </nuxt-link>
     </div>
     <v-spacer size="triple" />
-    <div v-if="page.slides.length > 0" class="l-wrap l-container l-container--xl">
+    <div
+      v-if="page.slides.length > 0"
+      class="l-wrap l-container l-container--xl"
+    >
       <nuxt-link
         :to="articleLink"
         class="gallery-back-to-link"
@@ -24,6 +27,12 @@
         v-for="(slide, index) in page.slides"
         :key="index"
         :ref="'image' + (index + 1)"
+        v-observe-visibility="{
+          callback: (isVisible, entry) => visibilityChanged(isVisible, entry, index + 1),
+          intersection: {
+            threshold: 1.0
+          }
+        }"
       >
         <div class="c-slide__count">
           Slide {{ index + 1 }} of {{ page.slides.length }}
@@ -33,8 +42,6 @@
           variation="gothamist"
           :alt-text="slide.value.slideImage.image.alt"
           :url-template="`https://cms.demo.nypr.digital/images/${slide.value.slideImage.image.id}/fill-%width%x%height%/`"
-          :aspect-ratio="4/3"
-          :width-in-viewport="96"
           :credit="slide.value.slideImage.image.credit"
           :caption="slide.value.slideImage.image.caption"
           :credit-url="slide.value.slideImage.image.creditLink"
@@ -48,11 +55,12 @@
       <gothamist-arrow />
       <div>End</div>
       <v-spacer size="triple" />
-      <nuxt-link :to="articleLink">
-        <v-button class="back-to-article">
-          Back To Article
-        </v-button>
-      </nuxt-link>
+      <v-button
+        class="back-to-article"
+        @click.prevent="goToArticle"
+      >
+        Back To Article
+      </v-button>
     </div>
     <v-spacer size="quad" />
   </div>
@@ -126,20 +134,28 @@ export default {
     }
   },
   mounted () {
-    // if the image url parameter exists, scroll to that id
-    // const imageElement = this.$refs['image' + this.$route.query.image]
-    // console.log(this.$route.query.image)
-    // console.log(this.$refs)
-    // console.log(imageElement[0])
-    // const top = element.offsetTop
-    // const imageElement = document.getElementById('image' + this.$route.query.image)
-    // imageElement[0].scrollIntoView()
-    // this.$refs['image' + this.$route.query.image].scrollTop = 0
-    // const a = document.getelementbyid('image' + this.$route.query.image)
-    // a.scrollTop = a.scrollHeight
+    // support deep linking
+    if (this.$route.query.image && this.$refs['image' + this.$route.query.image] !== undefined) {
+      const imageElement = this.$refs['image' + this.$route.query.image]
+      const top = imageElement[0].offsetTop
+      window.scrollTo(0, top + 40)
+    }
   },
   methods: {
-    formatTitle
+    formatTitle,
+    goToArticle () {
+      this.$router.push({
+        path: this.articleLink
+      })
+    },
+    visibilityChanged (isVisible, entry, imageId) {
+      if (isVisible) {
+        this.$router.push({
+          path: this.$route.path,
+          query: { image: imageId }
+        })
+      }
+    }
   },
   head () {
     return {
@@ -182,6 +198,10 @@ export default {
 </script>
 
 <style lang="scss">
+html {
+  overflow-y: scroll;
+}
+
 .gallery .gallery-close {
   position: fixed;
   top: 16px;
@@ -191,6 +211,7 @@ export default {
 
   path {
     fill: RGB(var(--color-white));
+    transition: var(--animation-duration-standard);
   }
 
   &:hover {
