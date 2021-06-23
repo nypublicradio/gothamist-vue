@@ -117,7 +117,7 @@ export default {
     },
     ogImage () {
       if (this.page && this.page.socialImage) {
-        return this.page.socialImage
+        return this.page.socialImage.file
       } else if (this.page && this.page.slides && this.page.slides.length > 0) {
         return this.page.slides[0].value.slideImage.image.file
       } else {
