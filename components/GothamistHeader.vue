@@ -2,7 +2,7 @@
   <div class="gothamist-header">
     <the-header
       ref="header"
-      :donate-url="donateUrl"
+      :donate-url="donateButtonUrl"
       class="u-color-group-dark"
       :class="{'sticky' : isScrolled}"
       @componentEvent="gaEvent('Click Tracking','Donate', 'Header')"
@@ -92,14 +92,20 @@
           <gothamist-logo title="Gothamist" />
         </nuxt-link>
       </template>
-      <template v-slot:navigation>
+      <template
+        v-if="!gallery"
+        v-slot:navigation
+      >
         <secondary-navigation
           orientation="horizontal"
           :nav-items="headerNav"
           @componentEvent="gaEvent('Click Tracking', ...arguments, 'Header')"
         />
       </template>
-      <template v-slot:search>
+      <template
+        v-if="!gallery"
+        v-slot:search
+      >
         <v-search
           class="header-search-bar"
           action="/search"
@@ -112,6 +118,40 @@
           @searchBarOpen="gaEvent('Click Tracking', 'user_search_open', 'Side Menu')"
           @searchBarSubmit="gaEvent('Click Tracking','user_search', 'Side Menu')"
         />
+      </template>
+      <template
+        v-if="gallery"
+        v-slot:social
+      >
+        <share-tools label="Share">
+          <share-tools-item
+            action="share"
+            service="facebook"
+            :url="url"
+            :utm-parameters="{medium: 'social', source: 'facebook', campaign: 'shared_facebook'}"
+          />
+          <share-tools-item
+            action="share"
+            service="twitter"
+            :url="url"
+            :share-parameters="{text: title, via: 'gothamist'}"
+            :utm-parameters="{medium: 'social', source: 'twitter', campaign: 'shared_twitter'}"
+          />
+          <share-tools-item
+            action="share"
+            service="reddit"
+            :url="url"
+            :share-parameters="{title: title}"
+            :utm-parameters="{medium: 'social', source: 'reddit', campaign: 'shared_reddit'}"
+          />
+          <share-tools-item
+            action="share"
+            service="email"
+            :url="url"
+            :share-parameters="{body: title + ' - %URL%'}"
+            :utm-parameters="{medium: 'social', source: 'email', campaign: 'shared_email'}"
+          />
+        </share-tools>
       </template>
       <template v-slot:bottom>
         <scroll-meter
@@ -142,10 +182,18 @@ export default {
     ScrollMeter: () => import('./ScrollMeter')
   },
   mixins: [gtm],
+  props: {
+    gallery: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       isScrolled: false,
-      scrollMeterTarget: null
+      scrollMeterTarget: null,
+      title: null,
+      url: null
     }
   },
   computed: {
@@ -155,11 +203,23 @@ export default {
       footerNav: state => state.footerNav,
       headerNav: state => state.headerNav,
       legalNav: state => state.legalNav
-    })
+    }),
+    donateButtonUrl () {
+      if (this.gallery) {
+        return null
+      } else {
+        return this.donateUrl
+      }
+    }
   },
   mounted () {
+    this.title = document.title
+    this.url = 'https://gothamist.com' + this.$route.path
     if (this.$route.name === 'section-article') {
       this.scrollMeterTarget = '.article-body'
+    }
+    if (this.$route.name === 'section-photos-gallery') {
+      this.scrollMeterTarget = '.gallery'
     }
     window.addEventListener('scroll', this.handleScroll)
   },
@@ -246,5 +306,12 @@ export default {
 
 .home-page .c-main-header__logo .gothamist-logo-icon--stacked .gothamist-letters path {
   fill: RGB(var(--color-black));
+}
+
+.c-main-header .c-share-tools__label {
+  display: none;
+  @include media(">large") {
+    display: block;
+  }
 }
 </style>
