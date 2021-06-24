@@ -72,16 +72,6 @@ export default {
           content: 'Contact Us - Gothamist'
         },
         {
-          hid: 'twitter_title',
-          name: 'twitter:title',
-          content: 'Contact Us - Gothamist'
-        },
-        {
-          hid: 'twitter_description',
-          name: 'twitter:description',
-          content: 'Contact Us - Gothamist'
-        },
-        {
           hid: 'twitter_url',
           name: 'twitter:url',
           content: 'https://www.gothamist.com' + this.$route.fullPath

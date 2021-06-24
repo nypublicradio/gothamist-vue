@@ -241,7 +241,10 @@ export default {
 
 <style lang="scss">
 .gothamist-header {
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 5000;
+  width: 100%;
 }
 
 .progress-bar {
