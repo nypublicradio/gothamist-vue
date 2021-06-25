@@ -140,6 +140,11 @@ export default {
     '~/plugins/observe-visibility'
   ],
 
+  serverMiddleware: [
+    // Server-side redirects
+    '~/middleware/redirects'
+  ],
+
   publicRuntimeConfig: {
     gtm: {
       id: process.env.GTM_ID
