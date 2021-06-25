@@ -30,7 +30,7 @@
         v-observe-visibility="{
           callback: (isVisible, entry) => visibilityChanged(isVisible, entry, index + 1),
           intersection: {
-            threshold: 1.0
+            threshold: 0.5
           }
         }"
       >
@@ -73,7 +73,7 @@ const { formatTitle } = require('~/mixins/helpers')
 
 export default {
   layout: 'gallery',
-  name: 'Photos', // this is the template name which is used for GTM
+  name: 'ArticleGallery', // this is the template name which is used for GTM
   components: {
     CloseIcon: () => import('nypr-design-system-vue/src/components/icons/CloseIcon'),
     ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
@@ -154,6 +154,7 @@ export default {
           path: this.$route.path,
           query: { image: imageId }
         })
+        this.gaEvent('Gallery Slide View', 'Slide ' + imageId)
       }
     }
   },
