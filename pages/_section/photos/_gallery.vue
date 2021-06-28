@@ -41,7 +41,11 @@
         <image-with-caption
           variation="gothamist"
           :alt-text="slide.value.slideImage.image.alt"
-          :url-template="`https://cms.demo.nypr.digital/images/${slide.value.slideImage.image.id}/fill-%width%x%height%/`"
+          :image="slide.value.slideImage.image.file"
+          :width="slide.value.slideImage.image.width"
+          :height="slide.value.slideImage.image.height"
+          :max-width="slide.value.slideImage.image.width || Infinity"
+          :max-height="slide.value.slideImage.image.height || Infinity"
           :credit="slide.value.slideImage.image.credit"
           :caption="slide.value.slideImage.image.caption"
           :credit-url="slide.value.slideImage.image.creditLink"
@@ -104,6 +108,7 @@ export default {
   data () {
     return {
       page: null,
+      pageLoaded: false,
       slug: this.$route.params.slug,
       title: null
     }
@@ -140,6 +145,7 @@ export default {
       const top = imageElement[0].offsetTop
       window.scrollTo(0, top + 40)
     }
+    this.pageLoaded = true
   },
   methods: {
     formatTitle,
@@ -149,7 +155,7 @@ export default {
       })
     },
     visibilityChanged (isVisible, entry, imageId) {
-      if (isVisible) {
+      if (isVisible && this.pageLoaded) {
         this.$router.push({
           path: this.$route.path,
           query: { image: imageId }
@@ -209,6 +215,11 @@ html {
   right: 20px;
   z-index: 9999;
   width: 16px;
+  display: none;
+
+  @include media(">medium") {
+    display: block;
+  }
 
   path {
     fill: RGB(var(--color-white));
