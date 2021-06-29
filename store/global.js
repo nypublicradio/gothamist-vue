@@ -15,6 +15,7 @@ export const state = () => ({
   legalNav: [],
   mailchimpAPI: process.env.MAILCHIMP_API,
   navigationAPI: 'navigation/1/',
+  newsletterAPI: process.env.NEWSLETTER_API,
   previousPath: 'none',
   readMoreNav: [
     {
@@ -82,6 +83,9 @@ export const getters = {
   },
   navigationAPI (state) {
     return state.navigationAPI
+  },
+  newsletterAPI (state) {
+    return state.newsletterAPI
   },
   previousPath (state) {
     return state.previousPath
