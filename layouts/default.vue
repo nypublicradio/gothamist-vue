@@ -80,9 +80,9 @@ export default {
       htlbid.layout('universal') // Leave as 'universal' or add custom layout
       htlbid.setTargeting('is_testing', this.$config.environment === 'PROD' ? 'no' : 'yes') // Set to "no" for production
       htlbid.setTargeting('is_home', this.isHomepage ? 'yes' : 'no') // Set to "yes" on the homepage
-      htlbid.setTargeting('host', location.host)
-      htlbid.setTargeting('url', location.pathname)
-      htlbid.setTargeting('urlSegments', location.pathname && location.pathname.split('/').filter(segment => segment.length > 0))
+      htlbid.setTargeting('host', location?.host)
+      htlbid.setTargeting('url', this.$route.path)
+      htlbid.setTargeting('urlSegments', this.$route.path.split('/').filter(segment => segment.length > 0))
     })
     // set the navigation
     await this.$store.dispatch('global/setNavigation')
