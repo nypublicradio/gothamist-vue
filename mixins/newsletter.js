@@ -18,7 +18,7 @@ export default {
   computed: {
     ...mapState('global', {
       dailyNewsletter: state => state.dailyNewsletter,
-      mailchimpAPI: state => state.mailchimpAPI
+      newsletterAPI: state => state.newsletterAPI
     })
   },
   methods: {
@@ -26,7 +26,7 @@ export default {
       this.submitted = true
       this.$axios
         .post(
-          this.mailchimpAPI,
+          this.newsletterAPI,
           {
             list: this.dailyNewsletter,
             email: this.email,
