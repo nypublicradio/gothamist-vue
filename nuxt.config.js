@@ -78,7 +78,7 @@ export default {
         hid: 'twitter_site',
         name: 'twitter:site',
         content: '@gothamist'
-      },
+      }
     ],
     link: process.env.ENV === 'PROD'
       ? [
