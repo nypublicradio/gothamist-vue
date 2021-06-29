@@ -2,7 +2,7 @@
   <div :class="{'home-page' : isHomepage}">
     <div class="ad-wrapper-leaderboard u-color-group-dark">
       <div class="ad-wrapper-inner">
-        <div :class="isHomePage ? 'htlad-index_leaderboard' : 'htlad-interior_leaderboard'" />
+        <div :class="isHomepage ? 'htlad-index_leaderboard' : 'htlad-interior_leaderboard'" />
         <div class="ad-label">
           Advertisement
         </div>
@@ -69,7 +69,7 @@ export default {
   },
   computed: {
     isHomepage () {
-      return this.$nuxt.$route.name === 'index'
+      return this.$route.name === 'index'
     }
   },
   async mounted () {
