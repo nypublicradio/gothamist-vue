@@ -80,12 +80,20 @@ export default {
         content: '@gothamist'
       },
     ],
-    link: [
-      { rel: 'stylesheet', type: 'text/css', href: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.css' }
-    ],
-    script: [
-      { hid: 'htl', src: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.js' }
-    ]
+    link: process.env.ENV === 'PROD'
+      ? [
+        { rel: 'stylesheet', type: 'text/css', href: 'https://htlbid.com/v3/gothamist.com/htlbid.css' }
+      ]
+      : [
+        { rel: 'stylesheet', type: 'text/css', href: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.css' }
+      ],
+    script: process.env.ENV === 'PROD'
+      ? [
+        { hid: 'htl', src: 'https://htlbid.com/v3/gothamist.com/htlbid.js' }
+      ]
+      : [
+        { hid: 'htl', src: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.js' }
+      ]
   },
 
   link: [
