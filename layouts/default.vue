@@ -103,6 +103,10 @@ export default {
 </script>
 
 <style lang="scss">
+html {
+  scroll-padding-top: 72px;
+}
+
 .home-page main {
   margin-top: 80px;
   @include media(">medium") {

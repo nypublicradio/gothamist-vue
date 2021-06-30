@@ -146,7 +146,7 @@ export default {
     if (this.$route.query.image && this.$refs['image' + this.$route.query.image] !== undefined) {
       const imageElement = this.$refs['image' + this.$route.query.image]
       const top = imageElement[0].offsetTop
-      window.scrollTo(0, top + 40)
+      window.scrollTo(0, top + 72)
     }
     this.pageLoaded = true
   },
@@ -208,10 +208,6 @@ export default {
 </script>
 
 <style lang="scss">
-html {
-  overflow-y: scroll;
-}
-
 .gallery .gallery-close {
   position: fixed;
   top: 16px;
