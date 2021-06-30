@@ -32,7 +32,7 @@
             icon="gallery"
             text="Photos"
             :value="galleryImages.length"
-            :href="`/gallery/${leadAsset.section}/${leadAsset.slug}`"
+            :href="galleryLink"
           />
         </template>
       </article-metadata>
@@ -90,6 +90,7 @@
           <gallery-preview
             :count="galleryImages.length"
             :images="galleryImages"
+            :gallery-url="galleryLink"
             variation="gothamist"
           />
         </div>
@@ -236,6 +237,9 @@ export default {
       } else {
         return []
       }
+    },
+    galleryLink () {
+      return this.article.gallery.url.replace(/^https:\/\/[^/]*/, '')
     },
     imageMeta ({ $config: { imageBase } }) {
       return this.ogImage ? [
