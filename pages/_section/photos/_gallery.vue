@@ -34,18 +34,21 @@
           }
         }"
       >
-        <div class="c-slide__count">
+        <div
+          class="c-slide__count"
+          :style="'width: ' + slide.value.slideImage.image.width + 'px'"
+        >
           Slide {{ index + 1 }} of {{ page.slides.length }}
         </div>
         <v-spacer />
         <image-with-caption
+          :style="'width: ' + slide.value.slideImage.image.width + 'px'"
+          class="u-color-group-dark"
           variation="gothamist"
           :alt-text="slide.value.slideImage.image.alt"
           :image="slide.value.slideImage.image.file"
           :width="slide.value.slideImage.image.width"
           :height="slide.value.slideImage.image.height"
-          :max-width="slide.value.slideImage.image.width || Infinity"
-          :max-height="slide.value.slideImage.image.height || Infinity"
           :credit="slide.value.slideImage.image.credit"
           :caption="slide.value.slideImage.image.caption"
           :credit-url="slide.value.slideImage.image.creditLink"
@@ -279,5 +282,33 @@ html {
 .gallery .o-simple-arrow-left-icon path,
 .gallery-footer .o-gothamist-arrow-icon path {
   fill: RGB(var(--color-white));
+}
+
+.gallery .c-slide__count {
+  margin: auto;
+  max-width: 100%;
+}
+
+.gallery .image-with-caption {
+  margin: auto;
+  display: block;
+  max-width: 100%;
+}
+
+.gallery .o-gothamist-arrow-icon {
+  display: none;
+}
+
+.gallery .image-with-caption-credit-link {
+  cursor: pointer;
+  padding-bottom: 2px;
+  border-bottom: 2px dotted RGB(var(--color-link));
+  text-decoration: none;
+  color: RGB(var(--color-link));
+
+  &:hover {
+    color: RGB(var(--color-link-hover));
+    background-color: RGB(var(--color-reddish-orange));
+  }
 }
 </style>

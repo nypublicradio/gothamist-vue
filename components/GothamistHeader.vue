@@ -214,7 +214,11 @@ export default {
   },
   mounted () {
     this.title = document.title
-    this.url = 'https://gothamist.com' + this.$route.path
+    if (this.$route.query.image) {
+      this.url = 'https://gothamist.com' + this.$route.path + '?image=' + this.$route.query.image
+    } else {
+      this.url = 'https://gothamist.com' + this.$route.path
+    }
     if (this.$route.name === 'section-article') {
       this.scrollMeterTarget = '.article-body'
     }
