@@ -295,7 +295,7 @@ html {
   max-width: 100%;
 }
 
-.gallery .o-gothamist-arrow-icon {
+.gallery .image-with-caption .o-gothamist-arrow-icon {
   display: none;
 }
 
