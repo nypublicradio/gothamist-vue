@@ -123,7 +123,7 @@
         v-if="gallery"
         v-slot:social
       >
-        <share-tools label="Share">
+        <share-tools label="SHARE">
           <share-tools-item
             action="share"
             service="facebook"

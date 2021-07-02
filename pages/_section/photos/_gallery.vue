@@ -295,6 +295,17 @@ html {
   max-width: 100%;
 }
 
+.gallery .image-with-caption .gothamist-caption {
+  font-family: var(--font-family-barlow);
+  font-size: var(--font-size-5);
+}
+
+.gallery .image-with-caption .image-with-caption-credit-link,
+.gallery .image-with-caption .image-with-caption-credit {
+  font-family: var(--font-family-b612);
+  font-size: var(--font-size-4);
+}
+
 .gallery .image-with-caption .o-gothamist-arrow-icon {
   display: none;
 }
