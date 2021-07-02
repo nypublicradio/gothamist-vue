@@ -1,10 +1,13 @@
 <template>
-  <div class="gothamist-header">
+  <div
+    v-observe-visibility="{callback: headerVisibilityChanged, intersection: {threshold: 1}}"
+    class="gothamist-header"
+    :class="{'is-stuck': isHeaderStuck}"
+  >
     <the-header
       ref="header"
       :donate-url="donateButtonUrl"
       class="u-color-group-dark"
-      :class="{'sticky' : isScrolled}"
       @componentEvent="gaEvent('Click Tracking','Donate', 'Header')"
     >
       <template v-slot:menu>
@@ -187,7 +190,7 @@ export default {
   },
   data () {
     return {
-      isScrolled: false,
+      isHeaderStuck: false,
       scrollMeterTarget: null,
       title: null,
       url: null
@@ -228,12 +231,8 @@ export default {
     window.removeEventListener('scroll', this.handleScroll)
   },
   methods: {
-    handleScroll (e) {
-      if (window.innerWidth < 850) {
-        this.isScrolled = e.target.documentElement.scrollTop > 35
-      } else {
-        this.isScrolled = e.target.documentElement.scrollTop > 45
-      }
+    headerVisibilityChanged (isVisible, entry) {
+      this.isHeaderStuck = entry.intersectionRatio < 1
     }
   }
 }
@@ -242,8 +241,8 @@ export default {
 <style lang="scss">
 .gothamist-header {
   position: sticky;
-  top: 0;
   z-index: 5000;
+  top: -1px;
   width: 100%;
 }
 
@@ -258,19 +257,23 @@ export default {
 }
 
 //home page header logo
-.home-page .c-main-header {
+.home-page .gothamist-header {
   --home-page-header-padding: 20px;
   --home-page-header-padding-desktop: 50px;
+  top: calc(-1px - var(--home-page-header-padding));
+  @include media(">medium") {
+    top: calc(-1px - var(--home-page-header-padding-desktop));
+  }
+}
+
+.home-page .c-main-header {
   padding-top: var(--home-page-header-padding);
   transition: padding var(--animation-duration-standard);
+  transform-origin: top;
   background: RGB(var(--color-background-darker));
   @include media(">medium") {
     padding-top: var(--home-page-header-padding-desktop);
   }
-}
-
-.home-page .c-main-header.sticky {
-  padding-top: 0;
 }
 
 .c-main-header .c-main-header__logo .gothamist-logo-icon--stacked {
@@ -285,16 +288,17 @@ export default {
   display: none;
 }
 
-.home-page .c-main-header.sticky .c-main-header__logo .gothamist-logo-icon {
-  display: inline-block;
+.home-page .gothamist-header.is-stuck {
+  .c-main-header__logo .gothamist-logo-icon {
+    display: inline-block;
+  }
+  .c-main-header__logo .gothamist-logo-icon--stacked {
+    display: none;
+  }
 }
 
-.home-page .c-main-header.sticky .c-main-header__logo .gothamist-logo-icon--stacked {
-  display: none;
-}
-
-.home-page .c-main-header:not(.sticky) .c-main-header__logo,
-.home-page .c-main-header .gothamist-logo-icon--stacked {
+.home-page .gothamist-header:not(.is-stuck) .c-main-header__logo,
+.home-page .gothamist-header .gothamist-logo-icon--stacked {
   position: absolute;
   width: 110px;
   height: 115px;

@@ -108,10 +108,7 @@ html {
 }
 
 .home-page main {
-  margin-top: 80px;
-  @include media(">medium") {
-    margin-top: 120px;
-  }
+  margin-top: 0px;
 }
 
 .ad-wrapper-leaderboard {
