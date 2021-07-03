@@ -127,22 +127,19 @@
           <share-tools-item
             action="share"
             service="facebook"
-            :url="url"
-            :utm-parameters="{medium: 'social', source: 'facebook', campaign: 'shared_facebook'}"
+            :url="url + '&utm_medium=social&utm_source=facebook&utm_campaign=shared_facebook'"
           />
           <share-tools-item
             action="share"
             service="twitter"
-            :url="url"
+            :url="url + '&utm_medium=social&utm_source=twitter&utm_campaign=shared_twitter'"
             :share-parameters="{text: title, via: 'gothamist'}"
-            :utm-parameters="{medium: 'social', source: 'twitter', campaign: 'shared_twitter'}"
           />
           <share-tools-item
             action="share"
             service="reddit"
-            :url="url"
+            :url="url + '&utm_medium=social&utm_source=reddit&utm_campaign=shared_reddit'"
             :share-parameters="{title: title}"
-            :utm-parameters="{medium: 'social', source: 'reddit', campaign: 'shared_reddit'}"
           />
           <share-tools-item
             action="share"
