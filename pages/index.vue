@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="l-container l-container--xl l-wrap">
+    <div class="l-container l-container--xl">
       <v-spacer />
       <!-- featured area -->
       <loading-icon v-if="!featuredStoriesLoaded" />
       <section
         v-if="featuredStories"
-        class="c-featured-blocks"
+        class="c-featured-blocks l-wrap"
       >
         <h2 class="c-featured-blocks__heading">
           <span class="c-featured-blocks__heading-icon o-icon u-icon--s u-path-fill--quaternary">
@@ -101,7 +101,7 @@
     <!-- sponsored story -->
     <div
       v-if="sponsoredStory && sponsoredStory.length > 0"
-      class="l-container l-container--16col"
+      class="l-container l-container--16col l-wrap"
     >
       <div class="c-sponsored-tout u-breakout o-border-accent">
         <h2 class="c-sponsored-tout__heading">
@@ -596,10 +596,10 @@ export default {
   font-style: italic;
 }
 
-.home-page .l-grid--right-rail {
+.home-page .ad-container {
   display: none;
   @include media(">large") {
-    display: grid;
+    display: block;
   }
 }
 
