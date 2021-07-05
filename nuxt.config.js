@@ -171,6 +171,18 @@ export default {
     environment: process.env.SENTRY_ENVIRONMENT,
     config: {
       lazy: true
+    },
+    tracing: {
+      tracesSampleRate: 1.0,
+      vueOptions: {
+        tracing: true,
+        tracingOptions: {
+          hooks: ['mount', 'update'],
+          timeout: 2000,
+          trackComponents: true
+        }
+      },
+      browserOptions: {}
     }
   },
 
