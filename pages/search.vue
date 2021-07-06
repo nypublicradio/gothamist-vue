@@ -6,7 +6,7 @@
           Search Results
         </h1>
         <div
-          v-if="totalCount && moreResults.length > 0"
+          v-if="totalCount && moreResults && moreResults.length > 0"
           class="c-search-results__result-number"
         >
           <strong v-html="totalCount" /> Results for:
@@ -45,7 +45,7 @@
       </header>
       <v-spacer size="quad" />
       <section
-        v-if="moreResults"
+        v-if="moreResultsNuggets && moreResultsNuggets.length > 0"
       >
         <div
           v-for="(nugget, nuggetIndex) in moreResultsNuggets"
@@ -70,7 +70,7 @@
               :updated-date="story.result.updatedDate ? fuzzyDateTime(story.result.updatedDate) : null"
             >
               <template
-                v-if="story.result.legacyId"
+                v-if="story.result.legacyId && moreResultsDisqusData"
                 v-slot:comments
               >
                 <v-counter
@@ -84,7 +84,7 @@
         </div>
         <v-spacer size="double" />
         <div
-          v-if="moreResults.length < totalCount && moreResults.length > 0"
+          v-if="totalCount && moreResults && moreResults.length < totalCount && moreResults.length > 0"
           class="l-container u-align-center"
         >
           <v-button
@@ -97,13 +97,13 @@
           </v-button>
         </div>
       </section>
-      <loading-icon v-if="!moreResultsLoaded && moreResults.length === 0" />
       <p
-        v-if="q && moreResults.length === 0 && moreResultsLoaded"
+        v-if="q && moreResults && moreResults.length === 0 && moreResultsLoaded"
         class="c-listing__sections-title u-align--center u-space--double--bottom"
       >
         No Results
       </p>
+      <loading-icon v-if="!moreResultsLoaded" />
       <v-spacer />
     </div>
   </div>
