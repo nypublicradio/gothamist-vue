@@ -1,7 +1,7 @@
 deployments:
     gothamist:
       port_forwarding:
-          3000:3000
+          80:3000
       environment:
           - NUXT_HOST=0.0.0.0
           - NUXT_PORT=3000
@@ -14,4 +14,15 @@ deployments:
           - SENTRY_DSN=https://525e09964a6d4c87bfa58617dc758455@o557978.ingest.sentry.io/5743108
           - SENTRY_ENVIRONMENT=dev
           - ENV=dev
-      build_options: --build-arg ENV=${ENV}
+      run_options:
+          --env NUXT_HOST=$NUXT_HOST
+          --env NUXT_PORT=$NUXT_PORT
+          --env API=$API
+          --env GTM_ID=$GTM_ID
+          --env MAILCHIMP_API=$MAILCHIMP_API
+          --env NEWSLETTER_API=$NEWSLETTER_API
+          --env DISQUS_API=$DISQUS_API
+          --env DISQUS_PUBLIC_KEY=$DISQUS_PUBLIC_KEY
+          --env SENTRY_DSN=$SENTRY_DSN
+          --env SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
+          --env ENV=$ENV
