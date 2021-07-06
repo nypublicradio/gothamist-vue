@@ -78,18 +78,22 @@ export default {
         hid: 'twitter_site',
         name: 'twitter:site',
         content: '@gothamist'
-      },
-      {
-        hid: 'twitter_image',
-        name: 'twitter:image',
-        content: 'https://gothamist.com/static-images/home_og_1200x650.png'
-      },
-      {
-        hid: 'twitter_alt',
-        name: 'twitter:alt',
-        content: 'Gothamist'
       }
-    ]
+    ],
+    link: process.env.ENV === 'PROD'
+      ? [
+        { rel: 'stylesheet', type: 'text/css', href: 'https://htlbid.com/v3/gothamist.com/htlbid.css' }
+      ]
+      : [
+        { rel: 'stylesheet', type: 'text/css', href: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.css' }
+      ],
+    script: process.env.ENV === 'PROD'
+      ? [
+        { hid: 'htl', src: 'https://htlbid.com/v3/gothamist.com/htlbid.js' }
+      ]
+      : [
+        { hid: 'htl', src: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.js' }
+      ]
   },
 
   link: [
@@ -152,7 +156,8 @@ export default {
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {
       baseURL: process.env.API
-    }
+    },
+    environment: process.env.ENV
   },
 
   gtm: {

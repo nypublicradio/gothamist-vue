@@ -1,5 +1,13 @@
 <template>
   <div :class="{'home-page' : isHomepage}">
+    <div class="ad-wrapper-leaderboard u-color-group-dark">
+      <div class="ad-wrapper-inner">
+        <div :class="isHomepage ? 'htlad-index_leaderboard_1' : 'htlad-interior_leaderboard'" />
+        <div class="ad-label">
+          Advertisement
+        </div>
+      </div>
+    </div>
     <gothamist-header />
     <main :class="$route.name">
       <v-spacer size="quad" />
@@ -61,10 +69,21 @@ export default {
   },
   computed: {
     isHomepage () {
-      return this.$nuxt.$route.name === 'index'
+      return this.$route.name === 'index'
     }
   },
   async mounted () {
+    // htlbid
+    const htlbid = window.htlbid = window.htlbid || {}
+    htlbid.cmd = htlbid.cmd || []
+    htlbid.cmd.push(() => {
+      htlbid.layout('universal') // Leave as 'universal' or add custom layout
+      htlbid.setTargeting('is_testing', this.$config.environment === 'PROD' ? 'no' : 'yes') // Set to "no" for production
+      htlbid.setTargeting('is_home', this.isHomepage ? 'yes' : 'no') // Set to "yes" on the homepage
+      htlbid.setTargeting('host', location?.host)
+      htlbid.setTargeting('url', this.$route.path)
+      htlbid.setTargeting('urlSegments', this.$route.path.split('/').filter(segment => segment.length > 0))
+    })
     // set the navigation
     await this.$store.dispatch('global/setNavigation')
     // check for breaking news banner
@@ -84,10 +103,38 @@ export default {
 </script>
 
 <style lang="scss">
-.home-page main {
-  margin-top: 80px;
-  @include media(">medium") {
-    margin-top: 120px;
-  }
+html {
+  scroll-padding-top: 72px;
 }
+
+.home-page main {
+  margin-top: 0px;
+}
+
+.ad-wrapper-leaderboard {
+  width: 100%;
+  background: RGB(var(--color-background));
+  color: RGB(var(--color-text-muted));
+}
+
+.ad-wrapper-inner {
+  width: fit-content;
+  margin: auto;
+}
+
+.ad-label {
+    font-family: var(--font-family-small);
+    letter-spacing: var(--letter-spacing-small);
+    font-weight: var(--font-weight-small);
+    font-size: var(--font-size-1);
+    line-height: var(--line-height-1);
+    margin-top: var(--space-2);
+    text-transform: uppercase;
+    text-align: right;
+}
+
+div:empty + .ad-label {
+ display: none;
+}
+
 </style>
