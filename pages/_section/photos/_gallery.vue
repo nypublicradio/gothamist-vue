@@ -310,6 +310,10 @@ html {
   display: none;
 }
 
+.gallery .image-with-caption-credit span {
+  text-transform: uppercase;
+}
+
 .gallery .image-with-caption-credit-link {
   cursor: pointer;
   padding-bottom: 2px;
