@@ -2,7 +2,7 @@
   <div :class="{'home-page' : isHomepage}">
     <div class="ad-wrapper-leaderboard u-color-group-dark">
       <div class="ad-wrapper-inner">
-        <div :class="isHomepage ? 'htlad-index_leaderboard' : 'htlad-interior_leaderboard'" />
+        <div :class="isHomepage ? 'htlad-index_leaderboard_1' : 'htlad-interior_leaderboard'" />
         <div class="ad-label">
           Advertisement
         </div>
