@@ -288,7 +288,7 @@ export default {
 }
 
 .tags-page.curated {
-  margin-top: -62px;
+  margin-top: -70px;
 }
 
 .tags-page .tags-page-listing-image img {

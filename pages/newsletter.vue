@@ -1,6 +1,5 @@
 <template>
   <div class="u-spacing--quad c-basic-page newsletter-page">
-    <v-spacer size="quad" />
     <div
       class="c-listing__sections u-section-spacing l-container l-wrap l-container--16col"
     >

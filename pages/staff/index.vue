@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="l-container l-wrap l-container--14col">
-      <v-spacer size="quad" />
       <header class="c-basic__header u-spacing">
         <h1 class="c-basic__heading o-3d-heading">
           Staff
