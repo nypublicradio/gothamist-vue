@@ -10,7 +10,6 @@
     </div>
     <gothamist-header />
     <main :class="$route.name">
-      <v-spacer size="quad" />
       <div>
         <div
           v-for="(banner, index) in breakingNewsBanner"

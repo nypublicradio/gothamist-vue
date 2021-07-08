@@ -2,9 +2,8 @@
   <div>
     <div
       v-if="contactPage"
-      class="l-container l-container--14col"
+      class="l-container l-container--14col l-wrap"
     >
-      <v-spacer size="quad" />
       <header class="c-basic__header u-spacing">
         <h1 class="c-basic__heading o-3d-heading">
           {{ contactPage.title }}
