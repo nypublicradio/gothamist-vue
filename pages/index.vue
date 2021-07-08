@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="l-container l-container--xl">
-      <v-spacer />
+      <v-spacer size="hex" />
       <!-- featured area -->
       <loading-icon v-if="!featuredStoriesLoaded" />
       <section

@@ -8,7 +8,6 @@
         <close-icon />
       </nuxt-link>
     </div>
-    <v-spacer size="triple" />
     <div
       v-if="page.slides.length > 0"
       class="l-wrap l-container l-container--xl"
