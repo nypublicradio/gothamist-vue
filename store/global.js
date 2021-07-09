@@ -12,6 +12,7 @@ export const state = () => ({
   footerNav: [],
   footerSlogan: '',
   headerNav: [],
+  imagePath: process.env.IMAGE_PATH,
   legalNav: [],
   mailchimpAPI: process.env.MAILCHIMP_API,
   navigationAPI: 'navigation/1/',

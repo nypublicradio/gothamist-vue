@@ -28,6 +28,7 @@
     "humps": "^2.0.1",
     "nuxt": "^2.15.4",
     "package.json": "^2.0.1",
+    "vue-mq": "^1.0.1",
     "vue-observe-visibility": "^1.0.0"
   },
   "devDependencies": {

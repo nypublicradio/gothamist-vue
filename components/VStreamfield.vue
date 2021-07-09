@@ -1,15 +1,8 @@
 <template>
-  <div
-    v-if="streamfield && streamfield.length > 0"
-    class="streamfield"
-  >
-    <div
-      v-for="block in streamfield"
-      :key="block.id"
-      class="streamfield-block"
-    >
+  <div class="streamfield">
+    <template v-for="block in streamfield">
       <!-- block-quote -->
-      <div v-if="block.type === 'block-quote'">
+      <div v-if="block.type === 'block-quote'" :key="block.id" class="streamfield-block-quote">
         <blockquote>
           <p>
             {{ block.value.block_quote }}
@@ -20,12 +13,16 @@
       <!-- code -->
       <div
         v-else-if="block.type === 'code'"
+        :key="block.id"
+        class="streamfield-code o-rte-text u-spacing"
         v-html="block.value.code"
       />
 
       <!-- content collection -->
       <div
         v-else-if="block.type === 'content_collection'"
+        :key="block.id"
+        class="streamfield-content-collection"
       >
         <div class="featured-stories l-grid l-grid--2up l-grid--large-gutters">
           <v-card
@@ -52,16 +49,26 @@
       <!-- embed -->
       <div
         v-else-if="block.type === 'embed'"
-        v-html="block.value.embed"
+        :key="block.id"
+        class="streamfield-embed"
+        v-html="block.value.code"
       />
 
       <!-- heading -->
-      <div v-else-if="block.type === 'heading'">
+      <div
+        v-else-if="block.type === 'heading'"
+        :key="block.id"
+        class="streamfield-heading"
+      >
         <h3>{{ block.value }}</h3>
       </div>
 
       <!-- image -->
-      <div v-else-if="block.type === 'image'">
+      <div
+        v-else-if="block.type === 'image'"
+        :key="block.id"
+        class="streamfield-image"
+      >
         <image-with-caption
           variation="gothamist"
           :alt-text="block.value.image.alt"
@@ -77,17 +84,19 @@
       <!-- paragraph -->
       <div
         v-else-if="block.type === 'paragraph'"
+        :key="block.id"
+        class="streamfield-paragraph o-rte-text u-spacing"
         v-html="block.value"
       />
 
       <!-- pull-quote -->
-      <div v-else-if="block.type === 'pull-quote'">
+      <div v-else-if="block.type === 'pull-quote'" :key="block.id" class="streamfield-pull-quote">
         <pull-quote
           :quote="block.value.pull_quote"
           :author="block.value.attribution"
         />
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
