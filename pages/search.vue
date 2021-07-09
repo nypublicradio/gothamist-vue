@@ -97,13 +97,6 @@
           </v-button>
         </div>
       </section>
-      <p
-        v-if="q && moreResults && moreResults.length === 0 && moreResultsLoaded"
-        class="c-listing__sections-title u-align--center u-space--double--bottom"
-      >
-        No Results
-      </p>
-      <loading-icon v-if="!moreResultsLoaded" />
       <v-spacer />
     </div>
   </div>
@@ -125,7 +118,6 @@ export default {
   name: 'Search',
   components: {
     ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
-    LoadingIcon: () => import('nypr-design-system-vue/src/components/animations/LoadingIcon'),
     SearchIcon: () => import('nypr-design-system-vue/src/components/icons/SearchIcon'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
     VCard: () => import('nypr-design-system-vue/src/components/VCard'),

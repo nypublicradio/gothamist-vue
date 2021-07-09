@@ -418,33 +418,33 @@ export default {
         })
         this.featuredStoriesLoaded = true
       })
-    // get featured/sponsored story & updated featured stories data
+    // get sponsored stories (there can be up to 2 at a time)
     await this.$axios
-      .get('/pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=1&sponsored_content=true')
+      .get('/pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=2&sponsored_content=true')
       .then((response) => {
         this.sponsoredStory = response.data.items
-        response.data.items.forEach((item) => {
+        this.sponsoredStory.forEach((item) => {
+          // add thread ID to disqus array
           this.sponsoredStoryDisqusThreadIds.push(item.legacyId)
-        })
-        // if the story is flagged as featured and is more than 24 hours old and less than 48 hours old
-        if (this.sponsoredStory.length > 0 && this.sponsoredStory[0].showAsFeature && !isLessThan24Hours(this.sponsoredStory[0].publicationDate) && isLessThan48Hours(this.sponsoredStory[0].publicationDate)) {
-          // replace the 4th featured story with this sponsored story
-          this.featuredStories[3] = this.sponsoredStory[0]
-          this.featuredStoriesDisqusThreadIds[3] = this.sponsoredStoryDisqusThreadIds[0]
-          this.sponsoredStory = []
-        }
-        // if the story is NOT flagged as featured and is more than 24 hours old and less than 48 hours old
-        if (this.sponsoredStory.length > 0 && !this.sponsoredStory[0].showAsFeature && !isLessThan24Hours(this.sponsoredStory[0].publicationDate) && isLessThan48Hours(this.sponsoredStory[0].publicationDate)) {
-          // it should appear in the river and not anywhere else
-          // remove it from the sponsoredStory array
-          this.sponsoredStory = []
-        }
-        if (this.sponsoredStory.length > 0 && !isLessThan48Hours(this.sponsoredStory[0].publicationDate)) {
+          // if the story is flagged as featured and is more than 24 hours old and less than 48 hours old
+          if (item.showAsFeature && !isLessThan24Hours(item.publicationDate) && isLessThan48Hours(item.publicationDate)) {
+            // replace the 4th featured story with this sponsored story
+            this.featuredStories[3] = item
+            this.featuredStoriesDisqusThreadIds[3] = this.sponsoredStoryDisqusThreadIds[0]
+            // remove it from the sponsoredStory array
+            this.sponsoredStory = this.sponsoredStory.filter(itemToRemove => itemToRemove !== item)
+          }
+          // if the story is NOT flagged as featured and is more than 24 hours old and less than 48 hours old
+          if (!item.showAsFeature && !isLessThan24Hours(item.publicationDate) && isLessThan48Hours(item.publicationDate)) {
+            // it should appear in the river and nowhere else, remove it from the sponsoredStory array
+            this.sponsoredStory = this.sponsoredStory.filter(itemToRemove => itemToRemove !== item)
+          }
           // if the story is more than 48 hours old
-          // it should appear in the river and not anywhere else
-          // remove it from the sponsoredStory array
-          this.sponsoredStory = []
-        }
+          if (!isLessThan48Hours(item.publicationDate)) {
+            // it should appear in the river and nowhere else, remove it from the sponsoredStory array
+            this.sponsoredStory = this.sponsoredStory.filter(itemToRemove => itemToRemove !== item)
+          }
+        })
         this.sponsoredStoryLoaded = true
       })
     // get the article river
