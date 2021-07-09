@@ -7,6 +7,7 @@ deployments:
           - NUXT_PORT=3000
           - API=https://cms.demo.nypr.digital/api/v2/
           - GTM_ID=GTM-M2S32K5
+          - IMAGE_BASE_URL=https://cms.demo.nypr.digital/images/
           - MAILCHIMP_API=https://api.demo.nypr.digital/opt-in/v1/subscribe/mailchimp
           - NEWSLETTER_API=https://api.demo.nypr.digital/email-proxy/subscribe
           - DISQUS_API=https://disqus.com/api/3.0
@@ -19,6 +20,7 @@ deployments:
           --env NUXT_PORT=$NUXT_PORT
           --env API=$API
           --env GTM_ID=$GTM_ID
+          --env IMAGE_BASE_URL=$IMAGE_BASE_URL
           --env MAILCHIMP_API=$MAILCHIMP_API
           --env NEWSLETTER_API=$NEWSLETTER_API
           --env DISQUS_API=$DISQUS_API
