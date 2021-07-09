@@ -2,7 +2,8 @@
   <div :class="{'home-page' : isHomepage}">
     <div class="ad-wrapper-leaderboard u-color-group-dark">
       <div class="ad-wrapper-inner">
-        <div :class="isHomepage ? 'htlad-index_leaderboard_1' : 'htlad-interior_leaderboard'" />
+        <div v-if="isHomepage" key="index-leaderboard" class="htlad-index_leaderboard_1" />
+        <div v-else key="interior-leaderboard" class="htlad-interior_leaderboard" />
         <div class="ad-label">
           Advertisement
         </div>
