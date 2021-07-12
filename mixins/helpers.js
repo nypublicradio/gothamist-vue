@@ -1,4 +1,4 @@
-import { addHours, compareAsc, format, differenceInMinutes, differenceInHours, getYear, isValid } from 'date-fns'
+import { compareAsc, format, differenceInMinutes, differenceInHours, getYear, isValid, subHours } from 'date-fns'
 
 // formats tags into the correct format for radial (for article listing pages)
 // name = the article's ancestry's title 'ancestry[0].title' from the CMS API
@@ -113,22 +113,48 @@ export const fuzzyDateTime = function (utcTimestamp) {
 
 // returns true if UTC date is less than 24 hours old
 export const isLessThan24Hours = function (utcStartTime) {
+  console.log('isLessThan24Hours')
   const now = new Date()
-  const then = addHours(now, -24)
+  const then = subHours(now, 24)
   const startTime = new Date(utcStartTime)
   if (isValid(startTime)) {
-    return compareAsc(then, startTime) === -1 && compareAsc(startTime, now) === -1
+    return compareAsc(startTime, then) === 1 && compareAsc(now, startTime) === 1
+  }
+  return false
+}
+
+// returns true if UTC date is more than 24 hours old
+export const isMoreThan24Hours = function (utcStartTime) {
+  console.log('isMoreThan24Hours')
+  const now = new Date()
+  const then = subHours(now, 24)
+  const startTime = new Date(utcStartTime)
+  if (isValid(startTime)) {
+    return compareAsc(startTime, then) === -1
   }
   return false
 }
 
 // returns true if UTC date is less than 48 hours old
 export const isLessThan48Hours = function (utcStartTime) {
+  console.log('isLessThan48Hours')
   const now = new Date()
-  const then = addHours(now, -48)
+  const then = subHours(now, 48)
   const startTime = new Date(utcStartTime)
   if (isValid(startTime)) {
-    return compareAsc(then, startTime) === -1 && compareAsc(startTime, now) === -1
+    return compareAsc(startTime, then) === 1 && compareAsc(now, startTime) === 1
+  }
+  return false
+}
+
+// returns true if UTC date is more than 48 hours old
+export const isMoreThan48Hours = function (utcStartTime) {
+  console.log('isMoreThan48Hours')
+  const now = new Date()
+  const then = subHours(now, 48)
+  const startTime = new Date(utcStartTime)
+  if (isValid(startTime)) {
+    return compareAsc(startTime, then) === -1
   }
   return false
 }
@@ -144,6 +170,8 @@ export default {
     getArticleImage,
     hasGallery,
     isLessThan24Hours,
-    isLessThan48Hours
+    isMoreThan24Hours,
+    isLessThan48Hours,
+    isMoreThan48Hours
   }
 }
