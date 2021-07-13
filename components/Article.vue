@@ -123,13 +123,14 @@
       </div>
       <!-- AD -->
 
-      <div id="comments" />
-      <disqus-embed
-        v-if="article"
-        :identifier="article.legacyId"
-        :url="article.url"
-      />
-      <v-spacer size="quad" />
+      <div v-if="!article.disableComments" id="comments">
+        <disqus-embed
+          v-if="article"
+          :identifier="article.legacyId"
+          :url="article.url"
+        />
+        <v-spacer size="quin" />
+      </div>
 
       <div
         v-if="showDonateBanner"

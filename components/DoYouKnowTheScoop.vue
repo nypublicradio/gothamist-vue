@@ -1,7 +1,8 @@
 <template>
   <div class="do-you-know-the-scoop u-reversed-out o-3d-heading">
     <strong>Do you know the scoop?</strong>
-    <a href="#comments">Comment</a> below or
+    <!-- eslint-disable-next-line -->
+    <nuxt-link to="#comments">Comment</nuxt-link> below or
     <a
       :href="'mailto:' + tipsEmail"
       target="_blank"
