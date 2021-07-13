@@ -8,7 +8,10 @@
         class="article-breadcrumbs"
         :breadcrumbs="breadcrumbs"
       />
-      <h1 class="article-title" v-html="article.title" />
+      <h1
+        class="article-title"
+        v-html="article.title"
+      />
       <article-metadata
         :publish-date="article.formattedPublishDate"
         :updated-date="article.formattedUpdatedDate"
@@ -104,7 +107,10 @@
       <div
         class="l-container l-container--10col"
       >
-        <article-page-newsletter title="NYC news never sleeps. Get the Gothamist Daily newsletter and don't miss a moment." class="article-newsletter" />
+        <article-page-newsletter
+          title="NYC news never sleeps. Get the Gothamist Daily newsletter and don't miss a moment."
+          class="article-newsletter"
+        />
         <div class="article-tag-list">
           <v-tag
             v-for="(tag, index) in article.tags"
@@ -116,7 +122,13 @@
         <do-you-know-the-scoop class="article-scoop" />
       </div>
       <!-- AD -->
-      <!-- DISQUS -->
+
+      <div id="comments" />
+      <disqus-embed
+        v-if="article"
+        :identifier="article.legacyId"
+        :url="article.url"
+      />
 
       <div
         v-if="showDonateBanner"
@@ -149,11 +161,13 @@
 
 <script>
 import { getImagePath } from '~/mixins/image'
+
 export default {
   name: 'Article',
   components: {
     VStreamfield: () => import('./VStreamfield'),
     Breadcrumbs: () => import('./Breadcrumbs'),
+    DisqusEmbed: () => import('./DisqusEmbed'),
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
     ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
     ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
@@ -183,11 +197,23 @@ export default {
       path: 'https://gothamist.com' + this.$route.fullPath,
       ogImage: this.article.socialImage || (this.article.leadImage && this.article.leadImage.image),
       baseMeta: [
-        { hid: 'description', name: 'description', content: this.article.description }
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.article.description
+        }
       ],
       twitterMeta: [
-        { hid: 'twitter_card', name: 'twitter:card', content: 'summary_large_image' },
-        { hid: 'twitter_site', name: 'twitter:site', content: '@gothamist' }
+        {
+          hid: 'twitter_card',
+          name: 'twitter:card',
+          content: 'summary_large_image'
+        },
+        {
+          hid: 'twitter_site',
+          name: 'twitter:site',
+          content: '@gothamist'
+        }
       ]
     }
   },
@@ -199,18 +225,30 @@ export default {
       return this.article.meta.parent.title
     },
     breadcrumbs () {
-      const breadcrumbs = [{ name: this.section, slug: this.article.ancestry[0].slug }]
+      const breadcrumbs = [{
+        name: this.section,
+        slug: this.article.ancestry[0].slug
+      }]
       if (this.article.sponsoredContent) {
         breadcrumbs.push({ name: 'Sponsored' })
       }
       if (this.article.tags.find(tag => tag.name === 'opinion' || tag.name === '@opinion')) {
-        breadcrumbs.push({ name: 'Opinion', slug: 'opinion' })
+        breadcrumbs.push({
+          name: 'Opinion',
+          slug: 'opinion'
+        })
       }
       if (this.article.tags.find(tag => tag.name === 'analysis' || tag.name === '@analysis')) {
-        breadcrumbs.push({ name: 'Analysis', slug: 'analysis' })
+        breadcrumbs.push({
+          name: 'Analysis',
+          slug: 'analysis'
+        })
       }
       if (this.article.tags.find(tag => tag.name === 'we the commuters')) {
-        breadcrumbs.push({ name: 'We The Commuters', slug: 'wethecommuters' })
+        breadcrumbs.push({
+          name: 'We The Commuters',
+          slug: 'wethecommuters'
+        })
       }
       return breadcrumbs
     },
@@ -243,20 +281,60 @@ export default {
     },
     imageMeta ({ $config: { imageBase } }) {
       return this.ogImage ? [
-        { hid: 'og_image', property: 'og:image', content: imageBase + getImagePath(this.ogImage, 1200, 650) },
-        { hid: 'og_image_width', property: 'og:image:width', content: '1200' },
-        { hid: 'og_image_height', property: 'og:image:height"', content: '650' },
-        { hid: 'og_image_alt', property: 'og:image:alt"', content: this.ogImage.alt }
+        {
+          hid: 'og_image',
+          property: 'og:image',
+          content: imageBase + getImagePath(this.ogImage, 1200, 650)
+        },
+        {
+          hid: 'og_image_width',
+          property: 'og:image:width',
+          content: '1200'
+        },
+        {
+          hid: 'og_image_height',
+          property: 'og:image:height"',
+          content: '650'
+        },
+        {
+          hid: 'og_image_alt',
+          property: 'og:image:alt"',
+          content: this.ogImage.alt
+        }
       ] : []
     },
     ogMeta () {
       return [
-        { hid: 'og_site_name', property: 'og:site_name', content: 'Gothamist' },
-        { hid: 'og_url', property: 'og:url"', content: this.url },
-        { hid: 'og_description', property: 'og:description', content: this.article.description },
-        { hid: 'og_title', property: 'og:title', content: this.article.title },
-        { hid: 'og_type', property: 'og:type', content: this.article.type },
-        { hid: 'og_locale', property: 'og:locale', content: 'en_US' }
+        {
+          hid: 'og_site_name',
+          property: 'og:site_name',
+          content: 'Gothamist'
+        },
+        {
+          hid: 'og_url',
+          property: 'og:url"',
+          content: this.url
+        },
+        {
+          hid: 'og_description',
+          property: 'og:description',
+          content: this.article.description
+        },
+        {
+          hid: 'og_title',
+          property: 'og:title',
+          content: this.article.title
+        },
+        {
+          hid: 'og_type',
+          property: 'og:type',
+          content: this.article.type
+        },
+        {
+          hid: 'og_locale',
+          property: 'og:locale',
+          content: 'en_US'
+        }
       ]
     },
     articleMeta () {
@@ -270,7 +348,9 @@ export default {
           property: 'article:modified_time',
           content: this.article.updatedDate?.toString()
         }, {
-          hid: 'article_section', property: 'article:section', content: this.article.ancestry[0].name
+          hid: 'article_section',
+          property: 'article:section',
+          content: this.article.ancestry[0].name
         }, {
           hid: 'article_tag',
           property: 'article:tag',
@@ -278,7 +358,7 @@ export default {
         },
         ...this.article.authors.map((author) => {
           return {
-          // hid: 'article author', -- not unique
+            // hid: 'article author', -- not unique
             property: 'article:author',
             content: 'https://gothamist.com' + author.url
           }

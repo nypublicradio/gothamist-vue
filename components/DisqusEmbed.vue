@@ -9,6 +9,7 @@ EXAMPLE USAGE:
   identifier="8621007665"
   url="https://gothamist.com/news/what-will-happen-when-board-elections-ranks-votes"
 />
+(identifier is the legacyId)
 */
 export default {
   name: 'DisqusEmbed',
@@ -18,7 +19,7 @@ export default {
       default: null
     },
     identifier: {
-      type: String,
+      type: Number,
       default: null
     },
     shortname: {
