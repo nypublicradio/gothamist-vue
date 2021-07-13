@@ -129,6 +129,7 @@
         :identifier="article.legacyId"
         :url="article.url"
       />
+      <v-spacer size="quad" />
 
       <div
         v-if="showDonateBanner"
