@@ -127,7 +127,6 @@ export const fuzzyDateTime = function (utcTimestamp) {
 
 // returns true if UTC date is less than 24 hours old
 export const isLessThan24Hours = function (utcStartTime) {
-  console.log('isLessThan24Hours')
   const now = new Date()
   const then = subHours(now, 24)
   const startTime = new Date(utcStartTime)
@@ -139,7 +138,6 @@ export const isLessThan24Hours = function (utcStartTime) {
 
 // returns true if UTC date is more than 24 hours old
 export const isMoreThan24Hours = function (utcStartTime) {
-  console.log('isMoreThan24Hours')
   const now = new Date()
   const then = subHours(now, 24)
   const startTime = new Date(utcStartTime)
@@ -151,7 +149,6 @@ export const isMoreThan24Hours = function (utcStartTime) {
 
 // returns true if UTC date is less than 48 hours old
 export const isLessThan48Hours = function (utcStartTime) {
-  console.log('isLessThan48Hours')
   const now = new Date()
   const then = subHours(now, 48)
   const startTime = new Date(utcStartTime)
@@ -163,7 +160,6 @@ export const isLessThan48Hours = function (utcStartTime) {
 
 // returns true if UTC date is more than 48 hours old
 export const isMoreThan48Hours = function (utcStartTime) {
-  console.log('isMoreThan48Hours')
   const now = new Date()
   const then = subHours(now, 48)
   const startTime = new Date(utcStartTime)

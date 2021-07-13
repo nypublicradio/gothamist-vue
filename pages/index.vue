@@ -426,14 +426,11 @@ export default {
       .then((response) => {
         this.sponsoredStory = response.data.items
         this.sponsoredStory.forEach((sponsoredStory) => {
-          console.log('sponsoredStory')
-          console.log(sponsoredStory.publicationDate)
           // add thread ID to disqus array
           this.sponsoredStoryDisqusThreadIds.push(sponsoredStory.legacyId)
           // if the story is less than 24 hours old, do nothing and keep it in the sponsoredStory array
           // if the story is flagged as featured and is more than 24 hours old and less than 48 hours old
           if (sponsoredStory.showAsFeature && isMoreThan24Hours(sponsoredStory.publicationDate) && isLessThan48Hours(sponsoredStory.publicationDate)) {
-            console.log('kim1')
             // replace the 4th featured story with this sponsored story
             this.featuredStories[3] = sponsoredStory
             this.featuredStoriesDisqusThreadIds[3] = this.sponsoredStoryDisqusThreadIds[0]
@@ -442,13 +439,11 @@ export default {
           }
           // if the story is not flagged as featured and is more than 24 hours old and less than 48 hours old
           if (!sponsoredStory.showAsFeature && isMoreThan24Hours(sponsoredStory.publicationDate) && isLessThan48Hours(sponsoredStory.publicationDate)) {
-            console.log('kim2')
             // it should appear in the river and nowhere else, remove it from the sponsoredStory array so it doesn't get de-duped
             this.sponsoredStory = []
           }
           // if the story is more than 48 hours old
           if (isMoreThan48Hours(sponsoredStory.publicationDate)) {
-            console.log('kim3')
             // it should appear in the river and nowhere else, remove it from the sponsoredStory array so it doesn't get de-duped
             this.sponsoredStory = []
           }
@@ -461,20 +456,16 @@ export default {
       .then((response) => {
         this.featuredStory = response.data.items
         this.featuredStory.forEach((featuredStory) => {
-          console.log('featuredStory')
-          console.log(featuredStory.publicationDate)
           // add thread ID to disqus array
           this.featuredStoryDisqusThreadIds.push(featuredStory.legacyId)
           // if the story is more than 24 hours old and less than 48 hours old
           if (isMoreThan24Hours(featuredStory.publicationDate) && isLessThan48Hours(featuredStory.publicationDate)) {
-            console.log('kimf1')
             // replace the 4th featured story with this sponsored story
             this.featuredStories[3] = featuredStory
             this.featuredStoriesDisqusThreadIds[3] = this.featuredStoryDisqusThreadIds[0]
           }
           // if the story is less than 24 hours old and there's no other sponsored story, make this the sponsored story
           if (isLessThan24Hours(featuredStory.publicationDate) && this.sponsoredStory.length === 0) {
-            console.log('kimf2')
             this.sponsoredStory = this.featuredStory
           }
           // if the story is more than 48 hours old, do nothing
