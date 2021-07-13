@@ -121,7 +121,15 @@
         </div>
         <do-you-know-the-scoop class="article-scoop" />
       </div>
-      <!-- AD -->
+
+      <div class="ad-wrapper-outer">
+        <div class="ad-wrapper-inner">
+          <div class="htlad-interior_midpage_2" />
+          <div class="ad-label">
+            Advertisement
+          </div>
+        </div>
+      </div>
 
       <div v-if="!article.disableComments" id="comments">
         <disqus-embed
