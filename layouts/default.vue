@@ -1,6 +1,7 @@
 <template>
   <div :class="{'home-page' : isHomepage}">
-    <div class="ad-wrapper-leaderboard u-color-group-dark">
+    <div class="htlad-skin" />
+    <div class="ad-wrapper-outer mod-header u-color-group-dark">
       <div class="ad-wrapper-inner">
         <div v-if="isHomepage" key="index-leaderboard" class="htlad-index_leaderboard_1" />
         <div v-else key="interior-leaderboard" class="htlad-interior_leaderboard" />
@@ -111,10 +112,13 @@ html {
   margin-top: 0px;
 }
 
-.ad-wrapper-leaderboard {
-  width: 100%;
-  background: RGB(var(--color-background));
+.ad-wrapper-outer {
   color: RGB(var(--color-text-muted));
+}
+
+.ad-wrapper-outer.mod-header {
+  background: RGB(var(--color-background));
+  width: 100%;
 }
 
 .ad-wrapper-inner {
