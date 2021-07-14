@@ -396,29 +396,48 @@ export default {
     structuredData ({ $config: { imageBase } }) {
       return {
         '@context': 'http://schema.org',
-        '@type': 'NewsArticle',
-        mainEntityOfPage: 'https://gothamist.com' + this.$route.fullPath,
-        image: this.ogImage && imageBase + getImagePath(this.ogImage, 1200, 650),
-        headline: this.article.title,
-        description: this.article.description,
-        datePublished: this.article.meta.firstPublishedAt,
-        dateModified: this.article.updatedDate && this.article.updatedDate,
-        author: this.article.authors.map((author) => {
-          return {
-            '@type': 'Person',
-            name: `${author.firstName} ${author.lastName}`
-          }
-        }),
-        publisher: {
-          '@type': 'Organization',
-          name: 'Gothamist',
-          logo: {
-            '@type': 'ImageObject',
-            url: 'http://gothamist.com/static-images/home_og_1200x600.png',
-            width: '1200',
-            height: '600'
-          }
-        }
+        '@graph':
+          [
+            {
+              '@type': 'NewsArticle',
+              mainEntityOfPage: 'https://gothamist.com' + this.$route.fullPath,
+              image: this.ogImage && imageBase + getImagePath(this.ogImage, 1200, 650),
+              headline: this.article.title,
+              description: this.article.description,
+              datePublished: this.article.meta.firstPublishedAt,
+              dateModified: this.article.updatedDate && this.article.updatedDate,
+              author: this.article.authors.map((author) => {
+                return {
+                  '@type': 'Person',
+                  name: `${author.firstName} ${author.lastName}`
+                }
+              }),
+              publisher: {
+                '@type': 'Organization',
+                name: 'Gothamist',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'http://gothamist.com/static-images/home_og_1200x600.png',
+                  width: '1200',
+                  height: '600'
+                }
+              }
+            },
+            {
+              '@type': 'BreadcrumbList',
+              itemListElement: this.breadcrumbs.map((crumb, index) => {
+                return {
+                  '@type': 'ListItem',
+                  position: index,
+                  item:
+                    {
+                      '@id': 'https://gothamist.com' + crumb.slug,
+                      name: crumb.name
+                    }
+                }
+              })
+            }
+          ]
       }
     },
     authors () {
