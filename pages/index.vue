@@ -55,7 +55,7 @@
                 <v-counter
                   icon="comment"
                   :value="getCommentCountById(featuredStories[0].legacyId, featuredStoriesDisqusData) || 0"
-                  :href="`/${featuredStories[0].ancestry[0].slug}/${featuredStories[0].meta.slug}?to=comments`"
+                  :href="`/${featuredStories[0].ancestry[0].slug}/${featuredStories[0].meta.slug}#comments`"
                 />
               </template>
             </article-metadata>
@@ -81,13 +81,13 @@
                   :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
                 >
                   <template
-                    v-if="story.legacyId"
+                    v-if="story.legacyId && getCommentCountById(story.legacyId, featuredStoriesDisqusData) > 0"
                     v-slot:comments
                   >
                     <v-counter
                       icon="comment"
-                      :value="getCommentCountById(story.legacyId, featuredStoriesDisqusData) || 0"
-                      :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
+                      :value="getCommentCountById(story.legacyId, featuredStoriesDisqusData)"
+                      :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                     />
                   </template>
                 </article-metadata>
@@ -123,13 +123,13 @@
             :updated-date="sponsoredStory[0].updatedDate ? fuzzyDateTime(sponsoredStory[0].updatedDate) : null"
           >
             <template
-              v-if="sponsoredStory[0].legacyId"
+              v-if="sponsoredStory[0].legacyId && getCommentCountById(sponsoredStory[0].legacyId, sponsoredStoryDisqusData) > 0"
               v-slot:comments
             >
               <v-counter
                 icon="comment"
                 :value="getCommentCountById(sponsoredStory[0].legacyId, sponsoredStoryDisqusData)"
-                :href="`/${sponsoredStory[0].ancestry[0].slug}/${sponsoredStory[0].meta.slug}?to=comments`"
+                :href="`/${sponsoredStory[0].ancestry[0].slug}/${sponsoredStory[0].meta.slug}#comments`"
               />
             </template>
           </article-metadata>
@@ -165,13 +165,13 @@
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
-                  v-if="story.legacyId"
+                  v-if="story.legacyId && getCommentCountById(story.legacyId, riverDisqusData) > 0"
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
                     :value="getCommentCountById(story.legacyId, riverDisqusData) || 0"
-                    :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
+                    :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
               </article-metadata>
@@ -208,13 +208,13 @@
             :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
           >
             <template
-              v-if="story.legacyId"
+              v-if="story.legacyId && getCommentCountById(story.legacyId, riverDisqusData) > 0"
               v-slot:comments
             >
               <v-counter
                 icon="comment"
                 :value="getCommentCountById(story.legacyId, riverDisqusData) || 0"
-                :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
+                :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
               />
             </template>
           </article-metadata>
@@ -248,13 +248,13 @@
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
-                  v-if="story.legacyId"
+                  v-if="story.legacyId && getCommentCountById(story.legacyId, riverDisqusData) > 0"
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
                     :value="getCommentCountById(story.legacyId, riverDisqusData) || 0"
-                    :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
+                    :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
               </article-metadata>
@@ -290,13 +290,13 @@
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
-                  v-if="story.legacyId"
+                  v-if="story.legacyId && getCommentCountById(story.legacyId, riverDisqusData) > 0"
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
                     :value="getCommentCountById(story.legacyId, riverDisqusData) || 0"
-                    :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
+                    :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
               </article-metadata>
@@ -337,13 +337,13 @@
                   :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
                 >
                   <template
-                    v-if="story.legacyId"
+                    v-if="story.legacyId && getCommentCountById(story.legacyId, moreResultsDisqusData) > 0"
                     v-slot:comments
                   >
                     <v-counter
                       icon="comment"
                       :value="getCommentCountById(story.legacyId, moreResultsDisqusData) || 0"
-                      :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
+                      :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                     />
                   </template>
                 </article-metadata>
@@ -396,6 +396,7 @@ const {
   isLessThan48Hours,
   isMoreThan48Hours
 } = require('~/mixins/helpers')
+
 export default {
   name: 'HomePage', // this is the template name which is used for GTM
   components: {
@@ -546,11 +547,20 @@ export default {
       return nuggetArray
     }
   },
-  async mounted () {
+  watch: {
     // get disqus comment counts
-    this.featuredStoriesDisqusData = await this.getCommentCount(this.featuredStoriesDisqusThreadIds)
-    this.sponsoredStoryDisqusData = await this.getCommentCount(this.sponsoredStoryDisqusThreadIds)
-    this.riverDisqusData = await this.getCommentCount(this.riverDisqusThreadIds)
+    async featuredStoriesDisqusThreadIds () {
+      this.featuredStoriesDisqusData = await this.getCommentCount(this.featuredStoriesDisqusThreadIds)
+    },
+    async sponsoredStoryDisqusThreadIds () {
+      this.sponsoredStoryDisqusData = await this.getCommentCount(this.sponsoredStoryDisqusThreadIds)
+    },
+    async riverDisqusThreadIds () {
+      this.riverDisqusData = await this.getCommentCount(this.riverDisqusThreadIds)
+    },
+    async moreResultsDisqusThreadIds () {
+      this.moreResultsDisqusData = await this.getCommentCount(this.moreResultsDisqusThreadIds)
+    }
   },
   methods: {
     formatTags,
@@ -579,85 +589,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.c-featured-blocks {
-  padding: var(--space-7) 0 0;
-  @include media(">medium") {
-    padding: var(--space-7) var(--space-7) 0;
-  }
-}
-
-.c-featured-blocks .featured-grid {
-  grid-template-columns: 1fr;
-  @media all and (min-width: 1100px) {
-    grid-gap: 50px;
-    grid-template-columns: 1fr 400px;
-  }
-}
-
-.c-featured-blocks .featured-grid .card.featured-grid-col1 {
-  @include media(">large") {
-    width: 590px;
-    max-width: 590px;
-  }
-}
-
-.home-page .card.gothamist.mod-large .card-image-wrapper {
-  //width: 100%;
-  //min-width: 100%;
-  @include media("<large") {
-    height: 300px;
-  }
-  @include media(">large") {
-    width: 560px;
-    max-width: 100%;
-  }
-}
-
-.home-page .card.gothamist .card-subtitle {
-  line-height: var(--line-height-4) !important;
-}
-
-.home-page .featured-grid .card.gothamist.mod-large .card-title .o-gallery-icon {
-  height: 20px;
-  margin: 0 0 -2px;
-}
-
-.ad-container {
-  padding: var(--space-4);
-  font-style: italic;
-}
-
-.home-page .ad-container {
-  display: none;
-  @include media(">large") {
-    display: block;
-  }
-}
-
-.home-page .loading-icon {
-  width: 75px !important;
-  margin: 0;
-}
-
-.home-page .loading-icon path {
-  stroke: RGB(var(--color-gray));
-}
-
-.home-page .button .loading-icon path {
-  stroke: RGB(var(--color-text));
-}
-
-.home-page .c-sponsored-tout {
-  margin-top: var(--space-4);
-  @include media(">large") {
-    margin-top: 0;
-  }
-}
-
-.home-page .c-sponsored-tout .card.gothamist {
-  background: none;
-  margin-bottom: 0;
-}
-</style>

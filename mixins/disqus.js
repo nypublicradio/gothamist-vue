@@ -13,18 +13,22 @@ export default {
       try {
         let threadIdString = ''
         threadIdArray.forEach((thread) => {
-          threadIdString += '&thread:ident=' + thread
+          if (thread) {
+            threadIdString += '&thread:ident=' + thread
+          }
         })
-        return this.$axios
-          .get(
-            this.disqusAPI + '/threads/set.json?api_key=' + this.disqusPublicKey + '&forum=gothamist' + threadIdString
-          )
-          .then((response) => {
-            return response
-          })
-          .catch((error) => {
-            console.warn(error) // eslint-disable-line
-          })
+        if (threadIdString !== '') {
+          return this.$axios
+            .get(
+              this.disqusAPI + '/threads/set.json?api_key=' + this.disqusPublicKey + '&forum=gothamist' + threadIdString
+            )
+            .then((response) => {
+              return response
+            })
+            .catch((error) => {
+              console.warn(error) // eslint-disable-line
+            })
+        }
       } catch (e) {
         console.warn(e) // eslint-disable-line
       }
