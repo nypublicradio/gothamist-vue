@@ -155,9 +155,6 @@ export default {
     }
   },
   mounted () {
-    if (this.$route.query.q) {
-      this.q = this.$route.query.q
-    }
     this.getMoreResults()
   },
   methods: {
@@ -165,6 +162,9 @@ export default {
     fuzzyDateTime,
     getArticleImage,
     async getMoreResults () {
+      if (this.$route.query.q) {
+        this.q = this.$route.query.q
+      }
       this.moreResultsLoaded = false
       let endpoint = '/search/?limit=12&q=' + this.q
       if (this.moreResultsOffset > 0) {
