@@ -16,7 +16,6 @@ export default {
   methods: {
     // google analytics events
     gaEvent (gaCategory, gaAction, gaLabel, custom) {
-      const event = 'eventTracking'
       let hitType = 'event'
       const eventCategory = gaCategory
       const eventAction = gaAction
@@ -30,7 +29,7 @@ export default {
         component = null
       }
       const data = {
-        event,
+        event: 'eventTracking',
         sessionID: this.sessionID,
         previousPath: this.previousPath,
         IDCustomEvents: this.clientID,
@@ -46,6 +45,42 @@ export default {
         component,
         intendedUrl,
         custom,
+        vue: true
+      }
+      this.$gtm.push(data)
+    },
+    // google analytics events
+    gaArticleEvent (gaCategory, gaAction, gaLabel, custom) {
+      let hitType = 'event'
+      const eventCategory = gaCategory
+      const eventAction = gaAction
+      const eventLabel = gaLabel
+      const hitTimeStamp = new Date().toISOString()
+      let intendedUrl = null
+      const component = null
+      if (gaAction === 'URL Error') {
+        intendedUrl = custom
+        hitType = 'exception'
+      }
+      const data = {
+        event: 'Page View',
+        sessionID: this.sessionID,
+        previousPath: this.previousPath,
+        IDCustomEvents: this.clientID,
+        articleTags: custom.articleTags,
+        articleAuthors: custom.articleAuthors,
+        articleSection: custom.articleSection,
+        articleTitle: custom.articleTitle,
+        articlePublishTime: custom.articlePublishTime,
+        eventCategory,
+        eventAction,
+        eventLabel,
+        eventValue: custom.milestone,
+        hitTimeStamp,
+        hitType,
+        template: 'article',
+        component,
+        intendedUrl,
         vue: true
       }
       this.$gtm.push(data)
