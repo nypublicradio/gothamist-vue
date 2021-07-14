@@ -177,14 +177,24 @@
               </article-metadata>
             </v-card>
           </div>
-          <div class="ad-container">
-            ad goes here
+          <div class="ad-wrapper-outer">
+            <div class="ad-wrapper-inner">
+              <div class="htlad-index_rectangle_1" />
+              <div class="ad-label">
+                Advertisement
+              </div>
+            </div>
           </div>
         </div>
         <v-spacer />
       </div>
-      <div class="l-container ad-container">
-        ad goes here
+      <div class="ad-wrapper-outer">
+        <div class="ad-wrapper-inner">
+          <div class="htlad-index_leaderboard_2" />
+          <div class="ad-label">
+            Advertisement
+          </div>
+        </div>
       </div>
       <!-- section 2 -->
       <div class="l-container l-container--10col l-wrap">
@@ -221,9 +231,15 @@
         </v-card>
         <v-spacer />
       </div>
-      <div class="l-container ad-container">
-        ad goes here
+      <div class="ad-wrapper-outer">
+        <div class="ad-wrapper-inner">
+          <div class="htlad-index_leaderboard_3" />
+          <div class="ad-label">
+            Advertisement
+          </div>
+        </div>
       </div>
+
       <!-- section 3 -->
       <div class="l-container l-container--14col l-wrap">
         <v-spacer size="triple" />
@@ -260,8 +276,13 @@
               </article-metadata>
             </v-card>
           </div>
-          <div class="ad-container">
-            ad goes here
+          <div class="ad-wrapper-outer">
+            <div class="ad-wrapper-inner">
+              <div class="htlad-index_rectangle_2" />
+              <div class="ad-label">
+                Advertisement
+              </div>
+            </div>
           </div>
         </div>
         <v-spacer />
@@ -302,8 +323,13 @@
               </article-metadata>
             </v-card>
           </div>
-          <div class="ad-container">
-            ad goes here
+          <div class="ad-wrapper-outer">
+            <div class="ad-wrapper-inner">
+              <div class="htlad-index_rectangle_3" />
+              <div class="ad-label">
+                Advertisement
+              </div>
+            </div>
           </div>
         </div>
         <v-spacer />
@@ -349,8 +375,13 @@
                 </article-metadata>
               </v-card>
             </div>
-            <div class="ad-container">
-              ad goes here
+            <div class="ad-wrapper-outer">
+              <div class="ad-wrapper-inner">
+                <div class="htlad-index_rectangle_repeating" />
+                <div class="ad-label">
+                  Advertisement
+                </div>
+              </div>
             </div>
           </div>
           <v-spacer />
