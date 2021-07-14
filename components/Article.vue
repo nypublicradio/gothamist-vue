@@ -119,11 +119,17 @@
             :name="`#${tag.name}`"
           />
         </div>
-        <do-you-know-the-scoop class="article-scoop" />
+        <do-you-know-the-scoop
+          :disable-comments="article.disableComments"
+          class="article-scoop"
+        />
       </div>
       <!-- AD -->
 
-      <div v-if="!article.disableComments" id="comments">
+      <div
+        v-if="!article.disableComments"
+        id="comments"
+      >
         <disqus-embed
           v-if="article"
           :identifier="article.legacyId"
