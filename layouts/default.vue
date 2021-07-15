@@ -73,18 +73,22 @@ export default {
       return this.$route.name === 'index'
     }
   },
+  watch: {
+    $route () {
+      // htlbid key value targeting for ads
+      const htlbid = window.htlbid = window.htlbid || {}
+      htlbid.cmd = htlbid.cmd || []
+      htlbid.cmd.push(() => {
+        htlbid.layout('universal') // Leave as 'universal' or add custom layout
+        htlbid.setTargeting('is_testing', this.$config.environment === 'PROD' ? 'no' : 'yes')
+        htlbid.setTargeting('is_home', this.isHomepage ? 'yes' : 'no')
+        htlbid.setTargeting('host', location?.host)
+        htlbid.setTargeting('url', this.$route.path)
+        htlbid.setTargeting('urlSegments', this.$route.path.split('/').filter(segment => segment.length > 0))
+      })
+    }
+  },
   async mounted () {
-    // htlbid
-    const htlbid = window.htlbid = window.htlbid || {}
-    htlbid.cmd = htlbid.cmd || []
-    htlbid.cmd.push(() => {
-      htlbid.layout('universal') // Leave as 'universal' or add custom layout
-      htlbid.setTargeting('is_testing', this.$config.environment === 'PROD' ? 'no' : 'yes') // Set to "no" for production
-      htlbid.setTargeting('is_home', this.isHomepage ? 'yes' : 'no') // Set to "yes" on the homepage
-      htlbid.setTargeting('host', location?.host)
-      htlbid.setTargeting('url', this.$route.path)
-      htlbid.setTargeting('urlSegments', this.$route.path.split('/').filter(segment => segment.length > 0))
-    })
     // set the navigation
     await this.$store.dispatch('global/setNavigation')
     // check for breaking news banner
