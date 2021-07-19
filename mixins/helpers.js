@@ -64,6 +64,24 @@ export const getImageFromStory = function (story) {
   return null
 }
 
+// returns the percent scrolled of any given query selector
+export const handleScroll = function (querySelector) {
+  let target = document.querySelector(querySelector)
+  if (!target) {
+    target = document.body
+  }
+  let distanceToTargetBottom = target.offsetHeight + target.offsetTop
+  let parent = target.offsetParent
+  while (parent) {
+    distanceToTargetBottom += parent.offsetTop
+    parent = parent.offsetParent
+  }
+  const scrolled = window.pageYOffset
+  const windowHeight = window.innerHeight
+  const progress = scrolled / (distanceToTargetBottom - windowHeight)
+  return Math.min(Math.max(0, progress * 100), 100)
+}
+
 // checks if the asset has a gallery or not and return true/false
 // asset = the story's 'lead_asset' from the CMS API
 export const hasGallery = function (asset) {
@@ -179,6 +197,7 @@ export default {
     fuzzyDateTime,
     getArticleImage,
     getImageFromStory,
+    handleScroll,
     hasGallery,
     isLessThan24Hours,
     isMoreThan24Hours,

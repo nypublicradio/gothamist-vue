@@ -115,7 +115,7 @@
           <v-tag
             v-for="(tag, index) in article.tags"
             :key="index"
-            :slug="tag.slug"
+            :slug="'/tags/' + tag.slug"
             :name="`#${tag.name}`"
           />
         </div>
@@ -168,7 +168,12 @@
 </template>
 
 <script>
+import gtm from '@/mixins/gtm'
 import { getImagePath } from '~/mixins/image'
+
+const {
+  handleScroll
+} = require('~/mixins/helpers')
 
 export default {
   name: 'Article',
@@ -191,6 +196,7 @@ export default {
     ArticlePageNewsletter: () => import('./ArticlePageNewsletter'),
     RecirculationModule: () => import('./RecirculationModule')
   },
+  mixins: [gtm],
   props: {
     article: {
       type: Object,
@@ -201,6 +207,10 @@ export default {
   data () {
     return {
       bannerOnscreen: false,
+      scrollPercent: 0,
+      scrollPercent25Logged: false,
+      scrollPercent50Logged: false,
+      scrollPercent75Logged: false,
       showDonateBanner: !this.$cookies.donateBannerDismissed && this.$cookies.articleViews < 3,
       path: 'https://gothamist.com' + this.$route.fullPath,
       ogImage: this.article.socialImage || (this.article.leadImage && this.article.leadImage.image),
@@ -226,6 +236,16 @@ export default {
     }
   },
   computed: {
+    gtmData () {
+      return {
+        articleTags: this.tags,
+        articleAuthors: this.authors,
+        articleSection: this.section,
+        articleTitle: this.article?.title,
+        articlePublishTime: this.article?.publicationDate,
+        milestone: 0
+      }
+    },
     leadAsset () {
       return this.article.leadAsset[0]
     },
@@ -235,7 +255,7 @@ export default {
     breadcrumbs () {
       const breadcrumbs = [{
         name: this.section,
-        slug: this.article.ancestry[0].slug
+        slug: '/' + this.article.ancestry[0].slug
       }]
       if (this.article.sponsoredContent) {
         breadcrumbs.push({ name: 'Sponsored' })
@@ -243,19 +263,19 @@ export default {
       if (this.article.tags.find(tag => tag.name === 'opinion' || tag.name === '@opinion')) {
         breadcrumbs.push({
           name: 'Opinion',
-          slug: 'opinion'
+          slug: '/tags/opinion'
         })
       }
       if (this.article.tags.find(tag => tag.name === 'analysis' || tag.name === '@analysis')) {
         breadcrumbs.push({
           name: 'Analysis',
-          slug: 'analysis'
+          slug: '/tags/analysis'
         })
       }
       if (this.article.tags.find(tag => tag.name === 'we the commuters')) {
         breadcrumbs.push({
           name: 'We The Commuters',
-          slug: 'wethecommuters'
+          slug: '/tags/wethecommuters'
         })
       }
       return breadcrumbs
@@ -376,33 +396,112 @@ export default {
     structuredData ({ $config: { imageBase } }) {
       return {
         '@context': 'http://schema.org',
-        '@type': 'NewsArticle',
-        mainEntityOfPage: 'https://gothamist.com' + this.$route.fullPath,
-        image: this.ogImage && imageBase + getImagePath(this.ogImage, 1200, 650),
-        headline: this.article.title,
-        description: this.article.description,
-        datePublished: this.article.meta.firstPublishedAt,
-        dateModified: this.article.updatedDate && this.article.updatedDate,
-        author: this.article.authors.map((author) => {
-          return {
-            '@type': 'Person',
-            name: `${author.firstName} ${author.lastName}`
-          }
-        }),
-        publisher: {
-          '@type': 'Organization',
-          name: 'Gothamist',
-          logo: {
-            '@type': 'ImageObject',
-            url: 'http://gothamist.com/static-images/home_og_1200x600.png',
-            width: '1200',
-            height: '600'
-          }
+        '@graph':
+          [
+            {
+              '@type': 'NewsArticle',
+              mainEntityOfPage: 'https://gothamist.com' + this.$route.fullPath,
+              image: this.ogImage && imageBase + getImagePath(this.ogImage, 1200, 650),
+              headline: this.article.title,
+              description: this.article.description,
+              datePublished: this.article.meta.firstPublishedAt,
+              dateModified: this.article.updatedDate && this.article.updatedDate,
+              author: this.article.authors.map((author) => {
+                return {
+                  '@type': 'Person',
+                  name: `${author.firstName} ${author.lastName}`
+                }
+              }),
+              publisher: {
+                '@type': 'Organization',
+                name: 'Gothamist',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'http://gothamist.com/static-images/home_og_1200x600.png',
+                  width: '1200',
+                  height: '600'
+                }
+              }
+            },
+            {
+              '@type': 'BreadcrumbList',
+              itemListElement: this.breadcrumbs.map((crumb, index) => {
+                return {
+                  '@type': 'ListItem',
+                  position: index,
+                  item:
+                    {
+                      '@id': 'https://gothamist.com' + crumb.slug,
+                      name: crumb.name
+                    }
+                }
+              })
+            }
+          ]
+      }
+    },
+    authors () {
+      let authors = ''
+      this.article?.authors.forEach(
+        (author) => {
+          authors += author.firstName + ' ' + author.lastName + ','
         }
+      )
+      return authors
+    },
+    tags () {
+      let tags = ''
+      this.article?.tags.forEach(
+        (crumb) => {
+          tags += crumb.name + ','
+        }
+      )
+      return tags
+    }
+  },
+  watch: {
+    scrollPercent () {
+      if (this.scrollPercent >= 25) {
+        if (!this.scrollPercent25Logged) {
+          this.gtmData.milestone = 25
+          this.articleGaEvent()
+        }
+        this.scrollPercent25Logged = true
+      }
+      if (this.scrollPercent >= 50) {
+        if (!this.scrollPercent50Logged) {
+          this.gtmData.milestone = 50
+          this.articleGaEvent()
+        }
+        this.scrollPercent50Logged = true
+      }
+      if (this.scrollPercent >= 75) {
+        if (!this.scrollPercent75Logged) {
+          this.gtmData.milestone = 75
+          this.articleGaEvent()
+        }
+        this.scrollPercent75Logged = true
+      }
+      if (this.scrollPercent === 100) {
+        this.gtmData.milestone = 100
+        this.articleGaEvent()
       }
     }
   },
+  mounted () {
+    this.scrollPercent25Logged = false
+    this.scrollPercent50Logged = false
+    this.scrollPercent75Logged = false
+    this.articleGaEvent()
+    window.addEventListener('scroll', this.scrollListener, { passive: true })
+  },
+  beforeDestroy () {
+    window.removeEventListener('scroll', this.scrollListener)
+  },
   methods: {
+    articleGaEvent () {
+      this.gaArticleEvent('NTG article milestone', this.gtmData.milestone + '%', this.gtmData.articleTitle, this.gtmData)
+    },
     bannerClosed () {
       // only show the banner once a day
       const tomorrow = new Date()
@@ -410,13 +509,16 @@ export default {
       this.$cookies.set('donateBannerClosed', true, { expires: tomorrow })
     },
     bannerDonateClicked () {
-      // track a ga event here
+      this.gaArticleEvent('Article Page', 'Donate Banner Clicked', this.gtmData.articleTitle, this.gtmData)
     },
     bannerVisibilityChanged (isVisible) {
       if (isVisible) {
         this.bannerOnscreen = true
-        // track a ga impression event here
+        this.gaArticleEvent('Article Page', 'Donate Banner Is Visible', this.gtmData.articleTitle, this.gtmData)
       }
+    },
+    scrollListener () {
+      this.scrollPercent = handleScroll('.article-body')
     }
   },
   head () {
