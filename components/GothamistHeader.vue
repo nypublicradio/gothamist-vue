@@ -297,8 +297,7 @@ export default {
   }
 }
 
-.home-page .gothamist-header:not(.is-stuck) .c-main-header__logo,
-.home-page .gothamist-header .gothamist-logo-icon--stacked {
+.home-page .gothamist-header:not(.is-stuck) .c-main-header__logo{
   position: absolute;
   width: 110px;
   height: 115px;
@@ -307,9 +306,14 @@ export default {
   @include media(">medium") {
     width: 135px;
     height: 142px;
-    top: -15px;
-    margin-left: calc(50% - var(--xl-container) / 2 + var(--space-5));
+    top: -30px;
+    left: calc(50% - var(--xl-container) / 2 + var(--space-5));
   }
+}
+
+.home-page .gothamist-header .gothamist-logo-icon--stacked {
+  width: 100%;
+  height: 100%;
 }
 
 .home-page .c-main-header__logo .gothamist-logo-icon--stacked .gothamist-letters path {
