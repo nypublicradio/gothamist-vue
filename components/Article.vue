@@ -489,6 +489,9 @@ export default {
     }
   },
   mounted () {
+    this.scrollPercent25Logged = false
+    this.scrollPercent50Logged = false
+    this.scrollPercent75Logged = false
     this.articleGaEvent()
     window.addEventListener('scroll', this.scrollListener, { passive: true })
   },
