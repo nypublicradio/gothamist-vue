@@ -301,13 +301,15 @@ export default {
   position: absolute;
   width: 110px;
   height: 115px;
-  top: -5px;
-  left: 40px;
+  top: -11px;
+  left: 66px;
   @include media(">medium") {
     width: 135px;
     height: 142px;
     top: -30px;
-    left: calc(50% - var(--xl-container) / 2 + var(--space-5));
+  }
+  @include media(">1255px") {
+    left: calc((100vw - var(--max-width-xl)) / 2);
   }
 }
 
