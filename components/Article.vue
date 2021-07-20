@@ -100,6 +100,7 @@
       </div>
       <v-spacer size="quad" />
       <v-streamfield
+        ref="article-body"
         class="l-container l-container--10col article-body c-article__body"
         :streamfield="article.body"
       />
@@ -178,6 +179,7 @@
 <script>
 import gtm from '@/mixins/gtm'
 import { getImagePath } from '~/mixins/image'
+import insertAdDiv from '~/utils/insert-ad-div'
 
 const {
   handleScroll
@@ -506,6 +508,11 @@ export default {
   beforeDestroy () {
     window.removeEventListener('scroll', this.scrollListener)
   },
+  updated () {
+    if (this.$refs['article-body']) {
+      insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1'] })
+    }
+  },
   methods: {
     articleGaEvent () {
       this.gaArticleEvent('NTG article milestone', this.gtmData.milestone + '%', this.gtmData.articleTitle, this.gtmData)
@@ -627,4 +634,19 @@ export default {
 .article-read-more-in {
   margin-bottom: var(--space-6);
 }
+
+#insertedAd > div > div > div::after {
+    content: "Advertisement";
+    display: block;
+    color: RGB(var(--color-text-muted));
+    font-family: var(--font-family-small);
+    letter-spacing: var(--letter-spacing-small);
+    font-weight: var(--font-weight-small);
+    font-size: var(--font-size-1);
+    line-height: var(--line-height-1);
+    margin-top: var(--space-2);
+    text-transform: uppercase;
+    text-align: right;
+}
+
 </style>
