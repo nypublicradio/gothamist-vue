@@ -117,6 +117,7 @@ html {
 }
 
 .ad-wrapper-outer.mod-header {
+  position: relative;
   background: RGB(var(--color-background));
   width: 100%;
 }
