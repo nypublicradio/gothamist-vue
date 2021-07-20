@@ -54,7 +54,14 @@
         />
         <v-spacer size="triple" />
       </div>
-      <div>ad goes here</div>
+      <div class="ad-wrapper-outer">
+        <div class="ad-wrapper-inner">
+          <div class="htlad-interior_midpage_gallery" />
+          <div class="ad-label">
+            Advertisement
+          </div>
+        </div>
+      </div>
     </div>
     <v-spacer size="triple" />
     <div class="gallery-footer">
