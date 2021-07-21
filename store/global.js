@@ -36,6 +36,7 @@ export const state = () => ({
       url: '/election-2021'
     }
   ],
+  isSensitiveContent: false,
   tipsEmail: 'tips@gothamist.com',
   wtcNewsletter: '8c376c6dff'
 })
@@ -138,5 +139,8 @@ export const mutations = {
   },
   setPreviousPath (state, path) {
     state.previousPath = path
+  },
+  setSensitiveContent (state, value) {
+    state.isSensitiveContent = value
   }
 }
