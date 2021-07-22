@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="l-container l-container--xl">
+    <div class="l-container l-container--xl c-featured-blocks__wrapper">
       <v-spacer size="hex" />
       <!-- featured area -->
       <loading-icon v-if="!featuredStoriesLoaded" />
@@ -620,10 +620,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.c-featured-blocks.l-wrap {
-  padding-left: var(--space-3);
-  padding-right: var(--space-3);
-}
-</style>
