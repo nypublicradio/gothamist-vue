@@ -1,7 +1,7 @@
 <template>
   <div :class="{'home-page' : isHomepage}">
-    <div class="htlad-skin" />
-    <div class="ad-wrapper-outer mod-header u-color-group-dark">
+    <div v-if="!isSensitiveContent" class="htlad-skin" />
+    <div v-if="!isSensitiveContent" class="ad-wrapper-outer mod-header u-color-group-dark">
       <div class="ad-wrapper-inner">
         <div v-if="isHomepage" key="index-leaderboard" class="htlad-index_leaderboard_1" />
         <div v-else key="interior-leaderboard" class="htlad-interior_leaderboard" />
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'Gothamist',
   components: {
@@ -71,7 +72,8 @@ export default {
   computed: {
     isHomepage () {
       return this.$route.name === 'index'
-    }
+    },
+    ...mapState('global', ['isSensitiveContent'])
   },
   watch: {
     $route () {

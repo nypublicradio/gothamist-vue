@@ -126,7 +126,7 @@
         />
       </div>
 
-      <div class="ad-wrapper-outer">
+      <div v-if="!article.sensitiveContent" class="ad-wrapper-outer">
         <div class="ad-wrapper-inner">
           <div class="htlad-interior_midpage_2" />
           <div class="ad-label">
@@ -496,6 +496,23 @@ export default {
         this.gtmData.milestone = 100
         this.articleGaEvent()
       }
+    },
+    article () {
+      if (this.article && this.article.sensitiveContent) {
+        this.$store.commit('global/setSensitiveContent', true)
+      } else {
+        this.$store.commit('global/setSensitiveContent', false)
+      }
+      if (this.article && this.$refs['article-body'] && !this.article.sensitiveContent) {
+        insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1'] })
+      }
+    }
+  },
+  created () {
+    if (this.article && this.article.sensitiveContent) {
+      this.$store.commit('global/setSensitiveContent', true)
+    } else {
+      this.$store.commit('global/setSensitiveContent', false)
     }
   },
   mounted () {
@@ -507,11 +524,7 @@ export default {
   },
   beforeDestroy () {
     window.removeEventListener('scroll', this.scrollListener)
-  },
-  updated () {
-    if (this.$refs['article-body']) {
-      insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1'] })
-    }
+    this.$store.commit('global/setSensitiveContent', false)
   },
   methods: {
     articleGaEvent () {
