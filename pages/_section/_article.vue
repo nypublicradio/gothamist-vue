@@ -9,6 +9,7 @@
 
 <script>
 import { fuzzyDateTime } from '~/mixins/helpers'
+import { setTargeting, clearTargeting } from '~/mixins/htl'
 
 export default {
   name: 'ArtsAndEntertainment',
@@ -67,6 +68,18 @@ export default {
       page: page?.data,
       cookies
     }
+  },
+  mounted () {
+    setTargeting({
+      Template: 'Article',
+      tags: this.page?.tags?.map(tag => tag.name),
+      racy: this.page?.provocativeContent ? 'true' : '',
+      Sponsor: this.page?.relatedSponsors?.map(tag => tag.name),
+      Category: this.page?.ancestry[0].slug
+    })
+  },
+  beforeUnmount () {
+    clearTargeting(['Template', 'tags', 'racy', 'Sponsor', 'Category'])
   }
 }
 </script>

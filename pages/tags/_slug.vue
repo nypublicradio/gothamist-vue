@@ -18,6 +18,7 @@
 
 <script>
 import gtm from '~/mixins/gtm'
+import { setTargeting, clearTargeting } from '~/mixins/htl'
 
 const { formatTitle } = require('~/mixins/helpers')
 
@@ -48,6 +49,10 @@ export default {
         this.dataLoaded = true
         this.title = formatTitle(this.$route.params.slug)
       })
+    setTargeting({ Template: 'Tag' })
+  },
+  beforeUnmount () {
+    clearTargeting(['Template'])
   },
   methods: {
     formatTitle

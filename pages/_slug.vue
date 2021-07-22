@@ -8,6 +8,7 @@
 
 <script>
 import gtm from '~/mixins/gtm'
+import { setTargeting, clearTargeting } from '~/mixins/htl'
 
 const { formatTitle } = require('~/mixins/helpers')
 
@@ -42,6 +43,9 @@ export default {
       title: null
     }
   },
+  mounted () {
+    setTargeting({ Template: 'Tag' })
+  },
   methods: {
     formatTitle
   },
@@ -71,6 +75,10 @@ export default {
         }
       ]
     }
+  },
+  beforeUnmount () {
+    clearTargeting(['Template'])
   }
+
 }
 </script>

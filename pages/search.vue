@@ -106,6 +106,7 @@
 import gtm from '@/mixins/gtm'
 import disqus from '@/mixins/disqus'
 import { mapState } from 'vuex'
+import { setTargeting, clearTargeting } from '~/mixins/htl'
 
 const {
   formatTags,
@@ -156,6 +157,10 @@ export default {
   },
   mounted () {
     this.getMoreResults()
+    setTargeting({ Template: 'Search Results' })
+  },
+  beforeUnmount () {
+    clearTargeting(['Template'])
   },
   methods: {
     formatTags,
