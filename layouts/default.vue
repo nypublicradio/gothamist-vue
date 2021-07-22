@@ -1,6 +1,6 @@
 <template>
   <div :class="{'home-page' : isHomepage}">
-    <div class="htlad-skin" />
+    <div v-if="!isSensitiveContent" class="htlad-skin" />
     <div v-if="!isSensitiveContent" class="ad-wrapper-outer mod-header u-color-group-dark">
       <div class="ad-wrapper-inner">
         <div v-if="isHomepage" key="index-leaderboard" class="htlad-index_leaderboard_1" />
