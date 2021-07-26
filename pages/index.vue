@@ -188,14 +188,16 @@
         </div>
         <v-spacer />
       </div>
-      <div class="ad-wrapper-outer">
-        <div class="ad-wrapper-inner">
-          <div class="htlad-index_leaderboard_2" />
-          <div class="ad-label">
-            Advertisement
+      <mq-layout mq="medium+">
+        <div class="ad-wrapper-outer">
+          <div class="ad-wrapper-inner">
+            <div class="htlad-index_leaderboard_2" />
+            <div class="ad-label">
+              Advertisement
+            </div>
           </div>
         </div>
-      </div>
+      </mq-layout>
       <!-- section 2 -->
       <div class="l-container l-container--10col l-wrap">
         <v-spacer size="triple" />
