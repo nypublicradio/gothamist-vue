@@ -503,9 +503,6 @@ export default {
       } else {
         this.$store.commit('global/setSensitiveContent', false)
       }
-      if (this.article && this.$refs['article-body'] && !this.article.sensitiveContent) {
-        insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1'] })
-      }
     }
   },
   created () {
@@ -513,6 +510,11 @@ export default {
       this.$store.commit('global/setSensitiveContent', true)
     } else {
       this.$store.commit('global/setSensitiveContent', false)
+    }
+  },
+  updated () {
+    if (this.article && this.$refs['article-body'] && !this.article.sensitiveContent) {
+      insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1'] })
     }
   },
   mounted () {
