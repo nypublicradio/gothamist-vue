@@ -63,7 +63,7 @@ export default {
         hitType = 'exception'
       }
       const data = {
-        event: 'Article Event',
+        event: 'eventTracking',
         sessionID: this.sessionID,
         previousPath: this.previousPath,
         IDCustomEvents: this.clientID,
