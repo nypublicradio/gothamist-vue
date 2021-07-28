@@ -39,7 +39,7 @@ export default {
           transformedData.authors = transformedData.relatedAuthors.map(author => ({
             firstName: author.firstName,
             lastName: author.lastName,
-            url: author.slug && `/author-detail/${author.slug}`,
+            url: author.slug && `/staff/${author.slug}`,
             organization: author.contributingOrganization?.name,
             organizationUrl: author.contributingOrganization?.url
           }))
