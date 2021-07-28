@@ -22,10 +22,9 @@
         </template>
         <template v-slot:comments>
           <v-counter
-            v-if="article.commentCount > 0"
             icon="comment"
             text="Comments"
-            :value="article.commentCount"
+            :value="getCommentCountById(article.legacyId || article.uuid, disqusData)"
             href="#comments"
           />
         </template>
@@ -141,7 +140,7 @@
       >
         <disqus-embed
           v-if="article"
-          :identifier="article.legacyId"
+          :identifier="article.legacyId || article.uuid"
           :url="article.url"
         />
         <v-spacer size="quin" />
@@ -178,6 +177,7 @@
 
 <script>
 import gtm from '@/mixins/gtm'
+import disqus from '@/mixins/disqus'
 import { getImagePath } from '~/mixins/image'
 import insertAdDiv from '~/utils/insert-ad-div'
 
@@ -206,7 +206,7 @@ export default {
     ArticlePageNewsletter: () => import('./ArticlePageNewsletter'),
     RecirculationModule: () => import('./RecirculationModule')
   },
-  mixins: [gtm],
+  mixins: [gtm, disqus],
   props: {
     article: {
       type: Object,
@@ -224,6 +224,8 @@ export default {
       showDonateBanner: !this.$cookies.donateBannerDismissed && this.$cookies.articleViews < 3,
       path: 'https://gothamist.com' + this.$route.fullPath,
       ogImage: this.article.socialImage || (this.article.leadImage && this.article.leadImage.image),
+      disqusData: null,
+      disqusThreadIds: [],
       baseMeta: [
         {
           hid: 'description',
@@ -517,12 +519,15 @@ export default {
       insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1'] })
     }
   },
-  mounted () {
+  async mounted () {
     this.scrollPercent25Logged = false
     this.scrollPercent50Logged = false
     this.scrollPercent75Logged = false
     this.articleGaEvent()
     window.addEventListener('scroll', this.scrollListener, { passive: true })
+    // get disqus comment counts
+    this.disqusThreadIds.push(this.article.legacyId || this.article.uuid)
+    this.disqusData = await this.getCommentCount(this.disqusThreadIds)
   },
   beforeDestroy () {
     window.removeEventListener('scroll', this.scrollListener)
