@@ -26,6 +26,7 @@
             text="Comments"
             :value="getCommentCountById(article.legacyId || article.uuid, disqusData)"
             href="#comments"
+            @click.native="scrollToComments"
           />
         </template>
         <template v-slot:photos>
@@ -554,6 +555,9 @@ export default {
     },
     scrollListener () {
       this.scrollPercent = handleScroll('.article-body')
+    },
+    scrollToComments () {
+      document.querySelector('#comments')?.scrollIntoView()
     }
   },
   head () {
