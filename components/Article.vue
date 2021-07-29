@@ -128,7 +128,7 @@
 
       <div v-if="!article.sensitiveContent" class="ad-wrapper-outer">
         <div class="ad-wrapper-inner">
-          <div class="htlad-interior_midpage_2" />
+          <div class="htlad-interior_midpage_2 break-margins" />
           <div class="ad-label">
             Advertisement
           </div>
@@ -517,7 +517,7 @@ export default {
   },
   updated () {
     if (this.article && this.$refs['article-body'] && !this.article.sensitiveContent) {
-      insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1'] })
+      insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'break-margins'] })
     }
   },
   async mounted () {
@@ -659,12 +659,12 @@ export default {
   margin-bottom: var(--space-6);
 }
 
-#insertedAd {
+.break-margins {
   position: relative;
   min-height: 270px;
 }
 
-#insertedAd > div {
+.break-margins > div {
   position: absolute;
   top: 0;
   width: max-content;
