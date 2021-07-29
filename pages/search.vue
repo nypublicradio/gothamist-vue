@@ -156,6 +156,9 @@ export default {
     }
   },
   mounted () {
+    if (this.$route.query.q) {
+      this.q = this.$route.query.q
+    }
     this.getMoreResults()
     setTargeting({ Template: 'Search Results' })
   },
@@ -167,9 +170,6 @@ export default {
     fuzzyDateTime,
     getArticleImage,
     async getMoreResults () {
-      if (this.$route.query.q) {
-        this.q = this.$route.query.q
-      }
       this.moreResultsLoaded = false
       let endpoint = '/search/?limit=12&q=' + this.q
       if (this.moreResultsOffset > 0) {
@@ -191,6 +191,11 @@ export default {
     },
     hasGallery,
     search () {
+      history.pushState(
+        {},
+        null,
+        this.$route.path + '?q=' + this.q
+      )
       this.moreResults = []
       this.moreResultsDisqusThreadIds = []
       this.moreResultsDisqusData = null
@@ -242,48 +247,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.c-search {
-  display: flex;
-  justify-content: space-between;
-}
-
-.c-search__input {
-  font-family: var(--font-family-body);
-  letter-spacing: var(--letter-spacing-body);
-  font-weight: 700;
-  text-transform: uppercase;
-  border: none;
-  display: inline-flex;
-  justify-content: center;
-}
-
-.c-search-results__form .c-search__button {
-  padding: var(--space-2);
-  background-color: transparent;
-  height: auto;
-  width: 40px;
-  display: inline-flex;
-  justify-content: center;
-  border: none;
-  position: relative;
-  cursor: pointer;
-  @include media(">medium") {
-    width: 60px;
-  }
-}
-
-.search .loading-icon {
-  width: 75px !important;
-  margin: 0;
-}
-
-.search .loading-icon path {
-  stroke: RGB(var(--color-gray));
-}
-
-.search .button .loading-icon path {
-  stroke: RGB(var(--color-text));
-}
-</style>
