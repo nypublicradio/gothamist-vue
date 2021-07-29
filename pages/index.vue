@@ -622,3 +622,43 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.c-featured-blocks.l-wrap {
+  padding: var(--space-7) var(--space-3) 0;
+  @include media(">medium") {
+    padding: var(--space-7) var(--space-7) 0;
+  }
+}
+
+.c-featured-blocks__wrapper {
+  @include media(">medium") {
+    margin: 0 auto;
+    padding-left: var(--space-3);
+    padding-right: var(--space-3);
+    width: 100%;
+    position: relative;
+  }
+}
+
+.c-featured-blocks .featured-grid {
+  grid-template-columns: 1fr;
+  @include media(">medium") {
+    grid-template-columns: 1fr 300px;
+  }
+  @include media(">xlarge") {
+    grid-gap: 35px;
+    grid-template-columns: 1fr 370px;
+  }
+  @include media(">xxlarge") {
+    grid-template-columns: 1fr 370px;
+  }
+}
+
+.c-featured-blocks .featured-grid .card.featured-grid-col1 {
+  @include media(">xlarge") {
+    width: 590px;
+    max-width: 590px;
+  }
+}
+</style>
