@@ -19,7 +19,7 @@ export default {
       default: null
     },
     identifier: {
-      type: Number,
+      type: String,
       default: null
     },
     shortname: {

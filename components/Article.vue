@@ -126,14 +126,7 @@
         />
       </div>
 
-      <div v-if="!article.sensitiveContent" class="ad-wrapper-outer">
-        <div class="ad-wrapper-inner">
-          <div class="htlad-interior_midpage_2" />
-          <div class="ad-label">
-            Advertisement
-          </div>
-        </div>
-      </div>
+      <div v-if="!article.sensitiveContent" class="htlad-interior_midpage_2 mod-break-margins mod-ad-disclosure" />
 
       <div
         v-if="!article.disableComments"
@@ -517,7 +510,7 @@ export default {
   },
   updated () {
     if (this.article && this.$refs['article-body'] && !this.article.sensitiveContent) {
-      insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1'] })
+      insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'mod-break-margins', 'mod-ad-disclosure'] })
     }
   },
   async mounted () {
@@ -659,7 +652,18 @@ export default {
   margin-bottom: var(--space-6);
 }
 
-#insertedAd > div > div > div::after {
+.mod-break-margins {
+  position: relative;
+  min-height: 270px;
+}
+
+.mod-break-margins > div {
+  position: absolute;
+  top: 0;
+  width: max-content;
+}
+
+.mod-ad-disclosure > div > div > div::after {
     content: "Advertisement";
     display: block;
     color: RGB(var(--color-text-muted));
