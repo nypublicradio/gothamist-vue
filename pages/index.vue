@@ -625,7 +625,7 @@ export default {
 .c-featured-blocks.l-wrap {
   padding: var(--space-7) var(--space-3) 0;
   @include media(">medium") {
-    padding: var(--space-7) var(--space-7) 0;
+    padding: var(--space-7) var(--space-7) 0!important;
   }
 }
 
