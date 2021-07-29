@@ -659,6 +659,17 @@ export default {
   margin-bottom: var(--space-6);
 }
 
+#insertedAd {
+  position: relative;
+  min-height: 270px;
+}
+
+#insertedAd > div {
+  position: absolute;
+  top: 0;
+  width: max-content;
+}
+
 #insertedAd > div > div > div::after {
     content: "Advertisement";
     display: block;
