@@ -126,7 +126,7 @@
         />
       </div>
 
-      <div v-if="!article.sensitiveContent" class="htlad-interior_midpage_2 mod-break-margins mod-ad-disclosure" />
+      <div v-if="!article.sensitiveContent" class="htlad-interior_midpage_2 htl-ad mod-break-margins mod-ad-disclosure" />
 
       <div
         v-if="!article.disableComments"
@@ -510,7 +510,7 @@ export default {
   },
   updated () {
     if (this.article && this.$refs['article-body'] && !this.article.sensitiveContent) {
-      insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'mod-break-margins', 'mod-ad-disclosure'] })
+      insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'htl-ad', 'mod-break-margins', 'mod-ad-disclosure'] })
     }
   },
   async mounted () {
@@ -650,31 +650,6 @@ export default {
 
 .article-read-more-in {
   margin-bottom: var(--space-6);
-}
-
-.mod-break-margins {
-  position: relative;
-  min-height: 270px;
-}
-
-.mod-break-margins > div {
-  position: absolute;
-  top: 0;
-  width: max-content;
-}
-
-.mod-ad-disclosure > div > div > div::after {
-    content: "Advertisement";
-    display: block;
-    color: RGB(var(--color-text-muted));
-    font-family: var(--font-family-small);
-    letter-spacing: var(--letter-spacing-small);
-    font-weight: var(--font-weight-small);
-    font-size: var(--font-size-1);
-    line-height: var(--line-height-1);
-    margin-top: var(--space-2);
-    text-transform: uppercase;
-    text-align: right;
 }
 
 </style>

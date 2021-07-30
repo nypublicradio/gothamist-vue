@@ -173,4 +173,29 @@ div:empty + .ad-label {
   display: none;
 }
 
+.htl-ad.mod-break-margins {
+  position: relative;
+  min-height: 270px;
+}
+
+.htl-ad.mod-break-margins > div {
+  position: absolute;
+  top: 0;
+  width: max-content;
+}
+
+.htl-ad.mod-ad-disclosure > div > div > div::after {
+    content: "Advertisement";
+    display: block;
+    color: RGB(var(--color-text-muted));
+    font-family: var(--font-family-small);
+    letter-spacing: var(--letter-spacing-small);
+    font-weight: var(--font-weight-small);
+    font-size: var(--font-size-1);
+    line-height: var(--line-height-1);
+    margin-top: var(--space-2);
+    text-transform: uppercase;
+    text-align: right;
+}
+
 </style>
