@@ -1,10 +1,24 @@
 <template>
   <div :class="{'home-page' : isHomepage}">
-    <div v-if="!isSensitiveContent" class="htlad-skin" />
-    <div v-if="!isSensitiveContent" class="ad-wrapper-outer mod-header u-color-group-dark">
+    <div
+      v-if="!isSensitiveContent"
+      class="htlad-skin"
+    />
+    <div
+      v-if="!isSensitiveContent"
+      class="ad-wrapper-outer mod-header u-color-group-dark"
+    >
       <div class="ad-wrapper-inner">
-        <div v-if="isHomepage" key="index-leaderboard" class="htlad-index_leaderboard_1" />
-        <div v-else key="interior-leaderboard" class="htlad-interior_leaderboard" />
+        <div
+          v-if="isHomepage"
+          key="index-leaderboard"
+          class="htlad-index_leaderboard_1"
+        />
+        <div
+          v-else
+          key="interior-leaderboard"
+          class="htlad-interior_leaderboard"
+        />
         <div class="ad-label">
           Advertisement
         </div>
@@ -54,6 +68,7 @@
 
 <script>
 import { mapState } from 'vuex'
+
 export default {
   name: 'Gothamist',
   components: {
@@ -99,6 +114,10 @@ export default {
   },
   methods: {
     setAdTargeting () {
+      // remove any existing ads
+      document.querySelectorAll('.htlunit-interior_leaderboard').forEach(function (el) {
+        el.remove()
+      })
       // htlbid key value targeting for ads
       const htlbid = window.htlbid = window.htlbid || {}
       htlbid.cmd = htlbid.cmd || []
@@ -121,7 +140,7 @@ html {
 }
 
 .home-page main {
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 .ad-wrapper-outer {
@@ -140,18 +159,18 @@ html {
 }
 
 .ad-label {
-    font-family: var(--font-family-small);
-    letter-spacing: var(--letter-spacing-small);
-    font-weight: var(--font-weight-small);
-    font-size: var(--font-size-1);
-    line-height: var(--line-height-1);
-    margin-top: var(--space-2);
-    text-transform: uppercase;
-    text-align: right;
+  font-family: var(--font-family-small);
+  letter-spacing: var(--letter-spacing-small);
+  font-weight: var(--font-weight-small);
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-1);
+  margin-top: var(--space-2);
+  text-transform: uppercase;
+  text-align: right;
 }
 
 div:empty + .ad-label {
- display: none;
+  display: none;
 }
 
 </style>
