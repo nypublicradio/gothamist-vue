@@ -5,7 +5,6 @@
       :key="index"
       :name="crumb.name"
       :slug="crumb.slug"
-      class="breadcrumbs-tag"
     />
   </div>
 </template>
