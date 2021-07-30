@@ -119,12 +119,8 @@
               class="u-border-accent u-hide-until--m u-space--double--bottom"
               aria-hidden="true"
             >
-            <div class="ad-wrapper-outer">
-              <div class="ad-wrapper-inner">
-                <div v-if="nuggetIndex === 0" key="interior_midpage_1" class="htlad-interior_midpage_1 htl-ad mod-break-margins mod-ad-disclosure" />
-                <div v-else key="interior_midpage_repeating" class="htlad-interior_midpage_repeating htl-ad mod-break-margins mod-ad-disclosure" />
-              </div>
-            </div>
+            <div v-if="nuggetIndex === 0" key="interior_midpage_1" class="htlad-interior_midpage_1 htl-ad mod-break-margins mod-ad-disclosure" />
+            <div v-else key="interior_midpage_repeating" class="htlad-interior_midpage_repeating htl-ad mod-break-margins mod-ad-disclosure" />
             <hr
               class="u-border-accent u-hide-until--m u-space--double--top"
               aria-hidden="true"
