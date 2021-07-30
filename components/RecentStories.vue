@@ -12,7 +12,7 @@
       :image-width="150"
       :sponsored="story.sponsoredContent"
       :title="story.title"
-      :title-link="story.url"
+      :title-link="'/' + story.ancestry[0].slug + '/' + story.meta.slug"
       :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsored_content, story.tags)"
     >
       <article-metadata
@@ -26,7 +26,7 @@
           <v-counter
             icon="comment"
             :value="disqusData.data.response[index].posts"
-            :href="story.url + '?to=comments'"
+            :href="'/' + story.ancestry[0].slug + '/' + story.meta.slug + '?to=comments'"
           />
         </template>
       </article-metadata>
