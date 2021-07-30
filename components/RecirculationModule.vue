@@ -14,7 +14,7 @@
         :image-max-width="getImageFromStory(story) && getImageFromStory(story).width || Infinity"
         :image-max-height="getImageFromStory(story) && getImageFromStory(story).height || Infinity"
         :title="story.title"
-        :title-link="story.url"
+        :title-link="'/' + story.ancestry[0].slug + '/' + story.meta.slug"
       >
         <article-metadata>
           <template v-slot:authors>
@@ -40,7 +40,7 @@
         :image-max-width="getImageFromStory(story) && getImageFromStory(story).width || Infinity"
         :image-max-height="getImageFromStory(story) && getImageFromStory(story).height || Infinity"
         :title="story.title"
-        :title-link="story.url"
+        :title-link="'/' + story.ancestry[0].slug + '/' + story.meta.slug"
         :subtitle="story.listingSummary || story.description"
       >
         <article-metadata>
