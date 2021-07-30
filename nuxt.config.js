@@ -205,6 +205,7 @@ export default {
     transpile: [
       'nypr-design-system-vue'
     ],
+    extractCSS: true,
     extend (config, ctx) {
       config.module.rules.push({
         resolve: { symlinks: false }
