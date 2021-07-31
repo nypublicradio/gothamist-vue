@@ -1,4 +1,7 @@
+const esModules = ['nypr-design-system-vue'].join('|')
+
 module.exports = {
+  globalSetup: './test/jest.setup.js',
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
     '^~/(.*)$': '<rootDir>/$1',
@@ -13,9 +16,11 @@ module.exports = {
     '^.+\\.js$': 'babel-jest',
     '.*\\.(vue)$': 'vue-jest'
   },
+  transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
   collectCoverage: true,
+  coverageDirectory: 'test/coverage',
   collectCoverageFrom: [
-    '<rootDir>/components/**/*.vue',
-    '<rootDir>/pages/**/*.vue'
+    'components/**/*.vue',
+    'pages/**/*.vue'
   ]
 }
