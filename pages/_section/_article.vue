@@ -26,7 +26,7 @@ export default {
     const oneMonth = 60 * 60 * 24 * 31
     let articleViews = Number($cookies.get('articleViews')) || 0
     articleViews += 1
-    $cookies.set('articleViews', articleViews, { expires: oneMonth })
+    $cookies.set('articleViews', articleViews, { maxAge: oneMonth })
     const cookies = {
       articleViews,
       donateBannerDismissed
