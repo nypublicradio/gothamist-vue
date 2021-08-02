@@ -215,7 +215,7 @@ export default {
       scrollPercent25Logged: false,
       scrollPercent50Logged: false,
       scrollPercent75Logged: false,
-      showDonateBanner: !this.$cookies.donateBannerDismissed && Number(this.$cookies.articleViews) < 3,
+      showDonateBanner: Number(this.$cookies.get('articleViews')) >= 3 && !this.$cookies.get('donateBannerDismissed'),
       path: 'https://gothamist.com' + this.$route.fullPath,
       ogImage: this.article.socialImage ??
         this.article.leadAsset[0]?.value.image ??
@@ -535,10 +535,10 @@ export default {
     },
     bannerClosed () {
       // only show the banner once a day
-      const tomorrow = new Date()
-      tomorrow.setDate(tomorrow.getDate() + 1)
-      this.$cookies.set('donateBannerDismissed', true, { expires: tomorrow })
-      this.$cookies.set('articleViews', 0)
+      const oneDay = 60 * 60 * 24
+      const oneMonth = 60 * 60 * 24 * 31
+      this.$cookies.set('donateBannerDismissed', true, { maxAge: oneDay })
+      this.$cookies.set('articleViews', 0, { maxAge: oneMonth })
     },
     bannerDonateClicked () {
       this.gaArticleEvent('Article Page', 'Donate Banner Clicked', this.gtmData.articleTitle, this.gtmData)
