@@ -537,8 +537,8 @@ export default {
       // only show the banner once a day
       const oneDay = 60 * 60 * 24
       const oneMonth = 60 * 60 * 24 * 31
-      this.$cookies.set('donateBannerDismissed', true, { maxAge: oneDay })
-      this.$cookies.set('articleViews', 0, { maxAge: oneMonth })
+      this.$cookies.set('donateBannerDismissed', true, { path: '/', maxAge: oneDay })
+      this.$cookies.set('articleViews', 0, { path: '/', maxAge: oneMonth })
     },
     bannerDonateClicked () {
       this.gaArticleEvent('Article Page', 'Donate Banner Clicked', this.gtmData.articleTitle, this.gtmData)
