@@ -134,7 +134,7 @@
       >
         <disqus-embed
           v-if="article"
-          :identifier="article.legacyId || article.uuid"
+          :identifier="String(article.legacyId) || article.uuid"
           :url="article.url"
         />
         <v-spacer size="quin" />
