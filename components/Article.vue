@@ -217,7 +217,9 @@ export default {
       scrollPercent75Logged: false,
       showDonateBanner: !this.$cookies.donateBannerDismissed && this.$cookies.articleViews < 3,
       path: 'https://gothamist.com' + this.$route.fullPath,
-      ogImage: this.article.socialImage || (this.article.leadImage && this.article.leadImage.image),
+      ogImage: this.article.socialImage ??
+        this.article.leadAsset[0]?.value.image ??
+        this.article.leadAsset[0]?.value.defaultImage,
       disqusData: null,
       disqusThreadIds: [],
       baseMeta: [
