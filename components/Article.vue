@@ -126,7 +126,7 @@
         />
       </div>
 
-      <div v-if="!article.sensitiveContent" class="htlad-interior_midpage_2 htl-ad mod-break-margins mod-ad-disclosure" />
+      <div v-if="!article.sensitiveContent" class="htlad-interior_midpage_2 ad-div mod-break-margins mod-ad-disclosure" />
 
       <div
         v-if="!article.disableComments"
@@ -510,7 +510,7 @@ export default {
   },
   updated () {
     if (this.article && this.$refs['article-body'] && !this.article.sensitiveContent) {
-      insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'htl-ad', 'mod-break-margins', 'mod-ad-disclosure'] })
+      insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'ad-div', 'mod-break-margins', 'mod-ad-disclosure'] })
     }
   },
   async mounted () {
