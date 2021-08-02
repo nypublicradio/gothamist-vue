@@ -173,18 +173,18 @@ div:empty + .ad-label {
   display: none;
 }
 
-.htl-ad.mod-break-margins {
+.ad-div.mod-break-margins {
   position: relative;
   min-height: 270px;
 }
 
-.htl-ad.mod-break-margins > div {
+.ad-div.mod-break-margins > div {
   position: absolute;
   top: 0;
   width: max-content;
 }
 
-.htl-ad.mod-ad-disclosure > div > div > div::after {
+.ad-div.mod-ad-disclosure > div > div > div::after {
     content: "Advertisement";
     display: block;
     color: RGB(var(--color-text-muted));
