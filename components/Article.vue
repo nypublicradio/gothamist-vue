@@ -24,7 +24,7 @@
           <v-counter
             icon="comment"
             text="Comments"
-            :value="getCommentCountById(article.legacyId || article.uuid, disqusData)"
+            :value="getCommentCountById(String(article.legacyId || article.uuid), disqusData)"
             href="#comments"
             @click.native="scrollToComments"
           />
@@ -134,7 +134,7 @@
       >
         <disqus-embed
           v-if="article"
-          :identifier="String(article.legacyId) || article.uuid"
+          :identifier="String(article.legacyId || article.uuid)"
           :url="article.url"
         />
         <v-spacer size="quin" />
