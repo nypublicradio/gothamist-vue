@@ -201,11 +201,6 @@ export default {
           hid: 'og_image',
           name: 'og:image',
           content: this.ogImage
-        },
-        {
-          hid: 'twitter_image',
-          name: 'twitter:image',
-          content: this.ogImage
         }
       ]
     }
