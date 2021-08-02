@@ -76,7 +76,7 @@
           <image-with-caption
             variation="gothamist"
             :alt-text="leadAsset.value.image.alt"
-            :image="`https://cms.demo.nypr.digital/images/${leadAsset.value.image.id}/fill-%width%x%height%/`"
+            :image="`${$config.imageBase}${leadAsset.value.image.id}/fill-%width%x%height%/`"
             :width="661"
             :height="496"
             :max-width="leadAsset.value.image.width || Infinity"
@@ -217,7 +217,9 @@ export default {
       scrollPercent75Logged: false,
       showDonateBanner: !this.$cookies.donateBannerDismissed && this.$cookies.articleViews < 3,
       path: 'https://gothamist.com' + this.$route.fullPath,
-      ogImage: this.article.socialImage || (this.article.leadImage && this.article.leadImage.image),
+      ogImage: this.article.socialImage ??
+        this.article.leadAsset[0]?.value.image ??
+        this.article.leadAsset[0]?.value.defaultImage,
       disqusData: null,
       disqusThreadIds: [],
       baseMeta: [
@@ -352,12 +354,12 @@ export default {
         {
           hid: 'og_description',
           property: 'og:description',
-          content: this.article.description
+          content: this.article.socialText ?? this.article.description
         },
         {
           hid: 'og_title',
           property: 'og:title',
-          content: this.article.title
+          content: this.article.socialTitle ?? this.article.title
         },
         {
           hid: 'og_type',

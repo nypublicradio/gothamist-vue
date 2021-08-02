@@ -226,21 +226,6 @@ export default {
           hid: 'og_description',
           name: 'og:description',
           content: 'Search Results - Gothamist'
-        },
-        {
-          hid: 'twitter_title',
-          name: 'twitter:title',
-          content: 'Search Results - Gothamist'
-        },
-        {
-          hid: 'twitter_description',
-          name: 'twitter:description',
-          content: 'Search Results - Gothamist'
-        },
-        {
-          hid: 'twitter_url',
-          name: 'twitter:url',
-          content: 'https://www.gothamist.com' + this.$route.fullPath
         }
       ]
     }

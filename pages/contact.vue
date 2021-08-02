@@ -48,11 +48,6 @@ export default {
           hid: 'og_description',
           name: 'og:description',
           content: 'Contact Us - Gothamist'
-        },
-        {
-          hid: 'twitter_url',
-          name: 'twitter:url',
-          content: 'https://www.gothamist.com' + this.$route.fullPath
         }
       ]
     }
