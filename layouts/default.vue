@@ -123,7 +123,7 @@ export default {
       htlbid.cmd = htlbid.cmd || []
       htlbid.cmd.push(() => {
         htlbid.layout('universal') // Leave as 'universal' or add custom layout
-        htlbid.setTargeting('is_testing', this.$config.environment === 'PROD' ? 'no' : 'yes')
+        htlbid.setTargeting('is_testing', this.$config.environment === 'demo' ? 'yes' : 'no')
         htlbid.setTargeting('is_home', this.isHomepage ? 'yes' : 'no')
         htlbid.setTargeting('host', location?.host)
         htlbid.setTargeting('url', this.$route.path)
