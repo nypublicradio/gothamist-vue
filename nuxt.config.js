@@ -89,10 +89,10 @@ export default {
       ],
     script: process.env.ENV === 'PROD'
       ? [
-        { hid: 'htl', src: 'https://htlbid.com/v3/gothamist.com/htlbid.js' }
+        { hid: 'htl', src: 'https://htlbid.com/v3/gothamist.com/htlbid.js', defer: true }
       ]
       : [
-        { hid: 'htl', src: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.js' }
+        { hid: 'htl', src: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.js', defer: true }
       ]
   },
 
