@@ -126,7 +126,10 @@
         />
       </div>
 
-      <div v-if="!article.sensitiveContent" class="htlad-interior_midpage_2 mod-break-margins mod-ad-disclosure" />
+      <div
+        v-if="!article.sensitiveContent"
+        class="htlad-interior_midpage_2 mod-break-margins mod-ad-disclosure"
+      />
 
       <div
         v-if="!article.disableComments"
@@ -134,7 +137,7 @@
       >
         <disqus-embed
           v-if="article"
-          :identifier="article.legacyId || article.uuid"
+          :identifier="String(article.legacyId || article.uuid)"
           :url="article.url"
         />
         <v-spacer size="quin" />
@@ -522,6 +525,9 @@ export default {
     // get disqus comment counts
     this.disqusThreadIds.push(this.article.legacyId || this.article.uuid)
     this.disqusData = await this.getCommentCount(this.disqusThreadIds)
+    if (location.hash === '#comments') {
+      this.scrollToComments()
+    }
   },
   beforeDestroy () {
     window.removeEventListener('scroll', this.scrollListener)
@@ -664,17 +670,17 @@ export default {
 }
 
 .mod-ad-disclosure > div > div > div::after {
-    content: "Advertisement";
-    display: block;
-    color: RGB(var(--color-text-muted));
-    font-family: var(--font-family-small);
-    letter-spacing: var(--letter-spacing-small);
-    font-weight: var(--font-weight-small);
-    font-size: var(--font-size-1);
-    line-height: var(--line-height-1);
-    margin-top: var(--space-2);
-    text-transform: uppercase;
-    text-align: right;
+  content: "Advertisement";
+  display: block;
+  color: RGB(var(--color-text-muted));
+  font-family: var(--font-family-small);
+  letter-spacing: var(--letter-spacing-small);
+  font-weight: var(--font-weight-small);
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-1);
+  margin-top: var(--space-2);
+  text-transform: uppercase;
+  text-align: right;
 }
 
 </style>
