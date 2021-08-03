@@ -80,14 +80,14 @@ export default {
         content: '@gothamist'
       }
     ],
-    link: process.env.ENV === 'demo'
+    link: process.env.ENV && process.env.ENV.toLowerCase() === 'demo'
       ? [
         { rel: 'stylesheet', type: 'text/css', href: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.css' }
       ]
       : [
         { rel: 'stylesheet', type: 'text/css', href: 'https://htlbid.com/v3/gothamist.com/htlbid.css' }
       ],
-    script: process.env.ENV === 'demo'
+    script: process.env.ENV && process.env.ENV.toLowerCase() === 'demo'
       ? [
         { hid: 'htl', src: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.js', defer: true }
       ]
@@ -165,7 +165,7 @@ export default {
     axios: {
       baseURL: process.env.API
     },
-    environment: process.env.ENV
+    environment: process.env.ENV && process.env.ENV.toLowerCase()
   },
 
   gtm: {
