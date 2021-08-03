@@ -70,12 +70,12 @@
               :updated-date="story.result.updatedDate ? fuzzyDateTime(story.result.updatedDate) : null"
             >
               <template
-                v-if="story.result.legacyId && moreResultsDisqusData"
+                v-if="getCommentCountById(story.result.legacyId | story.result.uuid, moreResultsDisqusData)"
                 v-slot:comments
               >
                 <v-counter
                   icon="comment"
-                  :value="getCommentCountById(story.result.legacyId, moreResultsDisqusData)"
+                  :value="getCommentCountById(story.result.legacyId | story.result.uuid, moreResultsDisqusData)"
                   :href="`/${story.result.ancestry[0].slug}/${story.result.meta.slug}?to=comments`"
                 />
               </template>
@@ -183,7 +183,7 @@ export default {
           this.moreResultsOffset += 12
           this.moreResultsLoaded = true
           response.data.items.forEach((item) => {
-            this.moreResultsDisqusThreadIds.push(item.result.legacyId)
+            this.moreResultsDisqusThreadIds.push(item.result.legacyId | item.result.uuid)
           })
         })
       this.moreResultsDisqusData = await this.getCommentCount(this.moreResultsDisqusThreadIds)
