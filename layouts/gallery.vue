@@ -20,7 +20,7 @@ export default {
     await this.$store.dispatch('global/setNavigation')
     setTargeting({
       Template: 'Article Gallery',
-      is_testing: this.$config.environment === 'PROD' ? 'no' : 'yes',
+      is_testing: this.$config.environment === 'demo' ? 'yes' : 'no',
       is_home: this.isHomepage ? 'yes' : 'no',
       host: location?.host,
       url: this.$route.path,
