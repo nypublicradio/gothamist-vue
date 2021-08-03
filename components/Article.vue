@@ -354,12 +354,12 @@ export default {
         {
           hid: 'og_description',
           property: 'og:description',
-          content: this.article.socialText ?? this.article.description
+          content: this.article.socialText || this.article.description
         },
         {
           hid: 'og_title',
           property: 'og:title',
-          content: this.article.socialTitle ?? this.article.title
+          content: this.article.socialTitle || this.article.title
         },
         {
           hid: 'og_type',
