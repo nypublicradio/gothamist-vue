@@ -49,12 +49,12 @@
               :updated-date="featuredStories[0].updatedDate ? fuzzyDateTime(featuredStories[0].updatedDate) : null"
             >
               <template
-                v-if="getCommentCountById(featuredStories[0].legacyId | featuredStories[0].uuid, featuredStoriesDisqusData)"
+                v-if="getCommentCountById(String(featuredStories[0].legacyId ||featuredStories[0].uuid), featuredStoriesDisqusData)"
                 v-slot:comments
               >
                 <v-counter
                   icon="comment"
-                  :value="getCommentCountById(featuredStories[0].legacyId | featuredStories[0].uuid, featuredStoriesDisqusData) || 0"
+                  :value="getCommentCountById(String(featuredStories[0].legacyId || featuredStories[0].uuid), featuredStoriesDisqusData) || 0"
                   :href="`/${featuredStories[0].ancestry[0].slug}/${featuredStories[0].meta.slug}#comments`"
                 />
               </template>
@@ -81,12 +81,12 @@
                   :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
                 >
                   <template
-                    v-if="getCommentCountById(story.legacyId | story.uuid, featuredStoriesDisqusData)"
+                    v-if="getCommentCountById(String(story.legacyId || story.uuid), featuredStoriesDisqusData)"
                     v-slot:comments
                   >
                     <v-counter
                       icon="comment"
-                      :value="getCommentCountById(story.legacyId | story.uuid, featuredStoriesDisqusData)"
+                      :value="getCommentCountById(String(story.legacyId || story.uuid), featuredStoriesDisqusData)"
                       :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                     />
                   </template>
@@ -123,12 +123,12 @@
             :updated-date="sponsoredStory[0].updatedDate ? fuzzyDateTime(sponsoredStory[0].updatedDate) : null"
           >
             <template
-              v-if="getCommentCountById(sponsoredStory[0].legacyId | sponsoredStory[0].uuid, sponsoredStoryDisqusData)"
+              v-if="getCommentCountById(String(sponsoredStory[0].legacyId || sponsoredStory[0].uuid), sponsoredStoryDisqusData)"
               v-slot:comments
             >
               <v-counter
                 icon="comment"
-                :value="getCommentCountById(sponsoredStory[0].legacyId | sponsoredStory[0].uuid, sponsoredStoryDisqusData)"
+                :value="getCommentCountById(String(sponsoredStory[0].legacyId || sponsoredStory[0].uuid), sponsoredStoryDisqusData)"
                 :href="`/${sponsoredStory[0].ancestry[0].slug}/${sponsoredStory[0].meta.slug}#comments`"
               />
             </template>
@@ -165,12 +165,12 @@
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
-                  v-if="getCommentCountById(story.legacyId | story.uuid, riverDisqusData)"
+                  v-if="getCommentCountById(String(story.legacyId || story.uuid), riverDisqusData)"
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(story.legacyId | story.uuid, riverDisqusData) || 0"
+                    :value="getCommentCountById(String(story.legacyId || story.uuid), riverDisqusData) || 0"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
@@ -220,12 +220,12 @@
             :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
           >
             <template
-              v-if="getCommentCountById(story.legacyId | story.uuid, riverDisqusData)"
+              v-if="getCommentCountById(String(story.legacyId || story.uuid), riverDisqusData)"
               v-slot:comments
             >
               <v-counter
                 icon="comment"
-                :value="getCommentCountById(story.legacyId | story.uuid, riverDisqusData) || 0"
+                :value="getCommentCountById(String(story.legacyId || story.uuid), riverDisqusData) || 0"
                 :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
               />
             </template>
@@ -266,12 +266,12 @@
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
-                  v-if="getCommentCountById(story.legacyId | story.uuid, riverDisqusData)"
+                  v-if="getCommentCountById(String(story.legacyId || story.uuid), riverDisqusData)"
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(story.legacyId | story.uuid, riverDisqusData) || 0"
+                    :value="getCommentCountById(String(story.legacyId || story.uuid), riverDisqusData) || 0"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
@@ -313,12 +313,12 @@
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
-                  v-if="getCommentCountById(story.legacyId | story.uuid, riverDisqusData)"
+                  v-if="getCommentCountById(String(story.legacyId || story.uuid), riverDisqusData)"
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(story.legacyId | story.uuid, riverDisqusData) || 0"
+                    :value="getCommentCountById(String(story.legacyId || story.uuid), riverDisqusData) || 0"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
@@ -365,12 +365,12 @@
                   :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
                 >
                   <template
-                    v-if="getCommentCountById(story.legacyId | story.uuid, moreResultsDisqusData)"
+                    v-if="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData)"
                     v-slot:comments
                   >
                     <v-counter
                       icon="comment"
-                      :value="getCommentCountById(story.legacyId | story.uuid, moreResultsDisqusData) || 0"
+                      :value="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData) || 0"
                       :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                     />
                   </template>
@@ -450,7 +450,7 @@ export default {
       .then((response) => {
         this.featuredStories = response.data.items
         response.data.items.forEach((item) => {
-          this.featuredStoriesDisqusThreadIds.push(item.legacyId | item.uuid)
+          this.featuredStoriesDisqusThreadIds.push(item.legacyId || item.uuid)
         })
         this.featuredStoriesLoaded = true
       })
@@ -461,7 +461,7 @@ export default {
         this.sponsoredStory = response.data.items
         this.sponsoredStory.forEach((sponsoredStory) => {
           // add thread ID to disqus array
-          this.sponsoredStoryDisqusThreadIds.push(sponsoredStory.legacyId | sponsoredStory.uuid)
+          this.sponsoredStoryDisqusThreadIds.push(sponsoredStory.legacyId || sponsoredStory.uuid)
           // if the story is less than 24 hours old, do nothing and keep it in the sponsoredStory array
           // if the story is flagged as featured and is more than 24 hours old and less than 48 hours old
           if (sponsoredStory.showAsFeature && isMoreThan24Hours(sponsoredStory.publicationDate) && isLessThan48Hours(sponsoredStory.publicationDate)) {
@@ -491,7 +491,7 @@ export default {
         this.featuredStory = response.data.items
         this.featuredStory.forEach((featuredStory) => {
           // add thread ID to disqus array
-          this.featuredStoryDisqusThreadIds.push(featuredStory.legacyId | featuredStory.uuid)
+          this.featuredStoryDisqusThreadIds.push(featuredStory.legacyId || featuredStory.uuid)
           // if the story is more than 24 hours old and less than 48 hours old
           if (isMoreThan24Hours(featuredStory.publicationDate) && isLessThan48Hours(featuredStory.publicationDate)) {
             // replace the 4th featured story with this sponsored story
@@ -512,7 +512,7 @@ export default {
       .then((response) => {
         this.river = response.data.items
         response.data.items.forEach((item) => {
-          this.riverDisqusThreadIds.push(item.legacyId | item.uuid)
+          this.riverDisqusThreadIds.push(item.legacyId || item.uuid)
         })
         this.riverLoaded = true
       })
@@ -608,7 +608,7 @@ export default {
           this.offset += 32
           this.moreResultsLoaded = true
           response.data.items.forEach((item) => {
-            this.moreResultsDisqusThreadIds.push(item.legacyId | item.uuid)
+            this.moreResultsDisqusThreadIds.push(item.legacyId || item.uuid)
           })
         })
       this.moreResultsDisqusData = await this.getCommentCount(this.moreResultsDisqusThreadIds)
@@ -627,7 +627,7 @@ export default {
 .c-featured-blocks.l-wrap {
   padding: var(--space-7) var(--space-3) 0;
   @include media(">medium") {
-    padding: var(--space-7) var(--space-7) 0!important;
+    padding: var(--space-7) var(--space-7) 0 !important;
   }
 }
 
