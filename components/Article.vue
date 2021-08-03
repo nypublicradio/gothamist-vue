@@ -524,6 +524,9 @@ export default {
     // get disqus comment counts
     this.disqusThreadIds.push(this.article.legacyId || this.article.uuid)
     this.disqusData = await this.getCommentCount(this.disqusThreadIds)
+    if (location.hash === '#comments') {
+      this.scrollToComments()
+    }
   },
   beforeDestroy () {
     window.removeEventListener('scroll', this.scrollListener)
