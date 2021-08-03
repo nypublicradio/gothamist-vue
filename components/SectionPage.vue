@@ -30,12 +30,12 @@
               :updated-date="featuredStory.updatedDate ? fuzzyDateTime(featuredStory.updatedDate) : null"
             >
               <template
-                v-if="getCommentCountById(featuredStory.legacyId | featuredStory.uuid, moreResultsDisqusData)"
+                v-if="getCommentCountById(String(featuredStory.legacyId || featuredStory.uuid), moreResultsDisqusData)"
                 v-slot:comments
               >
                 <v-counter
                   icon="comment"
-                  :value="getCommentCountById(featuredStory.legacyId | featuredStory.uuid, moreResultsDisqusData)"
+                  :value="getCommentCountById(String(featuredStory.legacyId || featuredStory.uuid), moreResultsDisqusData)"
                   :href="`/${featuredStory.ancestry[0].slug}/${featuredStory.meta.slug}?to=comments`"
                 />
               </template>
@@ -71,12 +71,12 @@
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
-                  v-if="getCommentCountById(story.legacyId | story.uuid, moreResultsDisqusData)"
+                  v-if="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData)"
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(story.legacyId | story.uuid, moreResultsDisqusData)"
+                    :value="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData)"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                   />
                 </template>
@@ -117,12 +117,12 @@
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
-                  v-if="getCommentCountById(story.legacyId | story.uuid, moreResultsDisqusData)"
+                  v-if="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData)"
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(story.legacyId | story.uuid, moreResultsDisqusData)"
+                    :value="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData)"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                   />
                 </template>
@@ -192,7 +192,7 @@ export default {
       .then((response) => {
         this.featuredStories = response.data.items
         response.data.items.forEach((item) => {
-          this.featuredStoriesDisqusThreadIds.push(item.legacyId | item.uuid)
+          this.featuredStoriesDisqusThreadIds.push(item.legacyId || item.uuid)
         })
         this.featuredStoriesLoaded = true
       })
@@ -256,7 +256,7 @@ export default {
           this.moreResultsOffset += 12
           this.moreResultsLoaded = true
           response.data.items.forEach((item) => {
-            this.moreResultsDisqusThreadIds.push(item.legacyId | item.uuid)
+            this.moreResultsDisqusThreadIds.push(item.legacyId || item.uuid)
           })
         })
       this.moreResultsDisqusData = await this.getCommentCount(this.moreResultsDisqusThreadIds)
