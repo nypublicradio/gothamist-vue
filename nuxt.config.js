@@ -80,14 +80,14 @@ export default {
         content: '@gothamist'
       }
     ],
-    link: process.env.ENV && process.env.ENV.toLowerCase() === 'demo'
+    link: process.env.NUXT_ENV_ENV === 'demo'
       ? [
         { rel: 'stylesheet', type: 'text/css', href: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.css' }
       ]
       : [
         { rel: 'stylesheet', type: 'text/css', href: 'https://htlbid.com/v3/gothamist.com/htlbid.css' }
       ],
-    script: process.env.ENV && process.env.ENV.toLowerCase() === 'demo'
+    script: process.env.NUXT_ENV_ENV === 'demo'
       ? [
         { hid: 'htl', src: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.js', defer: true }
       ]
