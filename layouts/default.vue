@@ -130,6 +130,40 @@ export default {
         htlbid.setTargeting('urlSegments', this.$route.path.split('/').filter(segment => segment.length > 0))
       })
     }
+  },
+  head () {
+    return {
+      link: [
+        {
+          skip: this.$config.environment !== 'demo',
+          hid: 'htlcss',
+          rel: 'stylesheet',
+          type: 'text/css',
+          href: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.css'
+        },
+        {
+          skip: this.$config.environment === 'demo',
+          hid: 'htlcss',
+          rel: 'stylesheet',
+          type: 'text/css',
+          href: 'https://htlbid.com/v3/gothamist.com/htlbid.css'
+        }
+      ],
+      script: [
+        {
+          skip: this.$config.environment !== 'demo',
+          hid: 'htljs',
+          src: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.js',
+          defer: true
+        },
+        {
+          skip: this.$config.environment === 'demo',
+          hid: 'htljs',
+          src: 'https://htlbid.com/v3/gothamist.com/htlbid.js',
+          defer: true
+        }
+      ]
+    }
   }
 }
 </script>

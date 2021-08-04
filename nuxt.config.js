@@ -79,21 +79,7 @@ export default {
         name: 'twitter:site',
         content: '@gothamist'
       }
-    ],
-    link: process.env.NUXT_ENV_ENV === 'demo'
-      ? [
-        { rel: 'stylesheet', type: 'text/css', href: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.css' }
-      ]
-      : [
-        { rel: 'stylesheet', type: 'text/css', href: 'https://htlbid.com/v3/gothamistv2.com/htlbid.css' }
-      ],
-    script: process.env.NUXT_ENV_ENV === 'demo'
-      ? [
-        { hid: 'htl', src: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.js', defer: true }
-      ]
-      : [
-        { hid: 'htl', src: 'https://htlbid.com/v3/gothamistv2.com/htlbid.js', defer: true }
-      ]
+    ]
   },
 
   link: [
