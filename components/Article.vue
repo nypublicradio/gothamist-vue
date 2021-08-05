@@ -34,7 +34,7 @@
             v-if="article.gallery"
             icon="gallery"
             text="Photos"
-            :value="galleryImages.length"
+            :value="galleryCount"
             :href="galleryLink"
           />
         </template>
@@ -91,7 +91,7 @@
           class="article-lead-image"
         >
           <gallery-preview
-            :count="galleryImages.length"
+            :count="galleryCount"
             :images="galleryImages"
             :gallery-url="galleryLink"
             variation="gothamist"
@@ -287,6 +287,13 @@ export default {
         })
       }
       return breadcrumbs
+    },
+    galleryCount () {
+      if (this.article.gallery) {
+        return this.article.gallery.slides.length
+      } else {
+        return 0
+      }
     },
     galleryImages () {
       if (this.article.gallery) {
