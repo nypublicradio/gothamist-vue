@@ -165,7 +165,7 @@ export default {
     },
     visibilityChanged (isVisible, entry, imageId) {
       if (isVisible && this.pageLoaded) {
-        this.$router.push({
+        this.$router.replace({
           path: this.$route.path,
           query: { image: imageId }
         })
