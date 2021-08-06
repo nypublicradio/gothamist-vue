@@ -118,6 +118,9 @@ export default {
       document.querySelectorAll('.htlunit-interior_leaderboard').forEach(function (el) {
         el.remove()
       })
+      document.querySelectorAll('.htlunit-interior_midpage_1').forEach(function (el) {
+        el.remove()
+      })
       // htlbid key value targeting for ads
       const htlbid = window.htlbid = window.htlbid || {}
       htlbid.cmd = htlbid.cmd || []

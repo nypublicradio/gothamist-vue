@@ -1,5 +1,5 @@
 <template>
-  <div class="streamfield">
+  <div class="streamfield o-rte-text">
     <template v-for="block in streamfield">
       <!-- block-quote -->
       <div v-if="block.type === 'block-quote'" :key="block.id" class="streamfield-block-quote">
@@ -14,7 +14,7 @@
       <div
         v-else-if="block.type === 'code'"
         :key="block.id"
-        class="streamfield-code o-rte-text u-spacing"
+        class="streamfield-code u-spacing"
         v-html="block.value.code"
       />
 
@@ -85,7 +85,7 @@
       <div
         v-else-if="block.type === 'paragraph'"
         :key="block.id"
-        class="streamfield-paragraph o-rte-text u-spacing"
+        class="streamfield-paragraph u-spacing"
         v-html="block.value"
       />
 
