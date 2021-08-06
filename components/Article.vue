@@ -501,13 +501,6 @@ export default {
         this.gtmData.milestone = 100
         this.articleGaEvent()
       }
-    },
-    article () {
-      if (this.article && this.article.sensitiveContent) {
-        this.$store.commit('global/setSensitiveContent', true)
-      } else {
-        this.$store.commit('global/setSensitiveContent', false)
-      }
     }
   },
   updated () {
@@ -516,11 +509,6 @@ export default {
     }
   },
   async mounted () {
-    if (this.article && this.article.sensitiveContent) {
-      this.$store.commit('global/setSensitiveContent', true)
-    } else {
-      this.$store.commit('global/setSensitiveContent', false)
-    }
     this.scrollPercent25Logged = false
     this.scrollPercent50Logged = false
     this.scrollPercent75Logged = false
@@ -535,7 +523,6 @@ export default {
   },
   beforeDestroy () {
     window.removeEventListener('scroll', this.scrollListener)
-    this.$store.commit('global/setSensitiveContent', false)
   },
   methods: {
     articleGaEvent () {
