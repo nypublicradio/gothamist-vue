@@ -27,6 +27,9 @@ export const formatTags = function (name, slug, sponsored, tags) {
 // slug = the article's ancestry's slug 'ancestry[0].slug' from the CMS API
 // listingImage = the article's 'listing_image' from the CMS API
 export const getArticleImage = function (asset, slug, listingImage) {
+  if (listingImage !== undefined && listingImage !== null) {
+    return `${this.$config.imageBase}${listingImage.id}/fill-560x413/`
+  }
   if (asset !== undefined && asset.length > 0) {
     if (asset[0].value.image) {
       return `${this.$config.imageBase}${asset[0].value.image.id}/fill-560x413/`
@@ -34,9 +37,6 @@ export const getArticleImage = function (asset, slug, listingImage) {
     if (asset[0].value.defaultImage) {
       return `${this.$config.imageBase}${asset[0].value.defaultImage.id}/fill-560x413/`
     }
-  }
-  if (listingImage !== undefined && listingImage !== null) {
-    return `${this.$config.imageBase}${listingImage.id}/fill-560x413/`
   }
   switch (slug) {
     case 'arts-entertainment':
