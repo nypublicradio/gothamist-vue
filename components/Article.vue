@@ -510,19 +510,17 @@ export default {
       }
     }
   },
-  created () {
-    if (this.article && this.article.sensitiveContent) {
-      this.$store.commit('global/setSensitiveContent', true)
-    } else {
-      this.$store.commit('global/setSensitiveContent', false)
-    }
-  },
   updated () {
     if (this.article && this.$refs['article-body'] && !this.article.sensitiveContent) {
       insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'ad-div', 'mod-break-margins', 'mod-ad-disclosure'] })
     }
   },
   async mounted () {
+    if (this.article && this.article.sensitiveContent) {
+      this.$store.commit('global/setSensitiveContent', true)
+    } else {
+      this.$store.commit('global/setSensitiveContent', false)
+    }
     this.scrollPercent25Logged = false
     this.scrollPercent50Logged = false
     this.scrollPercent75Logged = false
