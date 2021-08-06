@@ -70,6 +70,13 @@ export default {
       cookies
     }
   },
+  beforeMount () {
+    if (this.page?.sensitiveContent) {
+      this.$store.commit('global/setSensitiveContent', true)
+    } else {
+      this.$store.commit('global/setSensitiveContent', false)
+    }
+  },
   mounted () {
     setTargeting({
       Template: 'Article',
@@ -79,8 +86,9 @@ export default {
       Category: this.page?.ancestry[0].slug
     })
   },
-  beforeUnmount () {
+  beforeDestroy () {
     clearTargeting(['Template', 'tags', 'racy', 'Sponsor', 'Category'])
+    this.$store.commit('global/setSensitiveContent', false)
   }
 }
 </script>
