@@ -2,10 +2,10 @@ import navigation from '~/mixins/navigation'
 
 export const state = () => ({
   dailyNewsletter: '65dbec786b',
-  defaultImage: '/images/defaults/no-category/no-category-tile.png',
-  defaultImageArts: '/images/defaults/arts/arts-tile.png',
-  defaultImageFood: '/images/defaults/food/food-tile.png',
-  defaultImageNews: '/images/defaults/news/news-tile.png',
+  defaultImage: '/static-images/defaults/no-category/no-category-tile.png',
+  defaultImageArts: '/static-images/defaults/arts/arts-tile.png',
+  defaultImageFood: '/static-images/defaults/food/food-tile.png',
+  defaultImageNews: '/static-images/defaults/news/news-tile.png',
   disqusAPI: process.env.DISQUS_API,
   disqusPublicKey: process.env.DISQUS_PUBLIC_KEY,
   donateUrl: 'https://pledge3.wnyc.org/donate/gothamist/onestep/?utm_medium=partnersite&utm_source=gothamist&utm_campaign=brandheader',
