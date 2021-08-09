@@ -64,6 +64,16 @@ function _unwrapElement (element) {
 
 let target
 
+// remove the wrapper elements so paragraphs are top level elements
+const unwrapText = function (container) {
+  container.childNodes.forEach((element) => {
+    if (element.classList?.contains('streamfield-paragraph') || // article text
+        element.classList?.contains('streamfield-code')) { // legacy articles are just html in code blocks
+      _unwrapElement(element)
+    }
+  })
+}
+
 /**
   Inserts a div into a story's DOM based on the following rules.
 
@@ -89,14 +99,6 @@ let target
   @return {Element} The inserted div
 */
 const insertAdDiv = function (divId, container, { wordsBeforeAd = 150, classNames = [], reset = false } = {}) {
-  // remove the wrapper elements so paragraphs are top level elements
-  container.childNodes.forEach((element) => {
-    if (element.classList?.contains('streamfield-paragraph') || // article text
-        element.classList?.contains('streamfield-code')) { // legacy articles are just html in code blocks
-      _unwrapElement(element)
-    }
-  })
-
   const nodes = [...container.childNodes].filter(_isNotWhitespaceOnly)
   let wordCount = 0
 
@@ -128,3 +130,7 @@ const insertAdDiv = function (divId, container, { wordsBeforeAd = 150, className
 }
 
 export default insertAdDiv
+export {
+  insertAdDiv,
+  unwrapText
+}
