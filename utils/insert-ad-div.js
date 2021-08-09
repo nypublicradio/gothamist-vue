@@ -88,7 +88,7 @@ let target
   to the inserted Div
   @return {Element} The inserted div
 */
-const insertAdDiv = function (divId, container, { wordsBeforeAd = 150, classNames = [] } = {}) {
+const insertAdDiv = function (divId, container, { wordsBeforeAd = 150, classNames = [], reset = false } = {}) {
   // remove the wrapper elements so paragraphs are top level elements
   container.childNodes.forEach((element) => {
     if (element.classList?.contains('streamfield-paragraph') || // article text
@@ -114,7 +114,11 @@ const insertAdDiv = function (divId, container, { wordsBeforeAd = 150, className
     }
   })
   // Create the target div (or reuse it)
-  target = target || document.createElement('div')
+  if (reset) {
+    target = document.createElement('div')
+  } else {
+    target = target || document.createElement('div')
+  }
   target.id = divId
   target.className = ''
   target.classList.add(...classNames)
