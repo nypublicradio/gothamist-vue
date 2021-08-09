@@ -100,9 +100,11 @@
       </div>
       <v-spacer size="quad" />
       <v-streamfield
+        :key="article.uuid || article.legacyId"
         ref="article-body"
         class="l-container l-container--10col article-body c-article__body"
         :streamfield="article.body"
+        @hook:mounted="insertAd"
       />
       <v-spacer size="quad" />
       <div
@@ -503,15 +505,7 @@ export default {
       }
     }
   },
-  updated () {
-    if (this.article && this.$refs['article-body'] && !this.article.sensitiveContent) {
-      insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'ad-div', 'mod-break-margins', 'mod-ad-disclosure'] })
-    }
-  },
   async mounted () {
-    if (this.article && this.$refs['article-body'] && !this.article.sensitiveContent) {
-      insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'ad-div', 'mod-break-margins', 'mod-ad-disclosure'] })
-    }
     this.scrollPercent25Logged = false
     this.scrollPercent50Logged = false
     this.scrollPercent75Logged = false
@@ -552,6 +546,11 @@ export default {
     },
     scrollToComments () {
       document.querySelector('#comments')?.scrollIntoView()
+    },
+    insertAd () {
+      if (this.article && this.$refs['article-body'] && !this.article.sensitiveContent) {
+        insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'ad-div', 'mod-break-margins', 'mod-ad-disclosure'], reset: true })
+      }
     }
   },
   head () {
