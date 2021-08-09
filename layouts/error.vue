@@ -34,7 +34,7 @@
       <image-with-caption
         variation="gothamist"
         alt-text="Realize the key to Zubaz is wearing them high. No need to rock these low. They do the work for you."
-        image="/images/404.jpg"
+        image="/static-images/404.jpg"
         caption="Realize the key to Zubaz is wearing them high. No need to rock these low. They do the work for you."
       />
     </div>
