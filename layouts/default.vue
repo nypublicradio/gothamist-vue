@@ -54,8 +54,8 @@
             <product-marketing-banner
               :title="banner.value.title"
               :description="banner.value.description"
-              :cta="banner.value.button_text"
-              :link="banner.value.button_link"
+              :cta="banner.value.buttonText"
+              :link="banner.value.buttonLink"
             />
           </template>
         </div>
@@ -103,13 +103,13 @@ export default {
     await this.$axios
       .get('/sitewide_components/1/')
       .then(response => (
-        this.breakingNewsBanner = response.data.breaking_news
+        this.breakingNewsBanner = response.data.breakingNews
       ))
     // check for product marketing banner
     await this.$axios
       .get('/system_messages/1/')
       .then(response => (
-        this.productMarketingBanner = response.data.product_banners
+        this.productMarketingBanner = response.data.productBanners
       ))
   },
   methods: {
