@@ -134,6 +134,13 @@ export default {
       embed.src = 'https://platform.twitter.com/widgets.js'
       document.body.appendChild(embed)
     }
+    // load newsletter signup embeds manually
+    if (document.querySelectorAll('[data-pym-src]').length > 0) {
+      const embed = document.createElement('script')
+      embed.id = 'nprapps'
+      embed.src = 'https://pym.nprapps.org/pym.v1.min.js'
+      document.body.appendChild(embed)
+    }
   },
   methods: {
     formatTags,
