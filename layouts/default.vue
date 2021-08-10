@@ -178,7 +178,7 @@ html {
 }
 
 .home-page .gothamist-header {
-  padding-bottom: 45px; //overhanging logo heihgt
+  padding-bottom: 45px; //overhanging logo height
 }
 
 .ad-wrapper-outer {
