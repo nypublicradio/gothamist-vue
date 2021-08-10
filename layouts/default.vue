@@ -177,6 +177,10 @@ html {
   margin-top: 0;
 }
 
+.home-page .gothamist-header {
+  padding-bottom: 45px; //overhanging logo height
+}
+
 .ad-wrapper-outer {
   color: RGB(var(--color-text-muted));
 }
