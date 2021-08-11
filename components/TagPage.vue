@@ -15,7 +15,14 @@
       >
       <v-spacer size="triple" />
     </div>
+
     <!-- header & top page zone -->
+
+    <div class="gothamist-banners l-container l-container--xl l-wrap">
+      <gothamist-breaking-news class="l-container l-container--16col" />
+      <gothamist-marketing-banners class="l-container l-container--16col" />
+    </div>
+
     <div class="l-container l-container--14col l-wrap">
       <header v-if="title">
         <h1 class="tags-page-header">
@@ -195,6 +202,8 @@ export default {
   name: 'Section',
   components: {
     ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
+    GothamistMarketingBanners: () => import('../components/GothamistMarketingBanners'),
+    GothamistBreakingNews: () => import('../components/GothamistBreakingNews'),
     LoadingIcon: () => import('nypr-design-system-vue/src/components/animations/LoadingIcon'),
     VButton: () => import('nypr-design-system-vue/src/components/VButton'),
     VCard: () => import('nypr-design-system-vue/src/components/VCard'),

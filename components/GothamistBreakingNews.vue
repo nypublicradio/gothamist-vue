@@ -1,5 +1,5 @@
 <template>
-  <div v-if="breakingNewsBanner.length > 0" class="gothamist-breaking-news">
+  <div v-if="breakingNewsBanner && breakingNewsBanner.length > 0" class="gothamist-breaking-news">
     <template
       v-for="(banner, index) in breakingNewsBanner"
       class="l-container l-container--xl l-wrap"
@@ -36,3 +36,8 @@ export default {
   }
 }
 </script>
+<style>
+.gothamist-breaking-news-banner {
+   margin-bottom: var(--space-3);
+}
+</style>

@@ -26,7 +26,7 @@
     </div>
     <gothamist-header />
     <main :class="$route.name">
-      <div class="gothamist-banners l-container l-container--xl l-wrap">
+      <div v-if="this.$route.name !== 'tags-slug'" class="gothamist-banners l-container l-container--xl l-wrap">
         <gothamist-breaking-news class="l-container l-container--16col" />
         <gothamist-marketing-banners class="l-container l-container--16col" />
       </div>
@@ -130,6 +130,10 @@ html {
 
 .home-page .gothamist-header {
   padding-bottom: 45px; //overhanging logo height
+}
+
+.home-page .gothamist-banners:first-child {
+  padding-top: var(--space-6);
 }
 
 .ad-wrapper-outer {
