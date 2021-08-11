@@ -152,7 +152,8 @@ export default {
     axios: {
       baseURL: process.env.API
     },
-    environment: process.env.ENV && process.env.ENV.toLowerCase()
+    environment: process.env.ENV && process.env.ENV.toLowerCase(),
+    siteId: '1'
   },
 
   gtm: {
