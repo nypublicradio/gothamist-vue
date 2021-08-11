@@ -28,23 +28,7 @@
     <main :class="$route.name">
       <div class="gothamist-banners l-container l-container--xl l-wrap">
         <gothamist-breaking-news class="l-container l-container--16col" />
-        <div>
-          <div
-            v-for="(banner, index) in productMarketingBanner"
-            :key="index"
-            class="l-container l-container--xl l-wrap"
-          >
-            <template v-if="banner.value">
-              <v-spacer size="double" />
-              <product-marketing-banner
-                :title="banner.value.title"
-                :description="banner.value.description"
-                :cta="banner.value.buttonText"
-                :link="banner.value.buttonLink"
-              />
-            </template>
-          </div>
-        </div>
+        <gothamist-marketing-banners class="l-container l-container--16col" />
       </div>
       <Nuxt />
     </main>
@@ -60,14 +44,8 @@ export default {
   components: {
     GothamistFooter: () => import('../components/GothamistFooter'),
     GothamistHeader: () => import('../components/GothamistHeader'),
-    ProductMarketingBanner: () => import('../components/ProductMarketingBanner'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
+    GothamistMarketingBanners: () => import('../components/GothamistMarketingBanners'),
     GothamistBreakingNews: () => import('../components/GothamistBreakingNews')
-  },
-  data () {
-    return {
-      productMarketingBanner: null
-    }
   },
   computed: {
     isHomepage () {
@@ -84,12 +62,6 @@ export default {
     this.setAdTargeting()
     // set the navigation
     await this.$store.dispatch('global/setNavigation')
-    // check for product marketing banner
-    await this.$axios
-      .get('/system_messages/1/')
-      .then(response => (
-        this.productMarketingBanner = response.data.productBanners
-      ))
   },
   methods: {
     setAdTargeting () {

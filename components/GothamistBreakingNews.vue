@@ -1,5 +1,5 @@
 <template>
-  <div class="gothamist-breaking-news">
+  <div v-if="breakingNewsBanner.length > 0" class="gothamist-breaking-news">
     <template
       v-for="(banner, index) in breakingNewsBanner"
       class="l-container l-container--xl l-wrap"
@@ -7,6 +7,7 @@
       <v-banner
         v-if="banner.value"
         :key="index"
+        class="gothamist-breaking-news-banner"
         tag="Breaking News"
         :headline="banner.value.title"
         :headline-link="banner.value.link"
