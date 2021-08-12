@@ -76,7 +76,7 @@
                 <v-counter
                   icon="comment"
                   :value="getCommentCountById(String(story.result.legacyId || story.result.uuid), moreResultsDisqusData)"
-                  :href="`/${story.result.ancestry[0].slug}/${story.result.meta.slug}?to=comments`"
+                  :href="`/${story.result.ancestry[0].slug}/${story.result.meta.slug}#comments`"
                 />
               </template>
             </article-metadata>
