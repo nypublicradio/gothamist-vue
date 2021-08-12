@@ -169,10 +169,10 @@ workflows:
 #            - build-static
       - deploy-static-prod:
           <<: *filter_prod
-          requires:
-            - build-static
+#          requires:
+#            - build-static
       - deploy-nuxt-prod:
           <<: *filter_prod
-          requires:
-            - build-static
+#          requires:
+#            - build-static
 
