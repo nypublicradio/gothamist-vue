@@ -182,7 +182,7 @@ const {
 } = require('~/mixins/helpers')
 
 export default {
-  name: 'Article',
+  name: 'GothamistArticle',
   components: {
     VStreamfield: () => import('./VStreamfield'),
     Breadcrumbs: () => import('./Breadcrumbs'),
