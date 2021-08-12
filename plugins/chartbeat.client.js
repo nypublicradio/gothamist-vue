@@ -14,7 +14,7 @@
     var n = document.getElementsByTagName('script')[0];
     e.type = 'text/javascript';
     e.async = true;
-    e.src = '//static.chartbeat.com/js/chartbeat.client.js';
+    e.src = '//static.chartbeat.com/js/chartbeat.js';
     n.parentNode.insertBefore(e, n);
   }
   loadChartbeat();
