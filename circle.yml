@@ -2,7 +2,7 @@
 templates:
   defaults: &defaults
     docker:
-      - image: circleci/node:14.17.4-browsers
+      - image: circleci/node:10-browsers
         environment:
           JOBS: 2
 
@@ -152,12 +152,12 @@ workflows:
 #            - build-static
       - deploy-static-demo:
           <<: *filter_demo
-          requires:
-            - build-static
+#          requires:
+#            - build-static
       - deploy-nuxt-demo:
           <<: *filter_demo
-          requires:
-            - build-static
+#          requires:
+#            - build-static
 
   deploy-prod:
     jobs:
