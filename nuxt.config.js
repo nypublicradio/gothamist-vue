@@ -128,7 +128,8 @@ export default {
   plugins: [
     '~/plugins/axios',
     '~/plugins/observe-visibility',
-    '~/plugins/vue-mq'
+    '~/plugins/vue-mq',
+    '~/plugins/chartbeat.client.js'
   ],
 
   serverMiddleware: [
