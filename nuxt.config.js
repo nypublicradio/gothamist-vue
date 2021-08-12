@@ -128,7 +128,8 @@ export default {
   plugins: [
     '~/plugins/axios',
     '~/plugins/observe-visibility',
-    '~/plugins/vue-mq'
+    '~/plugins/vue-mq',
+    '~/plugins/chartbeat.client.js'
   ],
 
   serverMiddleware: [
@@ -157,7 +158,7 @@ export default {
   gtm: {
     // pageTracking: true, // using custom page tracking instead
     enabled: true,
-    debug: false, // set this to true when you are testing to get console logs
+    debug: true, // set this to true when you are testing to get console logs
     pageViewEventName: 'Page View'
   },
 
