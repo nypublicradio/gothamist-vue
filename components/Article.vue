@@ -98,7 +98,7 @@
           />
         </div>
       </div>
-      <v-spacer size="quad" />
+      <v-spacer size="double" />
       <v-streamfield
         :key="article.uuid || article.legacyId"
         ref="article-body"
@@ -652,5 +652,4 @@ export default {
 .article-read-more-in {
   margin-bottom: var(--space-6);
 }
-
 </style>
