@@ -144,8 +144,8 @@ workflows:
 
   deploy-demo:
     jobs:
-      - build-static:
-          <<: *filter_demo
+#      - build-static:
+#          <<: *filter_demo
 #      - test-static:
 #          <<: *filter_demo
 #          requires:
@@ -161,8 +161,8 @@ workflows:
 
   deploy-prod:
     jobs:
-      - build-static:
-          <<: *filter_prod
+#      - build-static:
+#          <<: *filter_prod
 #      - test-static:
 #          <<: *filter_prod
 #          requires:
