@@ -150,10 +150,10 @@ workflows:
 #          <<: *filter_demo
 #          requires:
 #            - build-static
-#      - deploy-static-demo:
-#          <<: *filter_demo
-#          requires:
-#            - build-static
+      - deploy-static-demo:
+          <<: *filter_demo
+          requires:
+            - build-static
       - deploy-nuxt-demo:
           <<: *filter_demo
           requires:
@@ -167,10 +167,10 @@ workflows:
 #          <<: *filter_prod
 #          requires:
 #            - build-static
-#      - deploy-static-prod:
-#          <<: *filter_prod
-#          requires:
-#            - build-static
+      - deploy-static-prod:
+          <<: *filter_prod
+          requires:
+            - build-static
       - deploy-nuxt-prod:
           <<: *filter_prod
           requires:
