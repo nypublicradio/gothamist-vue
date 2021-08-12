@@ -144,35 +144,35 @@ workflows:
 
   deploy-demo:
     jobs:
-#      - build-static:
-#          <<: *filter_demo
+      - build-static:
+          <<: *filter_demo
 #      - test-static:
 #          <<: *filter_demo
 #          requires:
 #            - build-static
-      - deploy-static-demo:
-          <<: *filter_demo
+#      - deploy-static-demo:
+#          <<: *filter_demo
 #          requires:
 #            - build-static
       - deploy-nuxt-demo:
           <<: *filter_demo
-#          requires:
-#            - build-static
+          requires:
+            - build-static
 
   deploy-prod:
     jobs:
-#      - build-static:
-#          <<: *filter_prod
+      - build-static:
+          <<: *filter_prod
 #      - test-static:
 #          <<: *filter_prod
 #          requires:
 #            - build-static
-      - deploy-static-prod:
-          <<: *filter_prod
+#      - deploy-static-prod:
+#          <<: *filter_prod
 #          requires:
 #            - build-static
       - deploy-nuxt-prod:
           <<: *filter_prod
-#          requires:
-#            - build-static
+          requires:
+            - build-static
 
