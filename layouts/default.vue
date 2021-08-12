@@ -129,11 +129,7 @@ html {
 }
 
 .home-page .gothamist-header {
-  padding-bottom: 45px; //overhanging logo height
-}
-
-.home-page .gothamist-banners:first-child {
-  padding-top: var(--space-6);
+  padding-bottom: calc(45px +  var(--space-6)); //45px = overhanging logo height
 }
 
 .ad-wrapper-outer {

@@ -38,6 +38,6 @@ export default {
 </script>
 <style>
 .gothamist-marketing-banners-banner {
-   margin-bottom: var(--space-5);
+   margin-bottom: var(--space-9);
 }
 </style>
