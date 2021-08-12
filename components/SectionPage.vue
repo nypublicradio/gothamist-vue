@@ -36,7 +36,7 @@
                 <v-counter
                   icon="comment"
                   :value="getCommentCountById(String(featuredStory.legacyId || featuredStory.uuid), moreResultsDisqusData)"
-                  :href="`/${featuredStory.ancestry[0].slug}/${featuredStory.meta.slug}?to=comments`"
+                  :href="`/${featuredStory.ancestry[0].slug}/${featuredStory.meta.slug}#comments`"
                 />
               </template>
             </article-metadata>
@@ -77,7 +77,7 @@
                   <v-counter
                     icon="comment"
                     :value="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData)"
-                    :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
+                    :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
               </article-metadata>
@@ -123,7 +123,7 @@
                   <v-counter
                     icon="comment"
                     :value="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData)"
-                    :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
+                    :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
               </article-metadata>
