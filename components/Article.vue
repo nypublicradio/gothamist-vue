@@ -75,7 +75,7 @@
         >
           <image-with-caption
             variation="gothamist"
-            :alt-text="leadAsset.value.image.alt"
+            :alt-text="leadAsset.value.image.alt || ''"
             :image="`${$config.imageBase}${leadAsset.value.image.id}/fill-%width%x%height%/`"
             :width="661"
             :height="496"
@@ -307,7 +307,7 @@ export default {
               url: image.file,
               template: this.$config.imageBase + image.id + '/fill-%width%x%height%/',
               thumbnail: image.file,
-              alt: image.alt,
+              alt: image.alt || '',
               credit: image.credit,
               creditUrl: image.creditLink,
               caption: slide.value.slideImage.caption,
@@ -344,7 +344,7 @@ export default {
         {
           hid: 'og_image_alt',
           property: 'og:image:alt"',
-          content: this.ogImage.alt
+          content: this.ogImage.alt || ''
         }
       ] : []
     },
