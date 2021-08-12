@@ -282,12 +282,6 @@ export default {
           slug: '/tags/analysis'
         })
       }
-      if (this.article.tags.find(tag => tag.name === 'we the commuters')) {
-        breadcrumbs.push({
-          name: 'We The Commuters',
-          slug: '/tags/wethecommuters'
-        })
-      }
       return breadcrumbs
     },
     galleryCount () {
