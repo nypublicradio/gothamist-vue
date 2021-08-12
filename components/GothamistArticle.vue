@@ -70,7 +70,7 @@
           />
         </share-tools>
         <div
-          v-if="leadAsset && leadAsset.type !== undefined && leadAsset.type === 'lead_image'"
+          v-if="leadAsset && leadAsset.type !== undefined && leadAsset.type === 'lead_image' && leadAsset.value.image"
           class="article-lead-image"
         >
           <image-with-caption
@@ -285,7 +285,7 @@ export default {
       if (this.article.tags.find(tag => tag.name === 'we the commuters')) {
         breadcrumbs.push({
           name: 'We The Commuters',
-          slug: '/tags/wethecommuters'
+          slug: '/tags/we-the-commuters'
         })
       }
       return breadcrumbs
