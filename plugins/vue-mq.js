@@ -4,7 +4,7 @@ import VueMq from 'vue-mq'
 export default function () {
   Vue.use(VueMq, {
     breakpoints: { // default breakpoints - customize this
-      xsmall: 550,
+      xsmall: 768,
       small: 768,
       medium: 850,
       large: 1024,
