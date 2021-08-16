@@ -130,9 +130,9 @@
 
       <div v-if="!article.sensitiveContent" class="htlad-interior_midpage_2 ad-div mod-break-margins mod-ad-disclosure" />
 
-      <div
+      <div id="comments" />
+      <template
         v-if="!article.disableComments"
-        id="comments"
       >
         <disqus-embed
           v-if="article"
@@ -140,7 +140,7 @@
           :url="article.url"
         />
         <v-spacer size="quin" />
-      </div>
+      </template>
 
       <div
         v-if="showDonateBanner"
