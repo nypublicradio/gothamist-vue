@@ -6,7 +6,7 @@
     />
     <div
       v-if="!isSensitiveContent"
-      class="ad-wrapper-outer mod-header u-color-group-dark"
+      class="ad-wrapper-outer mod-header u-color-group-dark no-print"
     >
       <div class="ad-wrapper-inner">
         <div

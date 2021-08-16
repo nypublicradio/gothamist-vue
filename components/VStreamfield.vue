@@ -2,7 +2,11 @@
   <div class="streamfield o-rte-text">
     <template v-for="block in streamfield">
       <!-- block-quote -->
-      <div v-if="block.type === 'block_quote'" :key="block.id" class="streamfield-block-quote">
+      <div
+        v-if="block.type === 'block_quote'"
+        :key="block.id"
+        class="streamfield-block-quote"
+      >
         <blockquote>
           <p>
             {{ block.value.blockQuote }}
@@ -90,7 +94,11 @@
       />
 
       <!-- pull-quote -->
-      <div v-else-if="block.type === 'pull-quote'" :key="block.id" class="streamfield-pull-quote">
+      <div
+        v-else-if="block.type === 'pull-quote'"
+        :key="block.id"
+        class="streamfield-pull-quote"
+      >
         <pull-quote
           :quote="block.value.pullQuote"
           :author="block.value.attribution"
