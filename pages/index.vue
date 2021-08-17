@@ -214,6 +214,7 @@
           :subtitle="story.description"
           :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
         >
+          {{ story.uuid }}
           <article-metadata
             :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
             :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
@@ -523,10 +524,11 @@ export default {
         return !featuredIDs.includes(story.id)
       })
 
-      filteredRiver = filteredRiver.filter((story) => {
-        return story.id !== this.sponsoredSection?.[0].id
-      })
-
+      if (this.sponsoredSection && this.sponsoredSection.length > 0) {
+        filteredRiver = filteredRiver.filter((story) => {
+          return story.id !== this.sponsoredSection?.[0].id
+        })
+      }
       return filteredRiver
     },
     moreResultsNuggets () {
@@ -559,7 +561,7 @@ export default {
           this.offset += 32
           this.moreResultsLoaded = true
           response.data.items.forEach((item) => {
-            this.disqusData.push(item.legacyId || item.uuid)
+            this.disqusThreadIds.push(item.legacyId || item.uuid)
           })
         })
       this.disqusData = await this.getCommentCount(this.disqusThreadIds)
