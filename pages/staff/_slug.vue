@@ -174,7 +174,7 @@ export default {
           this.moreResultsOffset += 12
           this.moreResultsLoaded = true
           response.data.items.forEach((item) => {
-            this.moreResultsDisqusThreadIds.push(String(story.legacyId || story.uuid))
+            this.moreResultsDisqusThreadIds.push(String(item.legacyId || item.uuid))
           })
         })
       this.moreResultsDisqusData = await this.getCommentCount(this.moreResultsDisqusThreadIds)
