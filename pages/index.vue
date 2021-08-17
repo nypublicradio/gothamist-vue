@@ -214,7 +214,6 @@
           :subtitle="story.description"
           :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
         >
-          {{ story.uuid }}
           <article-metadata
             :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
             :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
@@ -484,9 +483,9 @@ export default {
 
         this.riverSection = riverStories
 
-        this.disqusThreadIds = [].concat(this.featuredSection.map(story => story.uuid || story.legacyId),
-          this.sponsoredSection.map(story => story.uuid || story.legacyId),
-          this.riverSection.map(story => story.uuid || story.legacyId))
+        this.disqusThreadIds = [].concat(this.featuredSection.map(story => String(story.legacyId || story.uuid)),
+          this.sponsoredSection.map(story => String(story.legacyId || story.uuid)),
+          this.riverSection.map(story => String(story.legacyId || story.uuid)))
       }))
   },
   data () {
