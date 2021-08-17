@@ -30,7 +30,7 @@
         <div
           v-for="(banner, index) in breakingNewsBanner"
           :key="index"
-          class="l-container l-container--xl l-wrap"
+          class="l-container l-container--xl l-wrap no-print"
         >
           <template v-if="banner.value">
             <v-spacer size="double" />
