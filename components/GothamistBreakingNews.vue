@@ -23,11 +23,9 @@ export default {
     VBanner: () => import('nypr-design-system-vue/src/components/VBanner')
   },
   async fetch () {
-    await this.$axios
+    this.breakingNewsBanner = await this.$axios
       .get(`/sitewide_components/${this.$config.siteId}/`)
-      .then(response => (
-        this.breakingNewsBanner = response.data.breakingNews
-      ))
+      .then(response => response.data.breakingNews)
   },
   data () {
     return {

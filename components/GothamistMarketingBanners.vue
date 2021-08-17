@@ -23,11 +23,9 @@ export default {
     ProductMarketingBanner: () => import('../components/ProductMarketingBanner')
   },
   async fetch () {
-    await this.$axios
+    this.productMarketingBanner = await this.$axios
       .get('/system_messages/1/')
-      .then(response => (
-        this.productMarketingBanner = response.data.productBanners
-      ))
+      .then(response => response.data.productBanners)
   },
   data () {
     return {
