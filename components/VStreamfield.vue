@@ -95,7 +95,7 @@
 
       <!-- pull-quote -->
       <div
-        v-else-if="block.type === 'pull-quote'"
+        v-else-if="block.type === 'pull_quote'"
         :key="block.id"
         class="streamfield-pull-quote"
       >
