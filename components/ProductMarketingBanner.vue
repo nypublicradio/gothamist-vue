@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="active"
-    class="product-marketing-banner o-3d-heading"
+    class="product-marketing-banner o-3d-heading no-print"
     :class="{'product-marketing-banner-active': active}"
   >
     <div

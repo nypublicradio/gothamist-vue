@@ -128,7 +128,7 @@
         />
       </div>
 
-      <div v-if="!article.sensitiveContent" class="htlad-interior_midpage_2 ad-div mod-break-margins mod-ad-disclosure" />
+      <div v-if="!article.sensitiveContent" class="htlad-interior_midpage_2 ad-div mod-break-margins mod-ad-disclosure no-print" />
 
       <div id="comments" />
       <template

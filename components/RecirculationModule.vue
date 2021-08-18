@@ -1,5 +1,5 @@
 <template>
-  <div class="recirculation-module l-grid l-grid--2up">
+  <div class="recirculation-module l-grid l-grid--2up no-print">
     <div class="recirculation-module-group  recirculation-module-group-1">
       <h2 class="recirculation-module-header">
         Recent in {{ relatedArticle.ancestry[0].title }}
