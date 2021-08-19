@@ -131,7 +131,7 @@ export default {
       default: () => []
     }
   },
-  mounted () {
+  beforeMount () {
     // you can't have script tags in v-html
     // so we need to load the twitter embeds script manually
     if (window.twttr) {
