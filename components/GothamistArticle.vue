@@ -549,7 +549,9 @@ export default {
     },
     insertAd () {
       if (this.article && this.$refs['article-body'] && !this.article.sensitiveContent) {
-        insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'ad-div', 'mod-break-margins', 'mod-ad-disclosure'], reset: true })
+        this.$nextTick(() => {
+          insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'ad-div', 'mod-break-margins', 'mod-ad-disclosure'], reset: true })
+        })
       }
     }
   },
