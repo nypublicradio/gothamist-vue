@@ -15,11 +15,11 @@
       </div>
 
       <!-- code -->
-      <div
+      <html-fragment
         v-else-if="block.type === 'code'"
         :key="block.id"
         class="streamfield-code u-spacing"
-        v-html="block.value.code"
+        :html="block.value.code"
       />
 
       <!-- content collection -->
@@ -86,11 +86,11 @@
       </div>
 
       <!-- paragraph -->
-      <div
+      <html-fragment
         v-else-if="block.type === 'paragraph'"
         :key="block.id"
         class="streamfield-paragraph u-spacing"
-        v-html="block.value"
+        :html="block.value"
       />
 
       <!-- pull-quote -->
@@ -119,6 +119,7 @@ const {
 export default {
   name: 'Streamfield',
   components: {
+    HtmlFragment: () => import('@/components/HtmlFragment'),
     ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
     ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
     PullQuote: () => import('nypr-design-system-vue/src/components/PullQuote'),

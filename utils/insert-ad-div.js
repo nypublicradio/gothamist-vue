@@ -48,31 +48,7 @@ function _insertAtLocation (element, container, insertLocation) {
   }
 }
 
-function _unwrapElement (element) {
-  const parent = element.parentNode
-
-  // Move all children node to the parent
-  while (element.firstChild) {
-    element.firstChild.classList?.add('streamfield-block')
-    parent.insertBefore(element.firstChild, element)
-  }
-
-  // `element` becomes an empty element
-  // Remove it from the parent
-  parent.removeChild(element)
-}
-
 let target
-
-// remove the wrapper elements so paragraphs are top level elements
-const unwrapText = function (container) {
-  container.childNodes.forEach((element) => {
-    if (element.classList?.contains('streamfield-paragraph') || // article text
-        element.classList?.contains('streamfield-code')) { // legacy articles are just html in code blocks
-      _unwrapElement(element)
-    }
-  })
-}
 
 /**
   Inserts a div into a story's DOM based on the following rules.
@@ -117,6 +93,7 @@ const insertAdDiv = function (divId, container, { wordsBeforeAd = 150, className
   })
   // Create the target div (or reuse it)
   if (reset) {
+    target?.parentNode.removeChild(target)
     target = document.createElement('div')
   } else {
     target = target || document.createElement('div')
@@ -131,6 +108,5 @@ const insertAdDiv = function (divId, container, { wordsBeforeAd = 150, className
 
 export default insertAdDiv
 export {
-  insertAdDiv,
-  unwrapText
+  insertAdDiv
 }

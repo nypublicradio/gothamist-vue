@@ -105,6 +105,7 @@
         class="l-container l-container--10col article-body c-article__body"
         :streamfield="article.body"
         @hook:mounted="insertAd"
+        @hook:updated="insertAd"
       />
       <v-spacer size="quad" />
       <div
@@ -175,7 +176,7 @@
 import gtm from '@/mixins/gtm'
 import disqus from '@/mixins/disqus'
 import { getImagePath } from '~/mixins/image'
-import { insertAdDiv, unwrapText } from '~/utils/insert-ad-div'
+import { insertAdDiv } from '~/utils/insert-ad-div'
 
 const {
   handleScroll
@@ -548,9 +549,10 @@ export default {
       document.querySelector('#comments')?.scrollIntoView()
     },
     insertAd () {
-      unwrapText(this.$refs['article-body'].$el)
       if (this.article && this.$refs['article-body'] && !this.article.sensitiveContent) {
-        insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'ad-div', 'mod-break-margins', 'mod-ad-disclosure'], reset: true })
+        this.$refs['article-body'].$nextTick(() => {
+          insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'ad-div', 'mod-break-margins', 'mod-ad-disclosure'], reset: true })
+        })
       }
     }
   },
