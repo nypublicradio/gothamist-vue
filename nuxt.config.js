@@ -128,7 +128,8 @@ export default {
   plugins: [
     '~/plugins/axios',
     '~/plugins/observe-visibility',
-    '~/plugins/vue-mq'
+    '~/plugins/vue-mq',
+    '~/plugins/chartbeat.client.js'
   ],
 
   serverMiddleware: [
@@ -151,7 +152,8 @@ export default {
     axios: {
       baseURL: process.env.API
     },
-    environment: process.env.ENV && process.env.ENV.toLowerCase()
+    environment: process.env.ENV && process.env.ENV.toLowerCase(),
+    siteId: '1'
   },
 
   gtm: {

@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="l-container l-container--xl c-featured-blocks__wrapper">
-      <v-spacer size="triple" />
       <!-- featured area -->
       <loading-icon v-if="$fetchState.pending" />
       <section

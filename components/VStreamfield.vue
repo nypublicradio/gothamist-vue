@@ -2,20 +2,24 @@
   <div class="streamfield o-rte-text">
     <template v-for="block in streamfield">
       <!-- block-quote -->
-      <div v-if="block.type === 'block-quote'" :key="block.id" class="streamfield-block-quote">
+      <div
+        v-if="block.type === 'block_quote'"
+        :key="block.id"
+        class="streamfield-block-quote"
+      >
         <blockquote>
           <p>
-            {{ block.value.block_quote }}
+            {{ block.value.blockQuote }}
           </p>
         </blockquote>
       </div>
 
       <!-- code -->
-      <div
+      <html-fragment
         v-else-if="block.type === 'code'"
         :key="block.id"
         class="streamfield-code u-spacing"
-        v-html="block.value.code"
+        :html="block.value.code"
       />
 
       <!-- content collection -->
@@ -51,7 +55,7 @@
         v-else-if="block.type === 'embed'"
         :key="block.id"
         class="streamfield-embed"
-        v-html="block.value.code"
+        v-html="block.value.embed"
       />
 
       <!-- heading -->
@@ -82,17 +86,21 @@
       </div>
 
       <!-- paragraph -->
-      <div
+      <html-fragment
         v-else-if="block.type === 'paragraph'"
         :key="block.id"
         class="streamfield-paragraph u-spacing"
-        v-html="block.value"
+        :html="block.value"
       />
 
       <!-- pull-quote -->
-      <div v-else-if="block.type === 'pull-quote'" :key="block.id" class="streamfield-pull-quote">
+      <div
+        v-else-if="block.type === 'pull_quote'"
+        :key="block.id"
+        class="streamfield-pull-quote"
+      >
         <pull-quote
-          :quote="block.value.pull_quote"
+          :quote="block.value.pullQuote"
           :author="block.value.attribution"
         />
       </div>
@@ -111,6 +119,7 @@ const {
 export default {
   name: 'Streamfield',
   components: {
+    HtmlFragment: () => import('@/components/HtmlFragment'),
     ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
     ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
     PullQuote: () => import('nypr-design-system-vue/src/components/PullQuote'),

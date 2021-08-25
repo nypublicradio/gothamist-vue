@@ -1,6 +1,6 @@
 <template>
   <div v-if="page">
-    <v-article
+    <gothamist-article
       v-if="page.meta.type === 'news.ArticlePage'"
       :article="page"
     />
@@ -25,7 +25,7 @@ import { fuzzyDateTime } from '~/mixins/helpers'
 export default {
   name: 'Preview',
   components: {
-    VArticle: () => import('../components/Article'),
+    GothamistArticle: () => import('../components/GothamistArticle'),
     InformationPage: () => import('../components/InformationPage'),
     TagPage: () => import('../components/TagPage')
   },

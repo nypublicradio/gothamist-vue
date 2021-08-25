@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Article
+    <GothamistArticle
       :article="page"
       :show-donate-banner="!cookies.donateBannerDismissed && cookies.articlesViewed >= 3"
     />
@@ -10,12 +10,14 @@
 <script>
 import { fuzzyDateTime } from '~/mixins/helpers'
 import { setTargeting, clearTargeting } from '~/mixins/htl'
+import gtm from '~/mixins/gtm'
 
 export default {
-  name: 'ArtsAndEntertainment',
+  name: 'Article',
   components: {
-    Article: () => import('../../components/Article')
+    GothamistArticle: () => import('../../components/GothamistArticle')
   },
+  mixins: [gtm],
   async asyncData ({
     $axios,
     $cookies,
