@@ -100,7 +100,7 @@
       </div>
       <v-spacer size="double" />
       <v-streamfield
-        :key="article.uuid || article.legacyId"
+        :key="article.uuid"
         ref="article-body"
         class="l-container l-container--10col article-body c-article__body"
         :streamfield="article.body"
