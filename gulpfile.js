@@ -24,8 +24,7 @@ const config = {
     /* 'Cache-Control': 'max-age=315360000, no-transform, public', */
   },
 
-  // Sensible Defaults - gitignore these Files and Dirs
-  distDir: 'dist',
+  distDir: 'static', // only deploy static asset folder
   indexRootPath: true,
   cacheFileName: '.awspublish',
   concurrentUploads: 10,

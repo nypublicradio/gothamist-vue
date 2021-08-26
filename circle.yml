@@ -24,7 +24,6 @@ templates:
             env | sed -n "s/^${ENV}_//p" >> .env
             set -o allexport && source .env && set +o allexport
             npm install
-            npm run generate
             npm run deploy
 
   deploy_nuxt: &deploy_nuxt
