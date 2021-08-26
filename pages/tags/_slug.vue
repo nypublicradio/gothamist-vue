@@ -1,7 +1,7 @@
 <template>
   <div v-if="slug">
     <tag-page
-      v-if="page && dataLoaded"
+      v-if="page && !$fetchState.pending"
       :designed-header="page.designedHeader"
       :mid-page-zone="page.midpageZone"
       :slug="slug"
@@ -28,27 +28,26 @@ export default {
     TagPage: () => import('../../components/TagPage')
   },
   mixins: [gtm],
+  async fetch () {
+    await this.$axios
+      .get(`/pages/find/?html_path=tags/${this.slug}`)
+      .then((response) => {
+        this.page = response.data
+        this.title = this.page.title
+      })
+      .catch((e) => {
+        this.page = null
+        this.title = formatTitle(this.$route.params.slug)
+      })
+  },
   data () {
     return {
-      dataLoaded: false,
       page: null,
       slug: this.$route.params.slug,
       title: ''
     }
   },
-  async mounted () {
-    await this.$axios
-      .get(`/pages/find/?html_path=tags/${this.slug}`)
-      .then((response) => {
-        this.page = response.data
-        this.dataLoaded = true
-        this.title = this.page.title
-      })
-      .catch((e) => {
-        this.page = null
-        this.dataLoaded = true
-        this.title = formatTitle(this.$route.params.slug)
-      })
+  mounted () {
     setTargeting({ Template: 'Tag' })
   },
   beforeUnmount () {
