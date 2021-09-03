@@ -386,10 +386,6 @@ export default {
     articleMeta () {
       return [
         {
-          property: 'og:url"',
-          content: this.url
-        },
-        {
           hid: 'article_published_time',
           property: 'article:published_time',
           content: this.article.meta.firstPublishedAt?.toString()
