@@ -1,6 +1,6 @@
 <template>
   <div>
-    <GothamistArticle
+    <gothamist-article
       :article="page"
       :show-donate-banner="!cookies.donateBannerDismissed && cookies.articlesViewed >= 3"
     />

@@ -16,6 +16,7 @@ module.exports = {
   // add your custom rules here
   rules: {
     // we trust the content from our CMS so we can safely ignore these warnings
-    'vue/no-v-html': 0
+    'vue/no-v-html': 0,
+    'vue/component-name-in-template-casing': ['error', 'kebab-case']
   }
 }
