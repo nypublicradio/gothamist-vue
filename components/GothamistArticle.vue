@@ -386,6 +386,10 @@ export default {
     articleMeta () {
       return [
         {
+          property: 'og:url"',
+          content: this.url
+        },
+        {
           hid: 'article_published_time',
           property: 'article:published_time',
           content: this.article.meta.firstPublishedAt?.toString()
@@ -563,6 +567,12 @@ export default {
         {
           type: 'application/ld+json',
           json: this.structuredData
+        }
+      ],
+      link: [
+        {
+          rel: 'amphtml',
+          href: 'https://champ.gothamist.com/champ/gothamist' + this.$route.path
         }
       ],
       meta: [].concat(this.baseMeta, this.imageMeta, this.twitterMeta, this.ogMeta, this.articleMeta)
