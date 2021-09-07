@@ -568,7 +568,7 @@ export default {
       link: [
         {
           rel: 'amphtml',
-          href: 'https://champ.gothamist.com/champ/gothamist' + this.$route.path
+          href: this.$config.champUrl + this.$route.path
         }
       ],
       meta: [].concat(this.baseMeta, this.imageMeta, this.twitterMeta, this.ogMeta, this.articleMeta)
