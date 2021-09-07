@@ -64,7 +64,7 @@
               :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
             >
               <article-metadata
-                :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
@@ -102,7 +102,7 @@
               :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
             >
               <article-metadata
-                :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
@@ -148,7 +148,7 @@
               :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
             >
               <article-metadata
-                :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
