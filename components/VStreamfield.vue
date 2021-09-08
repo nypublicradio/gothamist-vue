@@ -163,10 +163,6 @@ export default {
 <style lang="scss">
 .streamfield-block {
   margin-bottom: var(--space-4);
-
-  &:last-of-type {
-    margin-bottom: 0;
-  }
 }
 
 .streamfield-block .twitter-tweet {
