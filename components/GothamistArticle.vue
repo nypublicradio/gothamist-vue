@@ -143,16 +143,19 @@
         <v-spacer size="quin" />
       </template>
 
-      <div
-        v-if="showDonateBanner"
-        v-observe-visibility="{callback: bannerVisibilityChanged, once: true}"
-      >
-        <donate-banner
-          :class="{'is-onscreen': bannerOnscreen}"
-          @close="bannerClosed"
-          @donate-click="bannerDonateClicked"
-        />
-      </div>
+      <dismissible-area prefix="donateBanner" :views-before-showable="3">
+        <template v-slot="dismissibleArea">
+          <div
+            v-observe-visibility="{callback: bannerVisibilityChanged, once: true}"
+          >
+            <donate-banner
+              :class="{'is-onscreen': bannerOnscreen}"
+              @close="dismissibleArea.handleDismissed"
+              @donate-click="bannerDonateClicked"
+            />
+          </div>
+        </template>
+      </dismissible-area>
     </div>
     <div
       v-else
@@ -199,6 +202,7 @@ export default {
     ReadMoreIn: () => import('./ReadMoreIn'),
     VTag: () => import('nypr-design-system-vue/src/components/VTag'),
     DoYouKnowTheScoop: () => import('./DoYouKnowTheScoop'),
+    DismissibleArea: () => import('./DismissibleArea'),
     DonateBanner: () => import('./DonateBanner'),
     ArticlePageNewsletter: () => import('./ArticlePageNewsletter'),
     RecirculationModule: () => import('./RecirculationModule')
@@ -213,12 +217,10 @@ export default {
   },
   data () {
     return {
-      bannerOnscreen: false,
       scrollPercent: 0,
       scrollPercent25Logged: false,
       scrollPercent50Logged: false,
       scrollPercent75Logged: false,
-      showDonateBanner: Number(this.$cookies.get('articleViews')) >= 3 && !this.$cookies.get('donateBannerDismissed'),
       path: 'https://gothamist.com' + this.$route.fullPath,
       ogImage: this.article.socialImage ??
         this.article.leadAsset[0]?.value.image ??
@@ -525,13 +527,6 @@ export default {
   methods: {
     articleGaEvent () {
       this.gaArticleEvent('NTG article milestone', this.gtmData.milestone + '%', this.gtmData.articleTitle, this.gtmData)
-    },
-    bannerClosed () {
-      // only show the banner once a day
-      const oneDay = 60 * 60 * 24
-      const oneMonth = 60 * 60 * 24 * 31
-      this.$cookies.set('donateBannerDismissed', true, { path: '/', maxAge: oneDay })
-      this.$cookies.set('articleViews', 0, { path: '/', maxAge: oneMonth })
     },
     bannerDonateClicked () {
       this.gaArticleEvent('Article Page', 'Donate Banner Clicked', this.gtmData.articleTitle, this.gtmData)
