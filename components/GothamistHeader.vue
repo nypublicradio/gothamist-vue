@@ -191,7 +191,6 @@ export default {
   data () {
     return {
       isHeaderStuck: false,
-      scrollMeterTarget: null,
       title: null,
       url: null
     }
@@ -204,6 +203,16 @@ export default {
       headerNav: state => state.headerNav,
       legalNav: state => state.legalNav
     }),
+    scrollMeterTarget () {
+      switch (this.$route.name) {
+        case 'section-article':
+          return '.article-body'
+        case 'section-photos-gallery':
+          return '.gallery'
+        default:
+          return null
+      }
+    },
     donateButtonUrl () {
       if (this.gallery) {
         return null
@@ -218,12 +227,6 @@ export default {
       this.url = 'https://gothamist.com' + this.$route.path + '?image=' + this.$route.query.image
     } else {
       this.url = 'https://gothamist.com' + this.$route.path
-    }
-    if (this.$route.name === 'section-article') {
-      this.scrollMeterTarget = '.article-body'
-    }
-    if (this.$route.name === 'section-photos-gallery') {
-      this.scrollMeterTarget = '.gallery'
     }
     window.addEventListener('scroll', this.handleScroll)
   },
