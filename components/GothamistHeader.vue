@@ -232,8 +232,8 @@ export default {
       return this.socialHeader
     },
     showSearch () {
-      // hide the search on the sticky header for the gallery view
-      return this.isHeaderStuck && !this.$route.name === GALLERY_ROUTE
+      // hide the search on the gallery view
+      return !(this.$route.name === GALLERY_ROUTE)
     },
     socialHeader () {
       return this.isHeaderStuck &&
