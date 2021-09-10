@@ -241,6 +241,9 @@ export default {
   },
   mounted () {
     this.updateShareData()
+    new MutationObserver(() => {
+      this.updateShareData()
+    }).observe(document.querySelector('title'), { childList: true })
     window.addEventListener('scroll', this.handleScroll)
   },
   destroyed () {
