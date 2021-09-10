@@ -1,11 +1,11 @@
 <template>
   <div :class="{'home-page' : isHomepage}">
     <div
-      v-if="!isSensitiveContent"
+      v-if="!isSensitiveContent && !isGallery"
       class="htlad-skin"
     />
     <div
-      v-if="!isSensitiveContent"
+      v-if="!isSensitiveContent && !isGallery"
       class="ad-wrapper-outer mod-header u-color-group-dark no-print"
     >
       <div class="ad-wrapper-inner">
@@ -24,15 +24,15 @@
         </div>
       </div>
     </div>
-    <gothamist-header />
+    <gothamist-header :gallery="isGallery" />
     <main :class="$route.name">
-      <div v-if="this.$route.name !== 'tags-slug'" class="gothamist-banners l-container l-container--xl l-wrap">
+      <div v-if="!isTagPage && !isGallery" class="gothamist-banners l-container l-container--xl l-wrap">
         <gothamist-breaking-news class="l-container l-container--16col" />
         <gothamist-marketing-banners class="l-container l-container--16col" />
       </div>
       <Nuxt keep-alive />
     </main>
-    <gothamist-footer />
+    <gothamist-footer v-if="!isGallery" />
   </div>
 </template>
 
@@ -52,6 +52,12 @@ export default {
   computed: {
     isHomepage () {
       return this.$route.name === 'index'
+    },
+    isGallery () {
+      return this.$route.name === 'section-photos-gallery'
+    },
+    isTagPage () {
+      return this.$route.name === 'tags-slug'
     },
     ...mapState('global', ['isSensitiveContent'])
   },
@@ -189,6 +195,13 @@ div:empty + .ad-label {
     margin-top: var(--space-2);
     text-transform: uppercase;
     text-align: right;
+}
+
+.section-photos-gallery {
+  margin-top: 0;
+  background-color: RGB(var(--color-dark-gray));
+  color: RGB(var(--color-white));
+  height: 100%;
 }
 
 </style>

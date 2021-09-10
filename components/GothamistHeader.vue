@@ -96,7 +96,7 @@
         </nuxt-link>
       </template>
       <template
-        v-if="!gallery"
+        v-if="showNavigation"
         v-slot:navigation
       >
         <secondary-navigation
@@ -106,7 +106,7 @@
         />
       </template>
       <template
-        v-if="!gallery"
+        v-if="showSearch"
         v-slot:search
       >
         <v-search
@@ -123,7 +123,7 @@
         />
       </template>
       <template
-        v-if="gallery"
+        v-if="showSocial"
         v-slot:social
       >
         <share-tools label="SHARE">
@@ -167,6 +167,9 @@
 import { mapState } from 'vuex'
 import gtm from '@/mixins/gtm'
 
+const ARTICLE_ROUTE = 'section-article'
+const GALLERY_ROUTE = 'section-photos-gallery'
+
 export default {
   name: 'GothamistHeader',
   components: {
@@ -203,32 +206,46 @@ export default {
       headerNav: state => state.headerNav,
       legalNav: state => state.legalNav
     }),
-    scrollMeterTarget () {
-      switch (this.$route.name) {
-        case 'section-article':
-          return '.article-body'
-        case 'section-photos-gallery':
-          return '.gallery'
-        default:
-          return null
-      }
-    },
     donateButtonUrl () {
       if (this.gallery) {
         return null
       } else {
         return this.donateUrl
       }
+    },
+    scrollMeterTarget () {
+      switch (this.$route.name) {
+        case ARTICLE_ROUTE:
+          return '.article-body'
+        case GALLERY_ROUTE:
+          return '.gallery'
+        default:
+          return null
+      }
+    },
+    showNavigation () {
+      // hide the nav on the 'social header' view
+      return !this.socialHeader
+    },
+    showSocial () {
+      // show the social share on the 'social header' view
+      return this.socialHeader
+    },
+    showSearch () {
+      // hide the search on the sticky header for the gallery view
+      return this.isHeaderStuck && !this.$route.name === GALLERY_ROUTE
+    },
+    socialHeader () {
+      return this.isHeaderStuck &&
+      (this.$route.name === ARTICLE_ROUTE || this.$route.name === GALLERY_ROUTE)
     }
   },
   mounted () {
-    this.title = document.title
-    if (this.$route.query.image) {
-      this.url = 'https://gothamist.com' + this.$route.path + '?image=' + this.$route.query.image
-    } else {
-      this.url = 'https://gothamist.com' + this.$route.path
-    }
+    this.updateShareData()
     window.addEventListener('scroll', this.handleScroll)
+  },
+  update () {
+    this.updateShareData()
   },
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll)
@@ -236,6 +253,14 @@ export default {
   methods: {
     headerVisibilityChanged (isVisible, entry) {
       this.isHeaderStuck = entry.intersectionRatio < 1
+    },
+    updateShareData () {
+      this.title = document.title
+      if (this.$route.query.image) {
+        this.url = 'https://gothamist.com' + this.$route.path + '?image=' + this.$route.query.image
+      } else {
+        this.url = 'https://gothamist.com' + this.$route.path
+      }
     }
   }
 }
