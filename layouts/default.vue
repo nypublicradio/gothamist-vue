@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <gothamist-header :gallery="isGallery" />
+    <gothamist-header />
     <main :class="$route.name">
       <div v-if="!isTagPage && !isGallery" class="gothamist-banners l-container l-container--xl l-wrap">
         <gothamist-breaking-news class="l-container l-container--16col" />

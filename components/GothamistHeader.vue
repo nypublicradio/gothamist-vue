@@ -185,12 +185,6 @@ export default {
     ScrollMeter: () => import('./ScrollMeter')
   },
   mixins: [gtm],
-  props: {
-    gallery: {
-      type: Boolean,
-      default: false
-    }
-  },
   data () {
     return {
       isHeaderStuck: false,
@@ -207,7 +201,7 @@ export default {
       legalNav: state => state.legalNav
     }),
     donateButtonUrl () {
-      if (this.gallery) {
+      if (this.$route.name === GALLERY_ROUTE) {
         return null
       } else {
         return this.donateUrl
@@ -240,12 +234,14 @@ export default {
       (this.$route.name === ARTICLE_ROUTE || this.$route.name === GALLERY_ROUTE)
     }
   },
+  watch: {
+    '$route' () {
+      this.updateShareData()
+    }
+  },
   mounted () {
     this.updateShareData()
     window.addEventListener('scroll', this.handleScroll)
-  },
-  update () {
-    this.updateShareData()
   },
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll)
