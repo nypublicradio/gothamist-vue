@@ -88,7 +88,6 @@ import { setTargeting, clearTargeting } from '~/mixins/htl'
 const { formatTitle } = require('~/mixins/helpers')
 
 export default {
-  layout: 'gallery',
   name: 'ArticleGallery', // this is the template name which is used for GTM
   components: {
     CloseIcon: () => import('nypr-design-system-vue/src/components/icons/CloseIcon'),
