@@ -76,7 +76,7 @@
           <image-with-caption
             variation="gothamist"
             :alt-text="leadAsset.value.image.alt"
-            :image="`${$config.imageBase}${leadAsset.value.image.id}/fill-%width%x%height%/`"
+            :image="`${$config.imageBase}${leadAsset.value.image.id}/fill-%width%x%height%|format-jpeg%7Cjpegquality-80/`"
             :width="661"
             :height="496"
             :max-width="leadAsset.value.image.width || Infinity"
