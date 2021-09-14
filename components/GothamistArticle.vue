@@ -217,6 +217,7 @@ export default {
   },
   data () {
     return {
+      bannerOnscreen: false,
       scrollPercent: 0,
       scrollPercent25Logged: false,
       scrollPercent50Logged: false,
