@@ -85,7 +85,10 @@
           </template>
         </the-menu>
       </template>
-      <template v-slot:logo>
+      <template
+        v-if="showLogo"
+        v-slot:logo
+      >
         <nuxt-link
           to="/"
           class="c-main-header__logo"
@@ -216,6 +219,10 @@ export default {
         default:
           return null
       }
+    },
+    showLogo () {
+      // Hide the logo at small widths when showing the social menu
+      return !(this.socialHeader && ['xsmall', 'small'].includes(this.$mq))
     },
     showNavigation () {
       // hide the nav on the 'social header' view
@@ -354,5 +361,35 @@ export default {
   @include media(">large") {
     display: block;
   }
+}
+
+.c-main-header .c-share-tools__label {
+  display: none;
+  @include media(">large") {
+    display: block;
+  }
+}
+
+.c-main-header__right {
+  display: inline-grid;
+  width: max-content;
+  @include media('>small') {
+    display: flex;
+  }
+
+  .share-tools-button,
+  .c-share-tools__link  {
+    min-width: 44px;
+  }
+}
+
+.c-main-header .c-main-header__right .c-share-tools__group.c-share-tools__group {
+  display: flex;
+  width: max-content;
+  margin-right: var(--space-3);
+}
+
+.c-main-header__branding:empty {
+    display: none;
 }
 </style>
