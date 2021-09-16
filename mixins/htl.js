@@ -3,7 +3,7 @@ export const setTargeting = function (targetingParams) {
   htlbid.cmd = htlbid.cmd || []
   htlbid.cmd.push(() => {
     for (const key in targetingParams) {
-      htlbid.setTargeting(key, targetingParams[key])
+      window.htlbid.setTargeting(key, targetingParams[key])
     }
   })
 }
@@ -13,7 +13,7 @@ export const clearTargeting = function (targetingKeys) {
   htlbid.cmd = htlbid.cmd || []
   htlbid.cmd.push(() => {
     targetingKeys.forEach((key) => {
-      htlbid.clearTargeting(key)
+      window.htlbid.clearTargeting(key)
     })
   })
 }
