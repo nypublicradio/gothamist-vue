@@ -138,6 +138,7 @@ export default {
   ],
 
   publicRuntimeConfig: {
+    champUrl: process.env.CHAMP_URL,
     imageBase: process.env.IMAGE_BASE_URL,
     defaultImages: {
       default: '/static-images/defaults/no-category/no-category-tile.png',

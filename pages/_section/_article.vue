@@ -2,7 +2,6 @@
   <div>
     <GothamistArticle
       :article="page"
-      :show-donate-banner="!cookies.donateBannerDismissed && cookies.articlesViewed >= 3"
     />
   </div>
 </template>
@@ -20,20 +19,9 @@ export default {
   mixins: [gtm],
   async asyncData ({
     $axios,
-    $cookies,
     params,
     error
   }) {
-    const donateBannerDismissed = $cookies.get('donateBannerDismissed') || false
-    const oneMonth = 60 * 60 * 24 * 31
-    let articleViews = Number($cookies.get('articleViews')) || 0
-    articleViews += 1
-    $cookies.set('articleViews', articleViews, { path: '/', maxAge: oneMonth })
-    const cookies = {
-      articleViews,
-      donateBannerDismissed
-    }
-
     const path = `${params.section}/${params.article}`
     const requestOptions = {
       transformResponse: $axios.defaults.transformResponse.concat(
@@ -68,8 +56,7 @@ export default {
     }
 
     return {
-      page: page?.data,
-      cookies
+      page: page?.data
     }
   },
   beforeMount () {
