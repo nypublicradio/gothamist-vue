@@ -38,6 +38,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { setTargeting } from '~/mixins/htl'
 
 export default {
   name: 'Gothamist',
@@ -70,15 +71,13 @@ export default {
         el.remove()
       })
       // htlbid key value targeting for ads
-      const htlbid = window.htlbid = window.htlbid || {}
-      htlbid.cmd = htlbid.cmd || []
-      htlbid.cmd.push(() => {
-        htlbid.layout('universal') // Leave as 'universal' or add custom layout
-        htlbid.setTargeting('is_testing', this.$config.environment === 'demo' ? 'yes' : 'no')
-        htlbid.setTargeting('is_home', this.isHomepage ? 'yes' : 'no')
-        htlbid.setTargeting('host', location?.host)
-        htlbid.setTargeting('url', this.$route.path)
-        htlbid.setTargeting('urlSegments', this.$route.path.split('/').filter(segment => segment.length > 0))
+      setTargeting({
+        layout: 'universal',
+        is_testing: this.$config.environment === 'demo' ? 'yes' : 'no',
+        is_home: this.isHomepage ? 'yes' : 'no',
+        host: location?.host,
+        url: this.$route.path,
+        urlSegments: this.$route.path.split('/').filter(segment => segment.length > 0)
       })
     }
   },
