@@ -381,6 +381,14 @@ export default {
   .c-share-tools__link  {
     min-width: 44px;
   }
+
+  .share-tools-button:nth-child(3),
+  .share-tools-button:nth-child(4) {
+    display: none;
+    @include media(">400px") {
+      display: block;
+    }
+  }
 }
 
 .c-main-header .c-main-header__right .c-share-tools__group.c-share-tools__group {
