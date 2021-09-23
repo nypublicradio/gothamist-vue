@@ -255,10 +255,6 @@ export default {
           this.disqusThreadIds.push(item.legacyId || item.uuid)
         })
         // if there are no live articles and there is no custom tag page for this tag, redirect to the 404 page
-        console.log(this.totalCount)
-        console.log(this.designedHeader)
-        console.log(this.topPageZone)
-        console.log(this.midPageZone)
         if (this.totalCount === 0 && this.designedHeader.length === 0 && this.topPageZone.length === 0 && this.midPageZone.length === 0) {
           return this.$nuxt.error({ statusCode: 404, message: 'Page not found' })
         }
