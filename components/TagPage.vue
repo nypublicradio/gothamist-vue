@@ -126,8 +126,16 @@
               class="u-border-accent u-hide-until--m u-space--double--bottom"
               aria-hidden="true"
             >
-            <div v-if="nuggetIndex === 0" key="interior_midpage_1" class="htlad-interior_midpage_1 ad-div mod-break-margins mod-ad-disclosure" />
-            <div v-else key="interior_midpage_repeating" class="htlad-interior_midpage_repeating ad-div mod-break-margins mod-ad-disclosure" />
+            <div
+              v-if="nuggetIndex === 0"
+              key="interior_midpage_1"
+              class="htlad-interior_midpage_1 ad-div mod-break-margins mod-ad-disclosure"
+            />
+            <div
+              v-else
+              key="interior_midpage_repeating"
+              class="htlad-interior_midpage_repeating ad-div mod-break-margins mod-ad-disclosure"
+            />
             <hr
               class="u-border-accent u-hide-until--m u-space--double--top"
               aria-hidden="true"
@@ -246,6 +254,14 @@ export default {
           this.disqusThreadIds = this.disqusThreadIds || []
           this.disqusThreadIds.push(item.legacyId || item.uuid)
         })
+        // if there are no live articles and there is no custom tag page for this tag, redirect to the 404 page
+        console.log(this.totalCount)
+        console.log(this.designedHeader)
+        console.log(this.topPageZone)
+        console.log(this.midPageZone)
+        if (this.totalCount === 0 && this.designedHeader.length === 0 && this.topPageZone.length === 0 && this.midPageZone.length === 0) {
+          return this.$nuxt.error({ statusCode: 404, message: 'Page not found' })
+        }
       })
   },
   data () {
