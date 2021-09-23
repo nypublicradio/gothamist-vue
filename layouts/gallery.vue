@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { setTargeting, clearTargeting } from '~/mixins/htl'
+// import { setTargeting, clearTargeting } from '~/mixins/htl'
 
 export default {
   name: 'Gothamist',
@@ -18,18 +18,18 @@ export default {
   async mounted () {
     // set the navigation
     await this.$store.dispatch('global/setNavigation')
-    setTargeting({
-      Template: 'Article Gallery',
-      is_testing: this.$config.environment === 'demo' ? 'yes' : 'no',
-      is_home: this.isHomepage ? 'yes' : 'no',
-      host: location?.host,
-      url: this.$route.path,
-      urlSegments: this.$route.path.split('/').filter(segment => segment.length > 0)
-    })
+    // setTargeting({
+    //   Template: 'Article Gallery',
+    //   is_testing: this.$config.environment === 'demo' ? 'yes' : 'no',
+    //   is_home: this.isHomepage ? 'yes' : 'no',
+    //   host: location?.host,
+    //   url: this.$route.path,
+    //   urlSegments: this.$route.path.split('/').filter(segment => segment.length > 0)
+    // })
   },
-  beforeUnmount () {
-    clearTargeting(['Template']) // other params are always overwritten by the watch function in the default layout
-  },
+  // beforeUnmount () {
+  //   clearTargeting(['Template']) // other params are always overwritten by the watch function in the default layout
+  // },
   head () {
     return {
       link: [

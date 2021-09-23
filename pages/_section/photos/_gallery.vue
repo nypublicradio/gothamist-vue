@@ -45,8 +45,10 @@
           class="u-color-group-dark"
           variation="gothamist"
           :alt-text="slide.value.slideImage.image.alt"
-          :image="slide.value.slideImage.image.file"
+          :image="`${$config.imageBase}${slide.value.slideImage.image.id}/fill-%width%x%height%|format-jpeg%7Cjpegquality-80/`"
           :width="slide.value.slideImage.image.width"
+          :max-width="slide.value.slideImage.image.width"
+          :max-height="slide.value.slideImage.image.height"
           :height="slide.value.slideImage.image.height"
           :credit="slide.value.slideImage.image.credit"
           :caption="slide.value.slideImage.image.caption"
@@ -54,14 +56,14 @@
         />
         <v-spacer size="triple" />
       </div>
-      <div class="ad-wrapper-outer">
-        <div class="ad-wrapper-inner">
-          <div class="htlad-interior_midpage_gallery" />
-          <div class="ad-label">
-            Advertisement
-          </div>
-        </div>
-      </div>
+      <!--      <div class="ad-wrapper-outer">-->
+      <!--        <div class="ad-wrapper-inner">-->
+      <!--          <div class="htlad-interior_midpage_gallery" />-->
+      <!--          <div class="ad-label">-->
+      <!--            Advertisement-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--      </div>-->
     </div>
     <v-spacer size="triple" />
     <div class="gallery-footer">
@@ -70,7 +72,7 @@
       <v-spacer size="triple" />
       <v-button
         class="back-to-article"
-        @click.prevent="goToArticle"
+        @click="goToArticle"
       >
         Back To Article
       </v-button>
@@ -149,11 +151,11 @@ export default {
   },
   mounted () {
     // support deep linking
-    if (this.$route.query.image && this.$refs['image' + this.$route.query.image] !== undefined) {
-      const imageElement = this.$refs['image' + this.$route.query.image]
-      const top = imageElement[0].offsetTop
-      window.scrollTo(0, top + 72)
-    }
+    // if (this.$route.query.image && this.$refs['image' + this.$route.query.image] !== undefined) {
+    //   const imageElement = this.$refs['image' + this.$route.query.image]
+    //   const top = imageElement[0].offsetTop
+    //   window.scrollTo(0, top + 72)
+    // }
     this.pageLoaded = true
   },
   methods: {
