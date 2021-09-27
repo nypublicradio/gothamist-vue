@@ -151,11 +151,11 @@ export default {
   },
   mounted () {
     // support deep linking
-    // if (this.$route.query.image && this.$refs['image' + this.$route.query.image] !== undefined) {
-    //   const imageElement = this.$refs['image' + this.$route.query.image]
-    //   const top = imageElement[0].offsetTop
-    //   window.scrollTo(0, top + 72)
-    // }
+    if (this.$route.query.image && this.$refs['image' + this.$route.query.image] !== undefined) {
+      const imageElement = this.$refs['image' + this.$route.query.image]
+      const top = imageElement[0].offsetTop
+      window.scrollTo(0, top + 72)
+    }
     this.pageLoaded = true
   },
   methods: {
