@@ -248,6 +248,10 @@ export default {
       .get('pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=12&tag_slug=' + this.slug + '&offset=' + this.offset)
       .then((response) => {
         this.totalCount = response.data.meta.totalCount
+        console.log(this.totalCount)
+        console.log(this.designedHeader)
+        console.log(this.topPageZone)
+        console.log(this.midPageZone)
         this.results = this.results.concat(response.data.items)
         this.offset += 12
         response.data.items.forEach((item) => {
@@ -255,7 +259,7 @@ export default {
           this.disqusThreadIds.push(item.legacyId || item.uuid)
         })
         // if there are no live articles and there is no custom tag page for this tag, redirect to the 404 page
-        if (this.totalCount === 0 && this.designedHeader.length === 0 && this.topPageZone.length === 0 && this.midPageZone.length === 0) {
+        if (this.totalCount === 0 && (!this.designedHeader || this.designedHeader.length === 0) && (!this.topPageZone || this.topPageZone.length === 0) && (!this.midPageZone || this.midPageZone.length === 0)) {
           return this.$nuxt.error({ statusCode: 404, message: 'Page not found' })
         }
       })
