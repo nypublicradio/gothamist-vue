@@ -30,7 +30,7 @@
         <gothamist-breaking-news class="l-container l-container--16col" />
         <gothamist-marketing-banners class="l-container l-container--16col" />
       </div>
-      <Nuxt />
+      <Nuxt keep-alive />
     </main>
     <gothamist-footer />
   </div>
