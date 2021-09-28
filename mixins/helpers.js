@@ -28,14 +28,14 @@ export const formatTags = function (name, slug, sponsored, tags) {
 // listingImage = the article's 'listing_image' from the CMS API
 export const getArticleImage = function (asset, slug, listingImage) {
   if (listingImage !== undefined && listingImage !== null) {
-    return `${this.$config.imageBase}${listingImage.id}/fill-560x413/`
+    return `${this.$config.imageBase}${listingImage.id}/fill-560x413|format-jpeg|jpegquality-80/`
   }
   if (asset !== undefined && asset.length > 0) {
     if (asset[0].value.image) {
-      return `${this.$config.imageBase}${asset[0].value.image.id}/fill-560x413/`
+      return `${this.$config.imageBase}${asset[0].value.image.id}/fill-560x413|format-jpeg|jpegquality-80/`
     }
     if (asset[0].value.defaultImage) {
-      return `${this.$config.imageBase}${asset[0].value.defaultImage.id}/fill-560x413/`
+      return `${this.$config.imageBase}${asset[0].value.defaultImage.id}/fill-560x413|format-jpeg|jpegquality-80/`
     }
   }
   switch (slug) {
