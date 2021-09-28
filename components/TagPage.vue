@@ -248,10 +248,6 @@ export default {
       .get('pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=12&tag_slug=' + this.slug + '&offset=' + this.offset)
       .then((response) => {
         this.totalCount = response.data.meta.totalCount
-        console.log(this.totalCount)
-        console.log(this.designedHeader)
-        console.log(this.topPageZone)
-        console.log(this.midPageZone)
         this.results = this.results.concat(response.data.items)
         this.offset += 12
         response.data.items.forEach((item) => {
