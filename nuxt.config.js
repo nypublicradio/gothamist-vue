@@ -169,8 +169,15 @@ export default {
   },
 
   sentry: {
+    disabled: true,
     dsn: process.env.SENTRY_DSN,
     environment: process.env.SENTRY_ENVIRONMENT,
+    // fixing infinite recursion issue
+    // https://github.com/getsentry/sentry-javascript/issues/2957
+    clientIntegrations: {
+      TryCatch: { eventTarget: false },
+      Vue: { attachProps: true }
+    },
     config: {
       lazy: true
     },

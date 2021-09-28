@@ -45,8 +45,10 @@
           class="u-color-group-dark"
           variation="gothamist"
           :alt-text="slide.value.slideImage.image.alt"
-          :image="slide.value.slideImage.image.file"
+          :image="`${$config.imageBase}${slide.value.slideImage.image.id}/fill-%width%x%height%|format-jpeg%7Cjpegquality-80/`"
           :width="slide.value.slideImage.image.width"
+          :max-width="slide.value.slideImage.image.width"
+          :max-height="slide.value.slideImage.image.height"
           :height="slide.value.slideImage.image.height"
           :credit="slide.value.slideImage.image.credit"
           :caption="slide.value.slideImage.image.caption"
@@ -70,7 +72,7 @@
       <v-spacer size="triple" />
       <v-button
         class="back-to-article"
-        @click.prevent="goToArticle"
+        @click="goToArticle"
       >
         Back To Article
       </v-button>
