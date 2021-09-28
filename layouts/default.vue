@@ -37,6 +37,7 @@
 </template>
 
 <script>
+/* global htlbid */
 import { mapState } from 'vuex'
 import { setTargeting } from '~/mixins/htl'
 
@@ -71,8 +72,12 @@ export default {
         el.remove()
       })
       // htlbid key value targeting for ads
+      window.htlbid = window.htlbid || {}
+      htlbid.cmd = htlbid.cmd || []
+      htlbid.cmd.push(() => {
+        htlbid.layout('universal')
+      })
       setTargeting({
-        layout: 'universal',
         is_testing: this.$config.environment === 'demo' ? 'yes' : 'no',
         is_home: this.isHomepage ? 'yes' : 'no',
         host: location?.host,
