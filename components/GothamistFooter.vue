@@ -43,7 +43,9 @@
       </template>
       <template v-slot:rightComponent>
         <div>
-          <gothamist-footer-newsletter />
+          <gothamist-footer-newsletter
+            @newletter-signup-success="handleNewsletterSignupSuccess"
+          />
         </div>
       </template>
     </the-footer>
@@ -72,6 +74,11 @@ export default {
       footerSlogan: state => state.footerSlogan,
       legalNav: state => state.legalNav
     })
+  },
+  methods: {
+    handleNewsletterSignupSuccess () {
+      this.gaEvent('NTG newsletter', 'newsletter signup', 'success')
+    }
   }
 }
 </script>

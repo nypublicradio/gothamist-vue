@@ -38,13 +38,13 @@ export default {
         )
         .then(() => {
           this.status = 'success'
+          this.$emit('newsletter-signup-success')
           // gaEvent (gaCategory, gaAction, gaLabel, custom) {
-          this.gaEvent('NTG Newsletter', 'newsletter modal impression 2', location, 'success')
         })
         .catch(() => {
           this.status = 'error'
           this.submitted = false
-          this.gaEvent('NTG Newsletter', 'newsletter modal impression 2', location, 'error')
+          this.$emit('newsletter-signup-error')
         })
     }
   }
