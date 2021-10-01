@@ -67,6 +67,9 @@ export default {
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
   mixins: [gtm],
+  mounted () {
+    this.gaEvent('NTG newsletter', 'newsletter modal impression 3', 'Newsletter Signup Page')
+  },
   methods: {
     handleNewsletterSignupSuccess () {
       this.gaEvent('NTG newsletter', 'newsletter signup', 'success')

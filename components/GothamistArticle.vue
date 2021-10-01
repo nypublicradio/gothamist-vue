@@ -112,6 +112,11 @@
         class="l-container l-container--10col"
       >
         <article-page-newsletter
+          :key="article.uuid"
+          v-observe-visibility="{
+            callback: handleNewsletterImpression,
+            once: true,
+          }"
           title="NYC news never sleeps. Get the Gothamist Daily newsletter and don't miss a moment."
           class="article-newsletter"
           @newsletter-signup-success="handleNewsletterSignupSuccess"
@@ -555,6 +560,9 @@ export default {
     },
     handleNewComment () {
       this.gaEvent('NTG user', 'comment added', 'this.article?.title')
+    },
+    handleNewsletterImpression () {
+      this.gaEvent('NTG newsletter', 'newsletter modal impression 1', this.article.title)
     },
     handleNewsletterSignupSuccess () {
       this.gaEvent('NTG newsletter', 'newsletter signup', 'success')
