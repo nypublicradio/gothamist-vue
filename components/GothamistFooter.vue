@@ -44,6 +44,11 @@
       <template v-slot:rightComponent>
         <div>
           <gothamist-footer-newsletter
+            :key="$route.path"
+            v-observe-visibility="{
+              callback: handleNewsletterImpression,
+              once: true,
+            }"
             @newletter-signup-success="handleNewsletterSignupSuccess"
           />
         </div>
@@ -76,6 +81,9 @@ export default {
     })
   },
   methods: {
+    handleNewsletterImpression () {
+      this.gaEvent('NTG newsletter', 'newsletter modal impression 2', 'footer')
+    },
     handleNewsletterSignupSuccess () {
       this.gaEvent('NTG newsletter', 'newsletter signup', 'success')
     }
