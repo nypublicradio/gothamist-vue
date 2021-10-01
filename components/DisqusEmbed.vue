@@ -78,6 +78,8 @@ export default {
     setBaseConfig (disqusConfig) {
       this.setPageConfig(disqusConfig)
       disqusConfig.language = 'en'
+      disqusConfig.callbacks.onReady = [() => { this.$emit('ready') }]
+      disqusConfig.callbacks.onNewComment = [(comment) => { this.$emit('new-comment', comment) }]
     },
     setPageConfig (disqusConfig) {
       const defaultConfig = {
