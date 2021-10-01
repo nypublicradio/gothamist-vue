@@ -139,6 +139,7 @@
           v-if="article"
           :identifier="String(article.legacyId || article.uuid)"
           :url="article.url"
+          @new-comment="handleNewComment"
         />
         <v-spacer size="quin" />
       </template>
@@ -550,6 +551,9 @@ export default {
           insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'ad-div', 'mod-break-margins', 'mod-ad-disclosure'], reset: true })
         })
       }
+    },
+    handleNewComment () {
+      this.gaEvent('NTG user', 'comment added', 'this.article?.title')
     }
   },
   head () {
