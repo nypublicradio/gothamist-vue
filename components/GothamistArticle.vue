@@ -114,6 +114,7 @@
         <article-page-newsletter
           title="NYC news never sleeps. Get the Gothamist Daily newsletter and don't miss a moment."
           class="article-newsletter"
+          @newsletter-signup-success="handleNewsletterSignupSuccess"
         />
         <div class="article-tag-list">
           <v-tag
@@ -554,6 +555,9 @@ export default {
     },
     handleNewComment () {
       this.gaEvent('NTG user', 'comment added', 'this.article?.title')
+    },
+    handleNewsletterSignupSuccess () {
+      this.gaEvent('NTG newsletter', 'newsletter signup', 'success')
     }
   },
   head () {
