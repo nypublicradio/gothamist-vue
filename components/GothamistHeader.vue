@@ -134,18 +134,24 @@
             action="share"
             service="facebook"
             :url="url + '&utm_medium=social&utm_source=facebook&utm_campaign=shared_facebook'"
+            :utm-parameters="{medium: 'social', source: 'facebook', campaign: 'shared_facebook'}"
+            @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
           />
           <share-tools-item
             action="share"
             service="twitter"
             :url="url + '&utm_medium=social&utm_source=twitter&utm_campaign=shared_twitter'"
             :share-parameters="{text: title, via: 'gothamist'}"
+            :utm-parameters="{medium: 'social', source: 'twitter', campaign: 'shared_twitter'}"
+            @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
           />
           <share-tools-item
             action="share"
             service="reddit"
             :url="url + '&utm_medium=social&utm_source=reddit&utm_campaign=shared_reddit'"
             :share-parameters="{title: title}"
+            :utm-parameters="{medium: 'social', source: 'reddit', campaign: 'shared_reddit'}"
+            @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
           />
           <share-tools-item
             action="share"
@@ -153,6 +159,7 @@
             :url="url"
             :share-parameters="{body: title + ' - %URL%'}"
             :utm-parameters="{medium: 'social', source: 'email', campaign: 'shared_email'}"
+            @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
           />
         </share-tools>
       </template>
