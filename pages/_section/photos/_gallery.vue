@@ -83,11 +83,11 @@
 
 <script>
 import gtm from '~/mixins/gtm'
+import { setTargeting, clearTargeting } from '~/mixins/htl'
 
 const { formatTitle } = require('~/mixins/helpers')
 
 export default {
-  layout: 'gallery',
   name: 'ArticleGallery', // this is the template name which is used for GTM
   components: {
     CloseIcon: () => import('nypr-design-system-vue/src/components/icons/CloseIcon'),
@@ -157,6 +157,10 @@ export default {
       window.scrollTo(0, top + 72)
     }
     this.pageLoaded = true
+    setTargeting({ Template: 'Article Gallery' })
+  },
+  beforeUnmount () {
+    clearTargeting(['Template'])
   },
   methods: {
     formatTitle,
