@@ -39,7 +39,6 @@ export default {
         .then(() => {
           this.status = 'success'
           this.$emit('newsletter-signup-success')
-          // gaEvent (gaCategory, gaAction, gaLabel, custom) {
         })
         .catch(() => {
           this.status = 'error'
