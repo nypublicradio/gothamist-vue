@@ -49,7 +49,7 @@
               callback: handleNewsletterImpression,
               once: true,
             }"
-            @newletter-signup-success="handleNewsletterSignupSuccess"
+            @newsletter-signup-success="handleNewsletterSignupSuccess"
           />
         </div>
       </template>
