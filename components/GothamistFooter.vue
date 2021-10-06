@@ -21,22 +21,22 @@
             <share-tools-item
               service="facebook"
               username="gothamist"
-              @follow="gaEvent('NTG social','Social Follow', ...arguments)"
+              @follow="gaEvent('NTG social','social follow', ...arguments)"
             />
             <share-tools-item
               service="twitter"
               username="gothamist"
-              @follow="gaEvent('NTG social','Social Follow', ...arguments)"
+              @follow="gaEvent('NTG social','social follow', ...arguments)"
             />
             <share-tools-item
               service="instagram"
               username="gothamist"
-              @follow="gaEvent('NTG social','Social Follow', ...arguments)"
+              @follow="gaEvent('NTG social','social follow', ...arguments)"
             />
             <share-tools-item
               service="youtube"
               username="UCY_2VeS5Q9_sMZRhtvF0c5Q"
-              @follow="gaEvent('NTG social','Social Follow', ...arguments)"
+              @follow="gaEvent('NTG social','social follow', ...arguments)"
             />
           </share-tools>
         </div>
