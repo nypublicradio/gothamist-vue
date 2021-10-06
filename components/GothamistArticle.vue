@@ -563,7 +563,7 @@ export default {
       }
     },
     handleNewComment () {
-      this.gaEvent('NTG user', 'comment added', 'this.article?.title')
+      this.gaEvent('NTG user', 'comment added', this.article?.title)
     },
     handleNewsletterImpression () {
       this.gaEvent('NTG newsletter', 'newsletter modal impression 1', this.article.title)
