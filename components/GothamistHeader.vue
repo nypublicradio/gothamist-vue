@@ -63,22 +63,22 @@
                 <share-tools-item
                   service="facebook"
                   username="gothamist"
-                  @componentEvent="gaEvent('NTG social','Social Follow', ...arguments)"
+                  @follow="gaEvent('NTG social','Social Follow', ...arguments)"
                 />
                 <share-tools-item
                   service="twitter"
                   username="gothamist"
-                  @componentEvent="gaEvent('NTG social','Social Follow', ...arguments)"
+                  @follow="gaEvent('NTG social','Social Follow', ...arguments)"
                 />
                 <share-tools-item
                   service="instagram"
                   username="gothamist"
-                  @componentEvent="gaEvent('NTG social','Social Follow', ...arguments)"
+                  @follow="gaEvent('NTG social','Social Follow', ...arguments)"
                 />
                 <share-tools-item
                   service="youtube"
                   username="UCY_2VeS5Q9_sMZRhtvF0c5Q"
-                  @componentEvent="gaEvent('NTG social','Social Follow', ...arguments)"
+                  @follow="gaEvent('NTG social','Social Follow', ...arguments)"
                 />
               </share-tools>
             </div>
@@ -135,7 +135,7 @@
             service="facebook"
             :url="url + '&utm_medium=social&utm_source=facebook&utm_campaign=shared_facebook'"
             :utm-parameters="{medium: 'social', source: 'facebook', campaign: 'shared_facebook'}"
-            @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
+            @share="gaEvent('NTG social','Social Share', ...arguments)"
           />
           <share-tools-item
             action="share"
@@ -143,7 +143,7 @@
             :url="url + '&utm_medium=social&utm_source=twitter&utm_campaign=shared_twitter'"
             :share-parameters="{text: title, via: 'gothamist'}"
             :utm-parameters="{medium: 'social', source: 'twitter', campaign: 'shared_twitter'}"
-            @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
+            @share="gaEvent('NTG social','Social Share', ...arguments)"
           />
           <share-tools-item
             action="share"
@@ -151,7 +151,7 @@
             :url="url + '&utm_medium=social&utm_source=reddit&utm_campaign=shared_reddit'"
             :share-parameters="{title: title}"
             :utm-parameters="{medium: 'social', source: 'reddit', campaign: 'shared_reddit'}"
-            @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
+            @share="gaEvent('NTG social','Social Share', ...arguments)"
           />
           <share-tools-item
             action="share"
@@ -159,7 +159,7 @@
             :url="url"
             :share-parameters="{body: title + ' - %URL%'}"
             :utm-parameters="{medium: 'social', source: 'email', campaign: 'shared_email'}"
-            @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
+            @share="gaEvent('NTG social','Social Share', ...arguments)"
           />
         </share-tools>
       </template>

@@ -46,7 +46,7 @@
             service="facebook"
             :url="article.url"
             :utm-parameters="{medium: 'social', source: 'facebook', campaign: 'shared_facebook'}"
-            @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
+            @share="gaEvent('NTG social','Social Share', ...arguments)"
           />
           <share-tools-item
             action="share"
@@ -54,7 +54,7 @@
             :url="article.url"
             :share-parameters="{text: article.title, via: 'gothamist'}"
             :utm-parameters="{medium: 'social', source: 'twitter', campaign: 'shared_twitter'}"
-            @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
+            @share="gaEvent('NTG social','Social Share', ...arguments)"
           />
           <share-tools-item
             action="share"
@@ -62,7 +62,7 @@
             :url="article.url"
             :share-parameters="{title: article.title}"
             :utm-parameters="{medium: 'social', source: 'reddit', campaign: 'shared_reddit'}"
-            @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
+            @share="gaEvent('NTG social','Social Share', ...arguments)"
           />
           <share-tools-item
             action="share"
@@ -70,7 +70,7 @@
             :url="article.url"
             :share-parameters="{body: article.title + ' - %URL%'}"
             :utm-parameters="{medium: 'social', source: 'email', campaign: 'shared_email'}"
-            @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
+            @share="gaEvent('NTG social','Social Share', ...arguments)"
           />
         </share-tools>
         <div
