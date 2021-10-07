@@ -78,6 +78,17 @@ export default {
   beforeDestroy () {
     clearTargeting(['Template', 'tags', 'racy', 'Sponsor', 'Category'])
     this.$store.commit('global/setSensitiveContent', false)
+  },
+  head () {
+    return {
+      link: [
+        {
+          hid: 'canonical_url',
+          href: this.page?.canonicalUrl || 'https://gothamist.com' + this.$route.path,
+          rel: 'canonical'
+        }
+      ]
+    }
   }
 }
 </script>
