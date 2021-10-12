@@ -1,6 +1,6 @@
 <template>
   <div class="error-page">
-    <div class="l-container l-container--11col">
+    <div class="l-container l-container--11col l-wrap">
       <v-spacer size="quad" />
       <strong
         v-if="error.statusCode === 404"
@@ -38,7 +38,7 @@
         caption="Realize the key to Zubaz is wearing them high. No need to rock these low. They do the work for you."
       />
     </div>
-    <div class="error-page l-container l-container--11col">
+    <div class="error-page l-container l-container--11col l-wrap">
       <v-spacer size="double" />
       <p>
         Welcome! The Gothamist page you're looking for doesn't appear to exist. Would you like to visit our

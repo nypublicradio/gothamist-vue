@@ -26,7 +26,7 @@
             :tags="featuredStory.sponsoredContent ? [{ name: 'sponsored' }] : []"
           >
             <article-metadata
-              :publish-date="!featuredStory.updatedDate ? fuzzyDateTime(featuredStory.meta.firstPublishedAt) : null"
+              :publish-date="!featuredStory.updatedDate ? (fuzzyDateTime(featuredStory.publicationDate) || fuzzyDateTime(featuredStory.meta.firstPublishedAt)) : null"
               :updated-date="featuredStory.updatedDate ? fuzzyDateTime(featuredStory.updatedDate) : null"
             >
               <template
@@ -67,7 +67,7 @@
               :subtitle="story.description"
             >
               <article-metadata
-                :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
@@ -113,7 +113,7 @@
               :tags="story.sponsoredContent ? [{ name: 'sponsored' }] : []"
             >
               <article-metadata
-                :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template

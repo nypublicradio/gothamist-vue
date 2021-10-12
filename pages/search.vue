@@ -66,7 +66,7 @@
             :tags="formatTags(story.result.ancestry[0].title, story.result.ancestry[0].slug, story.result.sponsoredContent, story.result.tags)"
           >
             <article-metadata
-              :publish-date="!story.result.updatedDate ? fuzzyDateTime(story.result.meta.firstPublishedAt) : null"
+              :publish-date="!story.result.updatedDate ? (fuzzyDateTime(story.result.publicationDate) || fuzzyDateTime(story.result.meta.firstPublishedAt)) : null"
               :updated-date="story.result.updatedDate ? fuzzyDateTime(story.result.updatedDate) : null"
             >
               <template

@@ -85,7 +85,10 @@
           </template>
         </the-menu>
       </template>
-      <template v-slot:logo>
+      <template
+        v-if="showLogo"
+        v-slot:logo
+      >
         <nuxt-link
           to="/"
           class="c-main-header__logo"
@@ -96,7 +99,7 @@
         </nuxt-link>
       </template>
       <template
-        v-if="!gallery"
+        v-if="showNavigation"
         v-slot:navigation
       >
         <secondary-navigation
@@ -106,7 +109,7 @@
         />
       </template>
       <template
-        v-if="!gallery"
+        v-if="showSearch"
         v-slot:search
       >
         <v-search
@@ -123,7 +126,7 @@
         />
       </template>
       <template
-        v-if="gallery"
+        v-if="showSocial"
         v-slot:social
       >
         <share-tools label="SHARE">
@@ -167,6 +170,9 @@
 import { mapState } from 'vuex'
 import gtm from '@/mixins/gtm'
 
+const ARTICLE_ROUTE = 'section-article'
+const GALLERY_ROUTE = 'section-photos-gallery'
+
 export default {
   name: 'GothamistHeader',
   components: {
@@ -182,16 +188,9 @@ export default {
     ScrollMeter: () => import('./ScrollMeter')
   },
   mixins: [gtm],
-  props: {
-    gallery: {
-      type: Boolean,
-      default: false
-    }
-  },
   data () {
     return {
       isHeaderStuck: false,
-      scrollMeterTarget: null,
       title: null,
       url: null
     }
@@ -205,26 +204,53 @@ export default {
       legalNav: state => state.legalNav
     }),
     donateButtonUrl () {
-      if (this.gallery) {
+      if (this.$route.name === GALLERY_ROUTE) {
         return null
       } else {
         return this.donateUrl
       }
+    },
+    scrollMeterTarget () {
+      switch (this.$route.name) {
+        case ARTICLE_ROUTE:
+          return '.article-body'
+        case GALLERY_ROUTE:
+          return '.gallery'
+        default:
+          return null
+      }
+    },
+    showLogo () {
+      // Hide the logo at small widths when showing the social menu
+      return !(this.socialHeader && ['xsmall', 'small'].includes(this.$mq))
+    },
+    showNavigation () {
+      // hide the nav on the 'social header' view
+      return !this.socialHeader
+    },
+    showSocial () {
+      // show the social share on the 'social header' view
+      return this.socialHeader
+    },
+    showSearch () {
+      // hide the search on the gallery view
+      return !(this.$route.name === GALLERY_ROUTE)
+    },
+    socialHeader () {
+      return this.isHeaderStuck &&
+      (this.$route.name === ARTICLE_ROUTE || this.$route.name === GALLERY_ROUTE)
+    }
+  },
+  watch: {
+    '$route' () {
+      this.updateShareData()
     }
   },
   mounted () {
-    this.title = document.title
-    if (this.$route.query.image) {
-      this.url = 'https://gothamist.com' + this.$route.path + '?image=' + this.$route.query.image
-    } else {
-      this.url = 'https://gothamist.com' + this.$route.path
-    }
-    if (this.$route.name === 'section-article') {
-      this.scrollMeterTarget = '.article-body'
-    }
-    if (this.$route.name === 'section-photos-gallery') {
-      this.scrollMeterTarget = '.gallery'
-    }
+    this.updateShareData()
+    new MutationObserver(() => {
+      this.updateShareData()
+    }).observe(document.querySelector('title'), { childList: true })
     window.addEventListener('scroll', this.handleScroll)
   },
   destroyed () {
@@ -233,6 +259,14 @@ export default {
   methods: {
     headerVisibilityChanged (isVisible, entry) {
       this.isHeaderStuck = entry.intersectionRatio < 1
+    },
+    updateShareData () {
+      this.title = document.title
+      if (this.$route.query.image) {
+        this.url = 'https://gothamist.com' + this.$route.path + '?image=' + this.$route.query.image
+      } else {
+        this.url = 'https://gothamist.com' + this.$route.path
+      }
     }
   }
 }
@@ -327,5 +361,43 @@ export default {
   @include media(">large") {
     display: block;
   }
+}
+
+.c-main-header .c-share-tools__label {
+  display: none;
+  @include media(">large") {
+    display: block;
+  }
+}
+
+.c-main-header__right {
+  display: inline-grid;
+  width: max-content;
+  @include media('>small') {
+    display: flex;
+  }
+
+  .share-tools-button,
+  .c-share-tools__link  {
+    min-width: 44px;
+  }
+
+  .share-tools-button:nth-child(3),
+  .share-tools-button:nth-child(4) {
+    display: none;
+    @include media(">400px") {
+      display: block;
+    }
+  }
+}
+
+.c-main-header .c-main-header__right .c-share-tools__group.c-share-tools__group {
+  display: flex;
+  width: max-content;
+  margin-right: var(--space-3);
+}
+
+.c-main-header__branding:empty {
+    display: none;
 }
 </style>

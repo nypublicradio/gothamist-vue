@@ -165,12 +165,6 @@ export default {
   margin-bottom: var(--space-4);
 }
 
-.streamfield .streamfield-heading,
-.streamfield .streamfield-pull-quote,
-.streamfield .image-with-caption {
-  margin-bottom: var(--space-6);
-}
-
 .streamfield-block .twitter-tweet {
   margin: auto;
 }

@@ -36,7 +36,7 @@
       </section>
     </div>
     <!-- results -->
-    <loading-icon v-if="!moreResultsLoaded" />
+    <loading-icon v-if="$fetchState.pending" />
     <div class="l-container l-container--14col l-wrap">
       <template v-if="!designedHeader">
         <hr
@@ -44,7 +44,7 @@
           aria-hidden="true"
         >
       </template>
-      <section v-if="moreResults && moreResults.length > 0 && moreResultsNuggets">
+      <section v-if="results && results.length > 0 && moreResultsNuggets">
         <div
           v-for="(nugget, nuggetIndex) in moreResultsNuggets"
           :key="nuggetIndex"
@@ -64,16 +64,16 @@
               :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
             >
               <article-metadata
-                :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
-                  v-if="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData)"
+                  v-if="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData)"
+                    :value="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
@@ -102,16 +102,16 @@
               :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
             >
               <article-metadata
-                :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
-                  v-if="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData)"
+                  v-if="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData)"
+                    :value="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
@@ -126,8 +126,16 @@
               class="u-border-accent u-hide-until--m u-space--double--bottom"
               aria-hidden="true"
             >
-            <div v-if="nuggetIndex === 0" key="interior_midpage_1" class="htlad-interior_midpage_1 ad-div mod-break-margins mod-ad-disclosure" />
-            <div v-else key="interior_midpage_repeating" class="htlad-interior_midpage_repeating ad-div mod-break-margins mod-ad-disclosure" />
+            <div
+              v-if="nuggetIndex === 0"
+              key="interior_midpage_1"
+              class="htlad-interior_midpage_1 ad-div mod-break-margins mod-ad-disclosure"
+            />
+            <div
+              v-else
+              key="interior_midpage_repeating"
+              class="htlad-interior_midpage_repeating ad-div mod-break-margins mod-ad-disclosure"
+            />
             <hr
               class="u-border-accent u-hide-until--m u-space--double--top"
               aria-hidden="true"
@@ -148,16 +156,16 @@
               :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
             >
               <article-metadata
-                :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
-                  v-if="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData)"
+                  v-if="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData)"
+                    :value="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
@@ -165,19 +173,19 @@
             </v-card>
           </div>
         </div>
-        <loading-icon v-if="!moreResultsLoaded && moreResults.length > 0" />
+        <loading-icon v-if="$fetchState.pending && results.length > 0" />
         <v-spacer size="double" />
         <div
-          v-if="moreResults.length < totalCount && moreResults.length > 0"
+          v-if="results.length < totalCount && results.length > 0"
           class="l-container u-align-center"
         >
           <v-button
             class="more-results"
-            :disabled="!moreResultsLoaded"
+            :disabled="$fetchState.pending"
             @click="getMoreResults"
           >
-            <span v-if="moreResultsLoaded">More Results</span>
-            <span v-if="!moreResultsLoaded">Loading...</span>
+            <span v-if="!$fetchState.pending">More Results</span>
+            <span v-if="$fetchState.pending">Loading...</span>
           </v-button>
         </div>
       </section>
@@ -235,13 +243,29 @@ export default {
       default: null
     }
   },
+  async fetch () {
+    await this.$axios
+      .get('pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=12&tag_slug=' + this.slug + '&offset=' + this.offset)
+      .then((response) => {
+        this.totalCount = response.data.meta.totalCount
+        this.results = this.results.concat(response.data.items)
+        this.offset += 12
+        response.data.items.forEach((item) => {
+          this.disqusThreadIds = this.disqusThreadIds || []
+          this.disqusThreadIds.push(item.legacyId || item.uuid)
+        })
+        // if there are no live articles and there is no custom tag page for this tag, redirect to the 404 page
+        if (this.totalCount === 0 && (!this.designedHeader || this.designedHeader.length === 0) && (!this.topPageZone || this.topPageZone.length === 0) && (!this.midPageZone || this.midPageZone.length === 0)) {
+          return this.$nuxt.error({ statusCode: 404, message: 'Page not found' })
+        }
+      })
+  },
   data () {
     return {
-      moreResults: [],
-      moreResultsDisqusThreadIds: [],
-      moreResultsDisqusData: null,
-      moreResultsLoaded: false,
-      moreResultsOffset: 0,
+      results: [],
+      disqusThreadIds: [],
+      disqusData: null,
+      offset: 0,
       totalCount: 0
     }
   },
@@ -256,35 +280,25 @@ export default {
       const nuggetArray = []
       const nuggetSize = 6
       let index = 0
-      while (index < this.moreResults.length) {
-        nuggetArray.push(this.moreResults.slice(index, nuggetSize + index))
+      while (index < this.results.length) {
+        nuggetArray.push(this.results.slice(index, nuggetSize + index))
         index += nuggetSize
       }
       return nuggetArray
     }
   },
-  mounted () {
-    this.getMoreResults()
+  watch: {
+    async disqusThreadIds () {
+      this.disqusData = await this.getCommentCount(this.disqusThreadIds)
+    }
   },
   methods: {
     formatTags,
     fuzzyDateTime,
     getArticleImage,
     async getMoreResults () {
-      this.moreResultsLoaded = false
-      await this.$axios
-        .get('pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=12&tag_slug=' + this.slug + '&offset=' + this.moreResultsOffset)
-        .then((response) => {
-          this.totalCount = response.data.meta.totalCount
-          this.moreResults = this.moreResults.concat(response.data.items)
-          this.moreResultsOffset += 12
-          this.moreResultsLoaded = true
-          response.data.items.forEach((item) => {
-            this.moreResultsDisqusThreadIds.push(item.legacyId || item.uuid)
-          })
-        })
-      this.moreResultsDisqusData = await this.getCommentCount(this.moreResultsDisqusThreadIds)
-      this.gaEvent('Click Tracking', 'Load More Results', 'TagPage', this.moreResultsOffset + ' articles loaded')
+      await this.$fetch()
+      this.gaEvent('Click Tracking', 'Load More Results', 'TagPage', this.offset + ' articles loaded')
     },
     hasGallery
   }

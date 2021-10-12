@@ -24,7 +24,7 @@ export default {
   },
   async fetch () {
     this.productMarketingBanner = await this.$axios
-      .get('/system_messages/1/')
+      .get('/system_messages/2/')
       .then(response => response.data.productBanners)
   },
   data () {

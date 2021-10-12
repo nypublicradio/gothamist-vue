@@ -1,11 +1,11 @@
 <template>
   <div :class="{'home-page' : isHomepage}">
     <div
-      v-if="!isSensitiveContent"
+      v-if="!isSensitiveContent && !isGallery"
       class="htlad-skin"
     />
     <div
-      v-if="!isSensitiveContent"
+      v-if="!isSensitiveContent && !isGallery"
       class="ad-wrapper-outer mod-header u-color-group-dark no-print"
     >
       <div class="ad-wrapper-inner">
@@ -26,18 +26,20 @@
     </div>
     <gothamist-header />
     <main :class="$route.name">
-      <div v-if="this.$route.name !== 'tags-slug'" class="gothamist-banners l-container l-container--xl l-wrap">
+      <div v-if="!isTagPage && !isGallery" class="gothamist-banners l-container l-container--xl l-wrap">
         <gothamist-breaking-news class="l-container l-container--16col" />
         <gothamist-marketing-banners class="l-container l-container--16col" />
       </div>
-      <Nuxt />
+      <Nuxt keep-alive />
     </main>
-    <gothamist-footer />
+    <gothamist-footer v-if="!isGallery" />
   </div>
 </template>
 
 <script>
+/* global htlbid */
 import { mapState } from 'vuex'
+import { setTargeting } from '~/mixins/htl'
 
 export default {
   name: 'Gothamist',
@@ -50,6 +52,12 @@ export default {
   computed: {
     isHomepage () {
       return this.$route.name === 'index'
+    },
+    isGallery () {
+      return this.$route.name === 'section-photos-gallery'
+    },
+    isTagPage () {
+      return this.$route.name === 'tags-slug'
     },
     ...mapState('global', ['isSensitiveContent'])
   },
@@ -70,15 +78,17 @@ export default {
         el.remove()
       })
       // htlbid key value targeting for ads
-      const htlbid = window.htlbid = window.htlbid || {}
+      window.htlbid = window.htlbid || {}
       htlbid.cmd = htlbid.cmd || []
       htlbid.cmd.push(() => {
-        htlbid.layout('universal') // Leave as 'universal' or add custom layout
-        htlbid.setTargeting('is_testing', this.$config.environment === 'demo' ? 'yes' : 'no')
-        htlbid.setTargeting('is_home', this.isHomepage ? 'yes' : 'no')
-        htlbid.setTargeting('host', location?.host)
-        htlbid.setTargeting('url', this.$route.path)
-        htlbid.setTargeting('urlSegments', this.$route.path.split('/').filter(segment => segment.length > 0))
+        htlbid.layout('universal')
+      })
+      setTargeting({
+        is_testing: this.$config.environment === 'demo' ? 'yes' : 'no',
+        is_home: this.isHomepage ? 'yes' : 'no',
+        host: location?.host,
+        url: this.$route.path,
+        urlSegments: this.$route.path.split('/').filter(segment => segment.length > 0)
       })
     }
   },
@@ -185,6 +195,13 @@ div:empty + .ad-label {
     margin-top: var(--space-2);
     text-transform: uppercase;
     text-align: right;
+}
+
+.section-photos-gallery {
+  margin-top: 0;
+  background-color: RGB(var(--color-dark-gray));
+  color: RGB(var(--color-white));
+  height: 100%;
 }
 
 </style>

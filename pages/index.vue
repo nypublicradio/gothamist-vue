@@ -2,9 +2,9 @@
   <div>
     <div class="l-container l-container--xl c-featured-blocks__wrapper">
       <!-- featured area -->
-      <loading-icon v-if="!featuredStoriesLoaded" />
+      <loading-icon v-if="$fetchState.pending" />
       <section
-        v-if="featuredStories"
+        v-if="featuredSection && !$fetchState.pending"
         class="c-featured-blocks l-wrap"
       >
         <h2 class="c-featured-blocks__heading">
@@ -33,28 +33,28 @@
         <div class="l-grid featured-grid">
           <!-- left column / large featured card -->
           <v-card
-            :show-gallery-icon="hasGallery(featuredStories[0].leadAsset)"
-            :title="featuredStories[0].title"
-            :title-link="`/${featuredStories[0].ancestry[0].slug}/${featuredStories[0].meta.slug}`"
-            :subtitle="featuredStories[0].description"
-            :image="getArticleImage(featuredStories[0].leadAsset, featuredStories[0].ancestry[0].slug, featuredStories[0].listingImage)"
+            :show-gallery-icon="hasGallery(featuredSection[0].leadAsset)"
+            :title="featuredSection[0].title"
+            :title-link="`/${featuredSection[0].ancestry[0].slug}/${featuredSection[0].meta.slug}`"
+            :subtitle="featuredSection[0].description"
+            :image="getArticleImage(featuredSection[0].leadAsset, featuredSection[0].ancestry[0].slug, featuredSection[0].listingImage)"
             :image-height="533"
             :image-width="800"
             class="featured-grid-col1 gothamist mod-vertical mod-large"
-            :tags="formatTags(featuredStories[0].ancestry[0].title, featuredStories[0].ancestry[0].slug, featuredStories[0].sponsoredContent, featuredStories[0].tags)"
+            :tags="formatTags(featuredSection[0].ancestry[0].title, featuredSection[0].ancestry[0].slug, featuredSection[0].sponsoredContent, featuredSection[0].tags)"
           >
             <article-metadata
-              :publish-date="!featuredStories[0].updatedDate ? fuzzyDateTime(featuredStories[0].meta.firstPublishedAt) : null"
-              :updated-date="featuredStories[0].updatedDate ? fuzzyDateTime(featuredStories[0].updatedDate) : null"
+              :publish-date="!featuredSection[0].updatedDate ? (fuzzyDateTime(featuredSection[0].publicationDate) || fuzzyDateTime(featuredSection[0].meta.firstPublishedAt)) : null"
+              :updated-date="featuredSection[0].updatedDate ? fuzzyDateTime(featuredSection[0].updatedDate) : null"
             >
               <template
-                v-if="getCommentCountById(String(featuredStories[0].legacyId ||featuredStories[0].uuid), featuredStoriesDisqusData)"
+                v-if="getCommentCountById(String(featuredSection[0].legacyId ||featuredSection[0].uuid), disqusData)"
                 v-slot:comments
               >
                 <v-counter
                   icon="comment"
-                  :value="getCommentCountById(String(featuredStories[0].legacyId || featuredStories[0].uuid), featuredStoriesDisqusData) || 0"
-                  :href="`/${featuredStories[0].ancestry[0].slug}/${featuredStories[0].meta.slug}#comments`"
+                  :value="getCommentCountById(String(featuredSection[0].legacyId || featuredSection[0].uuid), disqusData) || 0"
+                  :href="`/${featuredSection[0].ancestry[0].slug}/${featuredSection[0].meta.slug}#comments`"
                 />
               </template>
             </article-metadata>
@@ -62,7 +62,7 @@
           <!--- right column / small featured cards -->
           <ul>
             <li
-              v-for="(story, index) in featuredStories.slice(1,featuredStories.length)"
+              v-for="(story, index) in featuredSection.slice(1,featuredSection.length)"
               :key="index"
             >
               <v-card
@@ -76,16 +76,16 @@
                 :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
               >
                 <article-metadata
-                  :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                  :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
                   :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
                 >
                   <template
-                    v-if="getCommentCountById(String(story.legacyId || story.uuid), featuredStoriesDisqusData)"
+                    v-if="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
                     v-slot:comments
                   >
                     <v-counter
                       icon="comment"
-                      :value="getCommentCountById(String(story.legacyId || story.uuid), featuredStoriesDisqusData)"
+                      :value="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
                       :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                     />
                   </template>
@@ -99,7 +99,7 @@
     </div>
     <!-- sponsored story -->
     <div
-      v-if="sponsoredStory && sponsoredStory.length > 0"
+      v-if="sponsoredSection && sponsoredSection.length > 0 && !$fetchState.pending"
       class="l-container l-container--16col l-wrap"
     >
       <div class="c-sponsored-tout u-breakout o-border-accent">
@@ -107,28 +107,28 @@
           Sponsored
         </h2>
         <v-card
-          :show-gallery-icon="hasGallery(sponsoredStory[0].leadAsset)"
-          :title="sponsoredStory[0].title"
-          :title-link="`/${sponsoredStory[0].ancestry[0].slug}/${sponsoredStory[0].meta.slug}`"
-          :subtitle="sponsoredStory[0].description"
-          :image="getArticleImage(sponsoredStory[0].leadAsset, sponsoredStory[0].ancestry[0].slug, sponsoredStory[0].listingImage)"
+          :show-gallery-icon="hasGallery(sponsoredSection[0].leadAsset)"
+          :title="sponsoredSection[0].title"
+          :title-link="`/${sponsoredSection[0].ancestry[0].slug}/${sponsoredSection[0].meta.slug}`"
+          :subtitle="sponsoredSection[0].description"
+          :image="getArticleImage(sponsoredSection[0].leadAsset, sponsoredSection[0].ancestry[0].slug, sponsoredSection[0].listingImage)"
           :image-height="533"
           :image-width="800"
           class="gothamist mod-large"
-          :tags="formatTags(sponsoredStory[0].ancestry[0].title, sponsoredStory[0].ancestry[0].slug, sponsoredStory[0].sponsoredContent, sponsoredStory[0].tags)"
+          :tags="formatTags(sponsoredSection[0].ancestry[0].title, sponsoredSection[0].ancestry[0].slug, sponsoredSection[0].sponsoredContent, sponsoredSection[0].tags)"
         >
           <article-metadata
-            :publish-date="!sponsoredStory[0].updatedDate ? fuzzyDateTime(sponsoredStory[0].meta.firstPublishedAt) : null"
-            :updated-date="sponsoredStory[0].updatedDate ? fuzzyDateTime(sponsoredStory[0].updatedDate) : null"
+            :publish-date="!sponsoredSection[0].updatedDate ? (fuzzyDateTime(sponsoredSection[0].publicationDate) || fuzzyDateTime(sponsoredSection[0].meta.firstPublishedAt)) : null"
+            :updated-date="sponsoredSection[0].updatedDate ? fuzzyDateTime(sponsoredSection[0].updatedDate) : null"
           >
             <template
-              v-if="getCommentCountById(String(sponsoredStory[0].legacyId || sponsoredStory[0].uuid), sponsoredStoryDisqusData)"
+              v-if="getCommentCountById(String(sponsoredSection[0].legacyId || sponsoredSection[0].uuid), disqusData)"
               v-slot:comments
             >
               <v-counter
                 icon="comment"
-                :value="getCommentCountById(String(sponsoredStory[0].legacyId || sponsoredStory[0].uuid), sponsoredStoryDisqusData)"
-                :href="`/${sponsoredStory[0].ancestry[0].slug}/${sponsoredStory[0].meta.slug}#comments`"
+                :value="getCommentCountById(String(sponsoredSection[0].legacyId || sponsoredSection[0].uuid), disqusData)"
+                :href="`/${sponsoredSection[0].ancestry[0].slug}/${sponsoredSection[0].meta.slug}#comments`"
               />
             </template>
           </article-metadata>
@@ -137,9 +137,8 @@
       <v-spacer size="triple" />
     </div>
     <!-- news river -->
-    <loading-icon v-if="!riverLoaded" />
     <section
-      v-if="river"
+      v-if="riverSection && !$fetchState.pending"
     >
       <!-- section 1 -->
       <div class="l-container l-container--14col l-wrap">
@@ -160,16 +159,16 @@
               :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
             >
               <article-metadata
-                :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
-                  v-if="getCommentCountById(String(story.legacyId || story.uuid), riverDisqusData)"
+                  v-if="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(String(story.legacyId || story.uuid), riverDisqusData) || 0"
+                    :value="getCommentCountById(String(story.legacyId || story.uuid), disqusData) || 0"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
@@ -215,16 +214,16 @@
           :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
         >
           <article-metadata
-            :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+            :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
             :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
           >
             <template
-              v-if="getCommentCountById(String(story.legacyId || story.uuid), riverDisqusData)"
+              v-if="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
               v-slot:comments
             >
               <v-counter
                 icon="comment"
-                :value="getCommentCountById(String(story.legacyId || story.uuid), riverDisqusData) || 0"
+                :value="getCommentCountById(String(story.legacyId || story.uuid), disqusData) || 0"
                 :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
               />
             </template>
@@ -261,16 +260,16 @@
               :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
             >
               <article-metadata
-                :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
-                  v-if="getCommentCountById(String(story.legacyId || story.uuid), riverDisqusData)"
+                  v-if="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(String(story.legacyId || story.uuid), riverDisqusData) || 0"
+                    :value="getCommentCountById(String(story.legacyId || story.uuid), disqusData) || 0"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
@@ -308,16 +307,16 @@
               :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
             >
               <article-metadata
-                :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
                 :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
               >
                 <template
-                  v-if="getCommentCountById(String(story.legacyId || story.uuid), riverDisqusData)"
+                  v-if="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(String(story.legacyId || story.uuid), riverDisqusData) || 0"
+                    :value="getCommentCountById(String(story.legacyId || story.uuid), disqusData) || 0"
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
@@ -360,16 +359,16 @@
                 :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
               >
                 <article-metadata
-                  :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
+                  :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
                   :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
                 >
                   <template
-                    v-if="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData)"
+                    v-if="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
                     v-slot:comments
                   >
                     <v-counter
                       icon="comment"
-                      :value="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData) || 0"
+                      :value="getCommentCountById(String(story.legacyId || story.uuid), disqusData) || 0"
                       :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                     />
                   </template>
@@ -417,6 +416,7 @@
 import disqus from '@/mixins/disqus'
 import gtm from '@/mixins/gtm'
 import { mapState } from 'vuex'
+import axios from 'axios'
 
 const {
   formatTags,
@@ -425,8 +425,7 @@ const {
   hasGallery,
   isLessThan24Hours,
   isMoreThan24Hours,
-  isLessThan48Hours,
-  isMoreThan48Hours
+  isLessThan48Hours
 } = require('~/mixins/helpers')
 
 export default {
@@ -443,102 +442,61 @@ export default {
   },
   mixins: [disqus, gtm],
   async fetch () {
-    // get featured stories
-    await this.$axios
-      .get('/pages/?type=news.ArticlePage&fields=ancestry%2Cdescription%2Clead_asset%2Clegacy_id%2Clisting_image%2Cpublication_date%2Cshow_as_feature%2Csponsored_content%2Ctags%2Cupdated_date%2Curl%2Cuuid&order=-publication_date&show_on_index_listing=true&limit=4&show_as_feature=true&sponsored_content=false')
-      .then((response) => {
-        this.featuredStories = response.data.items
-        response.data.items.forEach((item) => {
-          this.featuredStoriesDisqusThreadIds.push(item.legacyId || item.uuid)
-        })
-        this.featuredStoriesLoaded = true
-      })
-    // get sponsored story
-    await this.$axios
-      .get('/pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=1&sponsored_content=true')
-      .then((response) => {
-        this.sponsoredStory = response.data.items
-        this.sponsoredStory.forEach((sponsoredStory) => {
-          // add thread ID to disqus array
-          this.sponsoredStoryDisqusThreadIds.push(sponsoredStory.legacyId || sponsoredStory.uuid)
-          // if the story is less than 24 hours old, do nothing and keep it in the sponsoredStory array
-          // if the story is flagged as featured and is more than 24 hours old and less than 48 hours old
-          if (sponsoredStory.showAsFeature && isMoreThan24Hours(sponsoredStory.publicationDate) && isLessThan48Hours(sponsoredStory.publicationDate)) {
-            // replace the 4th featured story with this sponsored story
-            this.featuredStories[3] = sponsoredStory
-            this.featuredStoriesDisqusThreadIds[3] = this.sponsoredStoryDisqusThreadIds[0]
-            // remove it from the sponsoredStory array
-            this.sponsoredStory = []
-          }
-          // if the story is not flagged as featured and is more than 24 hours old and less than 48 hours old
-          if (!sponsoredStory.showAsFeature && isMoreThan24Hours(sponsoredStory.publicationDate) && isLessThan48Hours(sponsoredStory.publicationDate)) {
-            // it should appear in the river and nowhere else, remove it from the sponsoredStory array so it doesn't get de-duped
-            this.sponsoredStory = []
-          }
-          // if the story is more than 48 hours old
-          if (isMoreThan48Hours(sponsoredStory.publicationDate)) {
-            // it should appear in the river and nowhere else, remove it from the sponsoredStory array so it doesn't get de-duped
-            this.sponsoredStory = []
-          }
-        })
-        this.sponsoredStoryLoaded = true
-      })
-    // get featured story
-    await this.$axios
-      .get('/pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=1&show_as_feature=true&sponsored_content=true')
-      .then((response) => {
-        this.featuredStory = response.data.items
-        this.featuredStory.forEach((featuredStory) => {
-          // add thread ID to disqus array
-          this.featuredStoryDisqusThreadIds.push(featuredStory.legacyId || featuredStory.uuid)
-          // if the story is more than 24 hours old and less than 48 hours old
-          if (isMoreThan24Hours(featuredStory.publicationDate) && isLessThan48Hours(featuredStory.publicationDate)) {
-            // replace the 4th featured story with this sponsored story
-            this.featuredStories[3] = featuredStory
-            this.featuredStoriesDisqusThreadIds[3] = this.featuredStoryDisqusThreadIds[0]
-          }
-          // if the story is less than 24 hours old and there's no other sponsored story, make this the sponsored story
-          if (isLessThan24Hours(featuredStory.publicationDate) && this.sponsoredStory.length === 0) {
-            this.sponsoredStory = this.featuredStory
-          }
-          // if the story is more than 48 hours old, do nothing
-        })
-        this.featuredStoryLoaded = true
-      })
+    // get default featured stories - i.e. the four latest featured stories
+    const mainRequest = this.$axios.get('/pages/?type=news.ArticlePage&fields=ancestry%2Cdescription%2Clead_asset%2Clegacy_id%2Clisting_image%2Cpublication_date%2Cshow_as_feature%2Csponsored_content%2Ctags%2Cupdated_date%2Curl%2Cuuid&order=-publication_date&show_on_index_listing=true&limit=4&show_as_feature=true&sponsored_content=false')
     // get the article river
-    await this.$axios
-      .get('/pages/?type=news.ArticlePage&fields=ancestry%2Cdescription%2Clead_asset%2Clegacy_id%2Clisting_image%2Cpublication_date%2Cshow_as_feature%2Csponsored_content%2Ctags%2Cupdated_date%2Curl%2Cuuid&order=-publication_date&show_on_index_listing=true&limit=32')
-      .then((response) => {
-        this.river = response.data.items
-        response.data.items.forEach((item) => {
-          this.riverDisqusThreadIds.push(item.legacyId || item.uuid)
+    const riverRequest = this.$axios.get('/pages/?type=news.ArticlePage&fields=ancestry%2Cdescription%2Clead_asset%2Clegacy_id%2Clisting_image%2Cpublication_date%2Cshow_as_feature%2Csponsored_content%2Ctags%2Cupdated_date%2Curl%2Cuuid&order=-publication_date&show_on_index_listing=true&limit=32')
+    // get the sponsored content
+    const sponsoredContentRequest = this.$axios.get('/pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=1&sponsored_content=true')
+    // get the featured sponsored content
+    const featuredSponsoredContentRequest = this.$axios.get('/pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=1&show_as_feature=true&sponsored_content=true')
+    // get the curated collection that is attached to the homepage
+    const curatedContentRequest = this.$axios.get('/pages/find/?html_path=/')
+
+    await axios.all([mainRequest, riverRequest, sponsoredContentRequest, featuredSponsoredContentRequest, curatedContentRequest])
+      .then(axios.spread((main, river, sponsoredContent, featuredSponsoredContent, curatedContent) => {
+        const mainStories = main.data.items
+        const riverStories = river.data.items
+        const sponsoredContentStories = sponsoredContent.data.items.filter((story) => {
+          return isLessThan24Hours(story.publicationDate)
         })
-        this.riverLoaded = true
-      })
+        const featuredSponsoredContentStories = featuredSponsoredContent.data.items.filter((story) => {
+          return isMoreThan24Hours(story.publicationDate) && isLessThan48Hours(story.publicationDate)
+        })
+        const curatedContentStories = curatedContent.data.pageCollectionRelationship.[0]?.pages || []
+
+        // set featuredSection to be the top four featured stories
+        this.featuredSection = mainStories.slice(0, 4)
+        // if there is a collection of curated content on the homepage replace with the curated content
+        this.featuredSection.forEach((story, index) => {
+          if (curatedContentStories[index]) {
+            this.featuredSection[index] = curatedContentStories[index]
+          }
+        })
+        // if there is a featured sponsored story (24 to 48 hours old) replace the fourth story with the sponsored story
+        if (featuredSponsoredContentStories[0]) {
+          this.featuredSection[3] = featuredSponsoredContentStories[0]
+        }
+
+        this.sponsoredSection = sponsoredContentStories
+
+        this.riverSection = riverStories
+
+        this.disqusThreadIds = [].concat(this.featuredSection.map(story => String(story.legacyId || story.uuid)),
+          this.sponsoredSection.map(story => String(story.legacyId || story.uuid)),
+          this.riverSection.map(story => String(story.legacyId || story.uuid)))
+      }))
   },
   data () {
     return {
-      featuredStories: null,
-      featuredStoriesDisqusThreadIds: [],
-      featuredStoriesDisqusData: null,
-      featuredStoriesLoaded: false,
+      featuredSection: null,
+      sponsoredSection: null,
+      riverSection: null,
+      disqusThreadIds: [],
+      disqusData: null,
       moreResults: [],
-      moreResultsDisqusThreadIds: [],
-      moreResultsDisqusData: null,
       moreResultsLoaded: true,
-      offset: 32,
-      river: null,
-      riverDisqusThreadIds: [],
-      riverDisqusData: null,
-      riverLoaded: false,
-      sponsoredStory: null,
-      sponsoredStoryDisqusThreadIds: [],
-      sponsoredStoryDisqusData: null,
-      sponsoredStoryLoaded: false,
-      featuredStory: null,
-      featuredStoryDisqusThreadIds: [],
-      featuredStoryDisqusData: null,
-      featuredStoryLoaded: false
+      offset: 32
     }
   },
   computed: {
@@ -552,21 +510,24 @@ export default {
       // de-dupe the river: take out the 4 featured stories
       let tempArray = this.moreResults
       tempArray = tempArray.filter((item) => {
-        return (item.id !== this.featuredStories[0].id && item.id !== this.featuredStories[1].id && item.id !== this.featuredStories[2].id && item.id !== this.featuredStories[3].id)
+        return (item.id !== this.featuredSection[0].id && item.id !== this.featuredSection[1].id && item.id !== this.featuredSection[2].id && item.id !== this.featuredSection[3].id)
       })
       return tempArray
     },
     filteredRiver () {
       // de-dupe the river: take out the 4 featured stories and the sponsored story
-      let tempArray = this.river
-      tempArray = tempArray.filter((item) => {
-        if (this.sponsoredStory.length > 0) {
-          return (item.id !== this.sponsoredStory[0].id && item.id !== this.featuredStories[0].id && item.id !== this.featuredStories[1].id && item.id !== this.featuredStories[2].id && item.id !== this.featuredStories[3].id)
-        } else {
-          return (item.id !== this.featuredStories[0].id && item.id !== this.featuredStories[1].id && item.id !== this.featuredStories[2].id && item.id !== this.featuredStories[3].id)
-        }
+
+      let filteredRiver = this.riverSection.filter((story) => {
+        const featuredIDs = this.featuredSection.map(item => item.id)
+        return !featuredIDs.includes(story.id)
       })
-      return tempArray
+
+      if (this.sponsoredSection && this.sponsoredSection.length > 0) {
+        filteredRiver = filteredRiver.filter((story) => {
+          return story.id !== this.sponsoredSection?.[0].id
+        })
+      }
+      return filteredRiver
     },
     moreResultsNuggets () {
       const nuggetArray = []
@@ -581,17 +542,8 @@ export default {
   },
   watch: {
     // get disqus comment counts
-    async featuredStoriesDisqusThreadIds () {
-      this.featuredStoriesDisqusData = await this.getCommentCount(this.featuredStoriesDisqusThreadIds)
-    },
-    async sponsoredStoryDisqusThreadIds () {
-      this.sponsoredStoryDisqusData = await this.getCommentCount(this.sponsoredStoryDisqusThreadIds)
-    },
-    async riverDisqusThreadIds () {
-      this.riverDisqusData = await this.getCommentCount(this.riverDisqusThreadIds)
-    },
-    async moreResultsDisqusThreadIds () {
-      this.moreResultsDisqusData = await this.getCommentCount(this.moreResultsDisqusThreadIds)
+    async disqusThreadIds () {
+      this.disqusData = await this.getCommentCount(this.disqusThreadIds)
     }
   },
   methods: {
@@ -607,17 +559,16 @@ export default {
           this.offset += 32
           this.moreResultsLoaded = true
           response.data.items.forEach((item) => {
-            this.moreResultsDisqusThreadIds.push(item.legacyId || item.uuid)
+            this.disqusThreadIds.push(item.legacyId || item.uuid)
           })
         })
-      this.moreResultsDisqusData = await this.getCommentCount(this.moreResultsDisqusThreadIds)
+      this.disqusData = await this.getCommentCount(this.disqusThreadIds)
       this.gaEvent('Click Tracking', 'Load More Results', 'HomePage', this.offset + ' articles loaded')
     },
     hasGallery,
     isLessThan24Hours,
     isMoreThan24Hours,
-    isLessThan48Hours,
-    isMoreThan48Hours
+    isLessThan48Hours
   }
 }
 </script>

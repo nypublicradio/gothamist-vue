@@ -45,8 +45,10 @@
           class="u-color-group-dark"
           variation="gothamist"
           :alt-text="slide.value.slideImage.image.alt"
-          :image="slide.value.slideImage.image.file"
+          :image="`${$config.imageBase}${slide.value.slideImage.image.id}/fill-%width%x%height%|format-jpeg%7Cjpegquality-80/`"
           :width="slide.value.slideImage.image.width"
+          :max-width="slide.value.slideImage.image.width"
+          :max-height="slide.value.slideImage.image.height"
           :height="slide.value.slideImage.image.height"
           :credit="slide.value.slideImage.image.credit"
           :caption="slide.value.slideImage.image.caption"
@@ -70,7 +72,7 @@
       <v-spacer size="triple" />
       <v-button
         class="back-to-article"
-        @click.prevent="goToArticle"
+        @click="goToArticle"
       >
         Back To Article
       </v-button>
@@ -81,11 +83,11 @@
 
 <script>
 import gtm from '~/mixins/gtm'
+import { setTargeting, clearTargeting } from '~/mixins/htl'
 
 const { formatTitle } = require('~/mixins/helpers')
 
 export default {
-  layout: 'gallery',
   name: 'ArticleGallery', // this is the template name which is used for GTM
   components: {
     CloseIcon: () => import('nypr-design-system-vue/src/components/icons/CloseIcon'),
@@ -155,6 +157,10 @@ export default {
       window.scrollTo(0, top + 72)
     }
     this.pageLoaded = true
+    setTargeting({ Template: 'Article Gallery' })
+  },
+  beforeUnmount () {
+    clearTargeting(['Template'])
   },
   methods: {
     formatTitle,

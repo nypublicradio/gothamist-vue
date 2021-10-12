@@ -138,6 +138,7 @@ export default {
   ],
 
   publicRuntimeConfig: {
+    champUrl: process.env.CHAMP_URL,
     imageBase: process.env.IMAGE_BASE_URL,
     defaultImages: {
       default: '/static-images/defaults/no-category/no-category-tile.png',
@@ -168,8 +169,15 @@ export default {
   },
 
   sentry: {
+    disabled: true,
     dsn: process.env.SENTRY_DSN,
     environment: process.env.SENTRY_ENVIRONMENT,
+    // fixing infinite recursion issue
+    // https://github.com/getsentry/sentry-javascript/issues/2957
+    clientIntegrations: {
+      TryCatch: { eventTarget: false },
+      Vue: { attachProps: true }
+    },
     config: {
       lazy: true
     },
