@@ -64,6 +64,42 @@ export const getImageFromStory = function (story) {
   return null
 }
 
+// returns an article image height
+// asset = the article's 'lead_asset' from the CMS API
+// listingImage = the article's 'listing_image' from the CMS API
+export const getArticleImageHeight = function (asset, listingImage) {
+  if (listingImage !== undefined && listingImage !== null) {
+    return listingImage.height
+  }
+  if (asset !== undefined && asset.length > 0) {
+    if (asset[0].value.image) {
+      return asset[0].value.image.height
+    }
+    if (asset[0].value.defaultImage) {
+      return asset[0].value.defaultImage.height
+    }
+  }
+  return null
+}
+
+// returns an article image width
+// asset = the article's 'lead_asset' from the CMS API
+// listingImage = the article's 'listing_image' from the CMS API
+export const getArticleImageWidth = function (asset, listingImage) {
+  if (listingImage !== undefined && listingImage !== null) {
+    return listingImage.width
+  }
+  if (asset !== undefined && asset.length > 0) {
+    if (asset[0].value.image) {
+      return asset[0].value.image.width
+    }
+    if (asset[0].value.defaultImage) {
+      return asset[0].value.defaultImage.width
+    }
+  }
+  return null
+}
+
 // returns the percent scrolled of any given query selector
 export const handleScroll = function (querySelector) {
   let target = document.querySelector(querySelector)
@@ -196,6 +232,8 @@ export default {
     formatTitle,
     fuzzyDateTime,
     getArticleImage,
+    getArticleImageHeight,
+    getArticleImageWidth,
     getImageFromStory,
     handleScroll,
     hasGallery,

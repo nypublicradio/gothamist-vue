@@ -58,8 +58,8 @@
               :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
               :image-height="560"
               :image-width="413"
-              :image-max-height="560"
-              :image-max-width="413"
+              :image-max-height="getArticleImageHeight(story.leadAsset, story.listingImage) || 560"
+              :image-max-width="getArticleImageWidth(story.leadAsset, story.listingImage) || 413"
               :title="story.title"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
               :subtitle="story.description"
@@ -98,8 +98,8 @@
               :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
               :image-height="560"
               :image-width="413"
-              :image-max-height="560"
-              :image-max-width="413"
+              :image-max-height="getArticleImageHeight(story.leadAsset, story.listingImage) || 560"
+              :image-max-width="getArticleImageWidth(story.leadAsset, story.listingImage) || 413"
               :title="story.title"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
               :subtitle="story.description"
@@ -154,8 +154,8 @@
               :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
               :image-height="560"
               :image-width="413"
-              :image-max-height="560"
-              :image-max-width="413"
+              :image-max-height="getArticleImageHeight(story.leadAsset, story.listingImage) || 560"
+              :image-max-width="getArticleImageWidth(story.leadAsset, story.listingImage) || 413"
               :title="story.title"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
               :subtitle="story.description"
@@ -209,6 +209,8 @@ const {
   formatTags,
   fuzzyDateTime,
   getArticleImage,
+  getArticleImageHeight,
+  getArticleImageWidth,
   hasGallery
 } = require('~/mixins/helpers')
 
@@ -302,6 +304,8 @@ export default {
     formatTags,
     fuzzyDateTime,
     getArticleImage,
+    getArticleImageHeight,
+    getArticleImageWidth,
     async getMoreResults () {
       await this.$fetch()
       this.gaEvent('Click Tracking', 'Load More Results', 'TagPage', this.offset + ' articles loaded')

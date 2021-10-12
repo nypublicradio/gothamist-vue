@@ -60,8 +60,8 @@
             :image="getArticleImage(story.result.leadAsset, story.result.ancestry[0].slug, story.listingImage)"
             :image-height="560"
             :image-width="413"
-            :image-max-height="560"
-            :image-max-width="413"
+            :image-max-height="getArticleImageHeight(story.result.leadAsset, story.result.listingImage) || 560"
+            :image-max-width="getArticleImageWidth(story.result.leadAsset, story.result.listingImage) || 413"
             :title="story.result.title"
             :title-link="`/${story.result.ancestry[0].slug}/${story.result.meta.slug}`"
             :subtitle="story.result.description"
@@ -114,6 +114,8 @@ const {
   formatTags,
   fuzzyDateTime,
   getArticleImage,
+  getArticleImageHeight,
+  getArticleImageWidth,
   hasGallery
 } = require('~/mixins/helpers')
 
@@ -171,6 +173,8 @@ export default {
     formatTags,
     fuzzyDateTime,
     getArticleImage,
+    getArticleImageHeight,
+    getArticleImageWidth,
     async getMoreResults () {
       this.moreResultsLoaded = false
       let endpoint = '/search/?limit=12&q=' + this.q

@@ -40,8 +40,8 @@
             :image="getArticleImage(featuredSection[0].leadAsset, featuredSection[0].ancestry[0].slug, featuredSection[0].listingImage)"
             :image-height="533"
             :image-width="800"
-            :image-max-height="533"
-            :image-max-width="800"
+            :image-max-height="getArticleImageHeight(featuredSection[0].leadAsset, featuredSection[0].listingImage) || 533"
+            :image-max-width="getArticleImageWidth(featuredSection[0].leadAsset, featuredSection[0].listingImage) || 800"
             class="featured-grid-col1 gothamist mod-vertical mod-large"
             :tags="formatTags(featuredSection[0].ancestry[0].title, featuredSection[0].ancestry[0].slug, featuredSection[0].sponsoredContent, featuredSection[0].tags)"
           >
@@ -73,8 +73,8 @@
                 :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
                 :image-height="150"
                 :image-width="150"
-                :image-max-height="150"
-                :image-max-width="150"
+                :image-max-height="getArticleImageHeight(story.leadAsset, story.listingImage) || 150"
+                :image-max-width="getArticleImageWidth(story.leadAsset, story.listingImage) || 150"
                 :title="story.title"
                 :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
                 :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
@@ -118,8 +118,8 @@
           :image="getArticleImage(sponsoredSection[0].leadAsset, sponsoredSection[0].ancestry[0].slug, sponsoredSection[0].listingImage)"
           :image-height="533"
           :image-width="800"
-          :image-max-height="533"
-          :image-max-width="800"
+          :image-max-height="getArticleImageHeight(sponsoredSection[0].leadAsset, sponsoredSection[0].listingImage) || 533"
+          :image-max-width="getArticleImageWidth(sponsoredSection[0].leadAsset, sponsoredSection[0].listingImage) || 800"
           class="gothamist mod-large"
           :tags="formatTags(sponsoredSection[0].ancestry[0].title, sponsoredSection[0].ancestry[0].slug, sponsoredSection[0].sponsoredContent, sponsoredSection[0].tags)"
         >
@@ -159,8 +159,8 @@
               :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
               :image-height="150"
               :image-width="150"
-              :image-max-height="150"
-              :image-max-width="150"
+              :image-max-height="getArticleImageHeight(story.leadAsset, story.listingImage) || 150"
+              :image-max-width="getArticleImageWidth(story.leadAsset, story.listingImage) || 150"
               :title="story.title"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
               :subtitle="story.description"
@@ -216,8 +216,8 @@
           :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
           :image-height="150"
           :image-width="150"
-          :image-max-height="150"
-          :image-max-width="150"
+          :image-max-height="getArticleImageHeight(story.leadAsset, story.listingImage) || 150"
+          :image-max-width="getArticleImageWidth(story.leadAsset, story.listingImage) || 150"
           :title="story.title"
           :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
           :subtitle="story.description"
@@ -264,8 +264,8 @@
               :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
               :image-height="150"
               :image-width="150"
-              :image-max-height="150"
-              :image-max-width="150"
+              :image-max-height="getArticleImageHeight(story.leadAsset, story.listingImage) || 150"
+              :image-max-width="getArticleImageWidth(story.leadAsset, story.listingImage) || 150"
               :title="story.title"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
               :subtitle="story.description"
@@ -313,8 +313,8 @@
               :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
               :image-height="150"
               :image-width="150"
-              :image-max-height="150"
-              :image-max-width="150"
+              :image-max-height="getArticleImageHeight(story.leadAsset, story.listingImage) || 150"
+              :image-max-width="getArticleImageWidth(story.leadAsset, story.listingImage) || 150"
               :title="story.title"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
               :subtitle="story.description"
@@ -367,8 +367,8 @@
                 :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
                 :image-height="150"
                 :image-width="150"
-                :image-max-height="150"
-                :image-max-width="150"
+                :image-max-height="getArticleImageHeight(story.leadAsset, story.listingImage) || 150"
+                :image-max-width="getArticleImageWidth(story.leadAsset, story.listingImage) || 150"
                 :title="story.title"
                 :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
                 :subtitle="story.description"
@@ -438,6 +438,8 @@ const {
   formatTags,
   fuzzyDateTime,
   getArticleImage,
+  getArticleImageHeight,
+  getArticleImageWidth,
   hasGallery,
   isLessThan24Hours,
   isMoreThan24Hours,
@@ -566,6 +568,8 @@ export default {
     formatTags,
     fuzzyDateTime,
     getArticleImage,
+    getArticleImageHeight,
+    getArticleImageWidth,
     async getMoreResults () {
       this.moreResultsLoaded = false
       await this.$axios
