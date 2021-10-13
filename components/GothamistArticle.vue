@@ -565,8 +565,10 @@ export default {
     handleNewComment () {
       this.gaEvent('NTG user', 'comment added', this.article?.title)
     },
-    handleNewsletterImpression () {
-      this.gaEvent('NTG newsletter', 'newsletter modal impression 1', this.article.title)
+    handleNewsletterImpression (isVisible) {
+      if (isVisible) {
+        this.gaEvent('NTG newsletter', 'newsletter modal impression 1', this.article.title)
+      }
     },
     handleNewsletterSignupSuccess () {
       this.gaEvent('NTG newsletter', 'newsletter signup', 'success')

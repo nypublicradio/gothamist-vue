@@ -44,10 +44,8 @@
       <template v-slot:rightComponent>
         <div>
           <gothamist-footer-newsletter
-            :key="$route.path"
             v-observe-visibility="{
               callback: handleNewsletterImpression,
-              once: true,
             }"
             @newsletter-signup-success="handleNewsletterSignupSuccess"
           />
@@ -73,6 +71,11 @@ export default {
     BackToTop: () => import('../components/BackToTop')
   },
   mixins: [gtm],
+  data () {
+    return {
+      newsLetterImpressionTracked: false
+    }
+  },
   computed: {
     ...mapState('global', {
       footerNav: state => state.footerNav,
@@ -80,9 +83,17 @@ export default {
       legalNav: state => state.legalNav
     })
   },
+  watch: {
+    '$route.path' () {
+      this.newsLetterImpressionTracked = false
+    }
+  },
   methods: {
-    handleNewsletterImpression () {
-      this.gaEvent('NTG newsletter', 'newsletter modal impression 2', 'footer')
+    handleNewsletterImpression (isVisible) {
+      if (isVisible) {
+        this.gaEvent('NTG newsletter', 'newsletter modal impression 2', 'footer')
+        this.newsLetterImpressionTracked = true
+      }
     },
     handleNewsletterSignupSuccess () {
       this.gaEvent('NTG newsletter', 'newsletter signup', 'success')
