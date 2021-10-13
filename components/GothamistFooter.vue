@@ -73,7 +73,7 @@ export default {
   mixins: [gtm],
   data () {
     return {
-      newsLetterImpressionTracked: false
+      newsletterImpressionWasTracked: false
     }
   },
   computed: {
@@ -85,14 +85,14 @@ export default {
   },
   watch: {
     '$route.path' () {
-      this.newsLetterImpressionTracked = false
+      this.newsletterImpressionWasTracked = false
     }
   },
   methods: {
     handleNewsletterImpression (isVisible) {
-      if (isVisible) {
+      if (isVisible && !this.newsletterImpressionWasTracked) {
         this.gaEvent('NTG newsletter', 'newsletter modal impression 2', 'footer')
-        this.newsLetterImpressionTracked = true
+        this.newsletterImpressionWasTracked = true
       }
     },
     handleNewsletterSignupSuccess () {
