@@ -169,7 +169,7 @@ export default {
   },
 
   sentry: {
-    disabled: true,
+    disabled: false,
     dsn: process.env.SENTRY_DSN,
     environment: process.env.SENTRY_ENVIRONMENT,
     // fixing infinite recursion issue
