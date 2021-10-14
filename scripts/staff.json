@@ -24,17 +24,6 @@
     }
   },
   {
-    "name": "John Del Signore",
-    "slug": "john-del-signore",
-    "title": "Editor-in-chief",
-    "image": "/static-images/staff/john-del-signore.jpg",
-    "bio": "Originally from the Albany area, John Del Signore has called NYC home since 1995. In addition to his thousands of meticulously-crafted bespoke blog posts for Gothamist, his writing has also been published in The Awl, Deadspin, The Nervous Breakdown, and performed at The Brick Theater in Brooklyn.",
-    "contact": {
-      "email": "johnd@gothamist.com",
-      "twitter": "johndelsignore"
-    }
-  },
-  {
     "name": "Jen Carlson",
     "slug": "jen-carlson",
     "title": "Editorial Director",
@@ -54,17 +43,6 @@
     "contact": {
       "email": "benyakas@gothamist.com",
       "twitter": "yenbakas"
-    }
-  },
-  {
-    "name": "Christopher Robbins",
-    "slug": "christopher-robbins",
-    "title": "City Editor",
-    "image": "/static-images/staff/christopher-robbins.jpg",
-    "bio": "Christopher Robbins has worked for Gothamist for nearly six years, covering transportation, affordable housing, local politics, and criminal justice. His work has also appeared in The Village Voice and The New York Times. Chris is a graduate of Patrick Henry High School in Roanoke, Virginia, and enjoys biking to Fort Tilden in the summertime.",
-    "contact": {
-      "email": "chris@gothamist.com",
-      "twitter": "christrobbins"
     }
   },
   {
