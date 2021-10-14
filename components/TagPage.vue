@@ -324,6 +324,10 @@ export default {
   }
 }
 
+.tags-page.curated header {
+  padding-top: var(--space-8);
+}
+
 .tags-page .tags-page-header {
   width: fit-content;
   @include typeface(tags, 10);
