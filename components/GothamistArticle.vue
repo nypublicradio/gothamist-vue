@@ -99,14 +99,16 @@
         </div>
       </div>
       <v-spacer size="double" />
-      <v-streamfield
-        :key="article.uuid"
-        ref="article-body"
-        class="l-container l-container--10col article-body c-article__body"
-        :streamfield="article.body"
-        @hook:mounted="insertAd"
-        @hook:updated="insertAd"
-      />
+      <LazyHydrate when-visible>
+        <v-streamfield
+          :key="article.uuid"
+          ref="article-body"
+          class="l-container l-container--10col article-body c-article__body"
+          :streamfield="article.body"
+          @hook:mounted="insertAd"
+          @hook:updated="insertAd"
+        />
+      </LazyHydrate>
       <v-spacer size="quad" />
       <div
         class="l-container l-container--10col"
@@ -178,6 +180,7 @@
 <script>
 import gtm from '@/mixins/gtm'
 import disqus from '@/mixins/disqus'
+import LazyHydrate from 'vue-lazy-hydration'
 import { getImagePath } from '~/mixins/image'
 import { insertAdDiv } from '~/utils/insert-ad-div'
 
@@ -188,6 +191,7 @@ const {
 export default {
   name: 'GothamistArticle',
   components: {
+    LazyHydrate,
     VStreamfield: () => import('./VStreamfield'),
     Breadcrumbs: () => import('./Breadcrumbs'),
     DisqusEmbed: () => import('./DisqusEmbed'),
