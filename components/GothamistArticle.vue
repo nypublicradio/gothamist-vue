@@ -571,7 +571,7 @@ export default {
       }
     },
     handleNewsletterSignupSuccess () {
-      this.gaEvent('NTG newsletter', 'newsletter signup', 'success')
+      this.gaEvent('NTG newsletter', 'newsletter signup 1', 'success')
     }
   },
   head () {
