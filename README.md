@@ -10,6 +10,7 @@ $ npm install
 $ cp .env.sample .env
 
 # serve with hot reload at localhost:3000
+# note: use http://localhost:3000 (not the IP address Nuxt provides) or else Disqus will not work properly
 $ npm run dev
 
 # build for production and launch server
