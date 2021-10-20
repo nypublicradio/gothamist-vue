@@ -161,7 +161,8 @@ export default {
 </script>
 
 <style lang="scss">
-.streamfield-block {
+.streamfield-heading,
+.streamfield-block > * {
   margin-bottom: var(--space-4);
 }
 
