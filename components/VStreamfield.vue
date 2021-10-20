@@ -1,5 +1,5 @@
 <template>
-  <div class="streamfield o-rte-text">
+  <div class="streamfield">
     <template v-for="block in streamfield">
       <!-- block-quote -->
       <div
@@ -169,8 +169,8 @@ export default {
   margin: auto;
 }
 
-.streamfield-block .featured-stories .card.mod-vertical .card-image-wrapper,
-.streamfield-block .featured-stories .card.mod-vertical .card-image {
+.streamfield .featured-stories .card.mod-vertical .card-image-wrapper,
+.streamfield .featured-stories .card.mod-vertical .card-image {
   @include media("<medium") {
     min-width: 100px;
     width: 100px;
@@ -178,9 +178,15 @@ export default {
   }
 }
 
-.streamfield-block .featured-stories .card.mod-vertical .card-image-wrapper {
+.streamfield .featured-stories .card.mod-vertical .card-image-wrapper {
   @include media(">medium") {
     height: 285px;
+  }
+}
+
+.streamfield .featured-stories .card {
+  @include media("<medium") {
+    margin-bottom: 0;
   }
 }
 </style>

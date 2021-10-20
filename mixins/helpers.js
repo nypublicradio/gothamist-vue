@@ -28,14 +28,14 @@ export const formatTags = function (name, slug, sponsored, tags) {
 // listingImage = the article's 'listing_image' from the CMS API
 export const getArticleImage = function (asset, slug, listingImage) {
   if (listingImage !== undefined && listingImage !== null) {
-    return `${this.$config.imageBase}${listingImage.id}/fill-560x413|format-jpeg|jpegquality-80/`
+    return `${this.$config.imageBase}${listingImage.id}/fill-%width%x%height%|format-jpeg|jpegquality-80/`
   }
   if (asset !== undefined && asset.length > 0) {
     if (asset[0].value.image) {
-      return `${this.$config.imageBase}${asset[0].value.image.id}/fill-560x413|format-jpeg|jpegquality-80/`
+      return `${this.$config.imageBase}${asset[0].value.image.id}/fill-%width%x%height%|format-jpeg|jpegquality-80/`
     }
     if (asset[0].value.defaultImage) {
-      return `${this.$config.imageBase}${asset[0].value.defaultImage.id}/fill-560x413|format-jpeg|jpegquality-80/`
+      return `${this.$config.imageBase}${asset[0].value.defaultImage.id}/fill-%width%x%height%|format-jpeg|jpegquality-80/`
     }
   }
   switch (slug) {
@@ -60,6 +60,42 @@ export const getImageFromStory = function (story) {
     story.leadAsset[0]?.value.defaultImage
   if (image) {
     return image
+  }
+  return null
+}
+
+// returns an article image height
+// asset = the article's 'lead_asset' from the CMS API
+// listingImage = the article's 'listing_image' from the CMS API
+export const getArticleImageHeight = function (asset, listingImage) {
+  if (listingImage !== undefined && listingImage !== null) {
+    return listingImage.height
+  }
+  if (asset !== undefined && asset.length > 0) {
+    if (asset[0].value.image) {
+      return asset[0].value.image.height
+    }
+    if (asset[0].value.defaultImage) {
+      return asset[0].value.defaultImage.height
+    }
+  }
+  return null
+}
+
+// returns an article image width
+// asset = the article's 'lead_asset' from the CMS API
+// listingImage = the article's 'listing_image' from the CMS API
+export const getArticleImageWidth = function (asset, listingImage) {
+  if (listingImage !== undefined && listingImage !== null) {
+    return listingImage.width
+  }
+  if (asset !== undefined && asset.length > 0) {
+    if (asset[0].value.image) {
+      return asset[0].value.image.width
+    }
+    if (asset[0].value.defaultImage) {
+      return asset[0].value.defaultImage.width
+    }
   }
   return null
 }
@@ -196,6 +232,8 @@ export default {
     formatTitle,
     fuzzyDateTime,
     getArticleImage,
+    getArticleImageHeight,
+    getArticleImageWidth,
     getImageFromStory,
     handleScroll,
     hasGallery,

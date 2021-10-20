@@ -53,7 +53,7 @@
           Digital Team
         </h3>
         <p>
-          Many people on the digital team at New York Public Radio are thrilled to have the chance to work on the next generation of Gothamist, including Kate Statton, Laura Galbraith, Brian Whitton, Mike Hearn, Brad Kammin, Kelly Suitor, Matt Walsh, Sean Zimmer, Nicolas Castro, Valentina Powers, Chris Hardtman, Jim Jazweicki, Freyja Balmer, and Nate Landau.
+          Many people on the digital team at New York Public Radio are thrilled to have the chance to work on the next generation of Gothamist, including Mike Hearn, Kelly Suitor, Matt Walsh, Nicolas Castro, Kim LaRocca, Sam Guzik, Josh Gitlin, and Nate Landau.
         </p>
         <h3>
           Animals

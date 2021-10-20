@@ -1,10 +1,17 @@
 <template>
-  <div v-html="html" />
+  <div class="o-rte-text">
+    <div v-html="html" />
+  </div>
 </template>
+
 <script>
 export default {
   props: {
-    html: { type: String, required: false, default: null }
+    html: {
+      type: String,
+      required: false,
+      default: null
+    }
   },
   mounted () {
     const element = this.$el
@@ -12,7 +19,7 @@ export default {
 
     // Move all children node to the parent
     while (element.firstChild) {
-      element.firstChild.classList?.add('streamfield-block')
+      element.firstChild.classList?.add('streamfield-block', 'o-rte-text')
       parent.insertBefore(element.firstChild, element)
     }
 

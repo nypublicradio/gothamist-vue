@@ -18,8 +18,10 @@
             class="gothamist u-space--double--bottom mod-vertical mod-large"
             :show-gallery-icon="hasGallery(featuredStory.leadAsset)"
             :image="getArticleImage(featuredStory.leadAsset, featuredStory.ancestry[0].slug, featuredStory.listingImage)"
-            :image-height="150"
-            :image-width="150"
+            :image-height="560"
+            :image-width="413"
+            :image-max-height="getArticleImageHeight(featuredStory.leadAsset, featuredStory.listingImage) || Infinity"
+            :image-max-width="getArticleImageWidth(featuredStory.leadAsset, featuredStory.listingImage) || Infinity"
             :title="featuredStory.title"
             :title-link="`/${featuredStory.ancestry[0].slug}/${featuredStory.meta.slug}`"
             :subtitle="featuredStory.description"
@@ -60,8 +62,10 @@
               class="gothamist u-space--double--bottom mod-large"
               :show-gallery-icon="hasGallery(story.leadAsset)"
               :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
-              :image-height="150"
-              :image-width="150"
+              :image-height="560"
+              :image-width="413"
+              :image-max-height="getArticleImageHeight(story.leadAsset, story.listingImage) || Infinity"
+              :image-max-width="getArticleImageWidth(story.leadAsset, story.listingImage) || Infinity"
               :title="story.title"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
               :subtitle="story.description"
@@ -105,8 +109,10 @@
               class="gothamist u-space--double--bottom mod-large"
               :show-gallery-icon="hasGallery(story.leadAsset)"
               :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
-              :image-height="150"
-              :image-width="150"
+              :image-height="560"
+              :image-width="413"
+              :image-max-height="getArticleImageHeight(story.leadAsset, story.listingImage) || Infinity"
+              :image-max-width="getArticleImageWidth(story.leadAsset, story.listingImage) || Infinity"
               :title="story.title"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
               :subtitle="story.description"
@@ -160,6 +166,8 @@ const {
   formatTags,
   fuzzyDateTime,
   getArticleImage,
+  getArticleImageHeight,
+  getArticleImageWidth,
   hasGallery
 } = require('~/mixins/helpers')
 
@@ -247,6 +255,8 @@ export default {
     formatTags,
     fuzzyDateTime,
     getArticleImage,
+    getArticleImageHeight,
+    getArticleImageWidth,
     async getMoreResults () {
       this.moreResultsLoaded = false
       await this.$axios
