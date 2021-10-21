@@ -108,6 +108,11 @@ export default {
           rel: 'stylesheet',
           type: 'text/css',
           href: 'https://htlbid.com/v3/gothamistv2.com/htlbid.css'
+        },
+        {
+          hid: 'canonical_url',
+          href: 'https://gothamist.com' + this.$route.path,
+          rel: 'canonical'
         }
       ],
       script: [
