@@ -21,29 +21,34 @@
             <share-tools-item
               service="facebook"
               username="gothamist"
-              @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
+              @follow="gaEvent('NTG social','social follow', ...arguments)"
             />
             <share-tools-item
               service="twitter"
               username="gothamist"
-              @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
+              @follow="gaEvent('NTG social','social follow', ...arguments)"
             />
             <share-tools-item
               service="instagram"
               username="gothamist"
-              @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
+              @follow="gaEvent('NTG social','social follow', ...arguments)"
             />
             <share-tools-item
               service="youtube"
               username="UCY_2VeS5Q9_sMZRhtvF0c5Q"
-              @componentEvent="gaEvent('NTG social','Social Share', ...arguments)"
+              @follow="gaEvent('NTG social','social follow', ...arguments)"
             />
           </share-tools>
         </div>
       </template>
       <template v-slot:rightComponent>
         <div>
-          <gothamist-footer-newsletter />
+          <gothamist-footer-newsletter
+            v-observe-visibility="{
+              callback: handleNewsletterImpression,
+            }"
+            @newsletter-signup-success="handleNewsletterSignupSuccess"
+          />
         </div>
       </template>
     </the-footer>
@@ -66,12 +71,33 @@ export default {
     BackToTop: () => import('../components/BackToTop')
   },
   mixins: [gtm],
+  data () {
+    return {
+      newsletterImpressionWasTracked: false
+    }
+  },
   computed: {
     ...mapState('global', {
       footerNav: state => state.footerNav,
       footerSlogan: state => state.footerSlogan,
       legalNav: state => state.legalNav
     })
+  },
+  watch: {
+    '$route.path' () {
+      this.newsletterImpressionWasTracked = false
+    }
+  },
+  methods: {
+    handleNewsletterImpression (isVisible) {
+      if (isVisible && !this.newsletterImpressionWasTracked) {
+        this.gaEvent('NTG newsletter', 'newsletter modal impression 2', 'footer')
+        this.newsletterImpressionWasTracked = true
+      }
+    },
+    handleNewsletterSignupSuccess () {
+      this.gaEvent('NTG newsletter', 'newsletter signup 2', 'success')
+    }
   }
 }
 </script>

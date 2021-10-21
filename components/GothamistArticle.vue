@@ -46,6 +46,7 @@
             service="facebook"
             :url="article.url"
             :utm-parameters="{medium: 'social', source: 'facebook', campaign: 'shared_facebook'}"
+            @share="gaEvent('NTG social','social share', ...arguments)"
           />
           <share-tools-item
             action="share"
@@ -53,6 +54,7 @@
             :url="article.url"
             :share-parameters="{text: article.title, via: 'gothamist'}"
             :utm-parameters="{medium: 'social', source: 'twitter', campaign: 'shared_twitter'}"
+            @share="gaEvent('NTG social','social share', ...arguments)"
           />
           <share-tools-item
             action="share"
@@ -60,6 +62,7 @@
             :url="article.url"
             :share-parameters="{title: article.title}"
             :utm-parameters="{medium: 'social', source: 'reddit', campaign: 'shared_reddit'}"
+            @share="gaEvent('NTG social','social share', ...arguments)"
           />
           <share-tools-item
             action="share"
@@ -67,6 +70,7 @@
             :url="article.url"
             :share-parameters="{body: article.title + ' - %URL%'}"
             :utm-parameters="{medium: 'social', source: 'email', campaign: 'shared_email'}"
+            @share="gaEvent('NTG social','social share', ...arguments)"
           />
         </share-tools>
         <div
@@ -112,8 +116,14 @@
         class="l-container l-container--10col"
       >
         <article-page-newsletter
+          :key="article.uuid"
+          v-observe-visibility="{
+            callback: handleNewsletterImpression,
+            once: true,
+          }"
           title="NYC news never sleeps. Get the Gothamist Daily newsletter and don't miss a moment."
           class="article-newsletter"
+          @newsletter-signup-success="handleNewsletterSignupSuccess"
         />
         <div class="article-tag-list">
           <v-tag
@@ -139,6 +149,7 @@
           v-if="article"
           :identifier="String(article.legacyId || article.uuid)"
           :url="article.url"
+          @new-comment="handleNewComment"
         />
         <v-spacer size="quin" />
       </template>
@@ -550,6 +561,17 @@ export default {
           insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'ad-div', 'mod-break-margins', 'mod-ad-disclosure'], reset: true })
         })
       }
+    },
+    handleNewComment () {
+      this.gaEvent('NTG user', 'comment added', this.article?.title)
+    },
+    handleNewsletterImpression (isVisible) {
+      if (isVisible) {
+        this.gaEvent('NTG newsletter', 'newsletter modal impression 1', this.article.title)
+      }
+    },
+    handleNewsletterSignupSuccess () {
+      this.gaEvent('NTG newsletter', 'newsletter signup 1', 'success')
     }
   },
   head () {

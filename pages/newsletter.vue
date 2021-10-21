@@ -35,7 +35,9 @@
                   data-action="newsletter modal impression 3"
                   data-label="Newsletter Signup Page"
                 >
-                  <article-page-newsletter />
+                  <article-page-newsletter
+                    @newsletter-signup-success="handleNewsletterSignupSuccess"
+                  />
                 </div>
               </div>
             </div>
@@ -65,6 +67,14 @@ export default {
     VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
   },
   mixins: [gtm],
+  mounted () {
+    this.gaEvent('NTG newsletter', 'newsletter modal impression 3', 'Newsletter Signup Page')
+  },
+  methods: {
+    handleNewsletterSignupSuccess () {
+      this.gaEvent('NTG newsletter', 'newsletter signup 3', 'success')
+    }
+  },
   head () {
     return {
       title: 'Newsletter - Gothamist',
