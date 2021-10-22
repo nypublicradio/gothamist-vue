@@ -39,6 +39,7 @@
 <script>
 /* global htlbid */
 import { mapState } from 'vuex'
+import gtm from '@/mixins/gtm'
 import { setTargeting } from '~/mixins/htl'
 
 export default {
@@ -48,6 +49,13 @@ export default {
     GothamistHeader: () => import('../components/GothamistHeader'),
     GothamistMarketingBanners: () => import('../components/GothamistMarketingBanners'),
     GothamistBreakingNews: () => import('../components/GothamistBreakingNews')
+  },
+  mixins: [gtm],
+  data () {
+    return {
+      clientID: null,
+      sessionID: null
+    }
   },
   computed: {
     isHomepage () {
@@ -62,16 +70,34 @@ export default {
     ...mapState('global', ['isSensitiveContent'])
   },
   watch: {
-    $route () {
-      this.setAdTargeting()
+    $route (newRoute, oldRoute) {
+      this.$store.commit('global/setPreviousPath', oldRoute.fullPath)
+      this.handleNewPage()
     }
   },
   async mounted () {
-    this.setAdTargeting()
-    // set the navigation
+    this.setTrackingIDs()
+    this.handleNewPage()
     await this.$store.dispatch('global/setNavigation')
   },
   methods: {
+    handleNewPage () {
+      this.$nextTick(() => {
+        this.setAdTargeting()
+        this.logPageView()
+      })
+    },
+    logPageView () {
+      const data = {
+        event: 'Page View',
+        sessionID: this.sessionID,
+        previousPath: this.previousPath,
+        IDCustomEvents: this.clientID,
+        template: this.$options.name,
+        vue: true
+      }
+      this.$gtm.push(data)
+    },
     setAdTargeting () {
       // remove any existing ads
       document.querySelectorAll('.htlunit-interior_leaderboard').forEach(function (el) {
