@@ -30,7 +30,9 @@
         <gothamist-breaking-news class="l-container l-container--16col" />
         <gothamist-marketing-banners class="l-container l-container--16col" />
       </div>
-      <Nuxt keep-alive />
+      <transition @after-enter="handleTransitionEnter">
+        <Nuxt />
+      </transition>
     </main>
     <gothamist-footer v-if="!isGallery" />
   </div>
@@ -72,20 +74,17 @@ export default {
   watch: {
     $route (newRoute, oldRoute) {
       this.$store.commit('global/setPreviousPath', oldRoute.fullPath)
-      this.handleNewPage()
     }
   },
-  async mounted () {
-    this.setTrackingIDs()
+  mounted () {
     this.handleNewPage()
-    await this.$store.dispatch('global/setNavigation')
   },
   methods: {
     handleNewPage () {
-      this.$nextTick(() => {
-        this.setAdTargeting()
-        this.logPageView()
-      })
+      this.setAdTargeting()
+      this.setTrackingData()
+      this.logPageView()
+      this.$store.dispatch('global/setNavigation')
     },
     logPageView () {
       const data = {
@@ -119,6 +118,9 @@ export default {
         url: this.$route.path,
         urlSegments: this.$route.path.split('/').filter(segment => segment.length > 0)
       })
+    },
+    handleTransitionEnter () {
+      this.handleNewPage()
     }
   },
   head () {

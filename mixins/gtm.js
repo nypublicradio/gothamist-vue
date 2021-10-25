@@ -104,7 +104,7 @@ export default {
       }
       return ''
     },
-    setTrackingIDs () {
+    setTrackingData () {
       const tenYears = 60 * 60 * 24 * 365 * 10
       this.clientID = this.$cookies.get('_gothamistClientID') || this.generateId()
       this.sessionID = this.$cookies.get('_gothamistSessionID') || this.generateId()
