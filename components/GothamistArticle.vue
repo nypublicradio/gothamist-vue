@@ -154,17 +154,14 @@
         <v-spacer size="quin" />
       </template>
 
-      <dismissible-area prefix="donateBanner" :views-before-showable="3">
+      <dismissible-area prefix="donateBanner" :views-before-showable="2">
         <template v-slot="dismissibleArea">
-          <div
+          <donate-banner
             v-observe-visibility="{callback: bannerVisibilityChanged, once: true}"
-          >
-            <donate-banner
-              :class="{'is-onscreen': bannerOnscreen}"
-              @close="dismissibleArea.handleDismissed"
-              @donate-click="bannerDonateClicked"
-            />
-          </div>
+            :class="{'is-onscreen': bannerOnscreen}"
+            @close="dismissibleArea.handleDismissed"
+            @donate-click="bannerDonateClicked"
+          />
         </template>
       </dismissible-area>
     </div>
@@ -511,6 +508,7 @@ export default {
         if (!this.scrollPercent75Logged) {
           this.gtmData.milestone = 75
           this.articleGaEvent()
+          this.bannerOnscreen = true
         }
         this.scrollPercent75Logged = true
       }
@@ -545,7 +543,6 @@ export default {
     },
     bannerVisibilityChanged (isVisible) {
       if (isVisible) {
-        this.bannerOnscreen = true
         this.gaArticleEvent('Article Page', 'Donate Banner Is Visible', this.gtmData.articleTitle, this.gtmData)
       }
     },

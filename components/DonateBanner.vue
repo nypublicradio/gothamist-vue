@@ -14,7 +14,7 @@
       <close-icon />
     </div>
     <div class="donate-banner-content">
-      <p>Help fund the local coverage you rely on. Back the extra reporting you need during this global pandemic.</p>
+      <p>We rely on your support to make local news available to all.</p>
       <v-button
         :href="donateUrl"
         target="_blank"

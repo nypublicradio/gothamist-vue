@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <slot v-show="shouldShow" :handleDismissed="handleDismissed" />
+  <div v-show="shouldShow">
+    <slot :handleDismissed="handleDismissed" />
   </div>
 </template>
 <script>
