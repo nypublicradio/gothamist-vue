@@ -53,12 +53,6 @@ export default {
     GothamistBreakingNews: () => import('../components/GothamistBreakingNews')
   },
   mixins: [gtm],
-  data () {
-    return {
-      clientID: null,
-      sessionID: null
-    }
-  },
   computed: {
     isHomepage () {
       return this.$route.name === 'index'
@@ -86,17 +80,6 @@ export default {
       this.logPageView()
       this.$store.dispatch('global/setNavigation')
     },
-    logPageView () {
-      const data = {
-        event: 'Page View',
-        sessionID: this.sessionID,
-        previousPath: this.previousPath,
-        IDCustomEvents: this.clientID,
-        template: this.$options.name,
-        vue: true
-      }
-      this.$gtm.push(data)
-    },
     setAdTargeting () {
       // remove any existing ads
       document.querySelectorAll('.htlunit-interior_leaderboard').forEach(function (el) {
@@ -120,7 +103,9 @@ export default {
       })
     },
     handleTransitionEnter () {
-      this.handleNewPage()
+      this.$nextTick(() => {
+        this.handleNewPage()
+      })
     }
   },
   head () {

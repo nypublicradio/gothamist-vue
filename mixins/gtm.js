@@ -110,6 +110,17 @@ export default {
       this.sessionID = this.$cookies.get('_gothamistSessionID') || this.generateId()
       this.$cookies.set('_gothamistClientID', this.clientID, { path: '/', maxAge: tenYears })
       this.$cookies.set('_gothamistSessionID', this.sessionID, { path: '/', expires: 0 })
+    },
+    logPageView () {
+      const data = {
+        event: 'Page View',
+        sessionID: this.sessionID,
+        previousPath: this.previousPath,
+        IDCustomEvents: this.clientID,
+        template: this.$options.name,
+        vue: true
+      }
+      this.$gtm.push(data)
     }
   }
 }
