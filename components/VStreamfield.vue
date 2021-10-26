@@ -35,8 +35,10 @@
             class="gothamist u-space--double--bottom mod-vertical mod-large"
             :show-gallery-icon="hasGallery(story.leadAsset)"
             :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
-            :image-height="150"
-            :image-width="150"
+            :image-height="413"
+            :image-width="560"
+            :image-max-height="getArticleImageHeight(story.leadAsset, story.listingImage) || Infinity"
+            :image-max-width="getArticleImageWidth(story.leadAsset, story.listingImage) || Infinity"
             :title="story.title"
             :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
             :subtitle="story.description"
@@ -113,6 +115,8 @@ const {
   formatTags,
   fuzzyDateTime,
   getArticleImage,
+  getArticleImageHeight,
+  getArticleImageWidth,
   hasGallery
 } = require('~/mixins/helpers')
 
@@ -155,6 +159,8 @@ export default {
     formatTags,
     fuzzyDateTime,
     getArticleImage,
+    getArticleImageHeight,
+    getArticleImageWidth,
     hasGallery
   }
 }
