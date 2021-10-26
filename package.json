@@ -26,12 +26,13 @@
     "gulp-awspublish": "^4.1.2",
     "gulp-cloudfront-invalidate-aws-publish": "^1.0.0",
     "humps": "^2.0.1",
-    "nuxt": "^2.15.4",
+    "nuxt-edge": "latest",
     "package.json": "^2.0.1",
     "vue-mq": "^1.0.1",
     "vue-observe-visibility": "^1.0.0"
   },
   "devDependencies": {
+    "@nuxt/bridge": "npm:@nuxt/bridge-edge@^3.0.0-27252999.d2cc9e4",
     "@nuxt/types": "^2.15.4",
     "@nuxtjs/eslint-config": "^3.1.0",
     "@nuxtjs/eslint-module": "^2.0.0",
@@ -48,10 +49,14 @@
     "jest": "^26.6.3",
     "jest-axe": "^5.0.1",
     "node-sass": "^4.14.1",
-    "nypr-design-system-vue": "github:nypublicradio/nypr-design-system-vue#6f0bc1f3d9f9a17f656ff29655629ae32cbcde5a",
+    "nypr-design-system-vue": "github:nypublicradio/nypr-design-system-vue#47c7e4ebb123e57845039e6f4b54d678501c7c22",
     "sass-loader": "^10.1.1",
+    "ufo": "^0.7.9",
+    "vue": "^2.6.14",
+    "vue-client-only": "^2.1.0",
     "vue-jest": "^3.0.4",
     "vue-lottie": "^0.2.1",
+    "vue-router": "^3.5.2",
     "vuex": "^3.6.2"
   },
   "gitHooks": {
