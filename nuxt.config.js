@@ -211,5 +211,10 @@ export default {
         config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
       }
     }
+  },
+  vue: {
+    config: {
+      devtools: process.env.ENV === 'demo',
+    }
   }
 }
