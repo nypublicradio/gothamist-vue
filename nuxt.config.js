@@ -214,7 +214,7 @@ export default {
   },
   vue: {
     config: {
-      devtools: true,
+      devtools: process.env.ENV === 'demo',
     }
   }
 }
