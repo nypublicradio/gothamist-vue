@@ -141,9 +141,12 @@
 
       <div v-if="!article.sensitiveContent" class="htlad-interior_midpage_2 ad-div mod-break-margins mod-ad-disclosure no-print" />
 
-      <div id="comments" />
+      <div
+        id="comments"
+        v-observe-visibility="{callback: loadComments, intersection: { rootMargin: '300px 0px 0px 0px', threshold: 0.01 } }"
+      />
       <template
-        v-if="!article.disableComments"
+        v-if="!article.disableComments && showComments"
       >
         <disqus-embed
           v-if="article"
@@ -254,7 +257,8 @@ export default {
           name: 'twitter:site',
           content: '@gothamist'
         }
-      ]
+      ],
+      showComments: false
     }
   },
   computed: {
@@ -569,6 +573,12 @@ export default {
     },
     handleNewsletterSignupSuccess () {
       this.gaEvent('NTG newsletter', 'newsletter signup 1', 'success')
+    },
+    loadComments (isVisible) {
+      if (isVisible) {
+        this.showComments = true
+        console.log('load comments')
+      }
     }
   },
   head () {
