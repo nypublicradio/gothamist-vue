@@ -55,12 +55,12 @@
           :credit-url="slide.value.slideImage.image.creditLink"
         />
         <v-spacer size="triple" />
-      </div>
-      <div class="ad-wrapper-outer">
-        <div class="ad-wrapper-inner">
-          <div class="htlad-interior_midpage_gallery" />
-          <div class="ad-label">
-            Advertisement
+        <div v-if="index === 2 || (index + 1) % 6 === 0" class="ad-wrapper-outer">
+          <div class="ad-wrapper-inner">
+            <div class="htlad-interior_midpage_gallery" />
+            <div class="ad-label">
+              Advertisement
+            </div>
           </div>
         </div>
       </div>
