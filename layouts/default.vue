@@ -31,7 +31,7 @@
         <gothamist-marketing-banners class="l-container l-container--16col" />
       </div>
       <transition @after-enter="handleTransitionEnter">
-        <Nuxt />
+        <Nuxt keep-alive :keep-alive-props="{ include: ['HomePage','Section','Tag'] }" />
       </transition>
     </main>
     <gothamist-footer v-if="!isGallery" />
