@@ -35,10 +35,6 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'ProductMarketingBanner',
-  components: {
-    CloseIcon: () => import('nypr-design-system-vue/src/components/icons/CloseIcon'),
-    VButton: () => import('nypr-design-system-vue/src/components/VButton')
-  },
   props: {
     cta: {
       type: String,

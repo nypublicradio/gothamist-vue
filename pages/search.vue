@@ -121,14 +121,6 @@ const {
 
 export default {
   name: 'Search',
-  components: {
-    ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
-    SearchIcon: () => import('nypr-design-system-vue/src/components/icons/SearchIcon'),
-    VButton: () => import('nypr-design-system-vue/src/components/VButton'),
-    VCard: () => import('nypr-design-system-vue/src/components/VCard'),
-    VCounter: () => import('nypr-design-system-vue/src/components/VCounter'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
-  },
   mixins: [gtm, disqus],
   data () {
     return {

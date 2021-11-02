@@ -67,11 +67,6 @@ import gtm from '@/mixins/gtm'
 
 export default {
   name: 'ErrorPage', // this is the template name which is used for GTM
-  components: {
-    ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
-    RecentStories: () => import('../components/RecentStories'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
-  },
   mixins: [gtm],
   props: {
     error: {

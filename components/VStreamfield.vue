@@ -118,13 +118,6 @@ const {
 
 export default {
   name: 'Streamfield',
-  components: {
-    HtmlFragment: () => import('@/components/HtmlFragment'),
-    ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
-    ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
-    PullQuote: () => import('nypr-design-system-vue/src/components/PullQuote'),
-    VCard: () => import('nypr-design-system-vue/src/components/VCard')
-  },
   props: {
     streamfield: {
       type: Array,

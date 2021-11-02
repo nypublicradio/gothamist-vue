@@ -19,9 +19,6 @@
 
 <script>
 export default {
-  components: {
-    VBanner: () => import('nypr-design-system-vue/src/components/VBanner')
-  },
   async fetch () {
     this.breakingNewsBanner = await this.$axios
       .get(`/sitewide_components/${this.$config.siteId}/`)

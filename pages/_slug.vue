@@ -14,9 +14,6 @@ const { formatTitle } = require('~/mixins/helpers')
 
 export default {
   name: 'Section', // this is the template name which is used for GTM
-  components: {
-    SectionPage: () => import('../components/SectionPage')
-  },
   mixins: [gtm],
   async asyncData ({
     $axios,

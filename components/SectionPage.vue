@@ -173,14 +173,6 @@ const {
 
 export default {
   name: 'Section',
-  components: {
-    ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
-    LoadingIcon: () => import('nypr-design-system-vue/src/components/animations/LoadingIcon'),
-    VButton: () => import('nypr-design-system-vue/src/components/VButton'),
-    VCard: () => import('nypr-design-system-vue/src/components/VCard'),
-    VCounter: () => import('nypr-design-system-vue/src/components/VCounter'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
-  },
   mixins: [gtm, disqus],
   props: {
     name: {

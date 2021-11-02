@@ -20,10 +20,6 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'DonateBanner',
-  components: {
-    NycLove: () => import('nypr-design-system-vue/src/components/icons/gothamist/NycLove'),
-    VButton: () => import('nypr-design-system-vue/src/components/VButton')
-  },
   computed: {
     ...mapState('global', {
       donateUrl: state => state.donateUrl

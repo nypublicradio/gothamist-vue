@@ -64,11 +64,6 @@ function dedupeStories (needle, haystack) {
 
 export default {
   name: 'RecirculationModule',
-  components: {
-    VCard: () => import('nypr-design-system-vue/src/components/VCard'),
-    VByline: () => import('nypr-design-system-vue/src/components/VByline'),
-    ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata')
-  },
   props: {
     relatedArticle: {
       type: Object,

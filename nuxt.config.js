@@ -106,7 +106,13 @@ export default {
   styleResources: { scss: './assets/*.scss' },
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
-  components: false,
+  components: [
+    '~/components',
+    { path: 'node_modules/nypr-design-system-vue/src/components', level: 1, transpile: true },
+    { path: 'node_modules/nypr-design-system-vue/src/components/animations', level: 1, transpile: true },
+    { path: 'node_modules/nypr-design-system-vue/src/components/icons', level: 1, transpile: true },
+    { path: 'node_modules/nypr-design-system-vue/src/components/icons/gothamist', level: 1, transpile: true }
+  ],
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
@@ -199,9 +205,9 @@ export default {
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     // this is needed to transpile es6 modules imported from radial
-    transpile: [
-      'nypr-design-system-vue'
-    ],
+    // transpile: [
+    //   'nypr-design-system-vue'
+    // ],
     extractCSS: true,
     extend (config, ctx) {
       config.module.rules.push({

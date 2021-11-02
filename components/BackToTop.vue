@@ -15,9 +15,6 @@ import gtm from '@/mixins/gtm'
 
 export default {
   name: 'BackToTop',
-  components: {
-    GothamistArrow: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistArrow')
-  },
   mixins: [gtm],
   methods: {
     scrollToTop () {

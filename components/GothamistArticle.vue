@@ -198,26 +198,6 @@ const {
 
 export default {
   name: 'GothamistArticle',
-  components: {
-    VStreamfield: () => import('./VStreamfield'),
-    Breadcrumbs: () => import('./Breadcrumbs'),
-    DisqusEmbed: () => import('./DisqusEmbed'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
-    ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
-    ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
-    ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
-    VCounter: () => import('nypr-design-system-vue/src/components/VCounter'),
-    VByline: () => import('nypr-design-system-vue/src/components/VByline'),
-    ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
-    GalleryPreview: () => import('nypr-design-system-vue/src/components/GalleryPreview'),
-    ReadMoreIn: () => import('./ReadMoreIn'),
-    VTag: () => import('nypr-design-system-vue/src/components/VTag'),
-    DoYouKnowTheScoop: () => import('./DoYouKnowTheScoop'),
-    DismissibleArea: () => import('./DismissibleArea'),
-    DonateBanner: () => import('./DonateBanner'),
-    ArticlePageNewsletter: () => import('./ArticlePageNewsletter'),
-    RecirculationModule: () => import('./RecirculationModule')
-  },
   mixins: [gtm, disqus],
   props: {
     article: {

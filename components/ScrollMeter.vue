@@ -5,9 +5,6 @@
 <script>
 export default {
   name: 'ScrollMeter',
-  components: {
-    ProgressBar: () => import('nypr-design-system-vue/src/components/ProgressBar')
-  },
   props: {
     scrollTargetSelector: {
       type: String,

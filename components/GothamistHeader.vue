@@ -176,24 +176,11 @@
 <script>
 import { mapState } from 'vuex'
 import gtm from '@/mixins/gtm'
-
 const ARTICLE_ROUTE = 'section-article'
 const GALLERY_ROUTE = 'section-photos-gallery'
 
 export default {
   name: 'GothamistHeader',
-  components: {
-    SecondaryNavigation: () => import('nypr-design-system-vue/src/components/SecondaryNavigation'),
-    TheHeader: () => import('nypr-design-system-vue/src/components/TheHeader'),
-    GothamistLogo: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogo'),
-    GothamistLogoStacked: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogoStacked'),
-    VSearch: () => import('nypr-design-system-vue/src/components/VSearch'),
-    TheMenu: () => import('nypr-design-system-vue/src/components/TheMenu'),
-    VButton: () => import('nypr-design-system-vue/src/components/VButton'),
-    ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
-    ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
-    ScrollMeter: () => import('./ScrollMeter')
-  },
   mixins: [gtm],
   data () {
     return {

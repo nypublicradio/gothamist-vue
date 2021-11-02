@@ -33,7 +33,7 @@ export const state = () => ({
     },
     {
       text: 'Election 2021',
-      url: '/election-2021'
+      url: '/tags/election-2021'
     }
   ],
   isSensitiveContent: false,
