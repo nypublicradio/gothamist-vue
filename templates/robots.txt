@@ -1,4 +1,8 @@
-# http://www.robotstxt.org
+<% if (options.env === 'DEMO') { %>
+User-agent: *
+Disallow: /
+<% } else { %>
+# http://www.robotstxt.org ?
 User-agent: Googlebot
 Disallow: /mt/
 Disallow: /*.jpg$
@@ -49,3 +53,4 @@ Allow: /
 User-agent: *
 Disallow: /
 Sitemap: /sitemap.xml
+<% } %>

@@ -210,11 +210,20 @@ export default {
       if (ctx.isDev) {
         config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
       }
-    }
+    },
+    templates: [
+      {
+        src: './templates/robots.txt',
+        dst: '../static/robots.txt',
+        options: {
+          env: process.env.ENV
+        }
+      }
+    ]
   },
   vue: {
     config: {
-      devtools: process.env.ENV === 'demo',
+      devtools: process.env.ENV === 'demo'
     }
   }
 }
