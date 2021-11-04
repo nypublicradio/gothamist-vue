@@ -216,7 +216,7 @@ export default {
         src: './templates/robots.txt',
         dst: '../static/robots.txt',
         options: {
-          env: process.env.ENV
+          env: process.env.ENV.toLowerCase()
         }
       }
     ]

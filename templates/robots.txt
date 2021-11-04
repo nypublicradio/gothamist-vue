@@ -1,4 +1,4 @@
-<% if (options.env === 'DEMO') { %>
+<% if (options.env === 'demo') { %>
 User-agent: *
 Disallow: /
 <% } else { %>
