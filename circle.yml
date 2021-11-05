@@ -46,6 +46,7 @@ templates:
       - deploy:
           name: Deploy Nuxt
           command: |
+            env | sed -n "s/^${ENV}_//p" >> .env
             TAG=${TAG:-$CIRCLE_TAG}
             source ~/.venv/bin/activate
             nyprsetuptools DockerDeploy \
