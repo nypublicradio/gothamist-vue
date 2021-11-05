@@ -77,6 +77,9 @@ export default {
       document.querySelectorAll('.htlunit-interior_leaderboard').forEach(function (el) {
         el.remove()
       })
+      document.querySelectorAll('.htlunit-interior_midpage_gallery').forEach(function (el) {
+        el.remove()
+      })
       // htlbid key value targeting for ads
       window.htlbid = window.htlbid || {}
       htlbid.cmd = htlbid.cmd || []
