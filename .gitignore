@@ -82,6 +82,7 @@ dist
 *.code-workspace
 .idea
 .vscode
+*.code-workspace
 
 # Service worker
 sw.*

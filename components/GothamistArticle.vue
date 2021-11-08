@@ -103,14 +103,16 @@
         </div>
       </div>
       <v-spacer size="double" />
-      <v-streamfield
-        :key="article.uuid"
-        ref="article-body"
-        class="l-container l-container--10col article-body c-article__body"
-        :streamfield="article.body"
-        @hook:mounted="insertAd"
-        @hook:updated="insertAd"
-      />
+      <LazyHydrate when-visible>
+        <v-streamfield
+          :key="article.uuid"
+          ref="article-body"
+          class="l-container l-container--10col article-body c-article__body"
+          :streamfield="article.body"
+          @hook:mounted="insertAd"
+          @hook:updated="insertAd"
+        />
+      </LazyHydrate>
       <v-spacer size="quad" />
       <div
         class="l-container l-container--10col"
@@ -141,9 +143,12 @@
 
       <div v-if="!article.sensitiveContent" class="htlad-interior_midpage_2 ad-div mod-break-margins mod-ad-disclosure no-print" />
 
-      <div id="comments" />
+      <div
+        id="comments"
+        v-observe-visibility="{callback: loadComments, intersection: { rootMargin: '300px 0px 0px 0px', threshold: 0.01 } }"
+      />
       <template
-        v-if="!article.disableComments"
+        v-if="!article.disableComments && showComments"
       >
         <disqus-embed
           v-if="article"
@@ -154,17 +159,14 @@
         <v-spacer size="quin" />
       </template>
 
-      <dismissible-area prefix="donateBanner" :views-before-showable="3">
+      <dismissible-area prefix="donateBanner" :views-before-showable="2">
         <template v-slot="dismissibleArea">
-          <div
+          <donate-banner
             v-observe-visibility="{callback: bannerVisibilityChanged, once: true}"
-          >
-            <donate-banner
-              :class="{'is-onscreen': bannerOnscreen}"
-              @close="dismissibleArea.handleDismissed"
-              @donate-click="bannerDonateClicked"
-            />
-          </div>
+            :class="{'is-onscreen': bannerOnscreen}"
+            @close="dismissibleArea.handleDismissed"
+            @donate-click="bannerDonateClicked"
+          />
         </template>
       </dismissible-area>
     </div>
@@ -189,6 +191,7 @@
 <script>
 import gtm from '@/mixins/gtm'
 import disqus from '@/mixins/disqus'
+import LazyHydrate from 'vue-lazy-hydration'
 import { getImagePath } from '~/mixins/image'
 import { insertAdDiv } from '~/utils/insert-ad-div'
 
@@ -237,7 +240,8 @@ export default {
           name: 'twitter:site',
           content: '@gothamist'
         }
-      ]
+      ],
+      showComments: false
     }
   },
   computed: {
@@ -491,6 +495,7 @@ export default {
         if (!this.scrollPercent75Logged) {
           this.gtmData.milestone = 75
           this.articleGaEvent()
+          this.bannerOnscreen = true
         }
         this.scrollPercent75Logged = true
       }
@@ -525,7 +530,6 @@ export default {
     },
     bannerVisibilityChanged (isVisible) {
       if (isVisible) {
-        this.bannerOnscreen = true
         this.gaArticleEvent('Article Page', 'Donate Banner Is Visible', this.gtmData.articleTitle, this.gtmData)
       }
     },
@@ -552,6 +556,12 @@ export default {
     },
     handleNewsletterSignupSuccess () {
       this.gaEvent('NTG newsletter', 'newsletter signup 1', 'success')
+    },
+    loadComments (isVisible) {
+      if (isVisible) {
+        this.showComments = true
+        console.log('load comments')
+      }
     }
   },
   head () {
