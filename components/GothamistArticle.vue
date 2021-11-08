@@ -201,6 +201,9 @@ const {
 
 export default {
   name: 'GothamistArticle',
+  components: {
+    LazyHydrate
+  },
   mixins: [gtm, disqus],
   props: {
     article: {
