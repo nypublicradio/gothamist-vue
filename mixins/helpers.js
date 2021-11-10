@@ -100,9 +100,8 @@ export const getArticleImageWidth = function (asset, listingImage) {
   return null
 }
 
-// returns the percent scrolled of any given query selector
-export const handleScroll = function (querySelector) {
-  let target = document.querySelector(querySelector)
+// returns the percent scrolled of any given element
+export const getScrollDepth = function (target) {
   if (!target) {
     target = document.body
   }
@@ -235,7 +234,7 @@ export default {
     getArticleImageHeight,
     getArticleImageWidth,
     getImageFromStory,
-    handleScroll,
+    getScrollDepth,
     hasGallery,
     isLessThan24Hours,
     isMoreThan24Hours,

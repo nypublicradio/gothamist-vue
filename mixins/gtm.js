@@ -103,39 +103,24 @@ export default {
         }
       }
       return ''
-    }
-  },
-  mounted () {
-    this.clientID = this.getCookie('_gothamistClientID')
-    this.sessionID = this.getCookie('_gothamistSessionID')
-  },
-  beforeRouteEnter (to, from, next) {
-    next((vm) => {
-      // set cookies for client and session ID if they don't already exist
-      if (vm.getCookie('_gothamistSessionID') === '') {
-        document.cookie = '_gothamistSessionID=' + vm.generateId() + '; expires=0; path=/'
-      }
-      if (vm.getCookie('_gothamistClientID') === '') {
-        const cookieDate = new Date()
-        cookieDate.setFullYear(cookieDate.getFullYear() + 10)
-        document.cookie = '_gothamistClientID=' + vm.generateId() + '; expires=' + cookieDate.toUTCString() + '; path=/'
-      }
-      // push page view data to GTM
+    },
+    setTrackingData () {
+      const tenYears = 60 * 60 * 24 * 365 * 10
+      this.clientID = this.$cookies.get('_gothamistClientID') || this.generateId()
+      this.sessionID = this.$cookies.get('_gothamistSessionID') || this.generateId()
+      this.$cookies.set('_gothamistClientID', this.clientID, { path: '/', maxAge: tenYears })
+      this.$cookies.set('_gothamistSessionID', this.sessionID, { path: '/', expires: 0 })
+    },
+    logPageView () {
       const data = {
         event: 'Page View',
-        sessionID: vm.getCookie('_gothamistSessionID'),
-        previousPath: vm.previousPath,
-        IDCustomEvents: vm.getCookie('_gothamistClientID'),
-        template: vm.$options.name,
+        sessionID: this.sessionID,
+        previousPath: this.previousPath,
+        IDCustomEvents: this.clientID,
+        template: this.$options.name,
         vue: true
       }
-      vm.$gtm.push(data)
-    })
-  },
-  beforeRouteLeave (to, from, next) {
-    // set previous path
-    this.$store.commit('global/setPreviousPath', this.$route.fullPath)
-    // go to the next route
-    next()
+      this.$gtm.push(data)
+    }
   }
 }

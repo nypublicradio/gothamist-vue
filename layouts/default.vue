@@ -30,7 +30,9 @@
         <gothamist-breaking-news class="l-container l-container--16col" />
         <gothamist-marketing-banners class="l-container l-container--16col" />
       </div>
-      <Nuxt keep-alive />
+      <transition @after-enter="handleTransitionEnter">
+        <Nuxt keep-alive :keep-alive-props="{ include: ['HomePage','Section','Tag'] }" />
+      </transition>
     </main>
     <gothamist-footer v-if="!isGallery" />
   </div>
@@ -39,6 +41,7 @@
 <script>
 /* global htlbid */
 import { mapState } from 'vuex'
+import gtm from '@/mixins/gtm'
 import { setTargeting } from '~/mixins/htl'
 
 export default {
@@ -49,6 +52,7 @@ export default {
     GothamistMarketingBanners: () => import('../components/GothamistMarketingBanners'),
     GothamistBreakingNews: () => import('../components/GothamistBreakingNews')
   },
+  mixins: [gtm],
   computed: {
     isHomepage () {
       return this.$route.name === 'index'
@@ -62,16 +66,20 @@ export default {
     ...mapState('global', ['isSensitiveContent'])
   },
   watch: {
-    $route () {
-      this.setAdTargeting()
+    $route (newRoute, oldRoute) {
+      this.$store.commit('global/setPreviousPath', oldRoute.fullPath)
     }
   },
-  async mounted () {
-    this.setAdTargeting()
-    // set the navigation
-    await this.$store.dispatch('global/setNavigation')
+  mounted () {
+    this.handleNewPage()
   },
   methods: {
+    handleNewPage () {
+      this.setAdTargeting()
+      this.setTrackingData()
+      this.logPageView()
+      this.$store.dispatch('global/setNavigation')
+    },
     setAdTargeting () {
       // remove any existing ads
       document.querySelectorAll('.htlunit-interior_leaderboard').forEach(function (el) {
@@ -92,6 +100,11 @@ export default {
         host: location?.host,
         url: this.$route.path,
         urlSegments: this.$route.path.split('/').filter(segment => segment.length > 0)
+      })
+    },
+    handleTransitionEnter () {
+      this.$nextTick(() => {
+        this.handleNewPage()
       })
     }
   },
