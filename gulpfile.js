@@ -19,11 +19,13 @@ const config = {
   // Optional
   deleteOldVersions: false, // NOT FOR PRODUCTION
   distribution: process.env.AWS_CLOUDFRONT, // CloudFront distribution ID
+  env: process.env.ENV,
   region: process.env.AWS_DEFAULT_REGION,
   headers: {
     /* 'Cache-Control': 'max-age=315360000, no-transform, public', */
   },
 
+  demoAssetsDir: 'static-demo',
   distDir: 'static', // only deploy static asset folder
   indexRootPath: true,
   cacheFileName: '.awspublish',
@@ -35,8 +37,12 @@ gulp.task('deploy', function () {
   // create a new publisher using S3 options
   // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property
   const publisher = awspublish.create(config)
-
-  let g = gulp.src('./' + config.distDir + '/**')
+  let g
+  if (config.env === 'demo') {
+    g = gulp.src(['./' + config.distDir + '/**', './' + config.demoAssetsDir + '/**'])
+  } else {
+    g = gulp.src('./' + config.distDir + '/**')
+  }
   // publisher will add Content-Length, Content-Type and headers specified above
   // If not specified it will set x-amz-acl to public-read by default
   g = g.pipe(
