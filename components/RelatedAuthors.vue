@@ -80,7 +80,7 @@ export default {
           this.finalAuthors.push(data)
         })
     })
-    console.log('finalAuthors = ', this.finalAuthors)
+    // console.log('finalAuthors = ', this.finalAuthors)
   },
   mounted () {},
   unmounted () {},
