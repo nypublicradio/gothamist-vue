@@ -8,7 +8,7 @@
       <v-person
         :orientation="orientation"
         :image="a.photo ? a.photo : defaultPhoto"
-        :video="a.video"
+        video="https://www.youtube.com/watch?v=LOS5WB75gkY"
         :img-scale="imgScale"
         :circle="circle"
         :animate="animate"
