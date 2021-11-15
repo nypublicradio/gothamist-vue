@@ -137,7 +137,7 @@ workflows:
       - build-static:
           filters:
             branches:
-              ignore: /main|[A-Za-z-_]+/[A-Za-z-_\d]+/
+              ignore: main
       - test-static:
           requires:
             - build-static
