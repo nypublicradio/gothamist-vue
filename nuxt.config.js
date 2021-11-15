@@ -204,10 +204,10 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-    // this is needed to transpile es6 modules imported from radial
-    // transpile: [
-    //   'nypr-design-system-vue'
-    // ],
+    // this is needed to transpile es6 modules imported from node_modules
+    transpile: [
+      'youtube-vue3'
+    ],
     extractCSS: true,
     extend (config, ctx) {
       config.module.rules.push({
