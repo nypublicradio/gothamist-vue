@@ -36,8 +36,7 @@ const resetConfig = {
 const config = Object.assign({}, nuxtConfig, resetConfig, {
   ssr: 'true',
   srcDir: nuxtConfig.srcDir,
-  ignore: ['**/components/**/*', '**/layouts/**/*', '**/pages/**/*'],
-  stubs: ['nuxt-link']
+  ignore: ['**/components/**/*', '**/layouts/**/*', '**/pages/**/*']
 })
 
 const buildNuxt = async () => {
