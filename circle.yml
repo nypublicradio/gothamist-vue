@@ -138,18 +138,18 @@ workflows:
           filters:
             branches:
               ignore: /main|[A-Za-z-_]+/[A-Za-z-_\d]+/
-     - test-static:
-         requires:
-           - build-static
+      - test-static:
+          requires:
+            - build-static
 
   deploy-demo:
     jobs:
       - build-static:
           <<: *filter_demo
-     - test-static:
-         <<: *filter_demo
-         requires:
-           - build-static
+      - test-static:
+          <<: *filter_demo
+          requires:
+            - build-static
       - deploy-static-demo:
           <<: *filter_demo
           requires:
@@ -163,10 +163,10 @@ workflows:
     jobs:
       - build-static:
           <<: *filter_prod
-     - test-static:
-         <<: *filter_prod
-         requires:
-           - build-static
+      - test-static:
+          <<: *filter_prod
+          requires:
+            - build-static
       - deploy-static-prod:
           <<: *filter_prod
           requires:
