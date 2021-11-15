@@ -12,7 +12,7 @@
         :img-scale="imgScale"
         :circle="circle"
         :animate="animate"
-        :name="a.title"
+        :full-name="a.title"
         :name-link="a.url"
         :role="a.job_title"
         :organization="a.organization"
@@ -82,7 +82,8 @@ export default {
     })
     // console.log('finalAuthors = ', this.finalAuthors)
   },
-  mounted () {},
+  mounted () {
+  },
   unmounted () {},
   methods: {}
 }
