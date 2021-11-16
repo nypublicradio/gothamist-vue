@@ -7,7 +7,7 @@
     >
       <v-person
         :orientation="orientation"
-        :image="a.photo ? a.photo : defaultPhoto"
+        :image="a.photo ? a.photo.meta.download_url : defaultPhoto"
         video="https://www.youtube.com/watch?v=LOS5WB75gkY"
         :img-scale="imgScale"
         :circle="circle"
@@ -22,7 +22,7 @@
         :website-url="a.website"
         :website-label="a.website_label"
         :email="a.email"
-        :phone-number="a.phone_numbers"
+        :phone-numbers="a.phone_numbers"
         :social="a.social_media_profile"
       />
     </div>
@@ -80,7 +80,7 @@ export default {
           this.finalAuthors.push(data)
         })
     })
-    // console.log('finalAuthors = ', this.finalAuthors)
+    console.log('finalAuthors = ', this.finalAuthors)
   },
   mounted () {
   },
