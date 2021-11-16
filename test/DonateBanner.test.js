@@ -17,7 +17,7 @@ describe('DonateBanner', () => {
   beforeEach(() => {
     store = new Vuex.Store({
       modules: {
-        myModule: {
+        global: {
           state,
           namespaced: true
         }
