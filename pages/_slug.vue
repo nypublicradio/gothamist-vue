@@ -43,6 +43,15 @@ export default {
   mounted () {
     setTargeting({ Template: 'Tag' })
   },
+  activated () {
+    setTargeting({ Template: 'Tag' })
+  },
+  beforeUnmount () {
+    clearTargeting(['Template'])
+  },
+  deactivated () {
+    clearTargeting(['Template'])
+  },
   methods: {
     formatTitle
   },
@@ -72,10 +81,6 @@ export default {
         }
       ]
     }
-  },
-  beforeUnmount () {
-    clearTargeting(['Template'])
   }
-
 }
 </script>

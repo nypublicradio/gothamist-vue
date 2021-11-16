@@ -7,8 +7,8 @@
     >
       <v-person
         :orientation="orientation"
-        :image="a.photo ? a.photo : defaultPhoto"
-        video="https://www.youtube.com/watch?v=LOS5WB75gkY"
+        :image="a.photo ? a.photo.meta.download_url : defaultPhoto"
+        :video="a.video"
         :img-scale="imgScale"
         :circle="circle"
         :animate="animate"
@@ -22,7 +22,7 @@
         :website-url="a.website"
         :website-label="a.website_label"
         :email="a.email"
-        :phone-number="a.phone_numbers"
+        :phone-numbers="a.phone_numbers"
         :social="a.social_media_profile"
       />
     </div>
@@ -32,7 +32,6 @@
 <script>
 export default {
   name: 'RelatedAuthors',
-  mixins: [],
   props: {
     authors: {
       type: Array,
@@ -69,9 +68,6 @@ export default {
       finalAuthors: []
     }
   },
-  computed: {},
-  watch: {},
-  updated () {},
   created () {
     this.authors.forEach((author, index, arr) => {
       fetch('https://cms.demo.nypr.digital/api/v2/pages/' + author.id)
@@ -81,13 +77,8 @@ export default {
         })
     })
     // console.log('finalAuthors = ', this.finalAuthors)
-  },
-  mounted () {
-  },
-  unmounted () {},
-  methods: {}
+  }
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

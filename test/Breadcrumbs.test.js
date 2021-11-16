@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { mount, RouterLinkStub } from '@vue/test-utils'
 import { toHaveNoViolations } from 'jest-axe'
 import VTag from 'nypr-design-system-vue/src/components/VTag'
 import Breadcrumbs from '../components/Breadcrumbs'
@@ -15,28 +15,25 @@ describe('Breadcrumbs', () => {
   ]
 
   const stubs = {
-    VTag
+    VTag,
+    NuxtLink: RouterLinkStub
+  }
+
+  const config = {
+    stubs,
+    propsData: {
+      breadcrumbs
+    }
   }
 
   test('donate url populates', () => {
-    const wrapper = mount(Breadcrumbs, {
-      stubs,
-      propsData: {
-        breadcrumbs
-      }
-    })
-    const div = wrapper.find('nuxt-link')
-    expect(div.attributes().to).toBe(breadcrumbs[0].slug)
+    const wrapper = mount(Breadcrumbs, config)
+    const div = wrapper.find('a')
     expect(div.text()).toContain(breadcrumbs[0].name)
   })
 
   test('it passes basic accessibility tests', async () => {
-    const wrapper = mount(Breadcrumbs, {
-      stubs,
-      propsData: {
-        breadcrumbs
-      }
-    })
+    const wrapper = mount(Breadcrumbs, config)
     const results = await axe(wrapper.element)
     expect(results).toHaveNoViolations()
   })

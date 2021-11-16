@@ -80,6 +80,7 @@ templates:
       tags:
         only: /^v[0-9]+\.[0-9]+\.[0-9]+/
 
+
 version: 2
 jobs:
   build-static:
@@ -104,8 +105,18 @@ jobs:
       - checkout
       - <<: *restore_node
       - run:
-          name: Test
-          command: npm test
+          name: Install JUnit coverage reporter
+          command: npm install --save-dev jest-junit
+      - run:
+          name: Run tests with JUnit as reporter
+          command: node ./node_modules/jest/bin/jest.js --ci --runInBand --reporters=default --reporters=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: ./reports/junit/
+      - store_test_results:
+          path: ./reports/junit/
+      - store_artifacts:
+          path: ./reports/junit
+
 
   deploy-static-demo:
     environment:
@@ -136,19 +147,19 @@ workflows:
       - build-static:
           filters:
             branches:
-              ignore: /main|[A-Za-z-_]+/[A-Za-z-_\d]+/
-#      - test-static:
-#          requires:
-#            - build-static
+              ignore: main
+      - test-static:
+          requires:
+            - build-static
 
   deploy-demo:
     jobs:
       - build-static:
           <<: *filter_demo
-#      - test-static:
-#          <<: *filter_demo
-#          requires:
-#            - build-static
+      - test-static:
+          <<: *filter_demo
+          requires:
+            - build-static
       - deploy-static-demo:
           <<: *filter_demo
           requires:
@@ -162,10 +173,10 @@ workflows:
     jobs:
       - build-static:
           <<: *filter_prod
-#      - test-static:
-#          <<: *filter_prod
-#          requires:
-#            - build-static
+      - test-static:
+          <<: *filter_prod
+          requires:
+            - build-static
       - deploy-static-prod:
           <<: *filter_prod
           requires:

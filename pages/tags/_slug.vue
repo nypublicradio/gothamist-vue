@@ -47,7 +47,13 @@ export default {
   mounted () {
     setTargeting({ Template: 'Tag' })
   },
+  activated () {
+    setTargeting({ Template: 'Tag' })
+  },
   beforeUnmount () {
+    clearTargeting(['Template'])
+  },
+  deactivated () {
     clearTargeting(['Template'])
   },
   methods: {
