@@ -107,6 +107,7 @@
         <v-streamfield
           :key="article.uuid"
           ref="article-body"
+          v-watch-scroll="updateScrollPercent"
           class="l-container l-container--10col article-body c-article__body"
           :streamfield="article.body"
           @hook:mounted="insertAd"
@@ -202,14 +203,24 @@ import LazyHydrate from 'vue-lazy-hydration'
 import RelatedAuthors from './RelatedAuthors.vue'
 import { getImagePath } from '~/mixins/image'
 import { insertAdDiv } from '~/utils/insert-ad-div'
-
-const { handleScroll } = require('~/mixins/helpers')
+import { getScrollDepth } from '~/mixins/helpers'
 
 export default {
   name: 'GothamistArticle',
   components: {
     LazyHydrate,
     RelatedAuthors
+  },
+  directives: {
+    'watch-scroll': {
+      bind (el, binding) {
+        el._scrollEvent = () => { binding.value(getScrollDepth(el)) }
+        window.addEventListener('scroll', el._scrollEvent, { passive: true })
+      },
+      unbind (el, binding) {
+        window.removeEventListener('scroll', el._scrollEvent, { passive: true })
+      }
+    }
   },
   mixins: [gtm, disqus],
   props: {
@@ -222,9 +233,8 @@ export default {
     return {
       bannerOnscreen: false,
       scrollPercent: 0,
-      scrollPercent25Logged: false,
-      scrollPercent50Logged: false,
-      scrollPercent75Logged: false,
+      scrollMilestones: [0, 25, 50, 75, 100],
+      currentlyWatching: [],
       path: 'https://gothamist.com' + this.$route.fullPath,
       ogImage:
         this.article.socialImage ??
@@ -495,41 +505,20 @@ export default {
     }
   },
   watch: {
+    '$route' () {
+      this.resetScrollMilestones()
+    },
     scrollPercent () {
-      if (this.scrollPercent >= 25) {
-        if (!this.scrollPercent25Logged) {
-          this.gtmData.milestone = 25
-          this.articleGaEvent()
+      this.currentlyWatching.forEach((threshold, index) => {
+        if (this.scrollPercent >= threshold) {
+          this.trackScrollDepth(threshold)
+          this.currentlyWatching.splice(index, 1)
         }
-        this.scrollPercent25Logged = true
-      }
-      if (this.scrollPercent >= 50) {
-        if (!this.scrollPercent50Logged) {
-          this.gtmData.milestone = 50
-          this.articleGaEvent()
-        }
-        this.scrollPercent50Logged = true
-      }
-      if (this.scrollPercent >= 75) {
-        if (!this.scrollPercent75Logged) {
-          this.gtmData.milestone = 75
-          this.articleGaEvent()
-          this.bannerOnscreen = true
-        }
-        this.scrollPercent75Logged = true
-      }
-      if (this.scrollPercent === 100) {
-        this.gtmData.milestone = 100
-        this.articleGaEvent()
-      }
+      })
     }
   },
   async mounted () {
-    this.scrollPercent25Logged = false
-    this.scrollPercent50Logged = false
-    this.scrollPercent75Logged = false
-    this.articleGaEvent()
-    window.addEventListener('scroll', this.scrollListener, { passive: true })
+    this.resetScrollMilestones()
     // get disqus comment counts
     this.disqusThreadIds.push(this.article.legacyId || this.article.uuid)
     this.disqusData = await this.getCommentCount(this.disqusThreadIds)
@@ -537,17 +526,16 @@ export default {
       this.scrollToComments()
     }
   },
-  beforeDestroy () {
-    window.removeEventListener('scroll', this.scrollListener)
-  },
   methods: {
-    articleGaEvent () {
-      this.gaArticleEvent(
-        'NTG article milestone',
-        this.gtmData.milestone + '%',
-        this.gtmData.articleTitle,
-        this.gtmData
-      )
+    updateScrollPercent (percent) {
+      this.scrollPercent = percent
+    },
+    resetScrollMilestones () {
+      this.currentlyWatching = this.scrollMilestones.slice()
+    },
+    trackScrollDepth (percentScrolled) {
+      this.gtmData.milestone = percentScrolled
+      this.gaArticleEvent('NTG article milestone', percentScrolled + '%', this.gtmData.articleTitle, this.gtmData)
     },
     bannerDonateClicked () {
       this.gaArticleEvent(
@@ -566,9 +554,6 @@ export default {
           this.gtmData
         )
       }
-    },
-    scrollListener () {
-      this.scrollPercent = handleScroll('.article-body')
     },
     scrollToComments () {
       document.querySelector('#comments')?.scrollIntoView()
@@ -610,7 +595,6 @@ export default {
     loadComments (isVisible) {
       if (isVisible) {
         this.showComments = true
-        // console.log('load comments')
       }
     }
   },
