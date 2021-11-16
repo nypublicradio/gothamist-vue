@@ -471,7 +471,7 @@ export default {
         const featuredSponsoredContentStories = featuredSponsoredContent.data.items.filter((story) => {
           return isMoreThan24Hours(story.publicationDate) && isLessThan48Hours(story.publicationDate)
         })
-        const curatedContentStories = curatedContent.data.pageCollectionRelationship.[0]?.pages || []
+        const curatedContentStories = curatedContent.data.pageCollectionRelationship[0]?.pages || []
 
         // set featuredSection to be the top four featured stories
         this.featuredSection = mainStories.slice(0, 4)

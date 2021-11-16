@@ -30,10 +30,6 @@ export const state = () => ({
     {
       text: 'Food',
       url: '/food'
-    },
-    {
-      text: 'Election 2021',
-      url: '/tags/election-2021'
     }
   ],
   isSensitiveContent: false,

@@ -108,10 +108,10 @@ export default {
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: [
     '~/components',
-    { path: 'node_modules/nypr-design-system-vue/src/components', level: 1, transpile: true },
-    { path: 'node_modules/nypr-design-system-vue/src/components/animations', level: 1, transpile: true },
-    { path: 'node_modules/nypr-design-system-vue/src/components/icons', level: 1, transpile: true },
-    { path: 'node_modules/nypr-design-system-vue/src/components/icons/gothamist', level: 1, transpile: true }
+    { path: '~/node_modules/nypr-design-system-vue/src/components', level: 1, pathPrefix: false },
+    { path: '~/node_modules/nypr-design-system-vue/src/components/animations', level: 1, pathPrefix: false },
+    { path: '~/node_modules/nypr-design-system-vue/src/components/icons', level: 1, pathPrefix: false },
+    { path: '~/node_modules/nypr-design-system-vue/src/components/icons/gothamist', level: 1, pathPrefix: false }
   ],
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
@@ -119,7 +119,8 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     '@nuxtjs/style-resources',
-    '@nuxtjs/google-analytics'
+    '@nuxtjs/google-analytics',
+    ['@nuxt/components', 'nypr-design-system-vue/nuxt']
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
