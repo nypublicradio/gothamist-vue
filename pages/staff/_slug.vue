@@ -11,9 +11,13 @@
         <div class="c-search-results__result-number">
           Articles By
         </div>
-        <div class="c-search-results__term">
+        <!-- <div class="c-search-results__term">
           {{ authorPage.title }}
-        </div>
+        </div> -->
+        <RelatedAuthors
+          :author="authorPage"
+          default-photo="/static-images/defaults/users/default-user.jpg"
+        />
       </header>
       <v-spacer />
       <hr
@@ -90,6 +94,7 @@
 import gtm from '@/mixins/gtm'
 import disqus from '@/mixins/disqus'
 import { mapState } from 'vuex'
+import RelatedAuthors from '@/components/RelatedAuthors.vue'
 
 const {
   formatTags,
@@ -100,6 +105,9 @@ const {
 
 export default {
   name: 'Author',
+  components: {
+    RelatedAuthors
+  },
   mixins: [gtm, disqus],
   async asyncData ({
     $axios,
@@ -151,6 +159,7 @@ export default {
   },
   mounted () {
     this.getMoreResults()
+    console.log('authorPage= ', this.authorPage)
   },
   methods: {
     formatTags,

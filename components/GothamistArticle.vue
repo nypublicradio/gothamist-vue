@@ -116,6 +116,7 @@
       </LazyHydrate>
       <v-spacer size="quad" />
       <RelatedAuthors
+        class="l-container l-container--10col"
         :authors="article.relatedAuthors"
         default-photo="/static-images/defaults/users/default-user.jpg"
       />

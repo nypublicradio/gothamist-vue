@@ -3,7 +3,6 @@
     <div
       v-for="(a, index) in finalAuthors"
       :key="index"
-      class="l-container l-container--10col"
     >
       <v-person
         :orientation="orientation"
@@ -33,9 +32,13 @@
 export default {
   name: 'RelatedAuthors',
   props: {
+    author: {
+      type: Object,
+      default: null
+    },
     authors: {
       type: Array,
-      default: () => []
+      default: null
     },
     defaultPhoto: {
       type: String,
@@ -69,13 +72,19 @@ export default {
     }
   },
   created () {
-    this.authors.forEach((author, index, arr) => {
-      fetch('https://cms.demo.nypr.digital/api/v2/pages/' + author.id)
-        .then(response => response.json())
-        .then((data) => {
-          this.finalAuthors.push(data)
-        })
-    })
+    if (this.authors) {
+      this.authors.forEach((author, index, arr) => {
+        fetch('https://cms.demo.nypr.digital/api/v2/pages/' + author.id)
+          .then(response => response.json())
+          .then((data) => {
+            this.finalAuthors.push(data)
+          })
+      })
+    } else if (this.author) {
+      this.finalAuthors.push(this.author)
+    } else {
+      console.error('No author(s) found')
+    }
     // console.log('finalAuthors = ', this.finalAuthors)
   }
 }
