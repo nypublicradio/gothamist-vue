@@ -159,7 +159,6 @@ export default {
   },
   mounted () {
     this.getMoreResults()
-    console.log('authorPage= ', this.authorPage)
   },
   methods: {
     formatTags,

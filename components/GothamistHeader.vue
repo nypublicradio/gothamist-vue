@@ -304,6 +304,10 @@ export default {
   }
 }
 
+.c-main-header .c-primary-nav {
+  padding: 0 24px;
+}
+
 .c-main-header .c-main-header__logo .gothamist-logo-icon--stacked {
   display: none;
 }

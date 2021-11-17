@@ -6,29 +6,31 @@
     >
       <v-person
         :orientation="orientation"
-        :image="a.photo ? a.photo.meta.download_url : defaultPhoto"
+        :image="!!a.photo ? a.photo.meta.downloadUrl : defaultPhoto"
         :video="a.video"
         :img-scale="imgScale"
         :circle="circle"
         :animate="animate"
         :full-name="a.title"
         :name-link="a.url"
-        :role="a.job_title"
+        :role="a.jobTitle"
         :organization="a.organization"
-        :organization-link="a.organization_link"
+        :organization-link="a.organizationLink"
         :blurb="a.biography"
         :truncate="a.biography ? truncate : null"
         :website-url="a.website"
-        :website-label="a.website_label"
+        :website-label="a.websiteLabel"
         :email="a.email"
-        :phone-numbers="a.phone_numbers"
-        :social="a.social_media_profile"
+        :phone-numbers="a.phoneNumbers"
+        :social="a.socialMediaProfile"
       />
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'RelatedAuthors',
   props: {
@@ -65,27 +67,30 @@ export default {
       default: 'responsive'
     }
   },
-  async asyncData ({ params }) {},
+  async asyncData ({ params }) { },
   data () {
     return {
       finalAuthors: []
     }
   },
-  created () {
+  computed: {
+    ...mapState('global', {
+      API: state => state.API
+    })
+  },
+  mounted () {
     if (this.authors) {
       this.authors.forEach((author, index, arr) => {
-        fetch('https://cms.demo.nypr.digital/api/v2/pages/' + author.id)
-          .then(response => response.json())
-          .then((data) => {
-            this.finalAuthors.push(data)
+        this.$axios
+          .get(this.API + 'pages/' + author.id)
+          .then((response) => {
+            this.finalAuthors.push(response.data)
           })
       })
     } else if (this.author) {
       this.finalAuthors.push(this.author)
     } else {
-      console.error('No author(s) found')
     }
-    // console.log('finalAuthors = ', this.finalAuthors)
   }
 }
 </script>
