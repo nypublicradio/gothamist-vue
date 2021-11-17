@@ -51,7 +51,7 @@
     "jest": "^26.6.3",
     "jest-axe": "^5.0.1",
     "node-sass": "^4.14.1",
-    "nypr-design-system-vue": "github:nypublicradio/nypr-design-system-vue#a447b5b76fa0857f9053853e0635dd14ed5bd916",
+    "nypr-design-system-vue": "github:nypublicradio/nypr-design-system-vue#4fb0ba320a03532af862720febee066d9372f48e",
     "sass-loader": "^10.1.1",
     "ufo": "^0.7.9",
     "vue": "^2.6.14",
