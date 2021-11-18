@@ -16,6 +16,7 @@
         </div> -->
         <RelatedAuthors
           :author="authorPage"
+          on-author-page
           default-photo="/static-images/defaults/users/default-user.jpg"
         />
       </header>

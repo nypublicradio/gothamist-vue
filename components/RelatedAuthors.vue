@@ -23,6 +23,7 @@
         :email="a.email"
         :phone-numbers="a.phoneNumbers"
         :social="a.socialMediaProfile"
+        :on-author-page="onAuthorPage"
       />
     </div>
   </div>
@@ -41,6 +42,10 @@ export default {
     authors: {
       type: Array,
       default: null
+    },
+    onAuthorPage: {
+      type: Boolean,
+      default: false
     },
     defaultPhoto: {
       type: String,
