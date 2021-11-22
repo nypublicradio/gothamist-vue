@@ -52,6 +52,7 @@
           <template v-slot:search>
             <div>
               <v-search
+                :closed-on-load="true"
                 action="/search"
                 @searchBarSubmit="gaEvent('Side Menu','user_search')"
               />
