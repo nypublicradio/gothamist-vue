@@ -206,9 +206,7 @@ export default {
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     // this is needed to transpile es6 modules imported from node_modules
-    transpile: [
-      'youtube-vue3'
-    ],
+    transpile: [],
     extractCSS: true,
     extend (config, ctx) {
       config.module.rules.push({
@@ -221,7 +219,7 @@ export default {
   },
   vue: {
     config: {
-      devtools: process.env.ENV === 'demo',
+      devtools: process.env.ENV === 'demo'
     }
   }
 }
