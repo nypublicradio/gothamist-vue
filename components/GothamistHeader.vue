@@ -118,11 +118,10 @@
           show-close-icon
           closed-on-load
           transition="none"
-        />
-        <!--
           :donate-url="donateUrl"
           @searchBarOpen="gaEvent('Click Tracking', 'user_search_open', 'Side Menu')"
-          @searchBarSubmit="gaEvent('Click Tracking','user_search', 'Side Menu')" -->
+          @searchBarSubmit="gaEvent('Click Tracking','user_search', 'Side Menu')"
+        />
       </template>
       <template
         v-if="showSocial"
