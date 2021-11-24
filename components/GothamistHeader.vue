@@ -52,9 +52,7 @@
           <template v-slot:search>
             <div>
               <v-search
-                :closed-on-load="true"
                 action="/search"
-                transition="none"
                 @searchBarSubmit="gaEvent('Side Menu','user_search')"
               />
             </div>
@@ -117,15 +115,14 @@
         <v-search
           class="header-search-bar"
           action="/search"
-          show-search-icon
-          :show-close-icon="true"
-          :closed-on-load="true"
-          :search-is-active="false"
+          show-close-icon
+          closed-on-load
           transition="none"
+        />
+        <!--
           :donate-url="donateUrl"
           @searchBarOpen="gaEvent('Click Tracking', 'user_search_open', 'Side Menu')"
-          @searchBarSubmit="gaEvent('Click Tracking','user_search', 'Side Menu')"
-        />
+          @searchBarSubmit="gaEvent('Click Tracking','user_search', 'Side Menu')" -->
       </template>
       <template
         v-if="showSocial"
