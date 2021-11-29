@@ -304,7 +304,7 @@ export default {
 
 .c-main-header .c-primary-nav {
   @include media(">xlarge") {
-    padding-right: 24px;
+    padding: 0 24px;
   }
   @include media(">1255px") {
     padding-left: 48px;
