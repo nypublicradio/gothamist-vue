@@ -303,7 +303,12 @@ export default {
 }
 
 .c-main-header .c-primary-nav {
-  padding: 0 24px;
+  @include media(">xlarge") {
+    padding-right: 24px;
+  }
+  @include media(">1255px") {
+    padding-left: 48px;
+  }
 }
 
 .c-main-header .c-main-header__logo .gothamist-logo-icon--stacked {
