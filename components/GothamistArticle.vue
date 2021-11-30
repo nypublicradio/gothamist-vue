@@ -518,15 +518,6 @@ export default {
       })
     }
   },
-  beforeMount () {
-    // when returning back from the gallery, it scrolls to the saved position, if the position exists
-    const queryString = window.location.search
-    const urlParams = new URLSearchParams(queryString)
-    const articleScrollTop = urlParams.get('articleScrollTop')
-    if (articleScrollTop) {
-      window.scrollTo(0, articleScrollTop)
-    }
-  },
   async mounted () {
     this.resetScrollMilestones()
     // get disqus comment counts

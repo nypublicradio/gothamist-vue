@@ -3,25 +3,24 @@
     v-if="page"
     class="gallery"
   >
-    <div class="gallery-close" @click="goToArticle">
-      <a>
+    <div class="gallery-close">
+      <nuxt-link :to="articleLink">
         <close-icon />
-      </a>
+      </nuxt-link>
     </div>
     <div
       v-if="page.slides.length > 0"
       class="l-wrap l-container l-container--xl"
     >
-      <div @click="goToArticle">
-        <a
-          class="gallery-back-to-link"
-        >
-          <simple-arrow-left />
-          <span>
-            {{ articleTitle }}
-          </span>
-        </a>
-      </div>
+      <nuxt-link
+        :to="articleLink"
+        class="gallery-back-to-link"
+      >
+        <simple-arrow-left />
+        <span>
+          {{ articleTitle }}
+        </span>
+      </nuxt-link>
       <v-spacer size="double" />
       <div
         v-for="(slide, index) in page.slides"
@@ -114,8 +113,7 @@ export default {
       page: null,
       pageLoaded: false,
       slug: this.$route.params.slug,
-      title: null,
-      articleScrollTop: 0
+      title: null
     }
   },
   computed: {
@@ -143,14 +141,8 @@ export default {
       }
     }
   },
-  beforeMount () {
-    const doc = document.documentElement
-    const articleScrollTop = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0)
-    this.articleScrollTop = articleScrollTop
-  },
   mounted () {
     // support deep linking
-    window.scrollTo(0, 0)
     if (this.$route.query.image && this.$refs['image' + this.$route.query.image] !== undefined) {
       const imageElement = this.$refs['image' + this.$route.query.image]
       const top = imageElement[0].offsetTop
@@ -166,14 +158,8 @@ export default {
     formatTitle,
     goToArticle () {
       this.$router.push({
-        path: this.articleLink,
-        query: {
-          articleScrollTop: this.articleScrollTop
-        }
+        path: this.articleLink
       })
-      // this.$router.push({
-      //   path: this.articleLink
-      // })
     },
     visibilityChanged (isVisible, entry, imageId) {
       if (isVisible && this.pageLoaded) {
@@ -257,7 +243,7 @@ export default {
   font-size: var(--font-size-8);
   align-items: flex-end;
   color: RGB(var(--color-white));
-  cursor: pointer;
+
   span {
     padding-bottom: 4px;
     border-bottom: 2px dotted RGB(var(--color-white));
