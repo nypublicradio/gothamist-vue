@@ -12,15 +12,16 @@
       v-if="page.slides.length > 0"
       class="l-wrap l-container l-container--xl"
     >
-      <nuxt-link
-        :to="articleLink"
-        class="gallery-back-to-link"
-      >
-        <simple-arrow-left />
-        <span>
-          {{ articleTitle }}
-        </span>
-      </nuxt-link>
+      <div @click="goToArticle">
+        <a
+          class="gallery-back-to-link"
+        >
+          <simple-arrow-left />
+          <span>
+            {{ articleTitle }}
+          </span>
+        </a>
+      </div>
       <v-spacer size="double" />
       <div
         v-for="(slide, index) in page.slides"
@@ -165,11 +166,14 @@ export default {
     formatTitle,
     goToArticle () {
       this.$router.push({
-        path: this.articleLink
+        path: this.articleLink,
+        query: {
+          articleScrollTop: this.articleScrollTop
+        }
       })
-      setTimeout(() => {
-        window.scrollTo(0, this.articleScrollTop)
-      }, 200)
+      // this.$router.push({
+      //   path: this.articleLink
+      // })
     },
     visibilityChanged (isVisible, entry, imageId) {
       if (isVisible && this.pageLoaded) {
@@ -253,7 +257,7 @@ export default {
   font-size: var(--font-size-8);
   align-items: flex-end;
   color: RGB(var(--color-white));
-
+  cursor: pointer;
   span {
     padding-bottom: 4px;
     border-bottom: 2px dotted RGB(var(--color-white));
