@@ -372,7 +372,7 @@ export default {
 }
 
 .c-main-header__right {
-  display: inline-grid;
+  // display: inline-grid;
   width: max-content;
   @include media('>small') {
     display: flex;

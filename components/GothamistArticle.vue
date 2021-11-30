@@ -668,7 +668,7 @@ export default {
 }
 
 .article-share-tools {
-  width: 48.5px;
+  // width: 48.5px;
   text-align: center;
   margin-bottom: var(--space-4);
   @media all and (min-width: $medium) {

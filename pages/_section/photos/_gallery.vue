@@ -3,10 +3,10 @@
     v-if="page"
     class="gallery"
   >
-    <div class="gallery-close">
-      <nuxt-link :to="articleLink">
+    <div class="gallery-close" @click="goToArticle">
+      <a>
         <close-icon />
-      </nuxt-link>
+      </a>
     </div>
     <div
       v-if="page.slides.length > 0"
@@ -113,7 +113,8 @@ export default {
       page: null,
       pageLoaded: false,
       slug: this.$route.params.slug,
-      title: null
+      title: null,
+      articleScrollTop: 0
     }
   },
   computed: {
@@ -141,8 +142,14 @@ export default {
       }
     }
   },
+  beforeMount () {
+    const doc = document.documentElement
+    const articleScrollTop = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0)
+    this.articleScrollTop = articleScrollTop
+  },
   mounted () {
     // support deep linking
+    window.scrollTo(0, 0)
     if (this.$route.query.image && this.$refs['image' + this.$route.query.image] !== undefined) {
       const imageElement = this.$refs['image' + this.$route.query.image]
       const top = imageElement[0].offsetTop
@@ -160,6 +167,9 @@ export default {
       this.$router.push({
         path: this.articleLink
       })
+      setTimeout(() => {
+        window.scrollTo(0, this.articleScrollTop)
+      }, 200)
     },
     visibilityChanged (isVisible, entry, imageId) {
       if (isVisible && this.pageLoaded) {
