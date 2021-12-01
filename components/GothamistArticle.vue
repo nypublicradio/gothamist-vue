@@ -22,9 +22,10 @@
         </template>
         <template v-slot:comments>
           <v-counter
+            v-if="commentCount"
             icon="comment"
             text="Comments"
-            :value="getCommentCountById(String(article.legacyId || article.uuid), disqusData)"
+            :value="commentCount"
             href="#comments"
             @click.native="scrollToComments"
           />
@@ -242,6 +243,7 @@ export default {
         this.article.leadAsset[0]?.value.image ??
         this.article.leadAsset[0]?.value.defaultImage,
       disqusData: null,
+      commentCount: null,
       disqusThreadIds: [],
       baseMeta: [
         {
@@ -523,6 +525,7 @@ export default {
     // get disqus comment counts
     this.disqusThreadIds.push(this.article.legacyId || this.article.uuid)
     this.disqusData = await this.getCommentCount(this.disqusThreadIds)
+    this.commentCount = await this.getCommentCountById(String(this.article.legacyId || this.article.uuid), this.disqusData)
     if (location.hash === '#comments') {
       this.scrollToComments()
     }
