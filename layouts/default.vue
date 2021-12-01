@@ -171,8 +171,13 @@ html {
 
 .ad-wrapper-outer.mod-header {
   position: relative;
+  display: flex;
   background: RGB(var(--color-background));
   width: 100%;
+  min-height: 72px;
+  @include media(">medium") {
+    min-height: 272px;
+  }
 }
 
 .ad-wrapper-inner {
@@ -197,7 +202,7 @@ div:empty + .ad-label {
 
 .ad-div.mod-break-margins {
   position: relative;
-  min-height: 270px;
+  min-height: 272px;
 }
 
 .ad-div.mod-break-margins > div {
