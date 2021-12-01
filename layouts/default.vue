@@ -5,10 +5,12 @@
       class="htlad-skin"
     />
     <div
-      v-if="!isSensitiveContent && !isGallery"
       class="ad-wrapper-outer mod-header u-color-group-dark no-print"
     >
-      <div class="ad-wrapper-inner">
+      <div
+        v-if="!isSensitiveContent && !isGallery"
+        class="ad-wrapper-inner"
+      >
         <div
           v-if="isHomepage"
           key="index-leaderboard"
