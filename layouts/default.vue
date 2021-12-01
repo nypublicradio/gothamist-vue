@@ -197,7 +197,7 @@ html {
 }
 
 div:empty + .ad-label {
-  display: none;
+  visibility: hidden;
 }
 
 .ad-div.mod-break-margins {
