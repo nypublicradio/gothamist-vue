@@ -14,6 +14,7 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.16.4",
     "@nuxtjs/axios": "^5.12.5",
     "@nuxtjs/gtm": "^2.4.0",
     "@sentry/browser": "^6.8.0",
