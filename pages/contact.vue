@@ -9,9 +9,6 @@ import gtm from '@/mixins/gtm'
 
 export default {
   name: 'Information', // this is the template name which is used for GTM
-  components: {
-    InformationPage: () => import('../components/InformationPage')
-  },
   mixins: [gtm],
   data () {
     return {

@@ -12,9 +12,6 @@
 <script>
 export default {
   name: 'Breadcrumbs',
-  components: {
-    VTag: () => import('nypr-design-system-vue/src/components/VTag')
-  },
   props: {
     breadcrumbs: {
       type: Array,

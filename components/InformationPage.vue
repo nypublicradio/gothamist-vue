@@ -23,10 +23,6 @@ import gtm from '@/mixins/gtm'
 
 export default {
   name: 'InformationPage', // this is the template name which is used for GTM
-  components: {
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
-    VStreamfield: () => import('../components/VStreamfield')
-  },
   mixins: [gtm],
   props: {
     page: {

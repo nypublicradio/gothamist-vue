@@ -19,9 +19,6 @@
 
 <script>
 export default {
-  components: {
-    ProductMarketingBanner: () => import('../components/ProductMarketingBanner')
-  },
   async fetch () {
     this.productMarketingBanner = await this.$axios
       .get('/system_messages/2/')

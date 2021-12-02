@@ -13,9 +13,6 @@ import gtm from '~/mixins/gtm'
 
 export default {
   name: 'Article',
-  components: {
-    GothamistArticle: () => import('../../components/GothamistArticle')
-  },
   mixins: [gtm],
   async asyncData ({
     $axios,

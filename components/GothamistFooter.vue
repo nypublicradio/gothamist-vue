@@ -62,14 +62,6 @@ import gtm from '@/mixins/gtm'
 
 export default {
   name: 'GothamistFooter',
-  components: {
-    ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
-    ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
-    GothamistLogoStacked: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogoStacked'),
-    TheFooter: () => import('nypr-design-system-vue/src/components/TheFooter'),
-    GothamistFooterNewsletter: () => import('../components/GothamistFooterNewsletter'),
-    BackToTop: () => import('../components/BackToTop')
-  },
   mixins: [gtm],
   data () {
     return {

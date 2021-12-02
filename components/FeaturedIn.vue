@@ -33,11 +33,6 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'FeaturedIn',
-  components: {
-    ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
-    VCounter: () => import('nypr-design-system-vue/src/components/VCounter'),
-    VCard: () => import('nypr-design-system-vue/src/components/VCard')
-  },
   data () {
     return {
       featuredStory: null

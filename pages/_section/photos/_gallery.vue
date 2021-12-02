@@ -89,14 +89,6 @@ const { formatTitle } = require('~/mixins/helpers')
 
 export default {
   name: 'ArticleGallery', // this is the template name which is used for GTM
-  components: {
-    CloseIcon: () => import('nypr-design-system-vue/src/components/icons/CloseIcon'),
-    ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
-    GothamistArrow: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistArrow'),
-    SimpleArrowLeft: () => import('nypr-design-system-vue/src/components/icons/SimpleArrowLeft'),
-    VButton: () => import('nypr-design-system-vue/src/components/VButton'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
-  },
   mixins: [gtm],
   async asyncData ({
     $axios,

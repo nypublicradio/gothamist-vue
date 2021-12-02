@@ -24,11 +24,6 @@ import { fuzzyDateTime } from '~/mixins/helpers'
 
 export default {
   name: 'Preview',
-  components: {
-    GothamistArticle: () => import('../components/GothamistArticle'),
-    InformationPage: () => import('../components/InformationPage'),
-    TagPage: () => import('../components/TagPage')
-  },
   async asyncData ({
     $axios,
     route,

@@ -448,16 +448,6 @@ const {
 
 export default {
   name: 'HomePage', // this is the template name which is used for GTM
-  components: {
-    ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
-    HomepageDonateBanner: () => import('../components/HomepageDonateBanner'),
-    LoadingIcon: () => import('nypr-design-system-vue/src/components/animations/LoadingIcon'),
-    ReadMoreIn: () => import('../components/ReadMoreIn'),
-    VButton: () => import('nypr-design-system-vue/src/components/VButton'),
-    VCard: () => import('nypr-design-system-vue/src/components/VCard'),
-    VCounter: () => import('nypr-design-system-vue/src/components/VCounter'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
-  },
   mixins: [disqus, gtm],
   async fetch () {
     // get default featured stories - i.e. the four latest featured stories
@@ -481,7 +471,7 @@ export default {
         const featuredSponsoredContentStories = featuredSponsoredContent.data.items.filter((story) => {
           return isMoreThan24Hours(story.publicationDate) && isLessThan48Hours(story.publicationDate)
         })
-        const curatedContentStories = curatedContent.data.pageCollectionRelationship.[0]?.pages || []
+        const curatedContentStories = curatedContent.data.pageCollectionRelationship[0]?.pages || []
 
         // set featuredSection to be the top four featured stories
         this.featuredSection = mainStories.slice(0, 4)

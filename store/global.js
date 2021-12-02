@@ -7,6 +7,7 @@ export const state = () => ({
   defaultImageFood: '/static-images/defaults/food/food-tile.png',
   defaultImageNews: '/static-images/defaults/news/news-tile.png',
   disqusAPI: process.env.DISQUS_API,
+  API: process.env.API,
   disqusPublicKey: process.env.DISQUS_PUBLIC_KEY,
   donateUrl: 'https://pledge3.wnyc.org/donate/gothamist/onestep/?utm_medium=partnersite&utm_source=gothamist&utm_campaign=brandheader',
   footerNav: [],
@@ -30,10 +31,6 @@ export const state = () => ({
     {
       text: 'Food',
       url: '/food'
-    },
-    {
-      text: 'Election 2021',
-      url: '/election-2021'
     }
   ],
   isSensitiveContent: false,

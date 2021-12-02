@@ -10,10 +10,6 @@ export default {
       termsCheckbox: true
     }
   },
-  components: {
-    GothamistArrow: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistArrow'),
-    LoadingIcon: () => import('nypr-design-system-vue/src/components/animations/LoadingIcon')
-  },
   mixins: [gtm],
   computed: {
     ...mapState('global', {

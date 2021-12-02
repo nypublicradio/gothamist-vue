@@ -31,11 +31,6 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'DonateBanner',
-  components: {
-    CloseIcon: () => import('nypr-design-system-vue/src/components/icons/CloseIcon'),
-    NycLove: () => import('nypr-design-system-vue/src/components/icons/gothamist/NycLove'),
-    VButton: () => import('nypr-design-system-vue/src/components/VButton')
-  },
   props: {
     onscreen: {
       type: Boolean,

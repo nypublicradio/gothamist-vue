@@ -42,11 +42,6 @@ const { formatTags, fuzzyDateTime, hasGallery } = require('~/mixins/helpers')
 
 export default {
   name: 'RecentStories',
-  components: {
-    ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
-    VCounter: () => import('nypr-design-system-vue/src/components/VCounter'),
-    VCard: () => import('nypr-design-system-vue/src/components/VCard')
-  },
   mixins: [disqus],
   props: {
     type: {

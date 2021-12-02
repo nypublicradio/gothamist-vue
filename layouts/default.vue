@@ -46,12 +46,6 @@ import { setTargeting } from '~/mixins/htl'
 
 export default {
   name: 'Gothamist',
-  components: {
-    GothamistFooter: () => import('../components/GothamistFooter'),
-    GothamistHeader: () => import('../components/GothamistHeader'),
-    GothamistMarketingBanners: () => import('../components/GothamistMarketingBanners'),
-    GothamistBreakingNews: () => import('../components/GothamistBreakingNews')
-  },
   mixins: [gtm],
   computed: {
     isHomepage () {

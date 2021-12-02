@@ -94,9 +94,6 @@ import newsletter from '../mixins/newsletter'
 
 export default {
   name: 'GothamistFooterNewsletter',
-  components: {
-    PartyConfetti: () => import('nypr-design-system-vue/src/components/icons/gothamist/PartyConfetti')
-  },
   mixins: [newsletter]
 }
 </script>

@@ -22,9 +22,10 @@
         </template>
         <template v-slot:comments>
           <v-counter
+            v-if="commentCount"
             icon="comment"
             text="Comments"
-            :value="getCommentCountById(String(article.legacyId || article.uuid), disqusData)"
+            :value="commentCount"
             href="#comments"
             @click.native="scrollToComments"
           />
@@ -115,9 +116,13 @@
         />
       </LazyHydrate>
       <v-spacer size="quad" />
-      <div
+      <RelatedAuthors
         class="l-container l-container--10col"
-      >
+        :authors="article.relatedAuthors"
+        default-photo="/static-images/defaults/users/default-user.jpg"
+      />
+      <v-spacer size="quad" />
+      <div class="l-container l-container--10col">
         <article-page-newsletter
           :key="article.uuid"
           v-observe-visibility="{
@@ -142,15 +147,16 @@
         />
       </div>
 
-      <div v-if="!article.sensitiveContent" class="htlad-interior_midpage_2 ad-div mod-break-margins mod-ad-disclosure no-print" />
+      <div
+        v-if="!article.sensitiveContent"
+        class="htlad-interior_midpage_2 ad-div mod-break-margins mod-ad-disclosure no-print"
+      />
 
       <div
         id="comments"
         v-observe-visibility="{callback: loadComments, intersection: { rootMargin: '300px 0px 0px 0px', threshold: 0.01 } }"
       />
-      <template
-        v-if="!article.disableComments && showComments"
-      >
+      <template v-if="!article.disableComments && showComments">
         <disqus-embed
           v-if="article"
           :identifier="String(article.legacyId || article.uuid)"
@@ -160,7 +166,10 @@
         <v-spacer size="quin" />
       </template>
 
-      <dismissible-area prefix="donateBanner" :views-before-showable="2">
+      <dismissible-area
+        prefix="donateBanner"
+        :views-before-showable="2"
+      >
         <template v-slot="dismissibleArea">
           <donate-banner
             v-observe-visibility="{callback: bannerVisibilityChanged, once: true}"
@@ -193,6 +202,7 @@
 import gtm from '@/mixins/gtm'
 import disqus from '@/mixins/disqus'
 import LazyHydrate from 'vue-lazy-hydration'
+import RelatedAuthors from './RelatedAuthors.vue'
 import { getImagePath } from '~/mixins/image'
 import { insertAdDiv } from '~/utils/insert-ad-div'
 import { getScrollDepth } from '~/mixins/helpers'
@@ -201,24 +211,7 @@ export default {
   name: 'GothamistArticle',
   components: {
     LazyHydrate,
-    VStreamfield: () => import('./VStreamfield'),
-    Breadcrumbs: () => import('./Breadcrumbs'),
-    DisqusEmbed: () => import('./DisqusEmbed'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer'),
-    ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
-    ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
-    ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
-    VCounter: () => import('nypr-design-system-vue/src/components/VCounter'),
-    VByline: () => import('nypr-design-system-vue/src/components/VByline'),
-    ImageWithCaption: () => import('nypr-design-system-vue/src/components/ImageWithCaption'),
-    GalleryPreview: () => import('nypr-design-system-vue/src/components/GalleryPreview'),
-    ReadMoreIn: () => import('./ReadMoreIn'),
-    VTag: () => import('nypr-design-system-vue/src/components/VTag'),
-    DoYouKnowTheScoop: () => import('./DoYouKnowTheScoop'),
-    DismissibleArea: () => import('./DismissibleArea'),
-    DonateBanner: () => import('./DonateBanner'),
-    ArticlePageNewsletter: () => import('./ArticlePageNewsletter'),
-    RecirculationModule: () => import('./RecirculationModule')
+    RelatedAuthors
   },
   directives: {
     'watch-scroll': {
@@ -235,8 +228,7 @@ export default {
   props: {
     article: {
       type: Object,
-      default: () => {
-      }
+      default: () => {}
     }
   },
   data () {
@@ -246,10 +238,12 @@ export default {
       scrollMilestones: [0, 25, 50, 75, 100],
       currentlyWatching: [],
       path: 'https://gothamist.com' + this.$route.fullPath,
-      ogImage: this.article.socialImage ??
+      ogImage:
+        this.article.socialImage ??
         this.article.leadAsset[0]?.value.image ??
         this.article.leadAsset[0]?.value.defaultImage,
       disqusData: null,
+      commentCount: null,
       disqusThreadIds: [],
       baseMeta: [
         {
@@ -291,20 +285,30 @@ export default {
       return this.article.meta.parent.title
     },
     breadcrumbs () {
-      const breadcrumbs = [{
-        name: this.section,
-        slug: '/' + this.article.ancestry[0].slug
-      }]
+      const breadcrumbs = [
+        {
+          name: this.section,
+          slug: '/' + this.article.ancestry[0].slug
+        }
+      ]
       if (this.article.sponsoredContent) {
         breadcrumbs.push({ name: 'Sponsored' })
       }
-      if (this.article.tags.find(tag => tag.name === 'opinion' || tag.name === '@opinion')) {
+      if (
+        this.article.tags.find(
+          tag => tag.name === 'opinion' || tag.name === '@opinion'
+        )
+      ) {
         breadcrumbs.push({
           name: 'Opinion',
           slug: '/tags/opinion'
         })
       }
-      if (this.article.tags.find(tag => tag.name === 'analysis' || tag.name === '@analysis')) {
+      if (
+        this.article.tags.find(
+          tag => tag.name === 'analysis' || tag.name === '@analysis'
+        )
+      ) {
         breadcrumbs.push({
           name: 'Analysis',
           slug: '/tags/analysis'
@@ -327,24 +331,23 @@ export default {
     },
     galleryImages () {
       if (this.article.gallery) {
-        return this.article.gallery.slides
-          .slice(0, 4)
-          .map((slide) => {
-            const image = slide.value.slideImage.image
-            return {
-              url: image.file,
-              template: this.$config.imageBase + image.id + '/fill-%width%x%height%/',
-              thumbnail: image.file,
-              alt: image.alt,
-              credit: image.credit,
-              creditUrl: image.creditLink,
-              caption: slide.value.slideImage.caption,
-              title: slide.slideTitle,
-              width: image.width,
-              height: image.height,
-              description: ''
-            }
-          })
+        return this.article.gallery.slides.slice(0, 4).map((slide) => {
+          const image = slide.value.slideImage.image
+          return {
+            url: image.file,
+            template:
+              this.$config.imageBase + image.id + '/fill-%width%x%height%/',
+            thumbnail: image.file,
+            alt: image.alt,
+            credit: image.credit,
+            creditUrl: image.creditLink,
+            caption: slide.value.slideImage.caption,
+            title: slide.slideTitle,
+            width: image.width,
+            height: image.height,
+            description: ''
+          }
+        })
       } else {
         return []
       }
@@ -353,28 +356,30 @@ export default {
       return this.article.gallery.url.replace(/^https:\/\/[^/]*/, '')
     },
     imageMeta ({ $config: { imageBase } }) {
-      return this.ogImage ? [
-        {
-          hid: 'og_image',
-          property: 'og:image',
-          content: imageBase + getImagePath(this.ogImage, 1200, 650)
-        },
-        {
-          hid: 'og_image_width',
-          property: 'og:image:width',
-          content: '1200'
-        },
-        {
-          hid: 'og_image_height',
-          property: 'og:image:height"',
-          content: '650'
-        },
-        {
-          hid: 'og_image_alt',
-          property: 'og:image:alt"',
-          content: this.ogImage.alt
-        }
-      ] : []
+      return this.ogImage
+        ? [
+          {
+            hid: 'og_image',
+            property: 'og:image',
+            content: imageBase + getImagePath(this.ogImage, 1200, 650)
+          },
+          {
+            hid: 'og_image_width',
+            property: 'og:image:width',
+            content: '1200'
+          },
+          {
+            hid: 'og_image_height',
+            property: 'og:image:height"',
+            content: '650'
+          },
+          {
+            hid: 'og_image_alt',
+            property: 'og:image:alt"',
+            content: this.ogImage.alt
+          }
+        ]
+        : []
     },
     ogMeta () {
       return [
@@ -416,15 +421,18 @@ export default {
           hid: 'article_published_time',
           property: 'article:published_time',
           content: this.article.meta.firstPublishedAt?.toString()
-        }, {
+        },
+        {
           hid: 'article_modified_time',
           property: 'article:modified_time',
           content: this.article.updatedDate?.toString()
-        }, {
+        },
+        {
           hid: 'article_section',
           property: 'article:section',
           content: this.article.ancestry[0].name
-        }, {
+        },
+        {
           hid: 'article_tag',
           property: 'article:tag',
           content: this.article.tags.map(tag => tag.name)
@@ -441,66 +449,61 @@ export default {
     structuredData ({ $config: { imageBase } }) {
       return {
         '@context': 'http://schema.org',
-        '@graph':
-          [
-            {
-              '@type': 'NewsArticle',
-              mainEntityOfPage: 'https://gothamist.com' + this.$route.fullPath,
-              image: this.ogImage && imageBase + getImagePath(this.ogImage, 1200, 650),
-              headline: this.article.title,
-              description: this.article.description,
-              datePublished: this.article.meta.firstPublishedAt,
-              dateModified: this.article.updatedDate && this.article.updatedDate,
-              author: this.article.authors.map((author) => {
-                return {
-                  '@type': 'Person',
-                  name: `${author.firstName} ${author.lastName}`
-                }
-              }),
-              publisher: {
-                '@type': 'Organization',
-                name: 'Gothamist',
-                logo: {
-                  '@type': 'ImageObject',
-                  url: 'http://gothamist.com/static-images/home_og_1200x600.png',
-                  width: '1200',
-                  height: '600'
+        '@graph': [
+          {
+            '@type': 'NewsArticle',
+            mainEntityOfPage: 'https://gothamist.com' + this.$route.fullPath,
+            image:
+              this.ogImage && imageBase + getImagePath(this.ogImage, 1200, 650),
+            headline: this.article.title,
+            description: this.article.description,
+            datePublished: this.article.meta.firstPublishedAt,
+            dateModified: this.article.updatedDate && this.article.updatedDate,
+            author: this.article.authors.map((author) => {
+              return {
+                '@type': 'Person',
+                name: `${author.firstName} ${author.lastName}`
+              }
+            }),
+            publisher: {
+              '@type': 'Organization',
+              name: 'Gothamist',
+              logo: {
+                '@type': 'ImageObject',
+                url: 'http://gothamist.com/static-images/home_og_1200x600.png',
+                width: '1200',
+                height: '600'
+              }
+            }
+          },
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: this.breadcrumbs.map((crumb, index) => {
+              return {
+                '@type': 'ListItem',
+                position: index,
+                item: {
+                  '@id': 'https://gothamist.com' + crumb.slug,
+                  name: crumb.name
                 }
               }
-            },
-            {
-              '@type': 'BreadcrumbList',
-              itemListElement: this.breadcrumbs.map((crumb, index) => {
-                return {
-                  '@type': 'ListItem',
-                  position: index,
-                  item:
-                    {
-                      '@id': 'https://gothamist.com' + crumb.slug,
-                      name: crumb.name
-                    }
-                }
-              })
-            }
-          ]
+            })
+          }
+        ]
       }
     },
     authors () {
       let authors = ''
-      this.article?.authors.forEach(
-        (author) => {
-          authors += author.firstName + ' ' + author.lastName + ','
-        }
-      )
+      this.article?.authors.forEach((author) => {
+        authors += author.firstName + ' ' + author.lastName + ','
+      })
       return authors
     },
     tags () {
       let tags = ''
-      this.article?.tags.forEach(
-        (crumb) => {
-          tags += crumb.name + ','
-        }
-      )
+      this.article?.tags.forEach((crumb) => {
+        tags += crumb.name + ','
+      })
       return tags
     }
   },
@@ -522,6 +525,7 @@ export default {
     // get disqus comment counts
     this.disqusThreadIds.push(this.article.legacyId || this.article.uuid)
     this.disqusData = await this.getCommentCount(this.disqusThreadIds)
+    this.commentCount = await this.getCommentCountById(String(this.article.legacyId || this.article.uuid), this.disqusData)
     if (location.hash === '#comments') {
       this.scrollToComments()
     }
@@ -538,20 +542,42 @@ export default {
       this.gaArticleEvent('NTG article milestone', percentScrolled + '%', this.gtmData.articleTitle, this.gtmData)
     },
     bannerDonateClicked () {
-      this.gaArticleEvent('Article Page', 'Donate Banner Clicked', this.gtmData.articleTitle, this.gtmData)
+      this.gaArticleEvent(
+        'Article Page',
+        'Donate Banner Clicked',
+        this.gtmData.articleTitle,
+        this.gtmData
+      )
     },
     bannerVisibilityChanged (isVisible) {
       if (isVisible) {
-        this.gaArticleEvent('Article Page', 'Donate Banner Is Visible', this.gtmData.articleTitle, this.gtmData)
+        this.gaArticleEvent(
+          'Article Page',
+          'Donate Banner Is Visible',
+          this.gtmData.articleTitle,
+          this.gtmData
+        )
       }
     },
     scrollToComments () {
       document.querySelector('#comments')?.scrollIntoView()
     },
     insertAd () {
-      if (this.article && this.$refs['article-body'] && !this.article.sensitiveContent) {
+      if (
+        this.article &&
+        this.$refs['article-body'] &&
+        !this.article.sensitiveContent
+      ) {
         this.$refs['article-body'].$nextTick(() => {
-          insertAdDiv('insertedAd', this.$refs['article-body'].$el, { classNames: ['htlad-interior_midpage_1', 'ad-div', 'mod-break-margins', 'mod-ad-disclosure'], reset: true })
+          insertAdDiv('insertedAd', this.$refs['article-body'].$el, {
+            classNames: [
+              'htlad-interior_midpage_1',
+              'ad-div',
+              'mod-break-margins',
+              'mod-ad-disclosure'
+            ],
+            reset: true
+          })
         })
       }
     },
@@ -560,7 +586,11 @@ export default {
     },
     handleNewsletterImpression (isVisible) {
       if (isVisible) {
-        this.gaEvent('NTG newsletter', 'newsletter modal impression 1', this.article.title)
+        this.gaEvent(
+          'NTG newsletter',
+          'newsletter modal impression 1',
+          this.article.title
+        )
       }
     },
     handleNewsletterSignupSuccess () {
@@ -587,7 +617,13 @@ export default {
           href: this.$config.champUrl + this.$route.path
         }
       ],
-      meta: [].concat(this.baseMeta, this.imageMeta, this.twitterMeta, this.ogMeta, this.articleMeta)
+      meta: [].concat(
+        this.baseMeta,
+        this.imageMeta,
+        this.twitterMeta,
+        this.ogMeta,
+        this.articleMeta
+      )
     }
   }
 }
@@ -607,7 +643,11 @@ export default {
   height: 1px;
   left: -4px;
   top: calc(50% + 1px);
-  background-image: linear-gradient(to right, transparent 50%, RGB(var(--color-gray)) 50%);
+  background-image: linear-gradient(
+    to right,
+    transparent 50%,
+    RGB(var(--color-gray)) 50%
+  );
   background-position: right bottom;
   background-repeat: repeat-x;
   background-size: 16px 1px;
@@ -631,14 +671,18 @@ export default {
 }
 
 .article-share-tools {
-  width: 48.5px;
+  // width: 48.5px;
   text-align: center;
   margin-bottom: var(--space-4);
   @media all and (min-width: $medium) {
     position: absolute;
     top: 0;
     left: -61px;
-    background-image: linear-gradient(to bottom, transparent 50%, RGB(var(--color-gray)) 50%);
+    background-image: linear-gradient(
+      to bottom,
+      transparent 50%,
+      RGB(var(--color-gray)) 50%
+    );
     background-size: 1px 16px;
     background-repeat: repeat-y;
     background-position: right bottom;
@@ -674,6 +718,9 @@ export default {
 }
 
 .article-read-more-in {
+  margin-bottom: var(--space-6);
+}
+.person {
   margin-bottom: var(--space-6);
 }
 </style>

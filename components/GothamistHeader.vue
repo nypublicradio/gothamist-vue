@@ -115,11 +115,9 @@
         <v-search
           class="header-search-bar"
           action="/search"
-          show-search-icon
           show-close-icon
           closed-on-load
-          :search-is-active="false"
-          transition="slide-left"
+          transition="none"
           :donate-url="donateUrl"
           @searchBarOpen="gaEvent('Click Tracking', 'user_search_open', 'Side Menu')"
           @searchBarSubmit="gaEvent('Click Tracking','user_search', 'Side Menu')"
@@ -176,24 +174,11 @@
 <script>
 import { mapState } from 'vuex'
 import gtm from '@/mixins/gtm'
-
 const ARTICLE_ROUTE = 'section-article'
 const GALLERY_ROUTE = 'section-photos-gallery'
 
 export default {
   name: 'GothamistHeader',
-  components: {
-    SecondaryNavigation: () => import('nypr-design-system-vue/src/components/SecondaryNavigation'),
-    TheHeader: () => import('nypr-design-system-vue/src/components/TheHeader'),
-    GothamistLogo: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogo'),
-    GothamistLogoStacked: () => import('nypr-design-system-vue/src/components/icons/gothamist/GothamistLogoStacked'),
-    VSearch: () => import('nypr-design-system-vue/src/components/VSearch'),
-    TheMenu: () => import('nypr-design-system-vue/src/components/TheMenu'),
-    VButton: () => import('nypr-design-system-vue/src/components/VButton'),
-    ShareTools: () => import('nypr-design-system-vue/src/components/ShareTools'),
-    ShareToolsItem: () => import('nypr-design-system-vue/src/components/ShareToolsItem'),
-    ScrollMeter: () => import('./ScrollMeter')
-  },
   mixins: [gtm],
   data () {
     return {
@@ -317,6 +302,15 @@ export default {
   }
 }
 
+.c-main-header .c-primary-nav {
+  @include media(">xlarge") {
+    padding: 0 24px;
+  }
+  @include media(">1255px") {
+    padding-left: 48px;
+  }
+}
+
 .c-main-header .c-main-header__logo .gothamist-logo-icon--stacked {
   display: none;
 }
@@ -378,7 +372,7 @@ export default {
 }
 
 .c-main-header__right {
-  display: inline-grid;
+  // display: inline-grid;
   width: max-content;
   @include media('>small') {
     display: flex;

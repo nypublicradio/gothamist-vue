@@ -24,9 +24,6 @@ const { formatTitle } = require('~/mixins/helpers')
 
 export default {
   name: 'Tag', // this is the template name which is used for GTM
-  components: {
-    TagPage: () => import('../../components/TagPage')
-  },
   mixins: [gtm],
   async fetch () {
     await this.$axios

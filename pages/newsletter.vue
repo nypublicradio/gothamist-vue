@@ -62,10 +62,6 @@ import gtm from '@/mixins/gtm'
 
 export default {
   name: 'Newsletter', // this is the template name which is used for GTM
-  components: {
-    ArticlePageNewsletter: () => import('../components/ArticlePageNewsletter'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
-  },
   mixins: [gtm],
   mounted () {
     this.gaEvent('NTG newsletter', 'newsletter modal impression 3', 'Newsletter Signup Page')

@@ -11,9 +11,14 @@
         <div class="c-search-results__result-number">
           Articles By
         </div>
-        <div class="c-search-results__term">
+        <!-- <div class="c-search-results__term">
           {{ authorPage.title }}
-        </div>
+        </div> -->
+        <RelatedAuthors
+          :author="authorPage"
+          on-author-page
+          default-photo="/static-images/defaults/users/default-user.jpg"
+        />
       </header>
       <v-spacer />
       <hr
@@ -90,6 +95,7 @@
 import gtm from '@/mixins/gtm'
 import disqus from '@/mixins/disqus'
 import { mapState } from 'vuex'
+import RelatedAuthors from '@/components/RelatedAuthors.vue'
 
 const {
   formatTags,
@@ -101,12 +107,7 @@ const {
 export default {
   name: 'Author',
   components: {
-    ArticleMetadata: () => import('nypr-design-system-vue/src/components/ArticleMetadata'),
-    LoadingIcon: () => import('nypr-design-system-vue/src/components/animations/LoadingIcon'),
-    VButton: () => import('nypr-design-system-vue/src/components/VButton'),
-    VCard: () => import('nypr-design-system-vue/src/components/VCard'),
-    VCounter: () => import('nypr-design-system-vue/src/components/VCounter'),
-    VSpacer: () => import('nypr-design-system-vue/src/components/VSpacer')
+    RelatedAuthors
   },
   mixins: [gtm, disqus],
   async asyncData ({
