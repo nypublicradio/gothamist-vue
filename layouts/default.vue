@@ -156,7 +156,7 @@ export default {
 
 <style lang="scss">
 html {
-  scroll-padding-top: 72px;
+  scroll-padding-top: 74px;
 }
 
 .home-page main {
@@ -176,9 +176,9 @@ html {
   display: flex;
   background: RGB(var(--color-background));
   width: 100%;
-  min-height: 72px;
+  min-height: 74px;
   @include media(">medium") {
-    min-height: 272px;
+    min-height: 274px;
   }
 }
 
@@ -204,7 +204,7 @@ div:empty + .ad-label {
 
 .ad-div.mod-break-margins {
   position: relative;
-  min-height: 272px;
+  min-height: 274px;
 }
 
 .ad-div.mod-break-margins > div {
