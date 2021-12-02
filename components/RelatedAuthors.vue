@@ -61,7 +61,7 @@ export default {
     },
     animate: {
       type: Boolean,
-      default: true
+      default: false
     },
     circle: {
       type: Boolean,
