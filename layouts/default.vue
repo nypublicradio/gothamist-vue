@@ -236,4 +236,8 @@ div:empty + .ad-label {
   }
 }
 
+.htl-ad{
+  z-index: 1;
+}
+
 </style>
