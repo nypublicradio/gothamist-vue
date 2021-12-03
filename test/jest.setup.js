@@ -1,4 +1,4 @@
-import { Nuxt, Builder } from 'nuxt'
+import { Nuxt, Builder } from 'nuxt-edge'
 import nuxtConfig from '../nuxt.config'
 
 // these boolean switches turn off the build for all but the store
