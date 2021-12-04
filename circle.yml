@@ -7,7 +7,7 @@ templates:
           JOBS: 2
 
   node_key: &node_key
-    key: node-deps-{{ checksum "circle.yml" }}
+    key: node-deps-{{ checksum "circle.yml" }}-{{ checksum "package-lock.json" }}
 
   restore_node: &restore_node
     restore_cache:
