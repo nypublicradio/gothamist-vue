@@ -76,12 +76,20 @@ export default {
     },
     setAdTargeting () {
       // remove any existing ads
-      document.querySelectorAll('.htlunit-interior_leaderboard').forEach(function (el) {
+      /* document.querySelectorAll('.htlunit-interior_leaderboard').forEach(function (el) {
         el.remove()
       })
       document.querySelectorAll('.htlunit-interior_midpage_gallery').forEach(function (el) {
         el.remove()
+      }) */
+
+      document.querySelectorAll('.htl-ad').forEach(function (el) {
+        el.remove()
       })
+      document.querySelectorAll('.htl-ad-gpt').forEach(function (el) {
+        el.remove()
+      })
+
       // htlbid key value targeting for ads
       window.htlbid = window.htlbid || {}
       htlbid.cmd = htlbid.cmd || []
@@ -217,6 +225,19 @@ div:empty + .ad-label {
   background-color: RGB(var(--color-dark-gray));
   color: RGB(var(--color-white));
   height: 100%;
+}
+
+@for $i from 1 through 20 {
+  .ad-wrapper-inner .htl-ad-gpt#htlad-#{$i}-gpt, .htl-ad .htl-ad-gpt#htlad-#{$i}-gpt{
+    position: relative !important;
+  }
+  .htlunit-interior_leaderboard_adhesion .htl-ad-gpt#htlad-#{$i}-gpt{
+    position: fixed !important;
+  }
+}
+
+.htl-ad{
+  z-index: 1;
 }
 
 </style>

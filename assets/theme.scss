@@ -1,0 +1,8 @@
+//import the theme
+$theme: 'gothamist (radial)';
+@import "~nypr-design-system-vue/src/styles/themes/gothamist/_theme.legacy-variables.scss";
+@import "~nypr-design-system-vue/src/styles/themes/gothamist/_theme.colors.scss";
+@import "~nypr-design-system-vue/src/styles/themes/gothamist/_theme.variables.scss";
+@import "~nypr-design-system-vue/src/styles/themes/gothamist/_theme.fonts.scss";
+@import "~nypr-design-system-vue/src/styles/_library/config.imports.scss";
+@import "~nypr-design-system-vue/src/styles/themes/gothamist/_theme.overrides.scss";

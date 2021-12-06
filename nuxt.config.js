@@ -96,14 +96,14 @@ export default {
   ],
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
+  styleResources: {
+    scss: [
+      './assets/shared.scss'
+    ]
+  },
   css: [
-    {
-      lang: 'scss',
-      src: './assets/main.scss'
-    }
+    './assets/theme.scss'
   ],
-
-  styleResources: { scss: './assets/*.scss' },
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: [
@@ -202,7 +202,6 @@ export default {
       browserOptions: {}
     }
   },
-
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     // this is needed to transpile es6 modules imported from node_modules

@@ -1,0 +1,6 @@
+// import any mixins or variables the vue components use first
+@import "~nypr-design-system-vue/src/styles/_library/_base.media.scss";
+@import "~nypr-design-system-vue/src/styles/_library/_base.mixins.scss";
+@import "~nypr-design-system-vue/src/styles/_library/_tools.include-media.scss";
+@import "~nypr-design-system-vue/src/styles/_library/_settings.z-index.scss";
+@import "~nypr-design-system-vue/src/styles/themes/gothamist/_theme.mixins.scss";
