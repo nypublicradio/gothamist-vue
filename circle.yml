@@ -2,7 +2,7 @@
 templates:
   defaults: &defaults
     docker:
-      - image: circleci/node:10-browsers
+      - image: cimg/node:14.18
         environment:
           JOBS: 2
 
