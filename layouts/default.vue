@@ -5,10 +5,12 @@
       class="htlad-skin"
     />
     <div
-      v-if="!isSensitiveContent && !isGallery"
       class="ad-wrapper-outer mod-header u-color-group-dark no-print"
     >
-      <div class="ad-wrapper-inner">
+      <div
+        v-if="!isSensitiveContent && !isGallery"
+        class="ad-wrapper-inner"
+      >
         <div
           v-if="isHomepage"
           key="index-leaderboard"
@@ -154,7 +156,7 @@ export default {
 
 <style lang="scss">
 html {
-  scroll-padding-top: 72px;
+  scroll-padding-top: 74px;
 }
 
 .home-page main {
@@ -171,8 +173,13 @@ html {
 
 .ad-wrapper-outer.mod-header {
   position: relative;
+  display: flex;
   background: RGB(var(--color-background));
   width: 100%;
+  min-height: 74px;
+  @include media(">medium") {
+    min-height: 274px;
+  }
 }
 
 .ad-wrapper-inner {
@@ -192,12 +199,12 @@ html {
 }
 
 div:empty + .ad-label {
-  display: none;
+  visibility: hidden;
 }
 
 .ad-div.mod-break-margins {
   position: relative;
-  min-height: 270px;
+  min-height: 274px;
 }
 
 .ad-div.mod-break-margins > div {
