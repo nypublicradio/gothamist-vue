@@ -7,7 +7,11 @@ export const getImagePath = function (image, width, height) {
   // the image resizer has more options but this basic url
   // is all we need to suppport for now
   const imageSizing = 'fill'
-  return `${image.id}/${imageSizing}-${width}x${height}/`
+  if (typeof image === 'object') {
+    return `${image.id}/${imageSizing}-${width}x${height}/`
+  } else if (typeof image === 'string' || typeof image === 'number') {
+    return `${image}/${imageSizing}-${width}x${height}/`
+  }
 }
 
 export default {
