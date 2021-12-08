@@ -92,7 +92,7 @@ jobs:
           name: Install node dependencies
           command: |
             if [ ! -d node_modules ]; then
-              npm install
+              npm ci
             fi
       - save_cache:
           <<: *node_key
