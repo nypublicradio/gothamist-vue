@@ -2,12 +2,12 @@
 templates:
   defaults: &defaults
     docker:
-      - image: circleci/node:10-browsers
+      - image: cimg/node:14.18
         environment:
           JOBS: 2
 
   node_key: &node_key
-    key: node-deps-{{ checksum "circle.yml" }}
+    key: node-deps-{{ checksum "circle.yml" }}-{{ checksum "package-lock.json" }}
 
   restore_node: &restore_node
     restore_cache:
@@ -92,7 +92,7 @@ jobs:
           name: Install node dependencies
           command: |
             if [ ! -d node_modules ]; then
-              npm install
+              npm ci
             fi
       - save_cache:
           <<: *node_key
@@ -104,9 +104,6 @@ jobs:
     steps:
       - checkout
       - <<: *restore_node
-      - run:
-          name: Install JUnit coverage reporter
-          command: npm install --save-dev jest-junit
       - run:
           name: Run tests with JUnit as reporter
           command: node ./node_modules/jest/bin/jest.js --ci --runInBand --reporters=default --reporters=jest-junit
