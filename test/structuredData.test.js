@@ -6,7 +6,7 @@ describe('getStructuredData', () => {
     const testArticle = coronavirusStatistics
     expect(getStructuredData({ article: testArticle })['@context']).toEqual('https://schema.org')
   })
-  test('it generates the correct breadcrumb list', () => {
+  it('should generate the correct breadcrumb list', () => {
     const testArticle = coronavirusStatistics
     const expectedBreadcrumbs = {
       '@type': 'BreadcrumbList',
@@ -24,7 +24,7 @@ describe('getStructuredData', () => {
     const breadCrumbMetadata = getStructuredData({ article: testArticle })['@graph'][1]
     expect(breadCrumbMetadata).toMatchObject(expectedBreadcrumbs)
   })
-  test('it generates the correct article data', () => {
+  it('should generate the correct article data', () => {
     const testArticle = coronavirusStatistics
     const expectedUrl = 'https://gothamist.com/news/coronavirus-statistics-tracking-epidemic-new-york'
     const expectedTitle = 'Coronavirus Statistics: Tracking The Epidemic In New York'
@@ -91,5 +91,105 @@ describe('getStructuredData', () => {
     expect(articleMetadata.image).toMatchObject(expectedImage)
     expect(articleMetadata.author).toMatchObject(expectedAuthor)
     expect(articleMetadata.publisher).toMatchObject(expectedPublisher)
+  })
+
+  it('should generate the correct description data', () => {
+    const testArticle1 = {
+      meta: {
+        searchDescription: ''
+      },
+      description: 'Default Description'
+    }
+    const testArticle2 = {
+      meta: {
+        searchDescription: 'Override Description'
+      },
+      description: 'Default Description'
+    }
+
+    expect(getStructuredData({ article: testArticle1 })['@graph'][0].description).toEqual('Default Description')
+    expect(getStructuredData({ article: testArticle2 })['@graph'][0].description).toEqual('Override Description')
+  })
+
+  it('should use the seo description when it exists', () => {
+    const testArticle = {
+      meta: {
+        searchDescription: 'Override Description'
+      },
+      description: 'Default Description'
+    }
+
+    expect(getStructuredData({ article: testArticle })['@graph'][0].description).toEqual('Override Description')
+  })
+
+  it('should use the main description when no seo override exists', () => {
+    const testArticle = {
+      meta: {
+        searchDescription: ''
+      },
+      description: 'Default Description'
+    }
+
+    expect(getStructuredData({ article: testArticle })['@graph'][0].description).toEqual('Default Description')
+  })
+
+  it('should use the social image when available', () => {
+    const testArticle = {
+      socialImage: {
+        id: 123
+      },
+      leadAsset: [{
+        type: 'leadImage',
+        value: {
+          image: {
+            id: 987
+          }
+        }
+      }]
+    }
+
+    expect(getStructuredData({
+      article: testArticle,
+      imageBase: 'https://example.com/'
+    })['@graph'][0].image.url).toContain('/123/')
+  })
+
+  it('should use the lead image', () => {
+    const testArticle = {
+      socialImage: undefined,
+      leadAsset: [{
+        type: 'leadImage',
+        value: {
+          image: {
+            id: 123
+          }
+        }
+      }]
+    }
+
+    expect(getStructuredData({
+      article: testArticle,
+      imageBase: 'https://example.com/'
+    })['@graph'][0].image.url).toContain('/123/')
+  })
+
+  it('should use the default gallery Image', () => {
+    const testArticle = {
+      socialImage: undefined,
+      leadAsset: [{
+        type: 'Gallery',
+        value: {
+          defaultImage: {
+            id: 123
+          },
+          slides: []
+        }
+      }]
+    }
+
+    expect(getStructuredData({
+      article: testArticle,
+      imageBase: 'https://example.com/'
+    })['@graph'][0].image.url).toContain('/123/')
   })
 })

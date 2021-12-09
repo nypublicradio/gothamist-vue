@@ -15,7 +15,7 @@ const getStructuredData = function ({ article, imageBase }) {
     diversityPolicy: 'https://www.nypublicradio.org/diversity-dei-overview/'
   }
 
-  const author = article.relatedAuthors.map((author) => {
+  const author = article.relatedAuthors?.map((author) => {
     return {
       '@type': 'Person',
       name: `${author.firstName} ${author.lastName}`,
@@ -47,9 +47,9 @@ const getStructuredData = function ({ article, imageBase }) {
           caption: getOgImage(article)?.caption
         },
         headline: article.title,
-        alternativeHeadline: article.meta.seoTitle,
-        description: article.meta.searchDescription || article.description,
-        datePublished: article.meta.firstPublishedAt,
+        alternativeHeadline: article.meta?.seoTitle,
+        description: article.meta?.searchDescription || article.description,
+        datePublished: article.meta?.firstPublishedAt,
         dateModified: article.updatedDate,
         author,
         publisher,
@@ -79,21 +79,21 @@ const getImageUrl = function (baseUrl, image, width, height) {
 }
 
 const getSection = function (article) {
-  return article.meta.parent.title
+  return article.meta?.parent?.title
 }
 
 const getBreadcrumbs = function (article) {
   const breadcrumbs = [
     {
       name: getSection(article),
-      slug: '/' + article.ancestry[0].slug
+      slug: '/' + article.ancestry?.[0].slug
     }
   ]
   if (article.sponsoredContent) {
     breadcrumbs.push({ name: 'Sponsored' })
   }
   if (
-    article.tags.find(
+    article.tags?.find(
       tag => tag.name === 'opinion' || tag.name === '@opinion'
     )
   ) {
@@ -103,7 +103,7 @@ const getBreadcrumbs = function (article) {
     })
   }
   if (
-    article.tags.find(
+    article.tags?.find(
       tag => tag.name === 'analysis' || tag.name === '@analysis'
     )
   ) {
@@ -112,7 +112,7 @@ const getBreadcrumbs = function (article) {
       slug: '/tags/analysis'
     })
   }
-  if (article.tags.find(tag => tag.name === 'we the commuters')) {
+  if (article.tags?.find(tag => tag.name === 'we the commuters')) {
     breadcrumbs.push({
       name: 'We The Commuters',
       slug: '/tags/we-the-commuters'
@@ -123,9 +123,10 @@ const getBreadcrumbs = function (article) {
 
 const getOgImage = function (article) {
   return article.socialImage ??
-  article.leadAsset[0]?.value.image ??
-  article.leadAsset[0]?.value.defaultImage
+  article.leadAsset?.[0]?.value.image ??
+  article.leadAsset?.[0]?.value.defaultImage
 }
+
 export {
   getStructuredData,
   getImageUrl,
