@@ -64,6 +64,14 @@ export const getImageFromStory = function (story) {
   return null
 }
 
+// returns the image height based on the current dimensions and the desired width
+// currentWidth = the image's current width
+// currentHeight = the image's current height
+// desiredWidth = the image's desired width
+export const getHeightFromWidth = function (currentWidth, currentHeight, desiredWidth) {
+  return Math.round(currentHeight * desiredWidth / currentWidth)
+}
+
 // returns an article image height
 // asset = the article's 'lead_asset' from the CMS API
 // listingImage = the article's 'listing_image' from the CMS API
@@ -233,6 +241,7 @@ export default {
     getArticleImage,
     getArticleImageHeight,
     getArticleImageWidth,
+    getHeightFromWidth,
     getImageFromStory,
     getScrollDepth,
     hasGallery,

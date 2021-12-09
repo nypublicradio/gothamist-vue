@@ -103,14 +103,20 @@
         <image-with-caption
           variation="gothamist"
           :alt-text="block.value.image.alt"
+          :image="`${$config.imageBase}${block.value.image.id}/fill-%width%x%height%|format-jpeg%7Cjpegquality-70/`"
+          :width="640"
+          :height="
+            getHeightFromWidth(
+              block.value.image.width,
+              block.value.image.height,
+              640
+            )
+          "
+          :max-width="block.value.image.width || Infinity"
+          :max-height="block.value.image.height || Infinity"
           :caption="block.value.caption || block.value.image.caption"
           :credit="block.value.image.credit"
           :credit-url="block.value.image.creditLink"
-          :image="`${$config.imageBase}${block.value.image.id}/fill-%width%x%height%|format-jpeg%7Cjpegquality-80/`"
-          :width="661"
-          :height="496"
-          :max-width="block.value.image.width || Infinity"
-          :max-height="block.value.image.height || Infinity"
         />
       </div>
 
@@ -144,6 +150,7 @@ const {
   getArticleImage,
   getArticleImageHeight,
   getArticleImageWidth,
+  getHeightFromWidth,
   hasGallery
 } = require('~/mixins/helpers')
 
@@ -181,6 +188,7 @@ export default {
     getArticleImage,
     getArticleImageHeight,
     getArticleImageWidth,
+    getHeightFromWidth,
     hasGallery
   }
 }
