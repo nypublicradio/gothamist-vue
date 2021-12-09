@@ -27,15 +27,15 @@ describe('getStructuredData', () => {
   it('should generate the correct article data', () => {
     const testArticle = coronavirusStatistics
     const expectedUrl = 'https://gothamist.com/news/coronavirus-statistics-tracking-epidemic-new-york'
-    const expectedTitle = 'Coronavirus Statistics: Tracking The Epidemic In New York'
+    const expectedTitle = 'Coronavirus Statistics: Tracking The Epidemic In NYC'
     const expectedDescription = 'Graphs charting the coronavirus in New York State and New York City.'
-    const expectedAlternativeHeadline = 'Coronavirus Statistics: Tracking The Epidemic In NYC'
-    const expectedPublishDate = '2020-03-28T22:17:21.839954Z'
+    const expectedAlternativeHeadline = 'Coronavirus Statistics: Tracking The Epidemic In New York'
+    const expectedPublishDate = '2021-12-03T20:30:00Z'
     const expectedModifiedDate = '2021-12-03T20:30:00Z'
     const expectedImage = {
       '@type': 'ImageObject',
-      url: 'https://cms.prod.nypr.digital/images/327482/fill-1400x800/',
-      width: 1400,
+      url: 'https://cms.prod.nypr.digital/images/327482/fill-1200x800/',
+      width: 1200,
       height: 800,
       caption: 'A chart showing COVID-19 case rate among vaccinated and unvaccinated New Yorkers.'
     }
@@ -111,15 +111,39 @@ describe('getStructuredData', () => {
     expect(getStructuredData({ article: testArticle2 })['@graph'][0].description).toEqual('Override Description')
   })
 
+  it('should use the seo title for headline the main title as the alternative headline', () => {
+    const testArticle = {
+      meta: {
+        seoTitle: 'SEO Title'
+      },
+      title: 'H1 Title'
+    }
+
+    expect(getStructuredData({ article: testArticle })['@graph'][0].headline).toEqual('SEO Title')
+    expect(getStructuredData({ article: testArticle })['@graph'][0].alternativeHeadline).toEqual('H1 Title')
+  })
+
+  it('should use the main title when no seo override exists', () => {
+    const testArticle = {
+      meta: {
+        seoTitle: ''
+      },
+      title: 'H1 Title'
+    }
+
+    expect(getStructuredData({ article: testArticle })['@graph'][0].headline).toEqual('H1 Title')
+    expect(getStructuredData({ article: testArticle })['@graph'][0].alternativeHeadline).toEqual('')
+  })
+
   it('should use the seo description when it exists', () => {
     const testArticle = {
       meta: {
-        searchDescription: 'Override Description'
+        searchDescription: 'SEO Description'
       },
       description: 'Default Description'
     }
 
-    expect(getStructuredData({ article: testArticle })['@graph'][0].description).toEqual('Override Description')
+    expect(getStructuredData({ article: testArticle })['@graph'][0].description).toEqual('SEO Description')
   })
 
   it('should use the main description when no seo override exists', () => {
@@ -191,5 +215,31 @@ describe('getStructuredData', () => {
       article: testArticle,
       imageBase: 'https://example.com/'
     })['@graph'][0].image.url).toContain('/123/')
+  })
+
+  it('should use the manual publish date', () => {
+    const testArticle = {
+      meta: {
+        firstPublishedAt: 'automatic publish date'
+      },
+      publicationDate: 'manual publish date',
+      updatedDate: 'updated date'
+    }
+
+    expect(getStructuredData({ article: testArticle })['@graph'][0].datePublished).toEqual('manual publish date')
+    expect(getStructuredData({ article: testArticle })['@graph'][0].dateModified).toEqual('updated date')
+  })
+
+  it('should use the auto publish date when no manual publish date is set', () => {
+    const testArticle = {
+      meta: {
+        firstPublishedAt: 'automatic publish date'
+      },
+      publicationDate: undefined,
+      updatedDate: 'updated date'
+    }
+
+    expect(getStructuredData({ article: testArticle })['@graph'][0].datePublished).toEqual('automatic publish date')
+    expect(getStructuredData({ article: testArticle })['@graph'][0].dateModified).toEqual('updated date')
   })
 })
