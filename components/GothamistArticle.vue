@@ -206,11 +206,12 @@ import RelatedAuthors from './RelatedAuthors.vue'
 import { getImagePath } from '~/mixins/image'
 import { insertAdDiv } from '~/utils/insert-ad-div'
 import { getScrollDepth } from '~/mixins/helpers'
-import {  getStructuredData,
-  getImageUrl,
+import {
+  getStructuredData,
   getOgImage,
   getSection,
-  getBreadcrumbs} from '~/utils/metadata'
+  getBreadcrumbs
+} from '~/utils/metadata'
 
 export default {
   name: 'GothamistArticle',
@@ -243,7 +244,7 @@ export default {
       scrollMilestones: [0, 25, 50, 75, 100],
       currentlyWatching: [],
       path: 'https://gothamist.com' + this.$route.fullPath,
-      ogImage: getOgImage(article),
+      ogImage: getOgImage(this.article),
       disqusData: null,
       commentCount: null,
       disqusThreadIds: [],
@@ -284,10 +285,10 @@ export default {
       return this.article.leadAsset[0]
     },
     section () {
-      return getSection(article)
+      return getSection(this.article)
     },
     breadcrumbs () {
-      return getBreadcrumbs(article)
+      return getBreadcrumbs(this.article)
     },
     galleryCount () {
       if (this.article.gallery) {
@@ -414,7 +415,7 @@ export default {
       ]
     },
     structuredData ({ $config: { imageBase } }) {
-      return getStructuredData(article, imageBase)
+      return getStructuredData({ article: this.article, imageBase })
     },
     authors () {
       let authors = ''
