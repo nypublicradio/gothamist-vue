@@ -44,7 +44,7 @@ const getStructuredData = function ({ article, imageBase }) {
           url: getImageUrl(imageBase, getOgImage(article), 1200, 800),
           width: 1200,
           height: 800,
-          caption: getOgImage(article)?.caption
+          caption: article.leadAsset?.[0]?.caption || getOgImage(article)?.caption
         },
         headline: article.meta?.seoTitle || article.title,
         alternativeHeadline: article.meta?.seoTitle && article.title,

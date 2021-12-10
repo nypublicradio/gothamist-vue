@@ -2,10 +2,11 @@ import { getStructuredData } from '../utils/metadata'
 import { coronavirusStatistics } from './story-data'
 
 describe('getStructuredData', () => {
-  test('it generates a structured json object', () => {
+  it('should generate a structured json object', () => {
     const testArticle = coronavirusStatistics
     expect(getStructuredData({ article: testArticle })['@context']).toEqual('https://schema.org')
   })
+
   it('should generate the correct breadcrumb list', () => {
     const testArticle = coronavirusStatistics
     const expectedBreadcrumbs = {
@@ -24,6 +25,7 @@ describe('getStructuredData', () => {
     const breadCrumbMetadata = getStructuredData({ article: testArticle })['@graph'][1]
     expect(breadCrumbMetadata).toMatchObject(expectedBreadcrumbs)
   })
+
   it('should generate the correct article data', () => {
     const testArticle = coronavirusStatistics
     const expectedUrl = 'https://gothamist.com/news/coronavirus-statistics-tracking-epidemic-new-york'
@@ -123,7 +125,7 @@ describe('getStructuredData', () => {
     expect(getStructuredData({ article: testArticle })['@graph'][0].alternativeHeadline).toEqual('H1 Title')
   })
 
-  it('should use the main title when no seo override exists', () => {
+  it('should use the main title for headline when no seo override exists', () => {
     const testArticle = {
       meta: {
         seoTitle: ''
@@ -160,13 +162,15 @@ describe('getStructuredData', () => {
   it('should use the social image when available', () => {
     const testArticle = {
       socialImage: {
-        id: 123
+        id: 123,
+        caption: 'caption'
       },
       leadAsset: [{
         type: 'leadImage',
         value: {
           image: {
-            id: 987
+            id: 987,
+            caption: 'wrong'
           }
         }
       }]
@@ -176,6 +180,10 @@ describe('getStructuredData', () => {
       article: testArticle,
       imageBase: 'https://example.com/'
     })['@graph'][0].image.url).toContain('/123/')
+    expect(getStructuredData({
+      article: testArticle,
+      imageBase: 'https://example.com/'
+    })['@graph'][0].image.caption).toContain('caption')
   })
 
   it('should use the lead image', () => {
@@ -183,9 +191,11 @@ describe('getStructuredData', () => {
       socialImage: undefined,
       leadAsset: [{
         type: 'leadImage',
+        caption: '',
         value: {
           image: {
-            id: 123
+            id: 123,
+            caption: 'caption'
           }
         }
       }]
@@ -195,16 +205,46 @@ describe('getStructuredData', () => {
       article: testArticle,
       imageBase: 'https://example.com/'
     })['@graph'][0].image.url).toContain('/123/')
+    expect(getStructuredData({
+      article: testArticle,
+      imageBase: 'https://example.com/'
+    })['@graph'][0].image.caption).toContain('caption')
   })
 
-  it('should use the default gallery Image', () => {
+  it('should use the lead image caption override', () => {
+    const testArticle = {
+      socialImage: undefined,
+      leadAsset: [{
+        type: 'leadImage',
+        caption: 'caption',
+        value: {
+          image: {
+            id: 123,
+            caption: 'wrong'
+          }
+        }
+      }]
+    }
+
+    expect(getStructuredData({
+      article: testArticle,
+      imageBase: 'https://example.com/'
+    })['@graph'][0].image.url).toContain('/123/')
+    expect(getStructuredData({
+      article: testArticle,
+      imageBase: 'https://example.com/'
+    })['@graph'][0].image.caption).toContain('caption')
+  })
+
+  it('should use the default gallery image', () => {
     const testArticle = {
       socialImage: undefined,
       leadAsset: [{
         type: 'Gallery',
         value: {
           defaultImage: {
-            id: 123
+            id: 123,
+            caption: 'caption'
           },
           slides: []
         }
@@ -215,6 +255,10 @@ describe('getStructuredData', () => {
       article: testArticle,
       imageBase: 'https://example.com/'
     })['@graph'][0].image.url).toContain('/123/')
+    expect(getStructuredData({
+      article: testArticle,
+      imageBase: 'https://example.com/'
+    })['@graph'][0].image.caption).toContain('caption')
   })
 
   it('should use the manual publish date', () => {
