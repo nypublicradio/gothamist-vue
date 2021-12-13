@@ -34,19 +34,44 @@
             :key="index"
             class="gothamist u-space--double--bottom mod-vertical mod-large"
             :show-gallery-icon="hasGallery(story.leadAsset)"
-            :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
+            :image="
+              getArticleImage(
+                story.leadAsset,
+                story.ancestry[0].slug,
+                story.listingImage
+              )
+            "
             :image-height="413"
             :image-width="560"
-            :image-max-height="getArticleImageHeight(story.leadAsset, story.listingImage) || Infinity"
-            :image-max-width="getArticleImageWidth(story.leadAsset, story.listingImage) || Infinity"
+            :image-max-height="
+              getArticleImageHeight(story.leadAsset, story.listingImage) ||
+                Infinity
+            "
+            :image-max-width="
+              getArticleImageWidth(story.leadAsset, story.listingImage) ||
+                Infinity
+            "
             :title="story.title"
             :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
             :subtitle="story.description"
-            :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
+            :tags="
+              formatTags(
+                story.ancestry[0].title,
+                story.ancestry[0].slug,
+                story.sponsoredContent,
+                story.tags
+              )
+            "
           >
             <article-metadata
-              :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
-              :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
+              :publish-date="
+                !story.updatedDate
+                  ? fuzzyDateTime(story.meta.firstPublishedAt)
+                  : null
+              "
+              :updated-date="
+                story.updatedDate ? fuzzyDateTime(story.updatedDate) : null
+              "
             />
           </v-card>
         </div>
@@ -78,12 +103,20 @@
         <image-with-caption
           variation="gothamist"
           :alt-text="block.value.image.alt"
+          :image="`${$config.imageBase}${block.value.image.id}/fill-%width%x%height%|format-jpeg%7Cjpegquality-70/`"
+          :width="640"
+          :height="
+            getHeightFromWidth(
+              block.value.image.width,
+              block.value.image.height,
+              640
+            )
+          "
+          :max-width="block.value.image.width || Infinity"
+          :max-height="block.value.image.height || Infinity"
           :caption="block.value.caption || block.value.image.caption"
           :credit="block.value.image.credit"
           :credit-url="block.value.image.creditLink"
-          :image="block.value.image.file"
-          :width="block.value.image.width"
-          :height="block.value.image.height"
         />
       </div>
 
@@ -117,6 +150,7 @@ const {
   getArticleImage,
   getArticleImageHeight,
   getArticleImageWidth,
+  getHeightFromWidth,
   hasGallery
 } = require('~/mixins/helpers')
 
@@ -154,6 +188,7 @@ export default {
     getArticleImage,
     getArticleImageHeight,
     getArticleImageWidth,
+    getHeightFromWidth,
     hasGallery
   }
 }
@@ -171,7 +206,7 @@ export default {
 
 .streamfield .featured-stories .card.mod-vertical .card-image-wrapper,
 .streamfield .featured-stories .card.mod-vertical .card-image {
-  @include media("<medium") {
+  @include media('<medium') {
     min-width: 100px;
     width: 100px;
     height: 100px;
@@ -179,13 +214,13 @@ export default {
 }
 
 .streamfield .featured-stories .card.mod-vertical .card-image-wrapper {
-  @include media(">medium") {
+  @include media('>medium') {
     height: 285px;
   }
 }
 
 .streamfield .featured-stories .card {
-  @include media("<medium") {
+  @include media('<medium') {
     margin-bottom: 0;
   }
 }
