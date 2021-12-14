@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="page"
-    class="gallery"
-  >
+  <div v-if="page" class="gallery">
     <div class="gallery-close">
       <nuxt-link :to="articleLink">
         <close-icon />
@@ -12,10 +9,7 @@
       v-if="page.slides.length > 0"
       class="l-wrap l-container l-container--xl"
     >
-      <nuxt-link
-        :to="articleLink"
-        class="gallery-back-to-link"
-      >
+      <nuxt-link :to="articleLink" class="gallery-back-to-link">
         <simple-arrow-left />
         <span>
           {{ articleTitle }}
@@ -27,7 +21,8 @@
         :key="index"
         :ref="'image' + (index + 1)"
         v-observe-visibility="{
-          callback: (isVisible, entry) => visibilityChanged(isVisible, entry, index + 1),
+          callback: (isVisible, entry) =>
+            visibilityChanged(isVisible, entry, index + 1),
           intersection: {
             threshold: 0.5
           }
@@ -41,21 +36,29 @@
         </div>
         <v-spacer />
         <image-with-caption
-          :style="'width: ' + slide.value.slideImage.image.width + 'px'"
           class="u-color-group-dark"
           variation="gothamist"
           :alt-text="slide.value.slideImage.image.alt"
-          :image="`${$config.imageBase}${slide.value.slideImage.image.id}/fill-%width%x%height%|format-jpeg%7Cjpegquality-80/`"
-          :width="slide.value.slideImage.image.width"
+          :image="getArticleImage(slide, null, slide.value.slideImage.image)"
+          :width="imgWidth"
+          :height="
+            getHeightFromWidth(
+              slide.value.slideImage.image.width,
+              slide.value.slideImage.image.height,
+              imgWidth
+            )
+          "
           :max-width="slide.value.slideImage.image.width"
           :max-height="slide.value.slideImage.image.height"
-          :height="slide.value.slideImage.image.height"
           :credit="slide.value.slideImage.image.credit"
           :caption="slide.value.slideImage.image.caption"
           :credit-url="slide.value.slideImage.image.creditLink"
         />
         <v-spacer size="triple" />
-        <div v-if="index === 2 || (index + 1) % 6 === 0" class="ad-wrapper-outer">
+        <div
+          v-if="index === 2 || (index + 1) % 6 === 0"
+          class="ad-wrapper-outer"
+        >
           <div class="ad-wrapper-inner">
             <div class="htlad-interior_midpage_gallery" />
             <div class="ad-label">
@@ -70,10 +73,7 @@
       <gothamist-arrow />
       <div>End</div>
       <v-spacer size="triple" />
-      <v-button
-        class="back-to-article"
-        @click="goToArticle"
-      >
+      <v-button class="back-to-article" @click="goToArticle">
         Back To Article
       </v-button>
     </div>
@@ -85,18 +85,19 @@
 import gtm from '~/mixins/gtm'
 import { setTargeting, clearTargeting } from '~/mixins/htl'
 
-const { formatTitle } = require('~/mixins/helpers')
+const {
+  formatTitle,
+  getHeightFromWidth,
+  getArticleImage
+} = require('~/mixins/helpers')
 
 export default {
   name: 'ArticleGallery', // this is the template name which is used for GTM
   mixins: [gtm],
-  async asyncData ({
-    $axios,
-    params,
-    error
-  }) {
+  async asyncData ({ $axios, params, error }) {
     const path = `${params.section}/photos/${params.gallery}`
-    const page = await $axios.get(`/pages/find/?html_path=${path}`)
+    const page = await $axios
+      .get(`/pages/find/?html_path=${path}`)
       .catch(() => {
         error({
           statusCode: 404,
@@ -113,13 +114,14 @@ export default {
       page: null,
       pageLoaded: false,
       slug: this.$route.params.slug,
-      title: null
+      title: null,
+      imgWidth: null
     }
   },
   computed: {
     articleLink () {
       if (this.page.relatedArticles && this.page.relatedArticles.length > 0) {
-        return (this.page.relatedArticles[0].path).replace('/home/', '/')
+        return this.page.relatedArticles[0].path.replace('/home/', '/')
       } else {
         return ''
       }
@@ -141,9 +143,27 @@ export default {
       }
     }
   },
+  beforeMount () {
+    const details = navigator.userAgent
+    const regexp = /android|iphone|kindle|ipad/i
+    const isMobileDevice = regexp.test(details)
+
+    const IMG_SCALE_POINT = 1147
+    const IMG_SCALE_MAX = 1098
+
+    const PADDING = isMobileDevice ? 32 : 49
+    const WINDOW_WIDTH = window.innerWidth
+
+    this.imgWidth =
+      WINDOW_WIDTH < IMG_SCALE_POINT ? WINDOW_WIDTH - PADDING : IMG_SCALE_MAX
+  },
+
   mounted () {
     // support deep linking
-    if (this.$route.query.image && this.$refs['image' + this.$route.query.image] !== undefined) {
+    if (
+      this.$route.query.image &&
+      this.$refs['image' + this.$route.query.image] !== undefined
+    ) {
       const imageElement = this.$refs['image' + this.$route.query.image]
       const top = imageElement[0].offsetTop
       window.scrollTo(0, top + 72)
@@ -169,7 +189,9 @@ export default {
         })
         this.gaEvent('Gallery Slide View', 'Slide ' + imageId)
       }
-    }
+    },
+    getHeightFromWidth,
+    getArticleImage
   },
   head () {
     return {
@@ -215,7 +237,7 @@ export default {
   width: 16px;
   display: none;
 
-  @include media(">medium") {
+  @include media('>medium') {
     display: block;
   }
 
@@ -320,5 +342,9 @@ export default {
     color: RGB(var(--color-link-hover));
     background-color: RGB(var(--color-reddish-orange));
   }
+}
+
+.gallery .image-with-caption-image img {
+  width: 100%;
 }
 </style>

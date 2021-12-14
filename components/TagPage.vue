@@ -1,9 +1,5 @@
 <template>
-  <div
-    v-if="slug"
-    class="tags-page"
-    :class="{'curated': designedHeader }"
-  >
+  <div v-if="slug" class="tags-page" :class="{ curated: designedHeader }">
     <!-- designed header -->
     <div
       v-if="designedHeader && designedHeader.length > 0"
@@ -51,31 +47,70 @@
         >
           <div>
             <v-card
-              v-for="(story, index) in moreResultsNuggets[nuggetIndex].slice(0,3)"
+              v-for="(story, index) in moreResultsNuggets[nuggetIndex].slice(
+                0,
+                3
+              )"
               :key="index"
               class="gothamist u-space--double--bottom mod-large"
               :show-gallery-icon="hasGallery(story.leadAsset)"
-              :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
-              :image-height="285"
+              :image="
+                getArticleImage(
+                  story.leadAsset,
+                  story.ancestry[0].slug,
+                  story.listingImage
+                )
+              "
+              :image-height="276"
               :image-width="414"
-              :image-max-height="getArticleImageHeight(story.leadAsset, story.listingImage) || Infinity"
-              :image-max-width="getArticleImageWidth(story.leadAsset, story.listingImage) || Infinity"
+              :image-max-height="
+                getArticleImageHeight(story.leadAsset, story.listingImage) ||
+                  Infinity
+              "
+              :image-max-width="
+                getArticleImageWidth(story.leadAsset, story.listingImage) ||
+                  Infinity
+              "
               :title="story.title"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
               :subtitle="story.description"
-              :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
+              :tags="
+                formatTags(
+                  story.ancestry[0].title,
+                  story.ancestry[0].slug,
+                  story.sponsoredContent,
+                  story.tags
+                )
+              "
             >
               <article-metadata
-                :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
-                :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
+                :publish-date="
+                  !story.updatedDate
+                    ? fuzzyDateTime(story.publicationDate) ||
+                      fuzzyDateTime(story.meta.firstPublishedAt)
+                    : null
+                "
+                :updated-date="
+                  story.updatedDate ? fuzzyDateTime(story.updatedDate) : null
+                "
               >
                 <template
-                  v-if="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
+                  v-if="
+                    getCommentCountById(
+                      String(story.legacyId || story.uuid),
+                      disqusData
+                    )
+                  "
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
+                    :value="
+                      getCommentCountById(
+                        String(story.legacyId || story.uuid),
+                        disqusData
+                      )
+                    "
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
@@ -91,41 +126,77 @@
           </section>
           <div>
             <v-card
-              v-for="(story, index) in moreResultsNuggets[nuggetIndex].slice(3,6)"
+              v-for="(story, index) in moreResultsNuggets[nuggetIndex].slice(
+                3,
+                6
+              )"
               :key="index"
               class="gothamist u-space--double--bottom mod-large"
               :show-gallery-icon="hasGallery(story.leadAsset)"
-              :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
-              :image-height="285"
+              :image="
+                getArticleImage(
+                  story.leadAsset,
+                  story.ancestry[0].slug,
+                  story.listingImage
+                )
+              "
+              :image-height="276"
               :image-width="414"
-              :image-max-height="getArticleImageHeight(story.leadAsset, story.listingImage) || Infinity"
-              :image-max-width="getArticleImageWidth(story.leadAsset, story.listingImage) || Infinity"
+              :image-max-height="
+                getArticleImageHeight(story.leadAsset, story.listingImage) ||
+                  Infinity
+              "
+              :image-max-width="
+                getArticleImageWidth(story.leadAsset, story.listingImage) ||
+                  Infinity
+              "
               :title="story.title"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
               :subtitle="story.description"
-              :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
+              :tags="
+                formatTags(
+                  story.ancestry[0].title,
+                  story.ancestry[0].slug,
+                  story.sponsoredContent,
+                  story.tags
+                )
+              "
             >
               <article-metadata
-                :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
-                :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
+                :publish-date="
+                  !story.updatedDate
+                    ? fuzzyDateTime(story.publicationDate) ||
+                      fuzzyDateTime(story.meta.firstPublishedAt)
+                    : null
+                "
+                :updated-date="
+                  story.updatedDate ? fuzzyDateTime(story.updatedDate) : null
+                "
               >
                 <template
-                  v-if="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
+                  v-if="
+                    getCommentCountById(
+                      String(story.legacyId || story.uuid),
+                      disqusData
+                    )
+                  "
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
+                    :value="
+                      getCommentCountById(
+                        String(story.legacyId || story.uuid),
+                        disqusData
+                      )
+                    "
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
               </article-metadata>
             </v-card>
           </div>
-          <div
-            v-if="nuggetIndex%2 === 0"
-            class="ad-container"
-          >
+          <div v-if="nuggetIndex % 2 === 0" class="ad-container">
             <hr
               class="u-border-accent u-hide-until--m u-space--double--bottom"
               aria-hidden="true"
@@ -133,12 +204,20 @@
             <div
               v-if="nuggetIndex === 0"
               key="interior_midpage_1"
-              class="htlad-interior_midpage_1 ad-div mod-break-margins mod-ad-disclosure"
+              class="
+                htlad-interior_midpage_1
+                ad-div
+                mod-break-margins mod-ad-disclosure
+              "
             />
             <div
               v-else
               key="interior_midpage_repeating"
-              class="htlad-interior_midpage_repeating ad-div mod-break-margins mod-ad-disclosure"
+              class="
+                htlad-interior_midpage_repeating
+                ad-div
+                mod-break-margins mod-ad-disclosure
+              "
             />
             <hr
               class="u-border-accent u-hide-until--m u-space--double--top"
@@ -147,31 +226,70 @@
           </div>
           <div>
             <v-card
-              v-for="(story, index) in moreResultsNuggets[nuggetIndex].slice(6,13)"
+              v-for="(story, index) in moreResultsNuggets[nuggetIndex].slice(
+                6,
+                13
+              )"
               :key="index"
               class="gothamist u-space--double--bottom mod-large"
               :show-gallery-icon="hasGallery(story.leadAsset)"
-              :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
-              :image-height="285"
+              :image="
+                getArticleImage(
+                  story.leadAsset,
+                  story.ancestry[0].slug,
+                  story.listingImage
+                )
+              "
+              :image-height="276"
               :image-width="414"
-              :image-max-height="getArticleImageHeight(story.leadAsset, story.listingImage) || Infinity"
-              :image-max-width="getArticleImageWidth(story.leadAsset, story.listingImage) || Infinity"
+              :image-max-height="
+                getArticleImageHeight(story.leadAsset, story.listingImage) ||
+                  Infinity
+              "
+              :image-max-width="
+                getArticleImageWidth(story.leadAsset, story.listingImage) ||
+                  Infinity
+              "
               :title="story.title"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
               :subtitle="story.description"
-              :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
+              :tags="
+                formatTags(
+                  story.ancestry[0].title,
+                  story.ancestry[0].slug,
+                  story.sponsoredContent,
+                  story.tags
+                )
+              "
             >
               <article-metadata
-                :publish-date="!story.updatedDate ? (fuzzyDateTime(story.publicationDate) || fuzzyDateTime(story.meta.firstPublishedAt)) : null"
-                :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
+                :publish-date="
+                  !story.updatedDate
+                    ? fuzzyDateTime(story.publicationDate) ||
+                      fuzzyDateTime(story.meta.firstPublishedAt)
+                    : null
+                "
+                :updated-date="
+                  story.updatedDate ? fuzzyDateTime(story.updatedDate) : null
+                "
               >
                 <template
-                  v-if="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
+                  v-if="
+                    getCommentCountById(
+                      String(story.legacyId || story.uuid),
+                      disqusData
+                    )
+                  "
                   v-slot:comments
                 >
                   <v-counter
                     icon="comment"
-                    :value="getCommentCountById(String(story.legacyId || story.uuid), disqusData)"
+                    :value="
+                      getCommentCountById(
+                        String(story.legacyId || story.uuid),
+                        disqusData
+                      )
+                    "
                     :href="`/${story.ancestry[0].slug}/${story.meta.slug}#comments`"
                   />
                 </template>
@@ -242,7 +360,12 @@ export default {
   },
   async fetch () {
     await this.$axios
-      .get('pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=12&tag_slug=' + this.slug + '&offset=' + this.offset)
+      .get(
+        'pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&limit=12&tag_slug=' +
+          this.slug +
+          '&offset=' +
+          this.offset
+      )
       .then((response) => {
         this.totalCount = response.data.meta.totalCount
         this.results = this.results.concat(response.data.items)
@@ -252,8 +375,16 @@ export default {
           this.disqusThreadIds.push(item.legacyId || item.uuid)
         })
         // if there are no live articles and there is no custom tag page for this tag, redirect to the 404 page
-        if (this.totalCount === 0 && (!this.designedHeader || this.designedHeader.length === 0) && (!this.topPageZone || this.topPageZone.length === 0) && (!this.midPageZone || this.midPageZone.length === 0)) {
-          return this.$nuxt.error({ statusCode: 404, message: 'Page not found' })
+        if (
+          this.totalCount === 0 &&
+          (!this.designedHeader || this.designedHeader.length === 0) &&
+          (!this.topPageZone || this.topPageZone.length === 0) &&
+          (!this.midPageZone || this.midPageZone.length === 0)
+        ) {
+          return this.$nuxt.error({
+            statusCode: 404,
+            message: 'Page not found'
+          })
         }
       })
   },
@@ -297,7 +428,12 @@ export default {
     getArticleImageWidth,
     async getMoreResults () {
       await this.$fetch()
-      this.gaEvent('Click Tracking', 'Load More Results', 'TagPage', this.offset + ' articles loaded')
+      this.gaEvent(
+        'Click Tracking',
+        'Load More Results',
+        'TagPage',
+        this.offset + ' articles loaded'
+      )
     },
     hasGallery
   }
@@ -318,7 +454,7 @@ export default {
   object-fit: cover;
   max-height: 95px;
   width: 100%;
-  @include media(">medium") {
+  @include media('>medium') {
     max-height: 277px;
   }
 }
@@ -334,7 +470,7 @@ export default {
   background-color: RGB(var(--color-tag-highlight));
   color: RGB(var(--color-text-inverse));
   text-transform: lowercase;
-  @include media(">medium") {
+  @include media('>medium') {
     @include typeface(tags, 14);
   }
 }

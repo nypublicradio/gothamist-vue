@@ -1,16 +1,8 @@
 <template>
-  <div :class="{'home-page' : isHomepage}">
-    <div
-      v-if="!isSensitiveContent && !isGallery"
-      class="htlad-skin"
-    />
-    <div
-      class="ad-wrapper-outer mod-header u-color-group-dark no-print"
-    >
-      <div
-        v-if="!isSensitiveContent && !isGallery"
-        class="ad-wrapper-inner"
-      >
+  <div :class="{ 'home-page': isHomepage }">
+    <div v-if="!isSensitiveContent && !isGallery" class="htlad-skin" />
+    <div class="ad-wrapper-outer mod-header u-color-group-dark no-print">
+      <div v-if="!isSensitiveContent && !isGallery" class="ad-wrapper-inner">
         <div
           v-if="isHomepage"
           key="index-leaderboard"
@@ -28,12 +20,18 @@
     </div>
     <gothamist-header />
     <main :class="$route.name">
-      <div v-if="!isTagPage && !isGallery" class="gothamist-banners l-container l-container--xl l-wrap">
+      <div
+        v-if="!isTagPage && !isGallery"
+        class="gothamist-banners l-container l-container--xl l-wrap"
+      >
         <gothamist-breaking-news class="l-container l-container--16col" />
         <gothamist-marketing-banners class="l-container l-container--16col" />
       </div>
       <transition @after-enter="handleTransitionEnter">
-        <Nuxt keep-alive :keep-alive-props="{ include: ['HomePage','Section','Tag'] }" />
+        <Nuxt
+          keep-alive
+          :keep-alive-props="{ include: ['HomePage', 'Section', 'Tag'] }"
+        />
       </transition>
     </main>
     <gothamist-footer v-if="!isGallery" />
@@ -49,6 +47,11 @@ import { setTargeting } from '~/mixins/htl'
 export default {
   name: 'Gothamist',
   mixins: [gtm],
+  data () {
+    return {
+      windowWidth: null
+    }
+  },
   computed: {
     isHomepage () {
       return this.$route.name === 'index'
@@ -65,6 +68,9 @@ export default {
     $route (newRoute, oldRoute) {
       this.$store.commit('global/setPreviousPath', oldRoute.fullPath)
     }
+  },
+  beforeMount () {
+    this.windowWidth = window.innerWidth
   },
   mounted () {
     this.handleNewPage()
@@ -103,7 +109,9 @@ export default {
         is_home: this.isHomepage ? 'yes' : 'no',
         host: location?.host,
         url: this.$route.path,
-        urlSegments: this.$route.path.split('/').filter(segment => segment.length > 0)
+        urlSegments: this.$route.path
+          .split('/')
+          .filter(segment => segment.length > 0)
       })
     },
     handleTransitionEnter () {
@@ -164,7 +172,7 @@ html {
 }
 
 .home-page .gothamist-header {
-  padding-bottom: calc(45px +  var(--space-6)); //45px = overhanging logo height
+  padding-bottom: calc(45px + var(--space-6)); //45px = overhanging logo height
 }
 
 .ad-wrapper-outer {
@@ -177,7 +185,7 @@ html {
   background: RGB(var(--color-background));
   width: 100%;
   min-height: 74px;
-  @include media(">medium") {
+  @include media('>medium') {
     min-height: 274px;
   }
 }
@@ -214,17 +222,17 @@ div:empty + .ad-label {
 }
 
 .ad-div.mod-ad-disclosure > div > div > div::after {
-    content: "Advertisement";
-    display: block;
-    color: RGB(var(--color-text-muted));
-    font-family: var(--font-family-small);
-    letter-spacing: var(--letter-spacing-small);
-    font-weight: var(--font-weight-small);
-    font-size: var(--font-size-1);
-    line-height: var(--line-height-1);
-    margin-top: var(--space-2);
-    text-transform: uppercase;
-    text-align: right;
+  content: 'Advertisement';
+  display: block;
+  color: RGB(var(--color-text-muted));
+  font-family: var(--font-family-small);
+  letter-spacing: var(--letter-spacing-small);
+  font-weight: var(--font-weight-small);
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-1);
+  margin-top: var(--space-2);
+  text-transform: uppercase;
+  text-align: right;
 }
 
 .section-photos-gallery {
@@ -234,17 +242,25 @@ div:empty + .ad-label {
   height: 100%;
 }
 
-@for $i from 1 through 20 {
-  .ad-wrapper-inner .htl-ad-gpt#htlad-#{$i}-gpt, .htl-ad .htl-ad-gpt#htlad-#{$i}-gpt{
-    position: relative !important;
-  }
-  .htlunit-interior_leaderboard_adhesion .htl-ad-gpt#htlad-#{$i}-gpt{
-    position: fixed !important;
-  }
-}
+// @for $i from 1 through 20 {
+//   .ad-wrapper-inner .htl-ad-gpt#htlad-#{$i}-gpt, .htl-ad .htl-ad-gpt#htlad-#{$i}-gpt{
+//     position: relative !important;
+//   }
+//   .htlunit-interior_leaderboard_adhesion .htl-ad-gpt#htlad-#{$i}-gpt{
+//     position: fixed !important;
+//   }
+// }
 
-.htl-ad{
-  z-index: 1 !important;
-}
+// .htl-ad{
+//   z-index: 1 !important;
+// }
 
+// this makes the content 640px wide on the home page
+.home-page .l-container--10col {
+  max-width: calc((var(--max-width) / 16) * 10.5);
+}
+// this makes the content 640px wide
+.home-page .l-container--16col {
+  max-width: calc((var(--max-width) / 16) * 15.75);
+}
 </style>
