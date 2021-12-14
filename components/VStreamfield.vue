@@ -41,8 +41,8 @@
                 story.listingImage
               )
             "
-            :image-height="426"
-            :image-width="640"
+            :image-height="276"
+            :image-width="414"
             :image-max-height="
               getArticleImageHeight(story.leadAsset, story.listingImage) ||
                 Infinity

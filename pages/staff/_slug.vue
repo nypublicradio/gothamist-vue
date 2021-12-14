@@ -43,8 +43,8 @@
                 story.listingImage
               )
             "
-            :image-height="276"
-            :image-width="414"
+            :image-width="$mq | mq({ xsmall: 100, medium: 360 })"
+            :image-height="$mq | mq({ xsmall: 100, medium: 240 })"
             :title="story.title"
             :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
             :subtitle="story.description"

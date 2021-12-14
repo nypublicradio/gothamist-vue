@@ -463,7 +463,7 @@
       </div>
 
       <!-- section 3 -->
-      <div class="l-container l-container--14col l-wrap">
+      <div class="l-container l-container--16col l-wrap">
         <v-spacer size="triple" />
         <div class="l-grid l-grid--large-gutters l-grid--right-rail">
           <div>

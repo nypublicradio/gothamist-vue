@@ -242,19 +242,6 @@ div:empty + .ad-label {
   height: 100%;
 }
 
-// @for $i from 1 through 20 {
-//   .ad-wrapper-inner .htl-ad-gpt#htlad-#{$i}-gpt, .htl-ad .htl-ad-gpt#htlad-#{$i}-gpt{
-//     position: relative !important;
-//   }
-//   .htlunit-interior_leaderboard_adhesion .htl-ad-gpt#htlad-#{$i}-gpt{
-//     position: fixed !important;
-//   }
-// }
-
-// .htl-ad{
-//   z-index: 1 !important;
-// }
-
 // this makes the content 640px wide on the home page
 .home-page .l-container--10col {
   max-width: calc((var(--max-width) / 16) * 10.5);
