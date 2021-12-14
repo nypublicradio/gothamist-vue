@@ -263,4 +263,9 @@ div:empty + .ad-label {
 .home-page .l-container--16col {
   max-width: calc((var(--max-width) / 16) * 15.75);
 }
+
+// images scale properly with little to no crop
+.card-image {
+  height: inherit;
+}
 </style>
