@@ -226,6 +226,12 @@ import RelatedAuthors from './RelatedAuthors.vue'
 import { getImagePath } from '~/mixins/image'
 import { insertAdDiv } from '~/utils/insert-ad-div'
 import { getScrollDepth, getArticleImage } from '~/mixins/helpers'
+import {
+  getStructuredData,
+  getOgImage,
+  getSection,
+  getBreadcrumbs
+} from '~/utils/metadata'
 
 export default {
   name: 'GothamistArticle',
@@ -260,10 +266,7 @@ export default {
       scrollMilestones: [0, 25, 50, 75, 100],
       currentlyWatching: [],
       path: 'https://gothamist.com' + this.$route.fullPath,
-      ogImage:
-        this.article.socialImage ??
-        this.article.leadAsset[0]?.value.image ??
-        this.article.leadAsset[0]?.value.defaultImage,
+      ogImage: getOgImage(this.article),
       disqusData: null,
       commentCount: null,
       disqusThreadIds: [],
@@ -304,45 +307,10 @@ export default {
       return this.article.leadAsset[0]
     },
     section () {
-      return this.article.meta.parent.title
+      return getSection(this.article)
     },
     breadcrumbs () {
-      const breadcrumbs = [
-        {
-          name: this.section,
-          slug: '/' + this.article.ancestry[0].slug
-        }
-      ]
-      if (this.article.sponsoredContent) {
-        breadcrumbs.push({ name: 'Sponsored' })
-      }
-      if (
-        this.article.tags.find(
-          tag => tag.name === 'opinion' || tag.name === '@opinion'
-        )
-      ) {
-        breadcrumbs.push({
-          name: 'Opinion',
-          slug: '/tags/opinion'
-        })
-      }
-      if (
-        this.article.tags.find(
-          tag => tag.name === 'analysis' || tag.name === '@analysis'
-        )
-      ) {
-        breadcrumbs.push({
-          name: 'Analysis',
-          slug: '/tags/analysis'
-        })
-      }
-      if (this.article.tags.find(tag => tag.name === 'we the commuters')) {
-        breadcrumbs.push({
-          name: 'We The Commuters',
-          slug: '/tags/we-the-commuters'
-        })
-      }
-      return breadcrumbs
+      return getBreadcrumbs(this.article)
     },
     galleryCount () {
       if (this.article.gallery) {
@@ -468,50 +436,7 @@ export default {
       ]
     },
     structuredData ({ $config: { imageBase } }) {
-      return {
-        '@context': 'http://schema.org',
-        '@graph': [
-          {
-            '@type': 'NewsArticle',
-            mainEntityOfPage: 'https://gothamist.com' + this.$route.fullPath,
-            image:
-              this.ogImage && imageBase + getImagePath(this.ogImage, 1200, 650),
-            headline: this.article.title,
-            description: this.article.description,
-            datePublished: this.article.meta.firstPublishedAt,
-            dateModified: this.article.updatedDate && this.article.updatedDate,
-            author: this.article.authors.map((author) => {
-              return {
-                '@type': 'Person',
-                name: `${author.firstName} ${author.lastName}`
-              }
-            }),
-            publisher: {
-              '@type': 'Organization',
-              name: 'Gothamist',
-              logo: {
-                '@type': 'ImageObject',
-                url: 'http://gothamist.com/static-images/home_og_1200x600.png',
-                width: '1200',
-                height: '600'
-              }
-            }
-          },
-          {
-            '@type': 'BreadcrumbList',
-            itemListElement: this.breadcrumbs.map((crumb, index) => {
-              return {
-                '@type': 'ListItem',
-                position: index,
-                item: {
-                  '@id': 'https://gothamist.com' + crumb.slug,
-                  name: crumb.name
-                }
-              }
-            })
-          }
-        ]
-      }
+      return getStructuredData({ article: this.article, imageBase })
     },
     authors () {
       let authors = ''
