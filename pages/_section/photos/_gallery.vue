@@ -115,7 +115,7 @@ export default {
       pageLoaded: false,
       slug: this.$route.params.slug,
       title: null,
-      imgWidth: null
+      imgWidth: 1098
     }
   },
   computed: {
@@ -144,18 +144,13 @@ export default {
     }
   },
   beforeMount () {
-    const details = navigator.userAgent
-    const regexp = /android|iphone|kindle|ipad/i
-    const isMobileDevice = regexp.test(details)
-
     const IMG_SCALE_POINT = 1147
     const IMG_SCALE_MAX = 1098
-
-    const PADDING = isMobileDevice ? 32 : 49
-    const WINDOW_WIDTH = window.innerWidth
+    const PADDING = 32
+    const BODY_WIDTH = document.body.clientWidth
 
     this.imgWidth =
-      WINDOW_WIDTH < IMG_SCALE_POINT ? WINDOW_WIDTH - PADDING : IMG_SCALE_MAX
+      BODY_WIDTH < IMG_SCALE_POINT ? BODY_WIDTH - PADDING : IMG_SCALE_MAX
   },
 
   mounted () {
