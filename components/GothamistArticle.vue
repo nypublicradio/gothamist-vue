@@ -107,6 +107,7 @@
             :credit="leadAsset.value.image.credit"
             :caption="leadAsset.value.caption || leadAsset.value.image.caption"
             :credit-url="leadAsset.value.image.creditLink"
+            allow-vertical-effect
           />
         </div>
         <div v-if="article.gallery" class="article-lead-image">
@@ -164,12 +165,7 @@
 
       <div
         v-if="!article.sensitiveContent"
-        class="
-          htlad-interior_midpage_2
-          ad-div
-          mod-break-margins mod-ad-disclosure
-          no-print
-        "
+        class="htlad-interior_midpage_2 ad-div mod-break-margins mod-ad-disclosure no-print"
       />
 
       <div
