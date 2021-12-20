@@ -442,7 +442,7 @@ export default {
           this.trackScrollDepth(threshold)
           this.currentlyWatching.splice(index, 1)
         }
-        if (this.scrollPercent >= 75) {
+        if (this.scrollPercent >= 75 && threshold === 75) {
           this.bannerOnscreen = true
         }
       })
