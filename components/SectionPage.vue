@@ -317,7 +317,6 @@ export default {
       moreResultsOffset: 0
     }
   },
-
   computed: {
     ...mapState('global', {
       defaultImage: state => state.defaultImage,
@@ -352,6 +351,9 @@ export default {
       }
       return nuggetArray
     }
+  },
+  mounted () {
+    this.getMoreResults()
   },
   methods: {
     formatTags,
