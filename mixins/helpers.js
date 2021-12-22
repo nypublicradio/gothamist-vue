@@ -1,5 +1,4 @@
 import { compareAsc, format, differenceInMinutes, differenceInHours, getYear, isValid, subHours } from 'date-fns'
-
 // formats tags into the correct format for radial (for article listing pages)
 // name = the article's ancestry's title 'ancestry[0].title' from the CMS API
 // slug = the article's ancestry's slug 'ancestry[0].slug' from the CMS API
@@ -26,16 +25,17 @@ export const formatTags = function (name, slug, sponsored, tags) {
 // asset = the article's 'lead_asset' from the CMS API
 // slug = the article's ancestry's slug 'ancestry[0].slug' from the CMS API
 // listingImage = the article's 'listing_image' from the CMS API
-export const getArticleImage = function (asset, slug, listingImage) {
+export const getArticleImage = function (asset, thisSlug, listingImage) {
+  const slug = thisSlug || ''
   if (listingImage !== undefined && listingImage !== null) {
-    return `${this.$config.imageBase}${listingImage.id}/fill-%width%x%height%|format-jpeg|jpegquality-80/`
+    return `${this.$config.imageBase}${listingImage.id}/fill-%width%x%height%|format-jpeg|jpegquality-%quality%/`
   }
   if (asset !== undefined && asset.length > 0) {
     if (asset[0].value.image) {
-      return `${this.$config.imageBase}${asset[0].value.image.id}/fill-%width%x%height%|format-jpeg|jpegquality-80/`
+      return `${this.$config.imageBase}${asset[0].value.image.id}/fill-%width%x%height%|format-jpeg|jpegquality-%quality%/`
     }
     if (asset[0].value.defaultImage) {
-      return `${this.$config.imageBase}${asset[0].value.defaultImage.id}/fill-%width%x%height%|format-jpeg|jpegquality-80/`
+      return `${this.$config.imageBase}${asset[0].value.defaultImage.id}/fill-%width%x%height%|format-jpeg|jpegquality-%quality%/`
     }
   }
   switch (slug) {

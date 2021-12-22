@@ -1,17 +1,8 @@
 <template>
   <div class="article l-container l-wrap">
-    <div
-      v-if="article.body"
-      class="l-container l-container--12col"
-    >
-      <breadcrumbs
-        class="article-breadcrumbs"
-        :breadcrumbs="breadcrumbs"
-      />
-      <h1
-        class="article-title"
-        v-html="article.title"
-      />
+    <div v-if="article.body" class="l-container l-container--12col">
+      <breadcrumbs class="article-breadcrumbs" :breadcrumbs="breadcrumbs" />
+      <h1 class="article-title" v-html="article.title" />
       <article-metadata
         :publish-date="article.formattedPublishDate"
         :updated-date="article.formattedUpdatedDate"
@@ -46,55 +37,81 @@
             action="share"
             service="facebook"
             :url="article.url"
-            :utm-parameters="{medium: 'social', source: 'facebook', campaign: 'shared_facebook'}"
-            @share="gaEvent('NTG social','social share', ...arguments)"
+            :utm-parameters="{
+              medium: 'social',
+              source: 'facebook',
+              campaign: 'shared_facebook'
+            }"
+            @share="gaEvent('NTG social', 'social share', ...arguments)"
           />
           <share-tools-item
             action="share"
             service="twitter"
             :url="article.url"
-            :share-parameters="{text: article.title, via: 'gothamist'}"
-            :utm-parameters="{medium: 'social', source: 'twitter', campaign: 'shared_twitter'}"
-            @share="gaEvent('NTG social','social share', ...arguments)"
+            :share-parameters="{ text: article.title, via: 'gothamist' }"
+            :utm-parameters="{
+              medium: 'social',
+              source: 'twitter',
+              campaign: 'shared_twitter'
+            }"
+            @share="gaEvent('NTG social', 'social share', ...arguments)"
           />
           <share-tools-item
             action="share"
             service="reddit"
             :url="article.url"
-            :share-parameters="{title: article.title}"
-            :utm-parameters="{medium: 'social', source: 'reddit', campaign: 'shared_reddit'}"
-            @share="gaEvent('NTG social','social share', ...arguments)"
+            :share-parameters="{ title: article.title }"
+            :utm-parameters="{
+              medium: 'social',
+              source: 'reddit',
+              campaign: 'shared_reddit'
+            }"
+            @share="gaEvent('NTG social', 'social share', ...arguments)"
           />
           <share-tools-item
             action="share"
             service="email"
             :url="article.url"
-            :share-parameters="{body: article.title + ' - %URL%'}"
-            :utm-parameters="{medium: 'social', source: 'email', campaign: 'shared_email'}"
-            @share="gaEvent('NTG social','social share', ...arguments)"
+            :share-parameters="{ body: article.title + ' - %URL%' }"
+            :utm-parameters="{
+              medium: 'social',
+              source: 'email',
+              campaign: 'shared_email'
+            }"
+            @share="gaEvent('NTG social', 'social share', ...arguments)"
           />
         </share-tools>
         <div
-          v-if="leadAsset && leadAsset.type !== undefined && leadAsset.type === 'lead_image' && leadAsset.value.image"
+          v-if="
+            leadAsset &&
+              leadAsset.type !== undefined &&
+              leadAsset.type === 'lead_image' &&
+              leadAsset.value.image
+          "
           class="article-lead-image"
         >
           <image-with-caption
             variation="gothamist"
             :alt-text="leadAsset.value.image.alt"
-            :image="`${$config.imageBase}${leadAsset.value.image.id}/fill-%width%x%height%|format-jpeg%7Cjpegquality-80/`"
-            :width="661"
-            :height="496"
+            :image="
+              getArticleImage(
+                article.leadAsset,
+                article.ancestry[0].slug,
+                article.leadAsset[0].value.image
+              )
+            "
+            :width="640"
+            :height="426"
+            :image-url="leadAsset.value.imageLink"
             :max-width="leadAsset.value.image.width || Infinity"
             :max-height="leadAsset.value.image.height || Infinity"
             :credit="leadAsset.value.image.credit"
             :caption="leadAsset.value.caption || leadAsset.value.image.caption"
             :credit-url="leadAsset.value.image.creditLink"
+            allow-vertical-effect
           />
         </div>
-        <div
-          v-if="article.gallery"
-          class="article-lead-image"
-        >
+        <div v-if="article.gallery" class="article-lead-image">
           <gallery-preview
             :count="galleryCount"
             :images="galleryImages"
@@ -127,7 +144,7 @@
           :key="article.uuid"
           v-observe-visibility="{
             callback: handleNewsletterImpression,
-            once: true,
+            once: true
           }"
           title="NYC news never sleeps. Get the Gothamist Daily newsletter and don't miss a moment."
           class="article-newsletter"
@@ -154,7 +171,10 @@
 
       <div
         id="comments"
-        v-observe-visibility="{callback: loadComments, intersection: { rootMargin: '300px 0px 0px 0px', threshold: 0.01 } }"
+        v-observe-visibility="{
+          callback: loadComments,
+          intersection: { rootMargin: '300px 0px 0px 0px', threshold: 0.01 }
+        }"
       />
       <template v-if="!article.disableComments && showComments">
         <disqus-embed
@@ -166,24 +186,21 @@
         <v-spacer size="quin" />
       </template>
 
-      <dismissible-area
-        prefix="donateBanner"
-        :views-before-showable="2"
-      >
+      <dismissible-area prefix="donateBanner" :views-before-showable="2">
         <template v-slot="dismissibleArea">
           <donate-banner
-            v-observe-visibility="{callback: bannerVisibilityChanged, once: true}"
-            :class="{'is-onscreen': bannerOnscreen}"
+            v-observe-visibility="{
+              callback: bannerVisibilityChanged,
+              once: true
+            }"
+            :class="{ 'is-onscreen': bannerOnscreen }"
             @close="dismissibleArea.handleDismissed"
             @donate-click="bannerDonateClicked"
           />
         </template>
       </dismissible-area>
     </div>
-    <div
-      v-else
-      class="l-container l-container--12col"
-    >
+    <div v-else class="l-container l-container--12col">
       <v-spacer size="quad" />
       <p>skeleton loading component goes here</p>
       <v-spacer size="quad" />
@@ -205,7 +222,7 @@ import LazyHydrate from 'vue-lazy-hydration'
 import RelatedAuthors from './RelatedAuthors.vue'
 import { getImagePath } from '~/mixins/image'
 import { insertAdDiv } from '~/utils/insert-ad-div'
-import { getScrollDepth } from '~/mixins/helpers'
+import { getScrollDepth, getArticleImage } from '~/mixins/helpers'
 import {
   getStructuredData,
   getOgImage,
@@ -222,7 +239,9 @@ export default {
   directives: {
     'watch-scroll': {
       bind (el, binding) {
-        el._scrollEvent = () => { binding.value(getScrollDepth(el)) }
+        el._scrollEvent = () => {
+          binding.value(getScrollDepth(el))
+        }
         window.addEventListener('scroll', el._scrollEvent, { passive: true })
       },
       unbind (el, binding) {
@@ -303,8 +322,7 @@ export default {
           const image = slide.value.slideImage.image
           return {
             url: image.file,
-            template:
-              this.$config.imageBase + image.id + '/fill-%width%x%height%/',
+            template: this.getArticleImage(null, null, image),
             thumbnail: image.file,
             alt: image.alt,
             credit: image.credit,
@@ -433,7 +451,7 @@ export default {
     }
   },
   watch: {
-    '$route' () {
+    $route () {
       this.resetScrollMilestones()
     },
     scrollPercent () {
@@ -453,7 +471,10 @@ export default {
     // get disqus comment counts
     this.disqusThreadIds.push(this.article.legacyId || this.article.uuid)
     this.disqusData = await this.getCommentCount(this.disqusThreadIds)
-    this.commentCount = await this.getCommentCountById(String(this.article.legacyId || this.article.uuid), this.disqusData)
+    this.commentCount = await this.getCommentCountById(
+      String(this.article.legacyId || this.article.uuid),
+      this.disqusData
+    )
     if (location.hash === '#comments') {
       this.scrollToComments()
     }
@@ -467,7 +488,12 @@ export default {
     },
     trackScrollDepth (percentScrolled) {
       this.gtmData.milestone = percentScrolled
-      this.gaArticleEvent('NTG article milestone', percentScrolled + '%', this.gtmData.articleTitle, this.gtmData)
+      this.gaArticleEvent(
+        'NTG article milestone',
+        percentScrolled + '%',
+        this.gtmData.articleTitle,
+        this.gtmData
+      )
     },
     bannerDonateClicked () {
       this.gaArticleEvent(
@@ -528,7 +554,8 @@ export default {
       if (isVisible) {
         this.showComments = true
       }
-    }
+    },
+    getArticleImage
   },
   head () {
     return {
@@ -565,7 +592,7 @@ export default {
 }
 
 .article-breadcrumbs:before {
-  content: "";
+  content: '';
   position: absolute;
   width: 100%;
   height: 1px;

@@ -21,10 +21,7 @@
         />
       </header>
       <v-spacer />
-      <hr
-        class="u-border-accent u-hide-until--m"
-        aria-hidden="true"
-      >
+      <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
       <v-spacer size="double" />
       <section
         v-if="moreResults && moreResults.length > 0 && moreResultsNuggets"
@@ -39,17 +36,36 @@
             :key="index"
             class="gothamist u-space--double--bottom mod-large"
             :show-gallery-icon="hasGallery(story.leadAsset)"
-            :image="getArticleImage(story.leadAsset, story.ancestry[0].slug, story.listingImage)"
-            :image-height="285"
-            :image-width="414"
+            :image="
+              getArticleImage(
+                story.leadAsset,
+                story.ancestry[0].slug,
+                story.listingImage
+              )
+            "
+            :image-width="$mq | mq({ xsmall: 100, medium: 360 })"
+            :image-height="$mq | mq({ xsmall: 100, medium: 240 })"
             :title="story.title"
             :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
             :subtitle="story.description"
-            :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsoredContent, story.tags)"
+            :tags="
+              formatTags(
+                story.ancestry[0].title,
+                story.ancestry[0].slug,
+                story.sponsoredContent,
+                story.tags
+              )
+            "
           >
             <article-metadata
-              :publish-date="!story.updatedDate ? fuzzyDateTime(story.meta.firstPublishedAt) : null"
-              :updated-date="story.updatedDate ? fuzzyDateTime(story.updatedDate) : null"
+              :publish-date="
+                !story.updatedDate
+                  ? fuzzyDateTime(story.meta.firstPublishedAt)
+                  : null
+              "
+              :updated-date="
+                story.updatedDate ? fuzzyDateTime(story.updatedDate) : null
+              "
             >
               <template
                 v-if="String(story.legacyId || story.uuid)"
@@ -57,7 +73,12 @@
               >
                 <v-counter
                   icon="comment"
-                  :value="getCommentCountById(String(story.legacyId || story.uuid), moreResultsDisqusData)"
+                  :value="
+                    getCommentCountById(
+                      String(story.legacyId || story.uuid),
+                      moreResultsDisqusData
+                    )
+                  "
                   :href="`/${story.ancestry[0].slug}/${story.meta.slug}?to=comments`"
                 />
               </template>
@@ -67,7 +88,12 @@
         <loading-icon v-if="!moreResultsLoaded" />
         <v-spacer size="double" />
         <div
-          v-if="moreResults && moreResultsLoaded && moreResults.length < totalCount && moreResults.length > 0"
+          v-if="
+            moreResults &&
+              moreResultsLoaded &&
+              moreResults.length < totalCount &&
+              moreResults.length > 0
+          "
           class="l-container u-align-center"
         >
           <v-button
@@ -82,7 +108,11 @@
       </section>
       <p
         v-if="moreResults && moreResults.length === 0 && moreResultsLoaded"
-        class="c-listing__sections-title u-align--center u-space--double--bottom"
+        class="
+          c-listing__sections-title
+          u-align--center
+          u-space--double--bottom
+        "
       >
         No Results
       </p>
@@ -110,13 +140,10 @@ export default {
     RelatedAuthors
   },
   mixins: [gtm, disqus],
-  async asyncData ({
-    $axios,
-    params,
-    error
-  }) {
+  async asyncData ({ $axios, params, error }) {
     const path = `${params.slug}`
-    const page = await $axios.get(`/pages/find/?html_path=staff/${path}`)
+    const page = await $axios
+      .get(`/pages/find/?html_path=staff/${path}`)
       .catch(() => {
         error({
           statusCode: 404,
@@ -168,18 +195,32 @@ export default {
     async getMoreResults () {
       this.moreResultsLoaded = false
       await this.$axios
-        .get('/pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&author_slug=' + this.slug + '&limit=12&offset=' + this.moreResultsOffset)
+        .get(
+          '/pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&author_slug=' +
+            this.slug +
+            '&limit=12&offset=' +
+            this.moreResultsOffset
+        )
         .then((response) => {
           this.totalCount = response.data.meta.totalCount
           this.moreResults = this.moreResults.concat(response.data.items)
           this.moreResultsOffset += 12
           this.moreResultsLoaded = true
           response.data.items.forEach((item) => {
-            this.moreResultsDisqusThreadIds.push(String(item.legacyId || item.uuid))
+            this.moreResultsDisqusThreadIds.push(
+              String(item.legacyId || item.uuid)
+            )
           })
         })
-      this.moreResultsDisqusData = await this.getCommentCount(this.moreResultsDisqusThreadIds)
-      this.gaEvent('Click Tracking', 'Load More Results', 'AuthorPage', this.moreResultsOffset + ' articles loaded')
+      this.moreResultsDisqusData = await this.getCommentCount(
+        this.moreResultsDisqusThreadIds
+      )
+      this.gaEvent(
+        'Click Tracking',
+        'Load More Results',
+        'AuthorPage',
+        this.moreResultsOffset + ' articles loaded'
+      )
     },
     hasGallery,
     search () {

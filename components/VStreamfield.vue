@@ -41,8 +41,8 @@
                 story.listingImage
               )
             "
-            :image-height="413"
-            :image-width="560"
+            :image-height="276"
+            :image-width="414"
             :image-max-height="
               getArticleImageHeight(story.leadAsset, story.listingImage) ||
                 Infinity
@@ -103,7 +103,7 @@
         <image-with-caption
           variation="gothamist"
           :alt-text="block.value.image.alt"
-          :image="`${$config.imageBase}${block.value.image.id}/fill-%width%x%height%|format-jpeg%7Cjpegquality-70/`"
+          :image="getArticleImage(null, null, block.value.image)"
           :width="640"
           :height="
             getHeightFromWidth(

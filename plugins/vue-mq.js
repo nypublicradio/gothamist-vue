@@ -12,6 +12,6 @@ export default function () {
       xxlarge: 1500,
       xxxlarge: Infinity
     },
-    defaultBreakpoint: 'small' // customize this for SSR
+    defaultBreakpoint: 'xsmall' // customize this for SSR
   })
 }
