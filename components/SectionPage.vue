@@ -161,20 +161,12 @@
             <div
               v-if="nuggetIndex === 0"
               key="interior_midpage_1"
-              class="
-                htlad-interior_midpage_1
-                ad-div
-                mod-break-margins mod-ad-disclosure
-              "
+              class="htlad-interior_midpage_1 ad-div mod-break-margins mod-ad-disclosure"
             />
             <div
               v-else
               key="interior_midpage_repeating"
-              class="
-                htlad-interior_midpage_repeating
-                ad-div
-                mod-break-margins mod-ad-disclosure
-              "
+              class="htlad-interior_midpage_repeating ad-div mod-break-margins mod-ad-disclosure"
             />
             <hr
               class="u-border-accent u-hide-until--m u-space--double--top"
@@ -325,6 +317,7 @@ export default {
       moreResultsOffset: 0
     }
   },
+
   computed: {
     ...mapState('global', {
       defaultImage: state => state.defaultImage,
@@ -359,9 +352,6 @@ export default {
       }
       return nuggetArray
     }
-  },
-  mounted () {
-    this.getMoreResults()
   },
   methods: {
     formatTags,

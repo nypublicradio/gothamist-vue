@@ -132,11 +132,11 @@
                 :image-height="$mq | mq({ xsmall: 100, medium: 150 })"
                 :image-max-height="
                   getArticleImageHeight(story.leadAsset, story.listingImage) ||
-                    150
+                    Infinity
                 "
                 :image-max-width="
                   getArticleImageWidth(story.leadAsset, story.listingImage) ||
-                    150
+                    Infinity
                 "
                 :title="story.title"
                 :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
