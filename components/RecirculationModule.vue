@@ -9,8 +9,8 @@
         :key="index"
         class="gothamist mod-small"
         :image="imageUrl(story)"
-        :image-width="$mq | mq({ xsmall: 100, medium: 150 })"
-        :image-height="$mq | mq({ xsmall: 100, medium: 150 })"
+        :image-width="$mq | mq({ medium: 150, xsmall: 100 })"
+        :image-height="$mq | mq({ medium: 150, xsmall: 100 })"
         :image-max-width="
           (getImageFromStory(story) && getImageFromStory(story).width) ||
             Infinity

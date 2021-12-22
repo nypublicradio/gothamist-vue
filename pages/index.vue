@@ -9,12 +9,7 @@
       >
         <h2 class="c-featured-blocks__heading">
           <span
-            class="
-              c-featured-blocks__heading-icon
-              o-icon
-              u-icon--s
-              u-path-fill--quaternary
-            "
+            class="c-featured-blocks__heading-icon o-icon u-icon--s u-path-fill--quaternary"
           >
             <svg
               role="img"
@@ -137,11 +132,11 @@
                 :image-height="$mq | mq({ xsmall: 100, medium: 150 })"
                 :image-max-height="
                   getArticleImageHeight(story.leadAsset, story.listingImage) ||
-                    Infinity
+                    150
                 "
                 :image-max-width="
                   getArticleImageWidth(story.leadAsset, story.listingImage) ||
-                    Infinity
+                    150
                 "
                 :title="story.title"
                 :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
@@ -643,10 +638,7 @@
           <div
             v-for="(nugget, nuggetIndex) in moreResultsNuggets"
             :key="nuggetIndex"
-            class="
-              l-grid l-grid--large-gutters l-grid--right-rail
-              u-space--double--bottom
-            "
+            class="l-grid l-grid--large-gutters l-grid--right-rail u-space--double--bottom"
           >
             <div>
               <v-card
