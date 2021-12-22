@@ -102,6 +102,7 @@
             "
             :width="640"
             :height="426"
+            :image-url="leadAsset.value.imageLink"
             :max-width="leadAsset.value.image.width || Infinity"
             :max-height="leadAsset.value.image.height || Infinity"
             :credit="leadAsset.value.image.credit"
@@ -458,6 +459,9 @@ export default {
         if (this.scrollPercent >= threshold) {
           this.trackScrollDepth(threshold)
           this.currentlyWatching.splice(index, 1)
+        }
+        if (this.scrollPercent >= 75 && threshold === 75) {
+          this.bannerOnscreen = true
         }
       })
     }
