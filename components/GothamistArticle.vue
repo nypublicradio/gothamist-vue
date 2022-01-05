@@ -566,12 +566,6 @@ export default {
           json: this.structuredData
         }
       ],
-      link: [
-        {
-          rel: 'amphtml',
-          href: this.$config.champUrl + this.$route.path
-        }
-      ],
       meta: [].concat(
         this.baseMeta,
         this.imageMeta,
