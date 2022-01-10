@@ -1,5 +1,5 @@
 <template>
-  <ContentWall class="content-wall">
+  <ContentWall class="content-wall" :show-content="showContent" @dismissed="setCookie">
     <template v-slot:full>
       <v-streamfield
         :key="article.uuid"
@@ -43,9 +43,30 @@ export default {
       default: () => {}
     }
   },
-  init: {
-    // check for utm
-    // check for cookie
+  data () {
+    return {
+      showContent: false
+    }
+  },
+  init () {
+    if (this.hasNewsletterCookie() || this.fromNewsletterLink()) {
+      this.setNewsletterCookie()
+      this.showContent = true
+    }
+  },
+  methods: {
+    hasNewsletterCookie () {
+      return this.$cookies.get('_gothamistNewsletterMember')
+    },
+    fromNewsletterLink () {
+      const newsletterUtmName = ''
+      const newsletterUtmValue = ''
+      return this.$route.query[newsletterUtmName] === newsletterUtmValue
+    },
+    setNewsletterCookie () {
+      const tenYears = 60 * 60 * 24 * 365 * 10
+      this.$cookies.set('_gothamistNewsletterMember', 'true', { path: '/', maxAge: tenYears })
+    }
   }
 }
 </script>
