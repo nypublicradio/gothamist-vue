@@ -1,6 +1,6 @@
 <template>
   <div class="streamfield">
-    <template v-for="block in streamfield">
+    <template v-for="block in blocks">
       <!-- block-quote -->
       <div
         v-if="block.type === 'block_quote'"
@@ -163,6 +163,15 @@ export default {
     streamfield: {
       type: Array,
       default: () => []
+    },
+    maxBlocks: {
+      type: Number,
+      default: Infinity
+    }
+  },
+  computed: {
+    blocks () {
+      return this.streamfield.slice(0, this.maxBlocks)
     }
   },
   mounted () {

@@ -121,17 +121,9 @@
         </div>
       </div>
       <v-spacer size="double" />
-      <LazyHydrate when-visible>
-        <v-streamfield
-          :key="article.uuid"
-          ref="article-body"
-          v-watch-scroll="updateScrollPercent"
-          class="l-container l-container--10col article-body c-article__body"
-          :streamfield="article.body"
-          @hook:mounted="insertAd"
-          @hook:updated="insertAd"
-        />
-      </LazyHydrate>
+      <GothamistWalledArticle
+        :article="article"
+      />
       <v-spacer size="quad" />
       <RelatedAuthors
         class="l-container l-container--10col"
@@ -218,8 +210,8 @@
 <script>
 import gtm from '@/mixins/gtm'
 import disqus from '@/mixins/disqus'
-import LazyHydrate from 'vue-lazy-hydration'
-import RelatedAuthors from './RelatedAuthors.vue'
+import RelatedAuthors from './RelatedAuthors'
+import GothamistWalledArticle from './GothamistWalledArticle'
 import { getImagePath } from '~/mixins/image'
 import { insertAdDiv } from '~/utils/insert-ad-div'
 import { getScrollDepth, getArticleImage } from '~/mixins/helpers'
@@ -233,7 +225,7 @@ import {
 export default {
   name: 'GothamistArticle',
   components: {
-    LazyHydrate,
+    GothamistWalledArticle,
     RelatedAuthors
   },
   directives: {
