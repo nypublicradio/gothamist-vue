@@ -1,5 +1,5 @@
 <template>
-  <ContentWall class="content-wall" :show-content="showContent" @dismissed="setCookie">
+  <ContentWall class="content-wall" @dismissed="handleDismissed">
     <template v-slot:full>
       <v-streamfield
         :key="article.uuid"
@@ -12,7 +12,6 @@
       <LazyHydrate when-visible>
         <v-streamfield
           :streamfield="article.body"
-          :max-blocks="3"
           class="leadin l-container l-container--10col article-body c-article__body"
         />
       </LazyHydrate>
@@ -43,29 +42,9 @@ export default {
       default: () => {}
     }
   },
-  data () {
-    return {
-      showContent: false
-    }
-  },
-  init () {
-    if (this.hasNewsletterCookie() || this.fromNewsletterLink()) {
-      this.setNewsletterCookie()
-      this.showContent = true
-    }
-  },
   methods: {
-    hasNewsletterCookie () {
-      return this.$cookies.get('_gothamistNewsletterMember')
-    },
-    fromNewsletterLink () {
-      const newsletterUtmName = ''
-      const newsletterUtmValue = ''
-      return this.$route.query[newsletterUtmName] === newsletterUtmValue
-    },
-    setNewsletterCookie () {
-      const tenYears = 60 * 60 * 24 * 365 * 10
-      this.$cookies.set('_gothamistNewsletterMember', 'true', { path: '/', maxAge: tenYears })
+    handleDismissed () {
+      this.$emit('dismissed')
     }
   }
 }

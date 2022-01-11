@@ -122,8 +122,20 @@
       </div>
       <v-spacer size="double" />
       <GothamistWalledArticle
+        v-if="shouldShowContentWall"
         :article="article"
+        @dismissed="handledWallDismissed"
+        @hook:mounted="handleWallImpression"
+        @hook:activated="handleWallImpression"
       />
+      <LazyHydrate v-else when-visible>
+        <v-streamfield
+          :key="article.uuid"
+          ref="article-body"
+          class="l-container l-container--10col article-body c-article__body"
+          :streamfield="article.body"
+        />
+      </LazyHydrate>
       <v-spacer size="quad" />
       <RelatedAuthors
         class="l-container l-container--10col"
@@ -210,6 +222,8 @@
 <script>
 import gtm from '@/mixins/gtm'
 import disqus from '@/mixins/disqus'
+import { differenceInMonths } from 'date-fns'
+import { LazyHydrate } from 'vue-lazy-hydration'
 import RelatedAuthors from './RelatedAuthors'
 import GothamistWalledArticle from './GothamistWalledArticle'
 import { getImagePath } from '~/mixins/image'
@@ -226,7 +240,8 @@ export default {
   name: 'GothamistArticle',
   components: {
     GothamistWalledArticle,
-    RelatedAuthors
+    RelatedAuthors,
+    LazyHydrate
   },
   directives: {
     'watch-scroll': {
@@ -282,6 +297,9 @@ export default {
     }
   },
   computed: {
+    shouldShowContentWall () {
+      return this.isOld && !this.fromNewsletterLink && !this.hasNewsletterCookie
+    },
     gtmData () {
       return {
         articleTags: this.tags,
@@ -440,7 +458,19 @@ export default {
         tags += crumb.name + ','
       })
       return tags
+    },
+    isOld () {
+      return differenceInMonths(new Date(), new Date(this.article.updatedDate) > 6)
+    },
+    hasNewsletterCookie () {
+      return this.$cookies.get('_gothamistNewsletterMember')
+    },
+    fromNewsletterLink () {
+      const newsletterUtmName = 'utm_medium'
+      const newsletterUtmValue = 'nypr-email'
+      return this.$route.query[newsletterUtmName] === newsletterUtmValue
     }
+
   },
   watch: {
     $route () {
@@ -539,8 +569,14 @@ export default {
         )
       }
     },
+    handleWallImpression () {
+      this.gaEvent('Article Page', 'Newsletter Signup Wall Visible', this.article.title)
+    },
     handleNewsletterSignupSuccess () {
       this.gaEvent('NTG newsletter', 'newsletter signup 1', 'success')
+    },
+    handleWallDismissed () {
+      this.gaEvent('Article Page', 'Newsletter Signup Submitted', this.article.title)
     },
     loadComments (isVisible) {
       if (isVisible) {

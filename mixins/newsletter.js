@@ -35,6 +35,8 @@ export default {
         .then(() => {
           this.status = 'success'
           this.$emit('newsletter-signup-success')
+          const tenYears = 60 * 60 * 24 * 365 * 10
+          this.$cookies.set('_gothamistNewsletterMember', 'true', { path: '/', maxAge: tenYears })
         })
         .catch(() => {
           this.status = 'error'
