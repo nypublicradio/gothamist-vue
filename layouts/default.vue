@@ -164,7 +164,7 @@ export default {
 
 <style lang="scss">
 html {
-  scroll-padding-top: 74px;
+  scroll-padding-top: 85px;
 }
 
 .home-page main {

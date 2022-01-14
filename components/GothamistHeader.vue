@@ -272,6 +272,12 @@ export default {
   width: 100%;
 }
 
+.gothamist-header.is-stuck .c-main-header__right .search-bar-form-wrapper {
+  position: fixed;
+  top: 12px;
+  right: 16px !important;
+}
+
 .progress-bar {
   position: absolute;
   width: 100%;
