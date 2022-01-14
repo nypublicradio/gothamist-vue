@@ -1,7 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import { toHaveNoViolations } from 'jest-axe'
 import ContentWall from '../components/ContentWall'
-import axe from './axe-helper'
 
 describe('ContentWall', () => {
   let component
