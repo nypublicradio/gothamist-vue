@@ -32,7 +32,8 @@
           <v-card
             v-for="(story, index) in block.value.pages"
             :key="index"
-            class="gothamist u-space--double--bottom mod-vertical mod-large"
+            class="gothamist u-space--double--bottom"
+            :class="$mq | mq({ xsmall: '', medium: 'mod-vertical mod-large' })"
             :show-gallery-icon="hasGallery(story.leadAsset)"
             :image="
               getArticleImage(
