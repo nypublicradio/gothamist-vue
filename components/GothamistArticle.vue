@@ -224,8 +224,22 @@ import gtm from '@/mixins/gtm'
 import disqus from '@/mixins/disqus'
 import { differenceInMonths } from 'date-fns'
 import { LazyHydrate } from 'vue-lazy-hydration'
-import RelatedAuthors from './RelatedAuthors'
+import { ObserveVisibility } from 'vue-observe-visibility'
+import ArticleMetadata from 'nypr-design-system-vue/src/components/ArticleMetadata'
+import ImageWithCaption from 'nypr-design-system-vue/src/components/ImageWithCaption'
+import ShareTools from 'nypr-design-system-vue/src/components/ShareTools'
+import ShareToolsItem from 'nypr-design-system-vue/src/components/ShareToolsItem'
+import VSpacer from 'nypr-design-system-vue/src/components/VSpacer'
+import VTag from 'nypr-design-system-vue/src/components/VTag'
+import ArticlePageNewsletter from './ArticlePageNewsletter'
+import Breadcrumbs from './Breadcrumbs'
+import DismissibleArea from './DismissibleArea'
+import DoYouKnowTheScoop from './DoYouKnowTheScoop'
 import GothamistWalledArticle from './GothamistWalledArticle'
+import ReadMoreIn from './ReadMoreIn'
+import RecirculationModule from './RecirculationModule'
+import RelatedAuthors from './RelatedAuthors'
+import VStreamfield from './VStreamfield'
 import { getImagePath } from '~/mixins/image'
 import { insertAdDiv } from '~/utils/insert-ad-div'
 import { getScrollDepth, getArticleImage } from '~/mixins/helpers'
@@ -239,9 +253,22 @@ import {
 export default {
   name: 'GothamistArticle',
   components: {
+    ArticleMetadata,
+    ArticlePageNewsletter,
+    Breadcrumbs,
+    DismissibleArea,
+    DoYouKnowTheScoop,
     GothamistWalledArticle,
+    ImageWithCaption,
+    LazyHydrate,
+    ReadMoreIn,
+    RecirculationModule,
     RelatedAuthors,
-    LazyHydrate
+    ShareTools,
+    ShareToolsItem,
+    VStreamfield,
+    VSpacer,
+    VTag
   },
   directives: {
     'watch-scroll': {
