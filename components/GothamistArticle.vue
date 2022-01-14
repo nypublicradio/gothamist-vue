@@ -487,7 +487,7 @@ export default {
       return tags
     },
     isOld () {
-      return differenceInMonths(new Date(), new Date(this.article.updatedDate) > 6)
+      return differenceInMonths(new Date(), new Date(this.article.updatedDate))
     },
     hasNewsletterCookie () {
       return this.$cookies.get('_gothamistNewsletterMember')
@@ -495,7 +495,12 @@ export default {
     fromNewsletterLink () {
       const newsletterUtmName = 'utm_medium'
       const newsletterUtmValue = 'nypr-email'
-      return this.$route.query[newsletterUtmName] === newsletterUtmValue
+      if (this.$route.query?.[newsletterUtmName] === newsletterUtmValue) {
+        const tenYears = 60 * 60 * 24 * 365 * 10
+        this.$cookies.set('_gothamistNewsletterMember', 'true', { path: '/', maxAge: tenYears })
+        return true
+      }
+      return false
     }
 
   },
