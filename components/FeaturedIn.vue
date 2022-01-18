@@ -9,7 +9,7 @@
         defaultImage"
       :image-height="150"
       :image-width="150"
-      :title="featuredStory.story.title"
+      :title="getTitle(featuredStory.story)"
       :title-link="featuredStory.story.url"
       :tags="featuredStory.story.tags"
     >
@@ -31,6 +31,10 @@
 <script>
 import { mapState } from 'vuex'
 
+const {
+  getTitle
+} = require('~/mixins/helpers')
+
 export default {
   name: 'FeaturedIn',
   data () {
@@ -42,6 +46,9 @@ export default {
     ...mapState('global', {
       defaultImage: state => state.defaultImage
     })
+  },
+  methods: {
+    getTitle
   }
   // async mounted () {
   //   await this.$axios

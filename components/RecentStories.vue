@@ -11,7 +11,7 @@
       :image-height="150"
       :image-width="150"
       :sponsored="story.sponsoredContent"
-      :title="story.title"
+      :title="getTitle(story)"
       :title-link="'/' + story.ancestry[0].slug + '/' + story.meta.slug"
       :tags="formatTags(story.ancestry[0].title, story.ancestry[0].slug, story.sponsored_content, story.tags)"
     >
@@ -38,7 +38,7 @@
 import { mapState } from 'vuex'
 import disqus from '~/mixins/disqus'
 
-const { formatTags, fuzzyDateTime, hasGallery } = require('~/mixins/helpers')
+const { formatTags, fuzzyDateTime, hasGallery, getTitle } = require('~/mixins/helpers')
 
 export default {
   name: 'RecentStories',
@@ -78,7 +78,8 @@ export default {
   methods: {
     formatTags,
     fuzzyDateTime,
-    hasGallery
+    hasGallery,
+    getTitle
   }
 }
 </script>

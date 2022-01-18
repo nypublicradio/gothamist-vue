@@ -37,9 +37,9 @@
           <v-card
             class="featured-grid-col1 gothamist mod-vertical mod-large"
             :show-gallery-icon="hasGallery(featuredSection[0].leadAsset)"
-            :title="featuredSection[0].title"
+            :title="getTitle(featuredSection[0])"
             :title-link="`/${featuredSection[0].ancestry[0].slug}/${featuredSection[0].meta.slug}`"
-            :subtitle="featuredSection[0].description"
+            :subtitle="getSubtitle(featuredSection[0])"
             :image="
               getArticleImage(
                 featuredSection[0].leadAsset,
@@ -138,7 +138,7 @@
                   getArticleImageWidth(story.leadAsset, story.listingImage) ||
                     Infinity
                 "
-                :title="story.title"
+                :title="getTitle(story)"
                 :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
                 :tags="
                   formatTags(
@@ -202,9 +202,9 @@
         <v-card
           class="gothamist mod-large"
           :show-gallery-icon="hasGallery(sponsoredSection[0].leadAsset)"
-          :title="sponsoredSection[0].title"
+          :title="getTitle(sponsoredSection[0])"
           :title-link="`/${sponsoredSection[0].ancestry[0].slug}/${sponsoredSection[0].meta.slug}`"
-          :subtitle="sponsoredSection[0].description"
+          :subtitle="getSubtitle(sponsoredSection[0])"
           :image="
             getArticleImage(
               sponsoredSection[0].leadAsset,
@@ -401,9 +401,9 @@
             getArticleImageWidth(story.leadAsset, story.listingImage) ||
               Infinity
           "
-          :title="story.title"
+          :title="getTitle(story)"
           :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-          :subtitle="story.description"
+          :subtitle="getSubtitle(story)"
           :tags="
             formatTags(
               story.ancestry[0].title,
@@ -487,9 +487,9 @@
                 getArticleImageWidth(story.leadAsset, story.listingImage) ||
                   Infinity
               "
-              :title="story.title"
+              :title="getTitle(story)"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-              :subtitle="story.description"
+              :subtitle="getSubtitle(story)"
               :tags="
                 formatTags(
                   story.ancestry[0].title,
@@ -574,9 +574,9 @@
                 getArticleImageWidth(story.leadAsset, story.listingImage) ||
                   Infinity
               "
-              :title="story.title"
+              :title="getTitle(story)"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-              :subtitle="story.description"
+              :subtitle="getSubtitle(story)"
               :tags="
                 formatTags(
                   story.ancestry[0].title,
@@ -666,9 +666,9 @@
                   getArticleImageWidth(story.leadAsset, story.listingImage) ||
                     Infinity
                 "
-                :title="story.title"
+                :title="getTitle(story)"
                 :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-                :subtitle="story.description"
+                :subtitle="getSubtitle(story)"
                 :tags="
                   formatTags(
                     story.ancestry[0].title,
