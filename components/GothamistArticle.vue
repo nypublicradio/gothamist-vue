@@ -223,14 +223,12 @@
 import gtm from '@/mixins/gtm'
 import disqus from '@/mixins/disqus'
 import { differenceInMonths } from 'date-fns'
-import { LazyHydrate } from 'vue-lazy-hydration'
-import { ObserveVisibility } from 'vue-observe-visibility'
-import ArticleMetadata from 'nypr-design-system-vue/src/components/ArticleMetadata'
-import ImageWithCaption from 'nypr-design-system-vue/src/components/ImageWithCaption'
-import ShareTools from 'nypr-design-system-vue/src/components/ShareTools'
-import ShareToolsItem from 'nypr-design-system-vue/src/components/ShareToolsItem'
-import VSpacer from 'nypr-design-system-vue/src/components/VSpacer'
-import VTag from 'nypr-design-system-vue/src/components/VTag'
+import LazyHydrate from 'vue-lazy-hydration'
+import ImageWithCaption from 'nypr-design-system-vue/src/components/ImageWithCaption.vue'
+import ShareTools from 'nypr-design-system-vue/src/components/ShareTools.vue'
+import ShareToolsItem from 'nypr-design-system-vue/src/components/ShareToolsItem.vue'
+import VSpacer from 'nypr-design-system-vue/src/components/VSpacer.vue'
+import VTag from 'nypr-design-system-vue/src/components/VTag.vue'
 import ArticlePageNewsletter from './ArticlePageNewsletter'
 import Breadcrumbs from './Breadcrumbs'
 import DismissibleArea from './DismissibleArea'
@@ -253,7 +251,6 @@ import {
 export default {
   name: 'GothamistArticle',
   components: {
-    ArticleMetadata,
     ArticlePageNewsletter,
     Breadcrumbs,
     DismissibleArea,
