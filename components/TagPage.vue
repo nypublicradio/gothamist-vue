@@ -52,7 +52,8 @@
                 3
               )"
               :key="index"
-              class="gothamist u-space--double--bottom mod-large"
+              class="gothamist u-space--double--bottom"
+              :class="$mq | mq({ xsmall: '', medium: 'mod-large' })"
               :show-gallery-icon="hasGallery(story.leadAsset)"
               :image="
                 getArticleImage(
@@ -131,7 +132,8 @@
                 6
               )"
               :key="index"
-              class="gothamist u-space--double--bottom mod-large"
+              class="gothamist u-space--double--bottom"
+              :class="$mq | mq({ xsmall: '', medium: 'mod-large' })"
               :show-gallery-icon="hasGallery(story.leadAsset)"
               :image="
                 getArticleImage(
@@ -231,7 +233,8 @@
                 13
               )"
               :key="index"
-              class="gothamist u-space--double--bottom mod-large"
+              class="gothamist u-space--double--bottom"
+              :class="$mq | mq({ xsmall: '', medium: 'mod-large' })"
               :show-gallery-icon="hasGallery(story.leadAsset)"
               :image="
                 getArticleImage(

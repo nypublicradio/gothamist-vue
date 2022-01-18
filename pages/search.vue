@@ -48,7 +48,8 @@
           <v-card
             v-for="(story, index) in moreResultsNuggets[nuggetIndex]"
             :key="index"
-            class="gothamist u-space--double--bottom mod-large"
+            class="gothamist u-space--double--bottom"
+            :class="$mq | mq({ xsmall: '', medium: 'mod-large' })"
             :show-gallery-icon="hasGallery(story.result.leadAsset)"
             :image="
               getArticleImage(

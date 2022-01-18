@@ -15,7 +15,8 @@
           <v-card
             v-for="(featuredStory, index) in featuredStories"
             :key="index"
-            class="gothamist u-space--double--bottom mod-vertical mod-large"
+            class="gothamist u-space--double--bottom"
+            :class="$mq | mq({ xsmall: '', medium: 'mod-vertical mod-large' })"
             :show-gallery-icon="hasGallery(featuredStory.leadAsset)"
             :image="
               getArticleImage(
@@ -96,7 +97,8 @@
                 4
               )"
               :key="index"
-              class="gothamist u-space--double--bottom mod-large"
+              class="gothamist u-space--double--bottom"
+              :class="$mq | mq({ xsmall: '', medium: 'mod-large' })"
               :show-gallery-icon="hasGallery(story.leadAsset)"
               :image="
                 getArticleImage(
@@ -180,7 +182,8 @@
                 11
               )"
               :key="index"
-              class="gothamist u-space--double--bottom mod-large"
+              class="gothamist u-space--double--bottom"
+              :class="$mq | mq({ xsmall: '', medium: 'mod-large' })"
               :show-gallery-icon="hasGallery(story.leadAsset)"
               :image="
                 getArticleImage(
