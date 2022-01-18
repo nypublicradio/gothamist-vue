@@ -230,6 +230,14 @@ export const isMoreThan48Hours = function (utcStartTime) {
   return false
 }
 
+export const getTitle = function (story) {
+  return (story.listingTitle || story.listingTitle !== '') ? story.listingTitle : story.title
+}
+
+export const getSubtitle = function (story) {
+  return (story.listingSummary || story.listingSummary !== '') ? story.listingSummary : story.description
+}
+
 export default {
   methods: {
     amountScrolled,
@@ -248,6 +256,8 @@ export default {
     isLessThan24Hours,
     isMoreThan24Hours,
     isLessThan48Hours,
-    isMoreThan48Hours
+    isMoreThan48Hours,
+    getTitle,
+    getSubtitle
   }
 }
