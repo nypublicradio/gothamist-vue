@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     handleDismissed () {
-      this.$emit('dismissed')
+      this.$emit('wallDismissed')
     }
   }
 }

@@ -124,7 +124,7 @@
       <GothamistWalledArticle
         v-if="shouldShowContentWall"
         :article="article"
-        @dismissed="handledWallDismissed"
+        @wallDismissed="handleWallDismissed"
         @hook:mounted="handleWallImpression"
         @hook:activated="handleWallImpression"
       />
@@ -488,18 +488,7 @@ export default {
     },
     hasNewsletterCookie () {
       return this.$cookies.get('_gothamistNewsletterMember')
-    },
-    fromNewsletterLink () {
-      const newsletterUtmName = 'utm_medium'
-      const newsletterUtmValue = 'nypr-email'
-      if (this.$route.query?.[newsletterUtmName] === newsletterUtmValue) {
-        const tenYears = 60 * 60 * 24 * 365 * 10
-        this.$cookies.set('_gothamistNewsletterMember', 'true', { path: '/', maxAge: tenYears })
-        return true
-      }
-      return false
     }
-
   },
   watch: {
     $route () {

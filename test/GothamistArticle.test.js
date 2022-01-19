@@ -77,9 +77,6 @@ describe('GothamistArticle', () => {
       propsData: {
         article
       },
-      methods: {
-        handleWallImpression: () => {}
-      },
       mocks: {
         $route,
         $axios,
@@ -89,36 +86,5 @@ describe('GothamistArticle', () => {
       }
     })
     expect(wrapper.find('gothamistwalledarticle-stub').exists()).toBe(false)
-  })
-
-  it('should not display the content wall on an old article when the utm query string exists and it should set the cookie', () => {
-    const utmRoute = { path: 'test', query: { utm_medium: 'nypr-email' } }
-    let cookieName = ''
-    let cookieValue = ''
-    const $cookies = {
-      get: () => {},
-      set: (name, value) => { cookieName = name; cookieValue = value }
-    }
-    const article = Object.assign({ updatedDate: String(sub(new Date(), { months: 7 })) }, coronavirusStatistics, {})
-    const wrapper = shallowMount(GothamistArticle, {
-      propsData: {
-        article
-      },
-      methods: {
-        handleWallImpression: () => {}
-      },
-      mocks: {
-        store,
-        localVue,
-        $route: utmRoute,
-        $axios,
-        $config,
-        $cookies,
-        $gtm
-      }
-    })
-    expect(wrapper.find('gothamistwalledarticle-stub').exists()).toBe(false)
-    expect(cookieName).toEqual('_gothamistNewsletterMember')
-    expect(cookieValue).toEqual('true')
   })
 })

@@ -62,6 +62,14 @@ export default {
     isTagPage () {
       return this.$route.name === 'tags-slug'
     },
+    fromNewsletterLink () {
+      const newsletterUtmName = 'utm_medium'
+      const newsletterUtmValue = 'nypr-email'
+      if (this.$route.query?.[newsletterUtmName] === newsletterUtmValue) {
+        return true
+      }
+      return false
+    },
     ...mapState('global', ['isSensitiveContent'])
   },
   watch: {
@@ -73,6 +81,10 @@ export default {
     this.windowWidth = window.innerWidth
   },
   mounted () {
+    if (this.fromNewsletterLink) {
+      const tenYears = 60 * 60 * 24 * 365 * 10
+      this.$cookies.set('_gothamistNewsletterMember', 'true', { path: '/', maxAge: tenYears })
+    }
     this.handleNewPage()
   },
   methods: {
