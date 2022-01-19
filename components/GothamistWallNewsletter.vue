@@ -4,11 +4,11 @@
       <template
         v-if="status === '' || status === 'error'"
       >
-        <h2 class="regwall-header">
+        <h2 class="regwall-header mod-left">
           Read this story completely free.
         </h2>
-        <div class="regwall-text">
-          To continue reading, sign up for our daily newsletter and get unlimited access to Gothamist.com. <a>Why am I seeing this?</a>
+        <div class="regwall-text mod-left">
+          To continue reading, sign up for our daily newsletter and get unlimited access to Gothamist.com.
         </div>
         <form
           class="gtm__click-tracking regwall-form"
@@ -20,35 +20,37 @@
           >
             newsletter signup
           </label>
-          <div
-            class="inline-button regwall-form-email"
-          >
-            <input
-              id="newsletter"
-              v-model="email"
-              name="newsletter"
-              placeholder="your@email.com"
-              class="regwall-form-email-input"
-              required
-              type="email"
+          <div class="regwall-form-wrapper">
+            <div
+              class="inline-button regwall-form-email"
             >
-            <button
-              class="regwall-form-email-submit"
-              data-label="Footer"
-              data-action="Newsletter Signup"
-              data-category="Click Tracking"
-              data-test-newsletter-submit=""
-              type="submit"
-              :disabled="!termsCheckbox"
-            >
-              <gothamist-arrow v-if="!submitted" />
-              <loading-icon
-                v-else
-                class="regwall-form-email-button-loading"
-              />
-            </button>
+              <input
+                id="newsletter"
+                v-model="email"
+                name="newsletter"
+                placeholder="your@email.com"
+                class="regwall-form-email-input"
+                required
+                type="email"
+              >
+              <button
+                class="regwall-form-email-submit"
+                data-label="Footer"
+                data-action="Newsletter Signup"
+                data-category="Click Tracking"
+                data-test-newsletter-submit=""
+                type="submit"
+                :disabled="!termsCheckbox"
+              >
+                <gothamist-arrow v-if="!submitted" />
+                <loading-icon
+                  v-else
+                  class="regwall-form-email-button-loading"
+                />
+              </button>
+            </div>
+            <v-button class="regwall-button mod-flat" label="No Thanks" @click="decline" />
           </div>
-          <v-button class="regwall-button mod-flat" label="No Thanks" @click="decline" />
           <div
             v-if="status === 'error'"
             class="regwall-form-error"
@@ -138,23 +140,44 @@ export default {
   @include typeface(body, 4);
 }
 
+.regwall-form-wrapper {
+ display: flex;
+ align-items: baseline;
+}
+.regwall-form-wrapper > .button {
+  margin: var(--space-4)
+}
+
 .regwall-graphic {
-  width: 100px;
-  height: 100px;
+  width: 108px;
+  height: 108px;
   margin:  0 auto 16px;
   top: -50px;
   left: -10px;
-  mix-blend-mode: difference;
   @include media(">xlarge") {
     z-index: 0;
-    mix-blend-mode: normal;
     top: 50px;
     left: -120px;
   }
 }
 
 .regwall-graphic .party-confetti-icon path {
-  fill: RGB(var(--color-background-muted));
+  fill: RGB(var(--color-text));
+  width: 108px;
+  height: 108px;
+  position: absolute;
+  z-index: 1
+}
+
+.regwall-graphic:before {
+  content: "";
+  background-color: RGB(var(--color-banana-yellow));
+  height: 75px;
+  width: 75px;
+  position: absolute;
+  top: 54px;
+  left: calc(50% - 75px/2 + 4px);
+  z-index: 0
 }
 
 .regwall-form  {
@@ -178,17 +201,22 @@ export default {
   font-weight:  var(--font-weight-subheader);
   font-size:  var(--font-size-8);
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-1);
 }
 .regwall-text {
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-3);
+}
+
+.regwall-header.mod-left,
+.regwall-text.mod-left {
+  text-align: left;
 }
 
 .regwall-button {
   height: 40px;
-  padding: 16px;
-  margin: 16px auto;
+  padding: var(--space-3);
+  margin: 0 auto;
   background-color: RGB(var(--color-banana-yellow));
   &>span {
     font-size: var(--font-size-5);
@@ -225,13 +253,14 @@ export default {
 }
 
 .regwall-form-email {
-  border: solid 2px RGB(var(--color-dark-gray));
+  border: none;
   margin: var(--space-3) 0;
   position: relative;
   z-index: 3;
 }
 
 .regwall-form-email-input {
+  border: solid 2px RGB(var(--color-dark-gray));
   border-radius: 0 !important;
   height: 60px;
 }

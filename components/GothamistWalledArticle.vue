@@ -53,6 +53,7 @@ export default {
 <style lang="scss">
 .content-wall {
   position: relative;
+  min-height: 400px;
 }
 
 .leadin  {
@@ -66,7 +67,10 @@ export default {
   display: flex;
   height: 400px;
   background: linear-gradient(rgba(255,255,255,0) 15%, rgba(255,255,255,1) 70%);
-  padding: 32px 96px;
+  padding: 32px var(--space-2);
+  @include media(">medium") {
+    padding: 32px 96px;
+  }
 }
 
 </style>
