@@ -11,7 +11,7 @@ export default {
   name: 'ContentWall',
   data() {
     return {
-      showContent: true
+      showContent: false
     }
   },
   methods: {
