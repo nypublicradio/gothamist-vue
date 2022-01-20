@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import ContentWall from '../components/ContentWall'
 
 describe('ContentWall', () => {
-  let component
+  let component = {}
 
   beforeEach(() => {
     component = shallowMount(ContentWall, {

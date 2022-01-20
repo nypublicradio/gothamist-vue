@@ -1,4 +1,4 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { sub } from 'date-fns'
 import GothamistArticle from '../components/GothamistArticle'
@@ -12,9 +12,9 @@ describe('GothamistArticle', () => {
   const $route = { fullPath: 'test' }
   const $axios = { get: () => Promise.resolve({}) }
   const $config = { imageBase: '' }
-  const $gtm = { push: () => {} }
+const $gtm = { push: () => { /* do nothing */ } }
 
-  let store
+  let store = {}
 
   beforeEach(() => {
     store = new Vuex.Store({
@@ -68,7 +68,7 @@ describe('GothamistArticle', () => {
 
   it('should not display the content wall on an old article when the subscriber cookie exists', () => {
     const $cookies = {
-      get: (c) => { if (c === '_gothamistNewsletterMember') { return 'true' } }
+      get: (c) => { if (c === '_gothamistNewsletterMember') { return 'true' } else { return null } }
     }
     const article = Object.assign({ updatedDate: String(sub(new Date(), { months: 7 })) }, coronavirusStatistics, {})
     const wrapper = shallowMount(GothamistArticle, {

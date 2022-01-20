@@ -9,10 +9,9 @@
 <script>
 export default {
   name: 'ContentWall',
-  props: {
-    showContent: {
-      type: Boolean,
-      default: false
+  data() {
+    return {
+      showContent: true
     }
   },
   methods: {

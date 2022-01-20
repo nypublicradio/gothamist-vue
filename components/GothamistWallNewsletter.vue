@@ -75,7 +75,7 @@
                 <a
                   href="https://www.wnyc.org/terms/"
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                   class="u-has-accent"
                 >Terms</a>.
               </label>
