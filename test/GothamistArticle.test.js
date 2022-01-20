@@ -68,7 +68,7 @@ const $gtm = { push: () => { /* do nothing */ } }
 
   it('should not display the content wall on an old article when the subscriber cookie exists', () => {
     const $cookies = {
-      get: (c) => { if (c === '_gothamistNewsletterMember') { return 'true' } else { return null } }
+      get: (c) => { return c === '_gothamistNewsletterMember' ? 'true' : null }
     }
     const article = Object.assign({ updatedDate: String(sub(new Date(), { months: 7 })) }, coronavirusStatistics, {})
     const wrapper = shallowMount(GothamistArticle, {
