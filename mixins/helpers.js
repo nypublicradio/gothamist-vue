@@ -230,10 +230,12 @@ export const isMoreThan48Hours = function (utcStartTime) {
   return false
 }
 
+// if the Author has provided a listing title, use that, otherwise use the original title
 export const getTitle = function (story) {
   return (story.listingTitle || story.listingTitle !== '') ? story.listingTitle : story.title
 }
 
+// if the Author has provided a listing summary, use that, otherwise use the original summary
 export const getSubtitle = function (story) {
   return (story.listingSummary || story.listingSummary !== '') ? story.listingSummary : story.description
 }
