@@ -78,7 +78,7 @@ export default {
   },
   async fetch () {
     const recent = this.$axios.get(
-      `/pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&descendant_of=${this.relatedArticle.ancestry[0].id}&limit=4`
+      `/pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&descendant_of=${this.relatedArticle.ancestry[0].id}&limit=4&sponsored_content=false`
     )
     const featured = this.$axios.get(
       `/pages/?type=news.ArticlePage&fields=*&order=-publication_date&show_on_index_listing=true&descendant_of=${this.relatedArticle.ancestry[0].id}&limit=5&show_as_feature=true`
