@@ -39,9 +39,9 @@
                 featuredStory.listingImage
               ) || Infinity
             "
-            :title="featuredStory.title"
+            :title="getTitle(featuredStory)"
             :title-link="`/${featuredStory.ancestry[0].slug}/${featuredStory.meta.slug}`"
-            :subtitle="featuredStory.description"
+            :subtitle="getSubtitle(featuredStory)"
             :tags="
               featuredStory.sponsoredContent ? [{ name: 'sponsored' }] : []
             "
@@ -117,9 +117,9 @@
                 getArticleImageWidth(story.leadAsset, story.listingImage) ||
                   Infinity
               "
-              :title="story.title"
+              :title="getTitle(story)"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-              :subtitle="story.description"
+              :subtitle="getSubtitle(story)"
             >
               <article-metadata
                 :publish-date="
@@ -202,9 +202,9 @@
                 getArticleImageWidth(story.leadAsset, story.listingImage) ||
                   Infinity
               "
-              :title="story.title"
+              :title="getTitle(story)"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-              :subtitle="story.description"
+              :subtitle="getSubtitle(story)"
               :tags="story.sponsoredContent ? [{ name: 'sponsored' }] : []"
             >
               <article-metadata
@@ -274,7 +274,9 @@ const {
   getArticleImage,
   getArticleImageHeight,
   getArticleImageWidth,
-  hasGallery
+  hasGallery,
+  getTitle,
+  getSubtitle
 } = require('~/mixins/helpers')
 
 export default {
@@ -391,7 +393,9 @@ export default {
         this.moreResultsOffset + ' articles loaded'
       )
     },
-    hasGallery
+    hasGallery,
+    getTitle,
+    getSubtitle
   }
 }
 </script>

@@ -37,9 +37,9 @@
           <v-card
             class="featured-grid-col1 gothamist mod-vertical mod-large"
             :show-gallery-icon="hasGallery(featuredSection[0].leadAsset)"
-            :title="featuredSection[0].title"
+            :title="getTitle(featuredSection[0])"
             :title-link="`/${featuredSection[0].ancestry[0].slug}/${featuredSection[0].meta.slug}`"
-            :subtitle="featuredSection[0].description"
+            :subtitle="getSubtitle(featuredSection[0])"
             :image="
               getArticleImage(
                 featuredSection[0].leadAsset,
@@ -138,7 +138,7 @@
                   getArticleImageWidth(story.leadAsset, story.listingImage) ||
                     Infinity
                 "
-                :title="story.title"
+                :title="getTitle(story)"
                 :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
                 :tags="
                   formatTags(
@@ -202,9 +202,9 @@
         <v-card
           class="gothamist mod-large"
           :show-gallery-icon="hasGallery(sponsoredSection[0].leadAsset)"
-          :title="sponsoredSection[0].title"
+          :title="getTitle(sponsoredSection[0])"
           :title-link="`/${sponsoredSection[0].ancestry[0].slug}/${sponsoredSection[0].meta.slug}`"
-          :subtitle="sponsoredSection[0].description"
+          :subtitle="getSubtitle(sponsoredSection[0])"
           :image="
             getArticleImage(
               sponsoredSection[0].leadAsset,
@@ -308,9 +308,9 @@
                 getArticleImageWidth(story.leadAsset, story.listingImage) ||
                   Infinity
               "
-              :title="story.title"
+              :title="getTitle(story)"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-              :subtitle="story.description"
+              :subtitle="getSubtitle(story)"
               :tags="
                 formatTags(
                   story.ancestry[0].title,
@@ -401,9 +401,9 @@
             getArticleImageWidth(story.leadAsset, story.listingImage) ||
               Infinity
           "
-          :title="story.title"
+          :title="getTitle(story)"
           :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-          :subtitle="story.description"
+          :subtitle="getSubtitle(story)"
           :tags="
             formatTags(
               story.ancestry[0].title,
@@ -487,9 +487,9 @@
                 getArticleImageWidth(story.leadAsset, story.listingImage) ||
                   Infinity
               "
-              :title="story.title"
+              :title="getTitle(story)"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-              :subtitle="story.description"
+              :subtitle="getSubtitle(story)"
               :tags="
                 formatTags(
                   story.ancestry[0].title,
@@ -574,9 +574,9 @@
                 getArticleImageWidth(story.leadAsset, story.listingImage) ||
                   Infinity
               "
-              :title="story.title"
+              :title="getTitle(story)"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-              :subtitle="story.description"
+              :subtitle="getSubtitle(story)"
               :tags="
                 formatTags(
                   story.ancestry[0].title,
@@ -666,9 +666,9 @@
                   getArticleImageWidth(story.leadAsset, story.listingImage) ||
                     Infinity
                 "
-                :title="story.title"
+                :title="getTitle(story)"
                 :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-                :subtitle="story.description"
+                :subtitle="getSubtitle(story)"
                 :tags="
                   formatTags(
                     story.ancestry[0].title,
@@ -760,7 +760,9 @@ const {
   hasGallery,
   isLessThan24Hours,
   isMoreThan24Hours,
-  isLessThan48Hours
+  isLessThan48Hours,
+  getTitle,
+  getSubtitle
 } = require('~/mixins/helpers')
 
 export default {
@@ -769,11 +771,11 @@ export default {
   async fetch () {
     // get default featured stories - i.e. the four latest featured stories
     const mainRequest = this.$axios.get(
-      '/pages/?type=news.ArticlePage&fields=ancestry%2Cdescription%2Clead_asset%2Clegacy_id%2Clisting_image%2Cpublication_date%2Cshow_as_feature%2Csponsored_content%2Ctags%2Cupdated_date%2Curl%2Cuuid&order=-publication_date&show_on_index_listing=true&limit=4&show_as_feature=true&sponsored_content=false'
+      '/pages/?type=news.ArticlePage&fields=ancestry%2Cdescription%2Clead_asset%2Clegacy_id%2Clisting_image%2Cpublication_date%2Cshow_as_feature%2Csponsored_content%2Ctags%2Cupdated_date%2Curl%2Cuuid%2Clisting_title%2Clisting_summary&order=-publication_date&show_on_index_listing=true&limit=4&show_as_feature=true&sponsored_content=false'
     )
     // get the article river
     const riverRequest = this.$axios.get(
-      '/pages/?type=news.ArticlePage&fields=ancestry%2Cdescription%2Clead_asset%2Clegacy_id%2Clisting_image%2Cpublication_date%2Cshow_as_feature%2Csponsored_content%2Ctags%2Cupdated_date%2Curl%2Cuuid&order=-publication_date&show_on_index_listing=true&limit=32'
+      '/pages/?type=news.ArticlePage&fields=ancestry%2Cdescription%2Clead_asset%2Clegacy_id%2Clisting_image%2Cpublication_date%2Cshow_as_feature%2Csponsored_content%2Ctags%2Cupdated_date%2Curl%2Cuuid%2Clisting_title%2Clisting_summary&order=-publication_date&show_on_index_listing=true&limit=32'
     )
     // get the sponsored content
     const sponsoredContentRequest = this.$axios.get(
@@ -924,6 +926,8 @@ export default {
     getArticleImage,
     getArticleImageHeight,
     getArticleImageWidth,
+    getTitle,
+    getSubtitle,
     async getMoreResults () {
       this.moreResultsLoaded = false
       await this.$axios

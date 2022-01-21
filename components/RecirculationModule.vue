@@ -19,7 +19,7 @@
           (getImageFromStory(story) && getImageFromStory(story).height) ||
             Infinity
         "
-        :title="story.title"
+        :title="getTitle(story)"
         :title-link="'/' + story.ancestry[0].slug + '/' + story.meta.slug"
       >
         <article-metadata>
@@ -48,9 +48,9 @@
           (getImageFromStory(story) && getImageFromStory(story).height) ||
             Infinity
         "
-        :title="story.title"
+        :title="getTitle(story)"
         :title-link="'/' + story.ancestry[0].slug + '/' + story.meta.slug"
-        :subtitle="story.listingSummary || story.description"
+        :subtitle="getSubtitle(story)"
       >
         <article-metadata>
           <template v-slot:authors>
@@ -62,7 +62,7 @@
   </div>
 </template>
 <script>
-import { getImageFromStory, getArticleImage } from '~/mixins/helpers'
+import { getImageFromStory, getArticleImage, getTitle, getSubtitle } from '~/mixins/helpers'
 
 function dedupeStories (needle, haystack) {
   return haystack.filter(article => article.id !== needle.id)
@@ -125,7 +125,9 @@ export default {
         )
       }
     },
-    getArticleImage
+    getArticleImage,
+    getTitle,
+    getSubtitle
   }
 }
 </script>

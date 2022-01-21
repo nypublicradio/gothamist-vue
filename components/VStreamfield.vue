@@ -52,9 +52,9 @@
               getArticleImageWidth(story.leadAsset, story.listingImage) ||
                 Infinity
             "
-            :title="story.title"
+            :title="getTitle(story)"
             :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-            :subtitle="story.description"
+            :subtitle="getSubtitle(story)"
             :tags="
               formatTags(
                 story.ancestry[0].title,
@@ -152,7 +152,9 @@ const {
   getArticleImageHeight,
   getArticleImageWidth,
   getHeightFromWidth,
-  hasGallery
+  hasGallery,
+  getTitle,
+  getSubtitle
 } = require('~/mixins/helpers')
 
 export default {
@@ -190,7 +192,9 @@ export default {
     getArticleImageHeight,
     getArticleImageWidth,
     getHeightFromWidth,
-    hasGallery
+    hasGallery,
+    getTitle,
+    getSubtitle
   }
 }
 </script>
