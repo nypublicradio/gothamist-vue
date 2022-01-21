@@ -72,9 +72,9 @@
                 getArticleImageWidth(story.leadAsset, story.listingImage) ||
                   Infinity
               "
-              :title="story.title"
+              :title="getTitle(story)"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-              :subtitle="story.description"
+              :subtitle="getSubtitle(story)"
               :tags="
                 formatTags(
                   story.ancestry[0].title,
@@ -152,9 +152,9 @@
                 getArticleImageWidth(story.leadAsset, story.listingImage) ||
                   Infinity
               "
-              :title="story.title"
+              :title="getTitle(story)"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-              :subtitle="story.description"
+              :subtitle="getSubtitle(story)"
               :tags="
                 formatTags(
                   story.ancestry[0].title,
@@ -253,9 +253,9 @@
                 getArticleImageWidth(story.leadAsset, story.listingImage) ||
                   Infinity
               "
-              :title="story.title"
+              :title="getTitle(story)"
               :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-              :subtitle="story.description"
+              :subtitle="getSubtitle(story)"
               :tags="
                 formatTags(
                   story.ancestry[0].title,
@@ -332,7 +332,9 @@ const {
   getArticleImage,
   getArticleImageHeight,
   getArticleImageWidth,
-  hasGallery
+  hasGallery,
+  getTitle,
+  getSubtitle
 } = require('~/mixins/helpers')
 
 export default {
@@ -438,7 +440,9 @@ export default {
         this.offset + ' articles loaded'
       )
     },
-    hasGallery
+    hasGallery,
+    getTitle,
+    getSubtitle
   }
 }
 </script>

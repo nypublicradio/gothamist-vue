@@ -72,9 +72,9 @@
                 story.result.listingImage
               ) || Infinity
             "
-            :title="story.result.title"
+            :title="getTitle(story.result)"
             :title-link="`/${story.result.ancestry[0].slug}/${story.result.meta.slug}`"
-            :subtitle="story.result.description"
+            :subtitle="getSubtitle(story.result)"
             :tags="
               formatTags(
                 story.result.ancestry[0].title,
@@ -157,7 +157,9 @@ const {
   getArticleImage,
   getArticleImageHeight,
   getArticleImageWidth,
-  hasGallery
+  hasGallery,
+  getTitle,
+  getSubtitle
 } = require('~/mixins/helpers')
 
 export default {
@@ -237,6 +239,8 @@ export default {
       )
     },
     hasGallery,
+    getTitle,
+    getSubtitle,
     search () {
       history.pushState({}, null, this.$route.path + '?q=' + this.q)
       this.moreResults = []

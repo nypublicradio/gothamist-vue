@@ -46,9 +46,9 @@
             "
             :image-width="$mq | mq({ xsmall: 100, medium: 360 })"
             :image-height="$mq | mq({ xsmall: 100, medium: 240 })"
-            :title="story.title"
+            :title="getTitle(story)"
             :title-link="`/${story.ancestry[0].slug}/${story.meta.slug}`"
-            :subtitle="story.description"
+            :subtitle="getSubtitle(story)"
             :tags="
               formatTags(
                 story.ancestry[0].title,
@@ -132,7 +132,9 @@ const {
   formatTags,
   fuzzyDateTime,
   getArticleImage,
-  hasGallery
+  hasGallery,
+  getTitle,
+  getSubtitle
 } = require('~/mixins/helpers')
 
 export default {
@@ -224,6 +226,8 @@ export default {
       )
     },
     hasGallery,
+    getTitle,
+    getSubtitle,
     search () {
       this.moreResults = []
       this.moreResultsDisqusThreadIds = []
