@@ -484,7 +484,9 @@ export default {
       return tags
     },
     isOld () {
-      return differenceInMonths(new Date(), new Date(this.article.updatedDate))
+      const now = new Date()
+      const updatedDate = new Date(this.article.updatedDate) || now
+      return differenceInMonths(now, updatedDate) > 6
     },
     hasNewsletterCookie () {
       return this.$cookies.get('_gothamistNewsletterMember')
