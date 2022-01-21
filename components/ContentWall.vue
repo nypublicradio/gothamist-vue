@@ -9,7 +9,7 @@
 <script>
 export default {
   name: 'ContentWall',
-  data() {
+  data () {
     return {
       showContent: false
     }

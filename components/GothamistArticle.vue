@@ -322,7 +322,7 @@ export default {
   },
   computed: {
     shouldShowContentWall () {
-      return this.isOld && !this.fromNewsletterLink && !this.hasNewsletterCookie
+      return this.isOld && !this.hasPassThroughParams && !this.hasNewsletterCookie
     },
     gtmData () {
       return {
@@ -485,11 +485,17 @@ export default {
     },
     isOld () {
       const now = new Date()
-      const updatedDate = new Date(this.article.updatedDate) || now
-      return differenceInMonths(now, updatedDate) > 6
+      const articleDate = this.article.updatedDate || this.article.publicationDate || this.article.meta?.firstPublishedAt
+      if (articleDate) {
+        return differenceInMonths(now, new Date(articleDate)) > 6
+      }
+      return false
     },
     hasNewsletterCookie () {
       return this.$cookies.get('_gothamistNewsletterMember')
+    },
+    hasPassThroughParams () {
+      return this.$route.query?.utm_source === 'nypr-email' || this.$route.query?.passThrough === 'true'
     }
   },
   watch: {
