@@ -49,7 +49,6 @@
                 />
               </button>
             </div>
-            <v-button class="regwall-button mod-flat" label="No Thanks" @click="decline" />
           </div>
           <div
             v-if="status === 'error'"
@@ -81,6 +80,7 @@
               </label>
             </fieldset>
           </div>
+          <v-button class="regwall-button mod-flat" label="No thanks" @click="decline" />
         </form>
       </template>
       <template
@@ -134,16 +134,16 @@ export default {
 </script>
 
 <style lang="scss">
+.regwall {
+  margin: 0 auto;
+}
+
 .regwall-form {
   position: relative;
   width: 100%;
   @include typeface(body, 4);
 }
 
-.regwall-form-wrapper {
- display: flex;
- align-items: baseline;
-}
 .regwall-form-wrapper > .button {
   margin: var(--space-4)
 }
@@ -159,6 +159,10 @@ export default {
     top: 50px;
     left: -120px;
   }
+}
+
+.regwall-graphic .party-confetti-icon {
+  position: relative;
 }
 
 .regwall-graphic .party-confetti-icon path {
@@ -230,10 +234,13 @@ export default {
 
 .regwall-button.mod-flat {
   color: var(--color-black);
+  margin: var(--space-2) 0;
+  padding: var(--space-1) 0;
   &>span {
+    text-transform: none;
+    font-family: var(--font-body);
     font-size: var(--font-size-5);
-    font-weight: 700;
-    letter-spacing: var(--letter-spacing-small);
+    font-weight: 400;
   }
   &:hover {
     background: transparent;
@@ -253,15 +260,15 @@ export default {
 }
 
 .regwall-form-email {
-  border: none;
-  margin: var(--space-3) 0;
+  border: solid 2px RGB(var(--color-dark-gray));
+  border-radius: 0 !important;
+  margin: 0 0 var(--space-4) ;
   position: relative;
   z-index: 3;
 }
 
 .regwall-form-email-input {
-  border: solid 2px RGB(var(--color-dark-gray));
-  border-radius: 0 !important;
+  border: none;
   height: 60px;
 }
 
@@ -309,10 +316,10 @@ export default {
 
 .regwall-form-terms {
   padding-left: 25px;
+  margin-bottom: var(--space-3);
   position: relative;
 }
 
-.regwall-form-terms input[type="checkbox"],
 .regwall-form-terms input[type="checkbox"] {
   position: absolute;
   left: -25px;
@@ -323,6 +330,10 @@ export default {
   background-color: RGB(var(--color-banana-yellow));
   color: RGB(var(--color-black));
   background-size: 10px !important;
+}
+
+.regwall-form-terms input[type=checkbox]:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath d='M26.08,3.56l-2,1.95L10.61,19l-5-4L3.47,13.29,0,17.62l2.17,1.73L9.1,24.9,11,26.44l1.77-1.76L28.05,9.43,30,7.48Z' fill='%23000000'/%3E%3C/svg%3E");
 }
 
 .regwall-form-terms label {

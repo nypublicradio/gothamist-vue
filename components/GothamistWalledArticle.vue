@@ -52,25 +52,26 @@ export default {
 
 <style lang="scss">
 .content-wall {
+  --content-wall-height: 400px;
   position: relative;
-  min-height: 400px;
+  min-height: var(--content-wall-height);
 }
 
 .leadin  {
-  max-height: 400px;
+  max-height: var(--content-wall-height);
   overflow: hidden;
 }
+
 .wall-wrapper {
   position: absolute;
   top: 0;
   width: 100%;
   display: flex;
-  height: 400px;
-  background: linear-gradient(rgba(255,255,255,0) 15%, rgba(255,255,255,1) 70%);
-  padding: 32px var(--space-2);
+  height: var(--content-wall-height);
+  background: linear-gradient(rgba(255,255,255,0) 5%, rgba(255,255,255,1) 80%);
+  padding: calc(var(--line-height-6) * var(--font-size-6) * 3) var(--space-2) 0;
   @include media(">medium") {
-    padding: 32px 96px;
+    padding: calc(var(--line-height-6) * var(--font-size-6) * 3) 96px 0;
   }
 }
-
 </style>
