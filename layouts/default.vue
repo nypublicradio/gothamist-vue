@@ -163,8 +163,20 @@ export default {
 </script>
 
 <style lang="scss">
+$ad-wrapper-desktop:274px;
+$ad-wrapper-mobile:74px;
+$main-margin-top:70px;
+
 html {
   scroll-padding-top: 85px;
+}
+
+// prevents the footer from showing in the viewport before content is loaded, which affects our content shift score
+main {
+  min-height: calc( 100vh - ( var(--heading-height) + #{$ad-wrapper-mobile} + #{$main-margin-top} ) );
+  @include media('>medium') {
+    min-height: calc( 100vh - ( var(--heading-height) + #{$ad-wrapper-desktop} + #{$main-margin-top} ) );
+  }
 }
 
 .home-page main {
@@ -184,9 +196,9 @@ html {
   display: flex;
   background: RGB(var(--color-background));
   width: 100%;
-  min-height: 74px;
+  min-height: $ad-wrapper-mobile;
   @include media('>medium') {
-    min-height: 274px;
+    min-height: $ad-wrapper-desktop;
   }
 }
 
@@ -212,7 +224,7 @@ div:empty + .ad-label {
 
 .ad-div.mod-break-margins {
   position: relative;
-  min-height: 274px;
+  min-height: $ad-wrapper-desktop;
 }
 
 .ad-div.mod-break-margins > div {
