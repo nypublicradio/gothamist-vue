@@ -30,6 +30,7 @@
     "humps": "^2.0.1",
     "nuxt-edge": "latest",
     "package.json": "^2.0.1",
+    "vue-hifi": "0.0.6",
     "vue-lazy-hydration": "^2.0.0-beta.4",
     "vue-mq": "^1.0.1",
     "vue-observe-visibility": "^1.0.0"
@@ -53,7 +54,7 @@
     "jest-axe": "^5.0.1",
     "jest-junit": "^13.0.0",
     "node-sass": "^4.14.1",
-    "nypr-design-system-vue": "github:nypublicradio/nypr-design-system-vue#9dbbc0a47391216cba42245f68eede5c76329b8a",
+    "nypr-design-system-vue": "github:nypublicradio/nypr-design-system-vue#68b06bdbfd20e3a898e28d0c5f1f73b144a4aef2",
     "sass-loader": "^10.1.1",
     "ufo": "^0.7.9",
     "vue": "^2.6.14",
