@@ -130,22 +130,18 @@
                   : defaultPhoto
               "
               :video="story.result.video"
-              :img-scale="imgScale"
-              :circle="circle"
-              :animate="animate"
               :full-name="story.result.title"
               :name-link="story.result.url"
               :role="story.result.jobTitle"
               :organization="story.result.organization"
               :organization-link="story.result.organizationLink"
               :blurb="story.result.biography"
-              :truncate="story.result.biography ? truncate : null"
+              :truncate="true"
               :website-url="story.result.website"
               :website-label="story.result.websiteLabel"
               :email="story.result.email"
               :phone-numbers="story.result.phoneNumbers"
               :social="story.result.socialMediaProfile"
-              :on-author-page="onAuthorPage"
             />
           </div>
         </div>
