@@ -122,26 +122,10 @@
                 </template>
               </article-metadata>
             </v-card>
-            <v-person
+            <RelatedAuthors
               v-if="story.result.meta.type === 'people.PersonPage'"
-              :image="
-                !!story.result.photo
-                  ? story.result.photo.meta.downloadUrl
-                  : defaultPhoto
-              "
-              :video="story.result.video"
-              :full-name="story.result.title"
-              :name-link="story.result.url"
-              :role="story.result.jobTitle"
-              :organization="story.result.organization"
-              :organization-link="story.result.organizationLink"
-              :blurb="story.result.biography"
-              :truncate="true"
-              :website-url="story.result.website"
-              :website-label="story.result.websiteLabel"
-              :email="story.result.email"
-              :phone-numbers="story.result.phoneNumbers"
-              :social="story.result.socialMediaProfile"
+              :author="story.result"
+              default-photo="/static-images/defaults/users/default-user.jpg"
             />
           </div>
         </div>
