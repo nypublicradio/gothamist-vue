@@ -76,14 +76,15 @@ import gtm from '@/mixins/gtm'
 
 // audio player
 import whatsOnNow from '@/mixins/whatsOnNow'
-import vueHifi from '../node_modules/vue-hifi/src/mixins/vue-hifi'
+import api from '@/mixins/api'
+import vueHifi from 'vue-hifi/src/mixins/vue-hifi'
 // audio player
 
 import { setTargeting } from '~/mixins/htl'
 
 export default {
   name: 'Gothamist',
-  mixins: [gtm, whatsOnNow, vueHifi],
+  mixins: [gtm, whatsOnNow, vueHifi, api],
   data () {
     return {
       windowWidth: null,
@@ -103,7 +104,6 @@ export default {
       return this.$route.name === 'tags-slug'
     },
     ...mapState('global', ['isSensitiveContent']),
-
     // audio player
     ...mapState('whatsOnNow', {
       dataLoaded: state => state.dataLoaded,
@@ -116,7 +116,10 @@ export default {
       whatsOnNowPlaying: state => state.whatsOnNow.playing,
       whatsOnNowStation: state => state.whatsOnNow.station,
       whatsOnNowTitle: state => state.whatsOnNow.title,
-      whatsOnNowTitleLink: state => state.whatsOnNow.titleLink
+      whatsOnNowTitleLink: state => state.whatsOnNow.titleLink,
+      streams: state => state.streams,
+      selectedStream: state => state.selectedStream,
+      selectedStreamPlaying: state => state.selectedStream.playing
     }),
     ...mapState('vue-hifi', {
       vueHifiVolume: state => state.volume,

@@ -158,7 +158,8 @@ export default {
     },
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {
-      baseURL: process.env.API
+      baseURL: process.env.API,
+      whatsOnAPI: process.env.WHATS_ON_API
     },
     environment: process.env.ENV && process.env.ENV.toLowerCase(),
     siteId: '1'
@@ -205,7 +206,11 @@ export default {
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     // this is needed to transpile es6 modules imported from node_modules
-    transpile: [],
+    transpile: [
+      // audio-player
+      'vue-hifi'
+      // audio-player
+    ],
     extractCSS: true,
     extend (config, ctx) {
       config.module.rules.push({
