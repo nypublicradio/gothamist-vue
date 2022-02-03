@@ -121,15 +121,19 @@
         </div>
       </div>
       <v-spacer size="double" />
-      <LazyHydrate when-visible>
+      <GothamistWalledArticle
+        v-if="shouldShowContentWall"
+        :article="article"
+        @wallDismissed="handleWallDismissed"
+        @hook:mounted="handleWallImpression"
+        @hook:activated="handleWallImpression"
+      />
+      <LazyHydrate v-else when-visible>
         <v-streamfield
           :key="article.uuid"
           ref="article-body"
-          v-watch-scroll="updateScrollPercent"
           class="l-container l-container--10col article-body c-article__body"
           :streamfield="article.body"
-          @hook:mounted="insertAd"
-          @hook:updated="insertAd"
         />
       </LazyHydrate>
       <v-spacer size="quad" />
@@ -218,8 +222,22 @@
 <script>
 import gtm from '@/mixins/gtm'
 import disqus from '@/mixins/disqus'
+import { differenceInMonths } from 'date-fns'
 import LazyHydrate from 'vue-lazy-hydration'
-import RelatedAuthors from './RelatedAuthors.vue'
+import ImageWithCaption from 'nypr-design-system-vue/src/components/ImageWithCaption.vue'
+import ShareTools from 'nypr-design-system-vue/src/components/ShareTools.vue'
+import ShareToolsItem from 'nypr-design-system-vue/src/components/ShareToolsItem.vue'
+import VSpacer from 'nypr-design-system-vue/src/components/VSpacer.vue'
+import VTag from 'nypr-design-system-vue/src/components/VTag.vue'
+import ArticlePageNewsletter from './ArticlePageNewsletter'
+import Breadcrumbs from './Breadcrumbs'
+import DismissibleArea from './DismissibleArea'
+import DoYouKnowTheScoop from './DoYouKnowTheScoop'
+import GothamistWalledArticle from './GothamistWalledArticle'
+import ReadMoreIn from './ReadMoreIn'
+import RecirculationModule from './RecirculationModule'
+import RelatedAuthors from './RelatedAuthors'
+import VStreamfield from './VStreamfield'
 import { getImagePath } from '~/mixins/image'
 import { insertAdDiv } from '~/utils/insert-ad-div'
 import { getScrollDepth, getArticleImage } from '~/mixins/helpers'
@@ -233,8 +251,21 @@ import {
 export default {
   name: 'GothamistArticle',
   components: {
+    ArticlePageNewsletter,
+    Breadcrumbs,
+    DismissibleArea,
+    DoYouKnowTheScoop,
+    GothamistWalledArticle,
+    ImageWithCaption,
     LazyHydrate,
-    RelatedAuthors
+    ReadMoreIn,
+    RecirculationModule,
+    RelatedAuthors,
+    ShareTools,
+    ShareToolsItem,
+    VStreamfield,
+    VSpacer,
+    VTag
   },
   directives: {
     'watch-scroll': {
@@ -290,6 +321,9 @@ export default {
     }
   },
   computed: {
+    shouldShowContentWall () {
+      return this.isOld && !this.hasPassThroughParams && !this.hasNewsletterCookie
+    },
     gtmData () {
       return {
         articleTags: this.tags,
@@ -448,6 +482,20 @@ export default {
         tags += crumb.name + ','
       })
       return tags
+    },
+    isOld () {
+      const now = new Date()
+      const articleDate = this.article.updatedDate || this.article.publicationDate || this.article.meta?.firstPublishedAt
+      if (articleDate) {
+        return differenceInMonths(now, new Date(articleDate)) > 6
+      }
+      return false
+    },
+    hasNewsletterCookie () {
+      return this.$cookies.get('_gothamistNewsletterMember')
+    },
+    hasPassThroughParams () {
+      return this.$route.query?.utm_source === 'nypr-email' || this.$route.query?.passThrough === 'true'
     }
   },
   watch: {
@@ -547,8 +595,14 @@ export default {
         )
       }
     },
+    handleWallImpression () {
+      this.gaEvent('Article Page', 'Newsletter Signup Wall Visible', this.article.title)
+    },
     handleNewsletterSignupSuccess () {
       this.gaEvent('NTG newsletter', 'newsletter signup 1', 'success')
+    },
+    handleWallDismissed () {
+      this.gaEvent('Article Page', 'Newsletter Signup Submitted', this.article.title)
     },
     loadComments (isVisible) {
       if (isVisible) {

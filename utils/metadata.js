@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { getImagePath } from '~/mixins/image'
 
 const getStructuredData = function ({ article, imageBase }) {
@@ -18,7 +19,7 @@ const getStructuredData = function ({ article, imageBase }) {
   const author = article.relatedAuthors?.map((author) => {
     return {
       '@type': 'Person',
-      name: `${author.firstName} ${author.lastName}`,
+      name: author.firstName + ' '  + author.lastName,
       email: author.email,
       jobTitle: author.jobTitle,
       image: author.photo && {
@@ -26,9 +27,9 @@ const getStructuredData = function ({ article, imageBase }) {
         url: getImageUrl(imageBase, { id: author.photo }, 600, 600),
         height: 600,
         width: 600,
-        caption: `${author.firstName} ${author.lastName}`
+        caption: author.firstName + ' '  + author.lastName
       },
-      url: `https://gothamist.com/staff/${author.slug}`,
+      url: 'https://gothamist.com/staff/' + author.slug,
       sameAs: ''
     }
   })
@@ -74,7 +75,7 @@ const getStructuredData = function ({ article, imageBase }) {
 
 const getImageUrl = function (baseUrl, image, width, height) {
   if (image) {
-    return `${baseUrl}` + getImagePath(image, width, height)
+    return baseUrl + getImagePath(image, width, height)
   }
 }
 
