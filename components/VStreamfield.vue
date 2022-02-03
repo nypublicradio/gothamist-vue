@@ -7,7 +7,7 @@
         :key="block.id"
         class="streamfield-block-quote"
       >
-        <blockquote>
+        <blockquote @hook:mounted="countMountedBlock">
           <p>
             {{ block.value.blockQuote }}
           </p>
@@ -20,6 +20,7 @@
         :key="block.id"
         class="streamfield-code u-spacing"
         :html="block.value.code"
+        @hook:mounted="countMountedBlock"
       />
 
       <!-- content collection -->
@@ -63,6 +64,7 @@
                 story.tags
               )
             "
+            @hook:mounted="countMountedBlock"
           >
             <article-metadata
               :publish-date="
@@ -118,6 +120,8 @@
           :caption="block.value.caption || block.value.image.caption"
           :credit="block.value.image.credit"
           :credit-url="block.value.image.creditLink"
+
+          @hook:mounted="countMountedBlock"
         />
       </div>
 
@@ -127,6 +131,7 @@
         :key="block.id"
         class="streamfield-paragraph u-spacing"
         :html="block.value"
+        @hook:mounted="countMountedBlock"
       />
 
       <!-- pull-quote -->
@@ -138,6 +143,7 @@
         <pull-quote
           :quote="block.value.pullQuote"
           :author="block.value.attribution"
+          @hook:mounted="countMountedBlock"
         />
       </div>
     </template>
@@ -165,7 +171,24 @@ export default {
       default: () => []
     }
   },
+  data () {
+    return {
+      blocksMounted: 0
+    }
+  },
+  computed: {
+    blockCount () {
+      return this.streamfield?.length || NaN
+    }
+  },
   mounted () {
+    const htmlBlocks = ['embed', 'heading']
+    for (const block of this.streamfield) {
+      if (htmlBlocks.includes(block.type)) {
+        this.countMountedBlock()
+      }
+    }
+
     // you can't have script tags in v-html
     // so we need to load the twitter embeds script manually
     if (window.twttr) {
@@ -194,7 +217,13 @@ export default {
     getHeightFromWidth,
     hasGallery,
     getTitle,
-    getSubtitle
+    getSubtitle,
+    countMountedBlock () {
+      this.blocksMounted = this.blocksMounted + 1
+      if (this.blocksMounted === this.blockCount) {
+        this.$emit('childrenMounted')
+      }
+    }
   }
 }
 </script>
