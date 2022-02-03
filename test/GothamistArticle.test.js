@@ -1,9 +1,9 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Vuex from 'vuex'
-import { differenceInMonths, sub } from 'date-fns'
+import { sub } from 'date-fns'
+import GothamistArticle from '../components/GothamistArticle'
 import { coronavirusStatistics } from './story-data'
 import { state } from './fake-data'
-import GothamistArticle from '../components/GothamistArticle'
 
 const localVue = createLocalVue()
 
@@ -13,8 +13,8 @@ describe('GothamistArticle', () => {
   const $axios = { get: () => Promise.resolve({}) }
   const $config = { imageBase: '' }
   const $gtm = { push: () => { /* do nothing */ } }
-  const currentDate = String(new Date());
-  const oldDate = String(sub(new Date(), {months: 7}))
+  const currentDate = String(new Date())
+  const oldDate = String(sub(new Date(), { months: 7 }))
 
   let store = {}
 
@@ -153,7 +153,7 @@ describe('GothamistArticle', () => {
 
   it('should not display the content wall on an old article when coming from an email link', () => {
     const $cookies = { get: () => { /* no cookies */ } }
-    const utmRoute = { fullPath: 'test', query: {utm_source: 'nypr-email'} }
+    const utmRoute = { fullPath: 'test', query: { utm_source: 'nypr-email' } }
     const article = Object.assign({}, coronavirusStatistics, { updatedDate: oldDate })
     const wrapper = shallowMount(GothamistArticle, {
       store,
@@ -174,7 +174,7 @@ describe('GothamistArticle', () => {
 
   it('should not display the content wall on an old article when the passThrough param is on', () => {
     const $cookies = { get: () => { /* no cookies */ } }
-    const passThroughRoute = { fullPath: 'test', query: {passThrough: 'true'} }
+    const passThroughRoute = { fullPath: 'test', query: { passThrough: 'true' } }
     const article = Object.assign({}, coronavirusStatistics, { updatedDate: oldDate })
     const wrapper = shallowMount(GothamistArticle, {
       store,
