@@ -45,80 +45,89 @@
           :key="nuggetIndex"
           class="u-space--double--bottom"
         >
-          <v-card
+          <div
             v-for="(story, index) in moreResultsNuggets[nuggetIndex]"
             :key="index"
-            class="gothamist u-space--double--bottom"
-            :class="$mq | mq({ xsmall: '', medium: 'mod-large' })"
-            :show-gallery-icon="hasGallery(story.result.leadAsset)"
-            :image="
-              getArticleImage(
-                story.result.leadAsset,
-                story.result.ancestry[0].slug,
-                story.listingImage
-              )
-            "
-            :image-width="$mq | mq({ xsmall: 100, medium: 360 })"
-            :image-height="$mq | mq({ xsmall: 100, medium: 240 })"
-            :image-max-height="
-              getArticleImageHeight(
-                story.result.leadAsset,
-                story.result.listingImage
-              ) || Infinity
-            "
-            :image-max-width="
-              getArticleImageWidth(
-                story.result.leadAsset,
-                story.result.listingImage
-              ) || Infinity
-            "
-            :title="getTitle(story.result)"
-            :title-link="`/${story.result.ancestry[0].slug}/${story.result.meta.slug}`"
-            :subtitle="getSubtitle(story.result)"
-            :tags="
-              formatTags(
-                story.result.ancestry[0].title,
-                story.result.ancestry[0].slug,
-                story.result.sponsoredContent,
-                story.result.tags
-              )
-            "
           >
-            <article-metadata
-              :publish-date="
-                !story.result.updatedDate
-                  ? fuzzyDateTime(story.result.publicationDate) ||
-                    fuzzyDateTime(story.result.meta.firstPublishedAt)
-                  : null
+            <v-card
+              v-if="story.result.meta.type === 'news.ArticlePage'"
+              class="gothamist u-space--double--bottom"
+              :class="$mq | mq({ xsmall: '', medium: 'mod-large' })"
+              :show-gallery-icon="hasGallery(story.result.leadAsset)"
+              :image="
+                getArticleImage(
+                  story.result.leadAsset,
+                  story.result.ancestry[0].slug,
+                  story.listingImage
+                )
               "
-              :updated-date="
-                story.result.updatedDate
-                  ? fuzzyDateTime(story.result.updatedDate)
-                  : null
+              :image-width="$mq | mq({ xsmall: 100, medium: 360 })"
+              :image-height="$mq | mq({ xsmall: 100, medium: 240 })"
+              :image-max-height="
+                getArticleImageHeight(
+                  story.result.leadAsset,
+                  story.result.listingImage
+                ) || Infinity
+              "
+              :image-max-width="
+                getArticleImageWidth(
+                  story.result.leadAsset,
+                  story.result.listingImage
+                ) || Infinity
+              "
+              :title="getTitle(story.result)"
+              :title-link="`/${story.result.ancestry[0].slug}/${story.result.meta.slug}`"
+              :subtitle="getSubtitle(story.result)"
+              :tags="
+                formatTags(
+                  story.result.ancestry[0].title,
+                  story.result.ancestry[0].slug,
+                  story.result.sponsoredContent,
+                  story.result.tags
+                )
               "
             >
-              <template
-                v-if="
-                  getCommentCountById(
-                    String(story.result.legacyId || story.result.uuid),
-                    moreResultsDisqusData
-                  )
+              <article-metadata
+                :publish-date="
+                  !story.result.updatedDate
+                    ? fuzzyDateTime(story.result.publicationDate) ||
+                      fuzzyDateTime(story.result.meta.firstPublishedAt)
+                    : null
                 "
-                v-slot:comments
+                :updated-date="
+                  story.result.updatedDate
+                    ? fuzzyDateTime(story.result.updatedDate)
+                    : null
+                "
               >
-                <v-counter
-                  icon="comment"
-                  :value="
+                <template
+                  v-if="
                     getCommentCountById(
                       String(story.result.legacyId || story.result.uuid),
                       moreResultsDisqusData
                     )
                   "
-                  :href="`/${story.result.ancestry[0].slug}/${story.result.meta.slug}#comments`"
-                />
-              </template>
-            </article-metadata>
-          </v-card>
+                  v-slot:comments
+                >
+                  <v-counter
+                    icon="comment"
+                    :value="
+                      getCommentCountById(
+                        String(story.result.legacyId || story.result.uuid),
+                        moreResultsDisqusData
+                      )
+                    "
+                    :href="`/${story.result.ancestry[0].slug}/${story.result.meta.slug}#comments`"
+                  />
+                </template>
+              </article-metadata>
+            </v-card>
+            <RelatedAuthors
+              v-if="story.result.meta.type === 'people.PersonPage'"
+              :author="story.result"
+              default-photo="/static-images/defaults/users/default-user.jpg"
+            />
+          </div>
         </div>
         <v-spacer size="double" />
         <div
