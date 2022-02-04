@@ -7,7 +7,7 @@
         :key="block.id"
         class="streamfield-block-quote"
       >
-        <blockquote @hook:mounted="countMountedBlock">
+        <blockquote>
           <p>
             {{ block.value.blockQuote }}
           </p>
@@ -182,30 +182,11 @@ export default {
     }
   },
   mounted () {
-    const htmlBlocks = ['embed', 'heading']
+    const htmlBlocks = ['embed', 'heading', 'block_quote']
     for (const block of this.streamfield) {
       if (htmlBlocks.includes(block.type)) {
         this.countMountedBlock()
       }
-    }
-
-    // you can't have script tags in v-html
-    // so we need to load the twitter embeds script manually
-    if (window.twttr) {
-      // the script is already loaded, so just reload the embeds
-      window.twttr.widgets.load()
-    } else if (!document.getElementById('twttr-widgets')) {
-      const embed = document.createElement('script')
-      embed.id = 'twttr-widgets'
-      embed.src = 'https://platform.twitter.com/widgets.js'
-      document.body.appendChild(embed)
-    }
-    // load newsletter signup embeds manually
-    if (document.querySelectorAll('[data-pym-src]').length > 0) {
-      const embed = document.createElement('script')
-      embed.id = 'nprapps'
-      embed.src = 'https://pym.nprapps.org/pym.v1.min.js'
-      document.body.appendChild(embed)
     }
   },
   methods: {
@@ -222,6 +203,27 @@ export default {
       this.blocksMounted = this.blocksMounted + 1
       if (this.blocksMounted === this.blockCount) {
         this.$emit('childrenMounted')
+        this.loadEmbedScripts()
+      }
+    },
+    loadEmbedScripts () {
+      // you can't have script tags in v-html
+      // so we need to load the twitter embeds script manually
+      if (window.twttr) {
+        // the script is already loaded, so just reload the embeds
+        window.twttr.widgets.load()
+      } else if (!document.getElementById('twttr-widgets')) {
+        const embed = document.createElement('script')
+        embed.id = 'twttr-widgets'
+        embed.src = 'https://platform.twitter.com/widgets.js'
+        document.body.appendChild(embed)
+      }
+      // load newsletter signup embeds manually
+      if (document.querySelectorAll('[data-pym-src]').length > 0) {
+        const embed = document.createElement('script')
+        embed.id = 'nprapps'
+        embed.src = 'https://pym.nprapps.org/pym.v1.min.js'
+        document.body.appendChild(embed)
       }
     }
   }

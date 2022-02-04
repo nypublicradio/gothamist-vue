@@ -12,8 +12,8 @@
         :title-link="`/${link.page.ancestry[0].slug}/${link.page.meta.slug}`"
         :image-width="100"
         :image-height="100"
-        :image-max-width="getArticleImageWidth(link.page) || Infinity"
-        :image-max-height="getArticleImageHeight(link.page) || Infinity"
+        :image-max-width="getArticleImageWidth(link.page, link.page.listingImage) || Infinity"
+        :image-max-height="getArticleImageHeight(link.page, link.page.listingImage) || Infinity"
         :tags="formatTags(link.page.ancestry[0].title,
                           link.page.ancestry[0].slug,
                           link.page.sponsoredContent,
@@ -35,7 +35,17 @@
           </template>
         </article-metadata>
       </v-card>
-      <div v-else-if="link.pageType === 'page'" />
+      <v-card
+        v-else-if="link.pageType === 'page' && link.page"
+        class="gothamist mod-small"
+        :image="getArticleImage(undefined, undefined, link.page.listingImage)"
+        :title="link.value.titleOverride || link.page.title"
+        :title-link="link.page.path"
+        :image-width="100"
+        :image-height="100"
+        :image-max-width="getArticleImageWidth(undefined, link.page.listingImage) || Infinity"
+        :image-max-height="getArticleImageHeight(undefined, link.page.listingImage) || Infinity"
+      />
       <v-card
         v-else-if="!link.pageType"
         :key="'link-' + link.id"
@@ -81,6 +91,10 @@ export default {
       .map((link) => {
         return this.$axios.get(`/pages/${link.value.page}`).then((result) => {
           const page = result.data
+          const pathMatch = page.url && page.url.match(/^http[s]?:\/\/[^/]+(\/.*)/)
+          page.path = pathMatch && pathMatch[1] ? pathMatch[1] : ''
+
+          console.log('PAGE', page)
           this.pages.push(page)
           if (this.getPageType(page) === 'story') {
             this.disqusThreadIds.push(page.uuid)
