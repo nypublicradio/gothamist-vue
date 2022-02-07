@@ -154,11 +154,14 @@ export default {
 }
 
 .c-article__body .related-links a {
+  transition: all 0s;
+  text-underline-position: auto;
   text-decoration-line: none;
-  border-bottom: none;
   &:hover {
     text-decoration-line: none;
-    border-bottom: none;
+  }
+  > span {
+    transition: all 0s;
   }
 }
 </style>
