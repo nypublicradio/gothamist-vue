@@ -93,8 +93,6 @@ export default {
           const page = result.data
           const pathMatch = page.url && page.url.match(/^http[s]?:\/\/[^/]+(\/.*)/)
           page.path = pathMatch && pathMatch[1] ? pathMatch[1] : ''
-
-          console.log('PAGE', page)
           this.pages.push(page)
           if (this.getPageType(page) === 'story') {
             this.disqusThreadIds.push(page.uuid)
