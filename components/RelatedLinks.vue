@@ -91,7 +91,7 @@ export default {
       .map((link) => {
         return this.$axios.get(`/pages/${link.value.page}`).then((result) => {
           const page = result.data
-          const pathMatch = page.url && page.url.match(/^http[s]?:\/\/[^/]+(\/.*)/)
+          const pathMatch = page.url && /^http[s]?:\/\/[^/]+(\/.*)/.exec(page.url.match)
           page.path = pathMatch && pathMatch[1] ? pathMatch[1] : ''
           this.pages.push(page)
           if (this.getPageType(page) === 'story') {

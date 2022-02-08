@@ -6,16 +6,23 @@ const TEXT_CLASS = 'o-rte-text'
 // a `div` tag in MT article markup is probably from an embed
 const EMBED_WEIGHT = 50
 
+// Returns whether a node only contains whitespace or not
 function _isNotWhitespaceOnly (node) {
   return !(['#text', 'P'].includes(node.nodeName) &&
   node.textContent.replace(/\s/g, '').length === 0)
 }
 
+// Counts the words in a DOM nodes text content
 function _countWords (node) {
   const text = node.textContent
   return text.replace(/[^\w ]/g, '').split(/\s+/).length
 }
 
+// Gets the word count of an element, setting a minimum value
+// for embeds.
+// We're really only using word count as a proxy for
+// vertical height i.e. line count so we want to account
+// for the height of images, embeds etc.
 function _getWordWeight (node) {
   const tagType = node.nodeName.toLowerCase()
   let wordWeight = _countWords(node)
@@ -25,8 +32,10 @@ function _getWordWeight (node) {
   return wordWeight
 }
 
-const _getTextFieldLandmarks = function (rootElement, wordWeight) {
+// Gets the sub-landmarks in rich text blocks so we can insert between paragraphs
+const _getTextFieldLandmarks = function (rootElement, startingWordWeight) {
   const landmarks = []
+  let wordWeight = startingWordWeight || 0
   const nodes = [...rootElement.childNodes].filter(_isNotWhitespaceOnly)
   for (const node of nodes) {
     if (node.nextSibling) {
@@ -60,6 +69,15 @@ const insertAfterElement = function (element, target) {
   }
 }
 
+// Gets a list of dom nodes in the streamfield, where
+// we can insert something (ads, inline information modules, etc.)
+// after them. Also includes some information about the elements
+// that can be used to help decide where to insert things.
+// Example output:
+// [
+//   {node: Node, wordWeight: 23, type: 'p', nextType: 'p' }
+//   {node: Node, wordWeight: 76, type: 'p', nextType: null }
+// ]
 const getStreamfieldLandmarks = function (rootElement) {
   let wordWeight = 0
   const landmarks = []
@@ -67,8 +85,8 @@ const getStreamfieldLandmarks = function (rootElement) {
   for (const node of nodes) {
     if ([...node.classList].includes(TEXT_CLASS)) {
       const childLandmarks = _getTextFieldLandmarks(node, wordWeight)
-      landmarks.push(...childLandmarks)
-      wordWeight = landmarks.lastItem.wordWeight
+      landmarks.push(...childLandmarks);
+      ({ wordWeight } = landmarks.lastItem)
     } else {
       wordWeight += _getWordWeight(node)
       landmarks.push({
