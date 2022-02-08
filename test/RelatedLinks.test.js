@@ -2,12 +2,16 @@ import { shallowMount } from '@vue/test-utils'
 import RelatedLinks from '../components/RelatedLinks'
 
 describe('RelatedLinks', () => {
-  let wrapper
+  let wrapper = {}
 
-  const findCollection = () => wrapper.find('v-collection')
-  const findCards = () => wrapper.findAll('v-card')
+  // This component
   const findRelatedLinks = () => wrapper.findComponent(RelatedLinks)
+  // the VCollection
+  const findCollection = () => wrapper.find('v-collection')
+  // the VCards
+  const findCards = () => wrapper.findAll('v-card')
 
+  // Component Factory
   function createComponent ({ propsData = {} } = {}) {
     const $axios = {
       get: (url) => {
