@@ -90,9 +90,9 @@ export default {
       .filter(link => link.type === 'cms_page')
       .map((link) => {
         return this.$axios.get(`/pages/${link.value.page}`).then((result) => {
-          const page = result.data
-          const pathMatch = page.url && /^http[s]?:\/\/[^/]+(\/.*)/.exec(page.url)
-          page.path = pathMatch && pathMatch[1] ? pathMatch[1] : ''
+          const page = result.data || {}
+          const pathMatches = /^http[s]?:\/\/[^/]+(\/.*)/.exec(page.url)
+          page.path = pathMatches && pathMatches[1] ? pathMatches[1] : ''
           this.pages.push(page)
           if (this.getPageType(page) === 'story') {
             this.disqusThreadIds.push(page.uuid)
