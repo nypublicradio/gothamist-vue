@@ -4,8 +4,10 @@
       <breadcrumbs class="article-breadcrumbs" :breadcrumbs="breadcrumbs" />
       <h1 class="article-title" v-html="article.title" />
       <article-metadata
-        :publish-date="article.formattedPublishDate"
-        :updated-date="article.formattedUpdatedDate"
+        publish-prefix="Published "
+        :publish-date="formatDateForByline(article.publicationDate)"
+        updated-prefix="Modified "
+        :updated-date="formatDateForByline(article.updatedDate)"
         class="l-container l-container--10col"
       >
         <template v-slot:authors>
@@ -219,6 +221,7 @@
 import gtm from '@/mixins/gtm'
 import disqus from '@/mixins/disqus'
 import LazyHydrate from 'vue-lazy-hydration'
+import { differenceInHours, format } from 'date-fns'
 import RelatedAuthors from './RelatedAuthors.vue'
 import { getImagePath } from '~/mixins/image'
 import { insertAdDiv } from '~/utils/insert-ad-div'
@@ -555,7 +558,17 @@ export default {
         this.showComments = true
       }
     },
-    getArticleImage
+    getArticleImage,
+    formatDateForByline (date) {
+      if (date) {
+        const dateObject = new Date(date)
+        const now = new Date()
+        const shortDate = format(dateObject, 'MMMM d, y')
+        const longDate = format(dateObject, "MMMM d, y 'at' K:mm aaaa")
+        return differenceInHours(now, dateObject) <= 12 ? shortDate : longDate
+      }
+      return null
+    }
   },
   head () {
     return {
@@ -604,6 +617,10 @@ export default {
 
 .article-metadata {
   margin-bottom: var(--space-4);
+}
+
+.article-metadata .article-metadata-separator::after {
+  content: "|"
 }
 
 .article-title {
