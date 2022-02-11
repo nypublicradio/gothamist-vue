@@ -221,11 +221,10 @@
 import gtm from '@/mixins/gtm'
 import disqus from '@/mixins/disqus'
 import LazyHydrate from 'vue-lazy-hydration'
-import { differenceInHours, format } from 'date-fns'
 import RelatedAuthors from './RelatedAuthors.vue'
 import { getImagePath } from '~/mixins/image'
 import { insertAdDiv } from '~/utils/insert-ad-div'
-import { getScrollDepth, getArticleImage } from '~/mixins/helpers'
+import { formatDateForByline, getScrollDepth, getArticleImage } from '~/mixins/helpers'
 import {
   getStructuredData,
   getOgImage,
@@ -559,16 +558,7 @@ export default {
       }
     },
     getArticleImage,
-    formatDateForByline (date) {
-      if (date) {
-        const dateObject = new Date(date)
-        const now = new Date()
-        const shortDate = format(dateObject, 'MMMM d, y')
-        const longDate = format(dateObject, "MMMM d, y 'at' K:mm aaaa")
-        return differenceInHours(now, dateObject) <= 12 ? shortDate : longDate
-      }
-      return null
-    }
+    formatDateForByline
   },
   head () {
     return {
