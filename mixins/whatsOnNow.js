@@ -75,7 +75,6 @@ export default {
             'whatsOnNow/setStreamsToNotPlaying'
           )
         } else {
-          console.log('stream = ', stream)
           this.play([stream.file])
           this.$store.commit(
             'whatsOnNow/setWhatsOnNow', stream
@@ -114,7 +113,7 @@ export default {
         action = 'Pause'
       }
       this.gaEvent(
-        'WNYC Player',
+        'Gothamist Player',
         action,
         component,
         stream

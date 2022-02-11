@@ -1,18 +1,15 @@
 import { mapState } from 'vuex'
 
-const whatsOnAPI = 'https://api.demo.nypr.digital/api/v4/whats_on/'
-
 export default {
   methods: {
     async pollApi () {
-      console.log('axios = ', this.$axios.get('/?filter[slug]=wnyc-fm939&include=current-airing.image,current-show.show.image,current-episode.segments', { baseURL: whatsOnAPI }))
       // fm stream
-      await this.$axios.get('/?filter[slug]=wnyc-fm939&include=current-airing.image,current-show.show.image,current-episode.segments', { baseURL: whatsOnAPI })
+      await this.$axios.get('/?filter[slug]=wnyc-fm939&include=current-airing.image,current-show.show.image,current-episode.segments', { baseURL: this.$config.whatsOnAPI })
         .then(response => (
           this.setTheState(response.data, 0)
         ))
       // am stream
-      await this.$axios.get('/?filter[slug]=wnyc-am820&include=current-airing.image,current-show.show.image,current-episode.segments', { baseURL: whatsOnAPI })
+      await this.$axios.get('/?filter[slug]=wnyc-am820&include=current-airing.image,current-show.show.image,current-episode.segments', { baseURL: this.$config.whatsOnAPI })
         .then(response => (
           this.setTheState(response.data, 1)
         ))
@@ -66,23 +63,23 @@ export default {
         detailsLink: showData ? showData.attributes.url : null,
         episodeTitle: episodeData ? episodeData.attributes.title : null,
         episodeLink: episodeData ? episodeData.attributes.url : null,
-        file: apiResponse.data[0].attributes['mobile-aac'],
-        image: imageData ? 'https://media.wnyc.org/i/480/480/l/80/' + imageData.attributes.name : apiResponse.data[0].attributes['image-logo'],
+        file: apiResponse.data[0].attributes.mobileAac,
+        image: imageData ? 'https://media.wnyc.org/i/480/480/l/80/' + imageData.attributes.name : apiResponse.data[0].attributes.imageLogo,
         playing: this.streams[index].playing,
         slug: apiResponse.data[0].attributes.slug,
         station: apiResponse.data[0].attributes.name,
-        timeStart: scheduleData ? scheduleData.attributes['iso-start-time'] : null,
-        timeEnd: scheduleData ? scheduleData.attributes['iso-end-time'] : null,
+        timeStart: scheduleData ? scheduleData.attributes.isoStartTime : null,
+        timeEnd: scheduleData ? scheduleData.attributes.isoEndTime : null,
         title,
         titleLink,
         onTodaysShowHeadline: episodeData ? episodeData.attributes.title : null,
         onTodaysShowHeadlineLink: episodeData ? episodeData.attributes.url : null,
         onTodaysShowHosts: showData ? showData.attributes.about.roles.host : null,
-        onTodaysShowImage: episodeData && episodeData.attributes['image-main'] ? episodeData.attributes['image-main'].url : null,
-        onTodaysShowImageAltText: episodeData && episodeData.attributes['image-main'] ? episodeData.attributes['image-main']['alt-text'] : null,
-        onTodaysShowImageCaption: episodeData && episodeData.attributes['image-main'] ? episodeData.attributes['image-main'].caption : null,
-        onTodaysShowImageCredits: episodeData && episodeData.attributes['image-main'] ? episodeData.attributes['image-main']['credits-name'] : null,
-        onTodaysShowImageCreditsUrl: episodeData && episodeData.attributes['image-main'] ? episodeData.attributes['image-main']['credits-url'] : null,
+        onTodaysShowImage: episodeData && episodeData.attributes.imageMain ? episodeData.attributes.imageMain.url : null,
+        onTodaysShowImageAltText: episodeData && episodeData.attributes.imageMain ? episodeData.attributes.imageMain.altText : null,
+        onTodaysShowImageCaption: episodeData && episodeData.attributes.imageMain ? episodeData.attributes.imageMain.caption : null,
+        onTodaysShowImageCredits: episodeData && episodeData.attributes.imageMain ? episodeData.attributes.imageMain.creditsName : null,
+        onTodaysShowImageCreditsUrl: episodeData && episodeData.attributes.imageMain ? episodeData.attributes.imageMain.creditsUrl : null,
         onTodaysShowSegments: segmentData.length > 0 ? formattedSegments : null,
         onTodaysShowSocial: showData ? showData.attributes.about.social : null
       }

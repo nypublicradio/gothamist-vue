@@ -158,11 +158,11 @@ export default {
     },
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {
-      baseURL: process.env.API,
-      whatsOnAPI: process.env.WHATS_ON_API
+      baseURL: process.env.API
     },
     environment: process.env.ENV && process.env.ENV.toLowerCase(),
-    siteId: '1'
+    siteId: '1',
+    whatsOnAPI: process.env.WHATS_ON_API
   },
 
   gtm: {

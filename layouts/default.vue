@@ -77,7 +77,7 @@ import gtm from '@/mixins/gtm'
 // audio player
 import whatsOnNow from '@/mixins/whatsOnNow'
 import api from '@/mixins/api'
-import vueHifi from 'vue-hifi/src/mixins/vue-hifi'
+import vueHifi from '../node_modules/vue-hifi/src/mixins/vue-hifi'
 // audio player
 
 import { setTargeting } from '~/mixins/htl'
@@ -144,7 +144,7 @@ export default {
     // send a google analytics event every 2 minutes if a stream is playing
     this.timer = window.setInterval(() => {
       if (this.vueHifiIsPlaying) {
-        this.gaEvent('WNYC Player', 'Ping', this.station)
+        this.gaEvent('Gothamist Player', 'Ping', this.station)
       } else {
         clearInterval(this.timer)
       }
@@ -242,9 +242,9 @@ export default {
 </script>
 
 <style lang="scss">
-$ad-wrapper-desktop:274px;
-$ad-wrapper-mobile:74px;
-$main-margin-top:70px;
+$ad-wrapper-desktop: 274px;
+$ad-wrapper-mobile: 74px;
+$main-margin-top: 70px;
 
 html {
   scroll-padding-top: 85px;
@@ -252,9 +252,15 @@ html {
 
 // prevents the footer from showing in the viewport before content is loaded, which affects our content shift score
 main {
-  min-height: calc( 100vh - ( var(--heading-height) + #{$ad-wrapper-mobile} + #{$main-margin-top} ) );
+  min-height: calc(
+    100vh -
+      (var(--heading-height) + #{$ad-wrapper-mobile} + #{$main-margin-top})
+  );
   @include media('>medium') {
-    min-height: calc( 100vh - ( var(--heading-height) + #{$ad-wrapper-desktop} + #{$main-margin-top} ) );
+    min-height: calc(
+      100vh -
+        (var(--heading-height) + #{$ad-wrapper-desktop} + #{$main-margin-top})
+    );
   }
 }
 
