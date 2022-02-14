@@ -9,6 +9,9 @@
       v-if="page.slides.length > 0"
       class="l-wrap l-container l-container--xl"
     >
+      <h1 class="is-vishidden">
+        {{ articleTitle }} - Photo Gallery
+      </h1>
       <nuxt-link :to="articleLink" class="gallery-back-to-link">
         <simple-arrow-left />
         <span>
