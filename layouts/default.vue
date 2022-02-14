@@ -180,11 +180,7 @@ main {
 }
 
 .home-page main {
-  margin-top: 0;
-}
-
-.home-page .gothamist-header {
-  padding-bottom: calc(45px + var(--space-6)); //45px = overhanging logo height
+  margin-top: calc(45px + var(--space-6)); //45px = overhanging logo height
 }
 
 .ad-wrapper-outer {
