@@ -1,14 +1,17 @@
 <template>
   <div
-    v-observe-visibility="{callback: headerVisibilityChanged, intersection: {threshold: 1}}"
+    v-observe-visibility="{
+      callback: headerVisibilityChanged,
+      intersection: { threshold: 1 }
+    }"
     class="gothamist-header"
-    :class="{'is-stuck': isHeaderStuck}"
+    :class="{ 'is-stuck': isHeaderStuck }"
   >
     <the-header
       ref="header"
       :donate-url="donateButtonUrl"
       class="u-color-group-dark"
-      @componentEvent="gaEvent('Click Tracking','Donate', 'Header')"
+      @componentEvent="gaEvent('Click Tracking', 'Donate', 'Header')"
     >
       <template v-slot:menu>
         <the-menu
@@ -19,10 +22,7 @@
         >
           <template v-slot:logo>
             <div>
-              <nuxt-link
-                to="/"
-                aria-label="gothamist home page"
-              >
+              <nuxt-link to="/" aria-label="gothamist home page">
                 <gothamist-logo />
               </nuxt-link>
             </div>
@@ -32,9 +32,10 @@
               <v-button
                 :href="donateUrl"
                 target="_blank"
+                rel="noopener noreferrer"
                 class="c-main-header__donate"
                 label="Donate"
-                @click="gaEvent('Click Tracking','Donate', 'Side Menu')"
+                @click="gaEvent('Click Tracking', 'Donate', 'Side Menu')"
               />
             </div>
           </template>
@@ -43,9 +44,12 @@
               <v-button
                 :href="'mailto:' + tipsEmail"
                 target="_blank"
+                rel="noopener noreferrer"
                 label="Send A Story Idea"
                 class="c-main-header__send-story"
-                @click="gaEvent('Click Tracking','Send A Story Idea', 'Side Menu')"
+                @click="
+                  gaEvent('Click Tracking', 'Send A Story Idea', 'Side Menu')
+                "
               />
             </div>
           </template>
@@ -53,7 +57,7 @@
             <div>
               <v-search
                 action="/search"
-                @searchBarSubmit="gaEvent('Side Menu','user_search')"
+                @searchBarSubmit="gaEvent('Side Menu', 'user_search')"
               />
             </div>
           </template>
@@ -63,32 +67,29 @@
                 <share-tools-item
                   service="facebook"
                   username="gothamist"
-                  @follow="gaEvent('NTG social','social follow', ...arguments)"
+                  @follow="gaEvent('NTG social', 'social follow', ...arguments)"
                 />
                 <share-tools-item
                   service="twitter"
                   username="gothamist"
-                  @follow="gaEvent('NTG social','social follow', ...arguments)"
+                  @follow="gaEvent('NTG social', 'social follow', ...arguments)"
                 />
                 <share-tools-item
                   service="instagram"
                   username="gothamist"
-                  @follow="gaEvent('NTG social','social follow', ...arguments)"
+                  @follow="gaEvent('NTG social', 'social follow', ...arguments)"
                 />
                 <share-tools-item
                   service="youtube"
                   username="UCY_2VeS5Q9_sMZRhtvF0c5Q"
-                  @follow="gaEvent('NTG social','social follow', ...arguments)"
+                  @follow="gaEvent('NTG social', 'social follow', ...arguments)"
                 />
               </share-tools>
             </div>
           </template>
         </the-menu>
       </template>
-      <template
-        v-if="showLogo"
-        v-slot:logo
-      >
+      <template v-if="showLogo" v-slot:logo>
         <nuxt-link
           to="/"
           class="c-main-header__logo"
@@ -98,20 +99,14 @@
           <gothamist-logo title="Gothamist" />
         </nuxt-link>
       </template>
-      <template
-        v-if="showNavigation"
-        v-slot:navigation
-      >
+      <template v-if="showNavigation" v-slot:navigation>
         <secondary-navigation
           orientation="horizontal"
           :nav-items="headerNav"
           @componentEvent="gaEvent('Click Tracking', ...arguments, 'Header')"
         />
       </template>
-      <template
-        v-if="showSearch"
-        v-slot:search
-      >
+      <template v-if="showSearch" v-slot:search>
         <v-search
           class="header-search-bar"
           action="/search"
@@ -119,45 +114,71 @@
           closed-on-load
           transition="none"
           :donate-url="donateUrl"
-          @searchBarOpen="gaEvent('Click Tracking', 'user_search_open', 'Side Menu')"
-          @searchBarSubmit="gaEvent('Click Tracking','user_search', 'Side Menu')"
+          @searchBarOpen="
+            gaEvent('Click Tracking', 'user_search_open', 'Side Menu')
+          "
+          @searchBarSubmit="
+            gaEvent('Click Tracking', 'user_search', 'Side Menu')
+          "
         />
       </template>
-      <template
-        v-if="showSocial"
-        v-slot:social
-      >
+      <template v-if="showSocial" v-slot:social>
         <share-tools label="SHARE">
           <share-tools-item
             action="share"
             service="facebook"
-            :url="url + '&utm_medium=social&utm_source=facebook&utm_campaign=shared_facebook'"
-            :utm-parameters="{medium: 'social', source: 'facebook', campaign: 'shared_facebook'}"
-            @share="gaEvent('NTG social','social share', ...arguments)"
+            :url="
+              url +
+                '&utm_medium=social&utm_source=facebook&utm_campaign=shared_facebook'
+            "
+            :utm-parameters="{
+              medium: 'social',
+              source: 'facebook',
+              campaign: 'shared_facebook'
+            }"
+            @share="gaEvent('NTG social', 'social share', ...arguments)"
           />
           <share-tools-item
             action="share"
             service="twitter"
-            :url="url + '&utm_medium=social&utm_source=twitter&utm_campaign=shared_twitter'"
-            :share-parameters="{text: title, via: 'gothamist'}"
-            :utm-parameters="{medium: 'social', source: 'twitter', campaign: 'shared_twitter'}"
-            @share="gaEvent('NTG social','social share', ...arguments)"
+            :url="
+              url +
+                '&utm_medium=social&utm_source=twitter&utm_campaign=shared_twitter'
+            "
+            :share-parameters="{ text: title, via: 'gothamist' }"
+            :utm-parameters="{
+              medium: 'social',
+              source: 'twitter',
+              campaign: 'shared_twitter'
+            }"
+            @share="gaEvent('NTG social', 'social share', ...arguments)"
           />
           <share-tools-item
             action="share"
             service="reddit"
-            :url="url + '&utm_medium=social&utm_source=reddit&utm_campaign=shared_reddit'"
-            :share-parameters="{title: title}"
-            :utm-parameters="{medium: 'social', source: 'reddit', campaign: 'shared_reddit'}"
-            @share="gaEvent('NTG social','social share', ...arguments)"
+            :url="
+              url +
+                '&utm_medium=social&utm_source=reddit&utm_campaign=shared_reddit'
+            "
+            :share-parameters="{ title: title }"
+            :utm-parameters="{
+              medium: 'social',
+              source: 'reddit',
+              campaign: 'shared_reddit'
+            }"
+            @share="gaEvent('NTG social', 'social share', ...arguments)"
           />
           <share-tools-item
             action="share"
             service="email"
             :url="url"
-            :share-parameters="{body: title + ' - %URL%'}"
-            :utm-parameters="{medium: 'social', source: 'email', campaign: 'shared_email'}"
-            @share="gaEvent('NTG social','social share', ...arguments)"
+            :share-parameters="{ body: title + ' - %URL%' }"
+            :utm-parameters="{
+              medium: 'social',
+              source: 'email',
+              campaign: 'shared_email'
+            }"
+            @share="gaEvent('NTG social', 'social share', ...arguments)"
           />
         </share-tools>
       </template>
@@ -229,12 +250,15 @@ export default {
       return !(this.$route.name === GALLERY_ROUTE)
     },
     socialHeader () {
-      return this.isHeaderStuck &&
-      (this.$route.name === ARTICLE_ROUTE || this.$route.name === GALLERY_ROUTE)
+      return (
+        this.isHeaderStuck &&
+        (this.$route.name === ARTICLE_ROUTE ||
+          this.$route.name === GALLERY_ROUTE)
+      )
     }
   },
   watch: {
-    '$route' () {
+    $route () {
       this.updateShareData()
     }
   },
@@ -255,7 +279,11 @@ export default {
     updateShareData () {
       this.title = document.title
       if (this.$route.query.image) {
-        this.url = 'https://gothamist.com' + this.$route.path + '?image=' + this.$route.query.image
+        this.url =
+          'https://gothamist.com' +
+          this.$route.path +
+          '?image=' +
+          this.$route.query.image
       } else {
         this.url = 'https://gothamist.com' + this.$route.path
       }
@@ -293,7 +321,7 @@ export default {
   --home-page-header-padding: 20px;
   --home-page-header-padding-desktop: 50px;
   top: calc(-1px - var(--home-page-header-padding));
-  @include media(">medium") {
+  @include media('>medium') {
     top: calc(-1px - var(--home-page-header-padding-desktop));
   }
 }
@@ -303,16 +331,16 @@ export default {
   transition: padding var(--animation-duration-standard);
   transform-origin: top;
   background: RGB(var(--color-background-darker));
-  @include media(">medium") {
+  @include media('>medium') {
     padding-top: var(--home-page-header-padding-desktop);
   }
 }
 
 .c-main-header .c-primary-nav {
-  @include media(">xlarge") {
+  @include media('>xlarge') {
     padding: 0 24px;
   }
-  @include media(">1255px") {
+  @include media('>1255px') {
     padding-left: 48px;
   }
 }
@@ -338,18 +366,18 @@ export default {
   }
 }
 
-.home-page .gothamist-header:not(.is-stuck) .c-main-header__logo{
+.home-page .gothamist-header:not(.is-stuck) .c-main-header__logo {
   position: absolute;
   width: 110px;
   height: 115px;
   top: -11px;
   left: 66px;
-  @include media(">medium") {
+  @include media('>medium') {
     width: 135px;
     height: 142px;
     top: -30px;
   }
-  @include media(">1255px") {
+  @include media('>1255px') {
     left: calc((100vw - var(--max-width-xl)) / 2);
   }
 }
@@ -359,20 +387,24 @@ export default {
   height: 100%;
 }
 
-.home-page .c-main-header__logo .gothamist-logo-icon--stacked .gothamist-letters path {
+.home-page
+  .c-main-header__logo
+  .gothamist-logo-icon--stacked
+  .gothamist-letters
+  path {
   fill: RGB(var(--color-black));
 }
 
 .c-main-header .c-share-tools__label {
   display: none;
-  @include media(">large") {
+  @include media('>large') {
     display: block;
   }
 }
 
 .c-main-header .c-share-tools__label {
   display: none;
-  @include media(">large") {
+  @include media('>large') {
     display: block;
   }
 }
@@ -385,26 +417,28 @@ export default {
   }
 
   .share-tools-button,
-  .c-share-tools__link  {
+  .c-share-tools__link {
     min-width: 44px;
   }
 
   .share-tools-button:nth-child(3),
   .share-tools-button:nth-child(4) {
     display: none;
-    @include media(">400px") {
+    @include media('>400px') {
       display: block;
     }
   }
 }
 
-.c-main-header .c-main-header__right .c-share-tools__group.c-share-tools__group {
+.c-main-header
+  .c-main-header__right
+  .c-share-tools__group.c-share-tools__group {
   display: flex;
   width: max-content;
   margin-right: var(--space-3);
 }
 
 .c-main-header__branding:empty {
-    display: none;
+  display: none;
 }
 </style>
