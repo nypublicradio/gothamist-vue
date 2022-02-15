@@ -24,7 +24,7 @@
                   <a
                     href="https://us5.campaign-archive.com/?e=40257345f9&u=4109fdd323aaac7078eadaa8f&id=82ecfc8061"
                     target="_blank"
-                    rel="noopener"
+                    rel="noopener noreferrer"
                   >
                     Read a Sample Newsletter
                   </a>
@@ -64,7 +64,11 @@ export default {
   name: 'Newsletter', // this is the template name which is used for GTM
   mixins: [gtm],
   mounted () {
-    this.gaEvent('NTG newsletter', 'newsletter modal impression 3', 'Newsletter Signup Page')
+    this.gaEvent(
+      'NTG newsletter',
+      'newsletter modal impression 3',
+      'Newsletter Signup Page'
+    )
   },
   methods: {
     handleNewsletterSignupSuccess () {

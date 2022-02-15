@@ -6,18 +6,11 @@
     <div class="c-newsletter-form__inner">
       <div class="c-newsletter-form__text">
         <gothamist-arrow />
-        Sign up for our newsletter! Share your email address to get our top stories each day.
+        Sign up for our newsletter! Share your email address to get our top
+        stories each day.
       </div>
-      <form
-        class="gtm__click-tracking"
-        @submit.prevent="submitForm('footer')"
-      >
-        <label
-          for="newsletter"
-          class="is-vishidden"
-        >
-          newsletter signup
-        </label>
+      <form class="gtm__click-tracking" @submit.prevent="submitForm('footer')">
+        <label for="newsletter" class="is-vishidden"> newsletter signup </label>
         <div
           v-if="status !== 'success'"
           class="inline-button c-newsletter-form__inline-button"
@@ -41,44 +34,28 @@
             :disabled="!termsCheckbox"
           >
             <gothamist-arrow v-if="!submitted" />
-            <loading-icon
-              v-else
-              class="c-newsletter-form__loading-icon"
-            />
+            <loading-icon v-else class="c-newsletter-form__loading-icon" />
           </button>
         </div>
-        <div
-          v-if="status === 'success'"
-          class="c-newsletter-form__submit"
-        >
+        <div v-if="status === 'success'" class="c-newsletter-form__submit">
           Thanks for signing up!
         </div>
-        <div
-          v-if="status === 'error'"
-          class="c-newsletter-form__submit"
-        >
+        <div v-if="status === 'error'" class="c-newsletter-form__submit">
           Sorry, there was an error with your submission. Please try again!
         </div>
-        <div
-          v-if="status !== 'success'"
-          class="c-newsletter-form__terms"
-        >
+        <div v-if="status !== 'success'" class="c-newsletter-form__terms">
           <fieldset>
             <legend class="is-vishidden">
               Terms
             </legend>
             <label>
-              <input
-                v-model="termsCheckbox"
-                type="checkbox"
-                required
-                checked
-              >
-              By submitting your information, you're agreeing to receive communications from New York Public Radio in accordance with our
+              <input v-model="termsCheckbox" type="checkbox" required checked>
+              By submitting your information, you're agreeing to receive
+              communications from New York Public Radio in accordance with our
               <a
                 href="https://www.wnyc.org/terms/"
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 class="u-has-accent"
               >Terms</a>.
             </label>
@@ -103,7 +80,7 @@ export default {
   position: relative;
   width: 100%;
   @include typeface(body, 4);
-  @include media(">medium") {
+  @include media('>medium') {
     max-width: 375px;
     margin: 0 0 0 auto;
   }
@@ -117,7 +94,7 @@ export default {
   top: -50px;
   left: -10px;
   mix-blend-mode: difference;
-  @include media(">xlarge") {
+  @include media('>xlarge') {
     z-index: 0;
     mix-blend-mode: normal;
     top: 50px;
@@ -134,14 +111,14 @@ export default {
   background-color: RGB(var(--color-background-highlight));
   border: 3px solid RGB(var(--color-dark-gray));
   padding: var(--space-5) var(--space-4);
-  @include media(">xlarge") {
+  @include media('>xlarge') {
     z-index: 1;
   }
 }
 
 .c-newsletter-form .c-newsletter-form__inner .c-newsletter-form__text {
   margin-left: 90px;
-  @include media(">xlarge") {
+  @include media('>xlarge') {
     margin-left: 0;
   }
 }
@@ -178,7 +155,7 @@ export default {
     transform: none;
 
     .o-gothamist-arrow-icon {
-      animation: bounceHorizontal .8s 0s ease-in-out infinite;
+      animation: bounceHorizontal 0.8s 0s ease-in-out infinite;
     }
   }
 
@@ -190,7 +167,7 @@ export default {
 
 .c-newsletter-form__button[disabled] {
   cursor: not-allowed;
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .c-newsletter-form .c-newsletter-form__button .o-gothamist-arrow-icon,
@@ -208,8 +185,8 @@ export default {
   position: relative;
 }
 
-.c-newsletter-form .c-newsletter-form__terms input[type="checkbox"],
-.c-newsletter-form__terms input[type="checkbox"] {
+.c-newsletter-form .c-newsletter-form__terms input[type='checkbox'],
+.c-newsletter-form__terms input[type='checkbox'] {
   position: absolute;
   left: -25px;
   top: 2px;
@@ -243,7 +220,8 @@ export default {
 }
 
 @keyframes bounceHorizontal {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
   20% {

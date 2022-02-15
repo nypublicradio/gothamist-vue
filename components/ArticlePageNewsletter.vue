@@ -3,16 +3,8 @@
     <h3 v-if="title">
       {{ title }}
     </h3>
-    <form
-      class="gtm__click-tracking"
-      @submit.prevent="submitForm('article')"
-    >
-      <label
-        for="newsletter"
-        class="is-vishidden"
-      >
-        newsletter signup
-      </label>
+    <form class="gtm__click-tracking" @submit.prevent="submitForm('article')">
+      <label for="newsletter" class="is-vishidden"> newsletter signup </label>
       <div
         v-if="status !== 'success'"
         class="inline-button c-newsletter-form__inline-button"
@@ -36,44 +28,28 @@
           :disabled="!termsCheckbox"
         >
           <gothamist-arrow v-if="!submitted" />
-          <loading-icon
-            v-else
-            class="c-newsletter-form__loading-icon"
-          />
+          <loading-icon v-else class="c-newsletter-form__loading-icon" />
         </button>
       </div>
-      <div
-        v-if="status === 'success'"
-        class="c-newsletter-form__submit"
-      >
+      <div v-if="status === 'success'" class="c-newsletter-form__submit">
         Thanks for signing up!
       </div>
-      <div
-        v-if="status === 'error'"
-        class="c-newsletter-form__submit"
-      >
+      <div v-if="status === 'error'" class="c-newsletter-form__submit">
         Sorry, there was an error with your submission. Please try again!
       </div>
-      <div
-        v-if="status !== 'success'"
-        class="c-newsletter-form__terms"
-      >
+      <div v-if="status !== 'success'" class="c-newsletter-form__terms">
         <fieldset>
           <legend class="is-vishidden">
             Terms
           </legend>
           <label>
-            <input
-              v-model="termsCheckbox"
-              type="checkbox"
-              required
-              checked
-            >
-            By submitting your information, you're agreeing to receive communications from New York Public Radio in accordance with our
+            <input v-model="termsCheckbox" type="checkbox" required checked>
+            By submitting your information, you're agreeing to receive
+            communications from New York Public Radio in accordance with our
             <a
               href="https://www.wnyc.org/terms/"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               class="u-has-accent"
             >Terms</a>.
           </label>
@@ -129,7 +105,7 @@ export default {
   background-color: RGB(var(--color-reddish-orange));
 }
 
-.article-page-newsletter .c-newsletter-form__terms input[type="checkbox"] {
+.article-page-newsletter .c-newsletter-form__terms input[type='checkbox'] {
   background-color: RGB(var(--color-reddish-orange));
 }
 </style>
