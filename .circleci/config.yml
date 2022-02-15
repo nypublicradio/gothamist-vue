@@ -12,6 +12,13 @@ env-param: &env_param
       default: "demo"
       enum: ["demo", "prod"]
 
+filter_all: &filter_all
+  filters:
+    branches:
+      only: /.*/
+    tags:
+      only: /.*/
+
 filter_demo: &filter_demo
   filters:
     branches:
@@ -32,9 +39,12 @@ workflows:
   # that deploy steps are only run under approprate conditions
   test-and-deploy:
     jobs:
-      - build-static
-      - test-nginx
+      - build-static:
+          <<: *filter_all
+      - test-nginx:
+          <<: *filter_all
       - test-static:
+          <<: *filter_all
           requires:
             - build-static
       - deploy-static:
