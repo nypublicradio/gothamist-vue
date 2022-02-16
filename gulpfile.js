@@ -51,12 +51,10 @@ gulp.task('deploy', function () {
 
   // Invalidate CDN
   if (config.distribution) {
-    console.log('Configured with CloudFront distribution')
+    
     g = g.pipe(cloudfront(config))
   } else {
-    console.log(
-      'No CloudFront distribution configured - skipping CDN invalidation'
-    )
+    
   }
 
   // Delete removed files
