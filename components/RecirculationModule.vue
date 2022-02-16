@@ -115,15 +115,9 @@ export default {
     getImageFromStory,
     imageUrl (story) {
       const image = getImageFromStory(story)
-      if (image) {
-        return this.getArticleImage(null, null, image)
-      } else {
-        return (
-          this.$config.defaultImages[story.ancestry[0].slug] ||
+      return image ? this.getArticleImage(null, null, image) : (this.$config.defaultImages[story.ancestry[0].slug] ||
           this.$config.defaultImages.default ||
-          ''
-        )
-      }
+          '');
     },
     getArticleImage,
     getTitle,

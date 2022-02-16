@@ -18,11 +18,7 @@ module.exports = function (req, res, next) {
   const redirect = redirects.find(r => r.from === url)
   if (redirect) {
     let newLocation
-    if (urlParams) {
-      newLocation = redirect.to + urlParams
-    } else {
-      newLocation = redirect.to
-    }
+    newLocation = urlParams ? redirect.to + urlParams : redirect.to;
     res.writeHead(301, {
       Location: newLocation
     })

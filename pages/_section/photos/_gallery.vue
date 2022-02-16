@@ -123,18 +123,10 @@ export default {
   },
   computed: {
     articleLink () {
-      if (this.page.relatedArticles && this.page.relatedArticles.length > 0) {
-        return this.page.relatedArticles[0].path.replace('/home/', '/')
-      } else {
-        return ''
-      }
+      return this.page.relatedArticles && this.page.relatedArticles.length > 0 ? this.page.relatedArticles[0].path.replace('/home/', '/') : '';
     },
     articleTitle () {
-      if (this.page.relatedArticles && this.page.relatedArticles.length > 0) {
-        return this.page.relatedArticles[0].title
-      } else {
-        return ''
-      }
+      return this.page.relatedArticles && this.page.relatedArticles.length > 0 ? this.page.relatedArticles[0].title : '';
     },
     ogImage () {
       if (this.page && this.page.socialImage) {

@@ -310,15 +310,10 @@ export default {
       return getBreadcrumbs(this.article)
     },
     galleryCount () {
-      if (this.article.gallery) {
-        return this.article.gallery.slides.length
-      } else {
-        return 0
-      }
+      return this.article.gallery ? this.article.gallery.slides.length : 0;
     },
     galleryImages () {
-      if (this.article.gallery) {
-        return this.article.gallery.slides.slice(0, 4).map((slide) => {
+      return this.article.gallery ? this.article.gallery.slides.slice(0, 4).map((slide) => {
           const image = slide.value.slideImage.image
           return {
             url: image.file,
@@ -333,10 +328,7 @@ export default {
             height: image.height,
             description: ''
           }
-        })
-      } else {
-        return []
-      }
+        }) : [];
     },
     galleryLink () {
       return this.article.gallery.url.replace(/^https:\/\/[^/]*/, '')

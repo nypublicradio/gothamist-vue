@@ -217,11 +217,7 @@ export default {
       legalNav: state => state.legalNav
     }),
     donateButtonUrl () {
-      if (this.$route.name === GALLERY_ROUTE) {
-        return null
-      } else {
-        return this.donateUrl
-      }
+      return this.$route.name === GALLERY_ROUTE ? null : this.donateUrl;
     },
     scrollMeterTarget () {
       switch (this.$route.name) {

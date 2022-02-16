@@ -38,11 +38,7 @@ gulp.task('deploy', function () {
   // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property
   const publisher = awspublish.create(config)
   let g
-  if (config.env === 'demo') {
-    g = gulp.src(['./' + config.distDir + '/**', './' + config.demoAssetsDir + '/**'])
-  } else {
-    g = gulp.src('./' + config.distDir + '/**')
-  }
+  g = config.env === 'demo' ? gulp.src(['./' + config.distDir + '/**', './' + config.demoAssetsDir + '/**']) : gulp.src('./' + config.distDir + '/**');
   // publisher will add Content-Length, Content-Type and headers specified above
   // If not specified it will set x-amz-acl to public-read by default
   g = g.pipe(
