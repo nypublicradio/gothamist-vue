@@ -2,9 +2,9 @@
   <div>
     <div class="l-container l-container--xl c-featured-blocks__wrapper">
       <!-- featured area -->
-      <loading-icon v-if="$fetchState.pending" />
+      <loading-icon v-if="loadingData" />
       <section
-        v-if="featuredSection && !$fetchState.pending"
+        v-if="featuredSection && !loadingData"
         class="c-featured-blocks l-wrap"
       >
         <h2 class="c-featured-blocks__heading">
@@ -191,7 +191,7 @@
     <!-- sponsored story -->
     <div
       v-if="
-        sponsoredSection && sponsoredSection.length > 0 && !$fetchState.pending
+        sponsoredSection && sponsoredSection.length > 0 && !loadingData
       "
       class="l-container l-container--16col l-wrap"
     >
@@ -278,7 +278,7 @@
       <v-spacer size="triple" />
     </div>
     <!-- news river -->
-    <section v-if="riverSection && !$fetchState.pending">
+    <section v-if="riverSection && !loadingData">
       <!-- section 1 -->
       <div class="l-container l-container--16col l-wrap">
         <div class="l-grid l-grid--large-gutters l-grid--right-rail">
@@ -298,8 +298,8 @@
                   story.listingImage
                 )
               "
-              :image-width="story.showAsFeature ? 640 : 150"
-              :image-height="story.showAsFeature ? 426 : 150"
+              :image-width="getImageWidth(story)"
+              :image-height="getImageHeight(story)"
               :image-max-height="
                 getArticleImageHeight(story.leadAsset, story.listingImage) ||
                   Infinity
@@ -391,8 +391,8 @@
               story.listingImage
             )
           "
-          :image-width="story.showAsFeature ? 640 : 150"
-          :image-height="story.showAsFeature ? 426 : 150"
+          :image-width="getImageWidth(story)"
+          :image-height="getImageHeight(story)"
           :image-max-height="
             getArticleImageHeight(story.leadAsset, story.listingImage) ||
               Infinity
@@ -477,8 +477,8 @@
                   story.listingImage
                 )
               "
-              :image-width="story.showAsFeature ? 640 : 150"
-              :image-height="story.showAsFeature ? 426 : 150"
+              :image-width="getImageWidth(story)"
+              :image-height="getImageHeight(story)"
               :image-max-height="
                 getArticleImageHeight(story.leadAsset, story.listingImage) ||
                   Infinity
@@ -564,8 +564,8 @@
                   story.listingImage
                 )
               "
-              :image-width="story.showAsFeature ? 640 : 150"
-              :image-height="story.showAsFeature ? 426 : 150"
+              :image-width="getImageWidth(story)"
+              :image-height="getImageHeight(story)"
               :image-max-height="
                 getArticleImageHeight(story.leadAsset, story.listingImage) ||
                   Infinity
@@ -656,8 +656,8 @@
                     story.listingImage
                   )
                 "
-                :image-width="story.showAsFeature ? 640 : 150"
-                :image-height="story.showAsFeature ? 426 : 150"
+                :image-width="getImageWidth(story)"
+                :image-height="getImageHeight(story)"
                 :image-max-height="
                   getArticleImageHeight(story.leadAsset, story.listingImage) ||
                     Infinity
@@ -768,7 +768,74 @@ const {
 export default {
   name: 'HomePage', // this is the template name which is used for GTM
   mixins: [disqus, gtm],
-  async fetch () {
+  data () {
+    return {
+      featuredSection: null,
+      sponsoredSection: null,
+      riverSection: null,
+      disqusThreadIds: [],
+      disqusData: null,
+      moreResults: [],
+      moreResultsLoaded: true,
+      offset: 32,
+      loadingData: true
+    }
+  },
+  computed: {
+    ...mapState('global', {
+      defaultImage: state => state.defaultImage,
+      defaultImageArts: state => state.defaultImageArts,
+      defaultImageFood: state => state.defaultImageFood,
+      defaultImageNews: state => state.defaultImageNews
+    }),
+    filteredMoreResults () {
+      // de-dupe the river: take out the 4 featured stories
+      let tempArray = this.moreResults
+      tempArray = tempArray.filter((item) => {
+        return (
+          item.id !== this.featuredSection[0].id &&
+          item.id !== this.featuredSection[1].id &&
+          item.id !== this.featuredSection[2].id &&
+          item.id !== this.featuredSection[3].id
+        )
+      })
+      return tempArray
+    },
+    filteredRiver () {
+      // de-dupe the river: take out the 4 featured stories and the sponsored story
+
+      let filteredRiver = this.riverSection.filter((story) => {
+        const featuredIDs = this.featuredSection.map(item => item.id)
+        return !featuredIDs.includes(story.id)
+      })
+
+      if (this.sponsoredSection && this.sponsoredSection.length > 0) {
+        filteredRiver = filteredRiver.filter((story) => {
+          return story.id !== this.sponsoredSection?.[0].id
+        })
+      }
+      return filteredRiver
+    },
+    moreResultsNuggets () {
+      const nuggetArray = []
+      const nuggetSize = 8
+      let index = 0
+      while (index < this.filteredMoreResults.length) {
+        nuggetArray.push(
+          this.filteredMoreResults.slice(index, nuggetSize + index)
+        )
+        index += nuggetSize
+      }
+      return nuggetArray
+    }
+  },
+  watch: {
+    // get disqus comment counts
+    async disqusThreadIds () {
+      this.disqusData = await this.getCommentCount(this.disqusThreadIds)
+    }
+  },
+  async mounted () {
     // get default featured stories - i.e. the four latest featured stories
     const mainRequest = this.$axios.get(
       '/pages/?type=news.ArticlePage&fields=ancestry%2Cdescription%2Clead_asset%2Clegacy_id%2Clisting_image%2Cpublication_date%2Cshow_as_feature%2Csponsored_content%2Ctags%2Cupdated_date%2Curl%2Cuuid%2Clisting_title%2Clisting_summary&order=-publication_date&show_on_index_listing=true&limit=4&show_as_feature=true&sponsored_content=false'
@@ -850,75 +917,12 @@ export default {
                 String(story.legacyId || story.uuid)
               )
             )
+            this.loadingData = false
+            // eslint-disable-next-line no-console
+            console.log('done = ', this.loadingData)
           }
         )
       )
-  },
-  data () {
-    return {
-      featuredSection: null,
-      sponsoredSection: null,
-      riverSection: null,
-      disqusThreadIds: [],
-      disqusData: null,
-      moreResults: [],
-      moreResultsLoaded: true,
-      offset: 32
-    }
-  },
-  computed: {
-    ...mapState('global', {
-      defaultImage: state => state.defaultImage,
-      defaultImageArts: state => state.defaultImageArts,
-      defaultImageFood: state => state.defaultImageFood,
-      defaultImageNews: state => state.defaultImageNews
-    }),
-    filteredMoreResults () {
-      // de-dupe the river: take out the 4 featured stories
-      let tempArray = this.moreResults
-      tempArray = tempArray.filter((item) => {
-        return (
-          item.id !== this.featuredSection[0].id &&
-          item.id !== this.featuredSection[1].id &&
-          item.id !== this.featuredSection[2].id &&
-          item.id !== this.featuredSection[3].id
-        )
-      })
-      return tempArray
-    },
-    filteredRiver () {
-      // de-dupe the river: take out the 4 featured stories and the sponsored story
-
-      let filteredRiver = this.riverSection.filter((story) => {
-        const featuredIDs = this.featuredSection.map(item => item.id)
-        return !featuredIDs.includes(story.id)
-      })
-
-      if (this.sponsoredSection && this.sponsoredSection.length > 0) {
-        filteredRiver = filteredRiver.filter((story) => {
-          return story.id !== this.sponsoredSection?.[0].id
-        })
-      }
-      return filteredRiver
-    },
-    moreResultsNuggets () {
-      const nuggetArray = []
-      const nuggetSize = 8
-      let index = 0
-      while (index < this.filteredMoreResults.length) {
-        nuggetArray.push(
-          this.filteredMoreResults.slice(index, nuggetSize + index)
-        )
-        index += nuggetSize
-      }
-      return nuggetArray
-    }
-  },
-  watch: {
-    // get disqus comment counts
-    async disqusThreadIds () {
-      this.disqusData = await this.getCommentCount(this.disqusThreadIds)
-    }
   },
   methods: {
     formatTags,
@@ -950,6 +954,14 @@ export default {
         'HomePage',
         this.offset + ' articles loaded'
       )
+    },
+    getImageWidth (story) {
+      // eslint-disable-next-line no-console
+      console.log('story.showAsFeature', story.showAsFeature)
+      return story.showAsFeature ? 640 : this.$mq === 'xsmall' ? 100 : 150
+    },
+    getImageHeight (story) {
+      return story.showAsFeature ? 426 : this.$mq === 'xsmall' ? 100 : 150
     },
     hasGallery,
     isLessThan24Hours,
