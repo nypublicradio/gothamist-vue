@@ -918,8 +918,6 @@ export default {
               )
             )
             this.loadingData = false
-            // eslint-disable-next-line no-console
-            console.log('done = ', this.loadingData)
           }
         )
       )
@@ -956,8 +954,6 @@ export default {
       )
     },
     getImageWidth (story) {
-      // eslint-disable-next-line no-console
-      console.log('story.showAsFeature', story.showAsFeature)
       return story.showAsFeature ? 640 : this.$mq === 'xsmall' ? 100 : 150
     },
     getImageHeight (story) {
