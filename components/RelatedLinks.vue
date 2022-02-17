@@ -141,12 +141,34 @@ export default {
 </script>
 <style lang="scss">
 .related-links {
-  margin-bottom: var(--space-4)
+  margin-bottom: var(--space-4);
+  margin-top: var(--space-7);
 }
 
 .related-links .card.gothamist.mod-small {
   --card-image-width: 100px;
   --card-image-height: 100px;
+}
+
+/* card title with no tag section above it */
+.related-links .card.gothamist .card-title:first-child {
+  margin-top: 40.4px;
+}
+
+.related-links .collection-items > div {
+  margin-bottom: var(--space-3);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @include media(">large")  {
+    margin-bottom: 0;
+  }
+
+  .card-tag a {
+    color: RGB(var(--color-tag-text));
+  }
 }
 
 .related-links .article-metadata {
