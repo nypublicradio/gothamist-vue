@@ -2,12 +2,9 @@
   <div
     v-if="active"
     class="product-marketing-banner o-3d-heading no-print"
-    :class="{'product-marketing-banner-active': active}"
+    :class="{ 'product-marketing-banner-active': active }"
   >
-    <div
-      class="product-marketing-banner-close"
-      @click="active=false"
-    >
+    <div class="product-marketing-banner-close" @click="active = false">
       <close-icon />
     </div>
     <div class="product-marketing-banner-content">
@@ -22,6 +19,7 @@
         <v-button
           :href="link"
           target="_blank"
+          rel="noopener noreferrer"
           class="product-marketing-banner-button"
           :label="cta"
         />
@@ -81,29 +79,33 @@ export default {
 .product-marketing-banner .product-marketing-banner-content {
   text-align: center;
   padding: var(--space-4) var(--space-4) var(--space-4);
-  @include media(">large") {
+  @include media('>large') {
     display: flex;
     justify-content: space-between;
     text-align: left;
   }
 }
 
-.product-marketing-banner .product-marketing-banner-content .product-marketing-banner-heading {
+.product-marketing-banner
+  .product-marketing-banner-content
+  .product-marketing-banner-heading {
   text-align: center;
   @include typeface(header, 8);
   font-weight: bold;
-  @include media(">large") {
+  @include media('>large') {
     text-align: right;
     @include typeface(header, 10);
     padding-right: var(--space-7);
   }
 }
 
-.product-marketing-banner .product-marketing-banner-content .product-marketing-banner-description {
+.product-marketing-banner
+  .product-marketing-banner-content
+  .product-marketing-banner-description {
   font-size: var(--font-size-5);
   line-height: 1.45;
   margin-bottom: var(--space-2);
-  @include media(">large") {
+  @include media('>large') {
     margin-bottom: var(--space-3);
     @include typeface(body, 6);
   }
@@ -131,12 +133,12 @@ export default {
   height: 60px;
   padding-right: var(--space-5);
   padding-left: var(--space-5);
-  @include media(">large") {
+  @include media('>large') {
     margin-top: 0;
   }
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     top: 0;

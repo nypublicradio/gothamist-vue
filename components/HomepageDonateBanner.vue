@@ -4,10 +4,14 @@
       <div class="homepage-donate-banner-graphic">
         <nyc-love />
       </div>
-      <p>Help fund the local coverage you rely on. Back the extra reporting you need during this global pandemic.</p>
+      <p>
+        Help fund the local coverage you rely on. Back the extra reporting you
+        need during this global pandemic.
+      </p>
       <v-button
         :href="donateUrl"
         target="_blank"
+        rel="noopener noreferrer"
         class="homepage-donate-banner-button"
         label="Donate"
       />
@@ -42,7 +46,7 @@ export default {
   border-right: none;
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     left: -3px;
     top: -3px;
@@ -51,7 +55,7 @@ export default {
     background-color: RGB(var(--color-background-highlight));
   }
 
-  @include media(">large") {
+  @include media('>large') {
     margin-top: var(--space-4);
     &::before {
       display: none;
@@ -64,7 +68,7 @@ export default {
   align-items: center;
   justify-content: center;
   text-align: center;
-  @include media(">large") {
+  @include media('>large') {
     max-width: 895px;
     margin: auto;
     padding: 0 var(--space-3) 0 100px;
@@ -77,7 +81,7 @@ export default {
   width: 100%;
   position: relative;
   text-align: left;
-  @include media(">large") {
+  @include media('>large') {
     width: calc(65% - var(--space-3));
   }
 }
@@ -89,7 +93,7 @@ export default {
   margin-top: -105px;
   position: relative;
   float: left;
-  @include media(">large") {
+  @include media('>large') {
     position: absolute;
     float: none;
     top: -55px;
@@ -113,13 +117,13 @@ export default {
   height: 60px;
   width: 100%;
   max-width: 400px;
-  @include media(">large") {
+  @include media('>large') {
     width: calc(35% - var(--space-3));
     margin-top: 0;
   }
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     top: 0;

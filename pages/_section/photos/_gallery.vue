@@ -9,6 +9,9 @@
       v-if="page.slides.length > 0"
       class="l-wrap l-container l-container--xl"
     >
+      <h1 class="is-vishidden">
+        {{ articleTitle }} - Photo Gallery
+      </h1>
       <nuxt-link :to="articleLink" class="gallery-back-to-link">
         <simple-arrow-left />
         <span>
@@ -190,12 +193,12 @@ export default {
   },
   head () {
     return {
-      title: this.title + ' - Gothamist',
+      title: this.title + ' - Photo Gallery - Gothamist',
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.title + ' - Gothamist'
+          content: this.title + ' - Photo Gallery - Gothamist'
         },
         {
           hid: 'og_url',
@@ -205,12 +208,12 @@ export default {
         {
           hid: 'og_title',
           name: 'og:title',
-          content: this.title + ' - Gothamist'
+          content: this.title + ' - Photo Gallery - Gothamist'
         },
         {
           hid: 'og_description',
           name: 'og:description',
-          content: this.title + ' - Gothamist'
+          content: this.title + ' - Photo Gallery - Gothamist'
         },
         {
           hid: 'og_image',

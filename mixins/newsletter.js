@@ -18,7 +18,7 @@ export default {
     })
   },
   methods: {
-    submitForm (location) {
+    submitForm () {
       this.submitted = true
       this.$axios
         .post(

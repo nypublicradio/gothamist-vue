@@ -1,16 +1,9 @@
 <template>
-  <div
-    v-if="active"
-    class="donate-banner"
-    :class="{'is-active': active}"
-  >
+  <div v-if="active" class="donate-banner" :class="{ 'is-active': active }">
     <div class="donate-banner-graphic">
       <nyc-love />
     </div>
-    <div
-      class="donate-banner-close"
-      @click="closeBanner"
-    >
+    <div class="donate-banner-close" @click="closeBanner">
       <close-icon />
     </div>
     <div class="donate-banner-content">
@@ -18,6 +11,7 @@
       <v-button
         :href="donateUrl"
         target="_blank"
+        rel="noopener noreferrer"
         class="donate-banner-button"
         label="Donate Now"
         @click="donateClick"
@@ -75,10 +69,10 @@ export default {
 
   right: calc(-1 * ((var(--grid-col-width) * 15) + (var(--grid-gutter) * 13)));
   transform: translateX(0);
-  transition: transform .2s cubic-bezier(.86,0,.07,1);
+  transition: transform 0.2s cubic-bezier(0.86, 0, 0.07, 1);
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     left: -3px;
     top: -3px;
@@ -87,18 +81,23 @@ export default {
     background-color: RGB(var(--color-background-highlight));
   }
 
-  @include media(">large") {
+  @include media('>large') {
     width: 980px;
     max-width: calc(100% - var(--space-6));
   }
 }
 
 .donate-banner.is-onscreen {
-    transform: translateX(calc(-1 * (var(--grid-col-width) * 15 + var(--grid-gutter) * 13 + var(--space-3))));
+  transform: translateX(
+    calc(
+      -1 * (var(--grid-col-width) * 15 + var(--grid-gutter) * 13 +
+            var(--space-3))
+    )
+  );
 }
 
 .donate-banner .donate-banner-content {
-  @include media(">large") {
+  @include media('>large') {
     padding: 0 var(--space-3) 0 100px;
     display: flex;
     align-items: center;
@@ -109,7 +108,7 @@ export default {
 .donate-banner .donate-banner-content p {
   width: 100%;
   position: relative;
-  @include media(">large") {
+  @include media('>large') {
     width: calc(65% - var(--space-3));
   }
 }
@@ -137,7 +136,7 @@ export default {
   margin-top: -95px;
   margin-right: var(--space-2);
   float: left;
-  @include media(">large") {
+  @include media('>large') {
     float: none;
     margin: 0;
     position: absolute;
@@ -160,13 +159,13 @@ export default {
   margin-top: var(--space-3);
   height: 60px;
   width: 100%;
-  @include media(">large") {
+  @include media('>large') {
     width: calc(35% - var(--space-3));
     margin-top: 0;
   }
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     top: 0;
