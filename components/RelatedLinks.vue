@@ -145,6 +145,14 @@ export default {
   margin-top: var(--space-7);
 }
 
+.related-links.collection {
+  // this should already be coming from the gothamist theme but until that's working...
+  background-color: RGB(var(--color-light-gray));
+  border: var(--border-standard);
+  margin-top: 25px;
+  padding-top: var(--space-4);
+}
+
 .related-links .card.gothamist.mod-small {
   --card-image-width: 100px;
   --card-image-height: 100px;

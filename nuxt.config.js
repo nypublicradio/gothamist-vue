@@ -98,10 +98,12 @@ export default {
   // Global CSS (https://go.nuxtjs.dev/config-css)
   styleResources: {
     scss: [
-      './assets/shared.scss',
-      './assets/theme.scss'
+      './assets/shared.scss'
     ]
   },
+  css: [
+    './assets/theme.scss'
+  ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: [
