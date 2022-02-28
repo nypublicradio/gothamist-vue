@@ -175,7 +175,13 @@ export default {
   }
 
   .card-tag a {
+    cursor: pointer;
     color: RGB(var(--color-tag-text));
+    background: RGB(var(--color-tag-background));
+    &:hover {
+      color: RGB(var(--color-tag-hover-text));
+      background: RGB(var(--color-tag-hover-background));
+    }
   }
 }
 
@@ -184,6 +190,7 @@ export default {
 }
 
 .c-article__body .related-links a {
+  cursor: pointer;
   transition: all 0s;
   text-underline-position: auto;
   text-decoration-line: none;
