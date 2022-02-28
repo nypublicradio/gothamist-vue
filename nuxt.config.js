@@ -129,7 +129,8 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/sentry',
     '@nuxtjs/gtm',
-    'cookie-universal-nuxt'
+    'cookie-universal-nuxt',
+    'nuxt-google-optimize'
   ],
 
   plugins: [
