@@ -4,8 +4,10 @@
       <breadcrumbs class="article-breadcrumbs" :breadcrumbs="breadcrumbs" />
       <h1 class="article-title" v-html="article.title" />
       <article-metadata
-        :publish-date="article.formattedPublishDate"
-        :updated-date="article.formattedUpdatedDate"
+        publish-prefix="Published "
+        :publish-date="formatDateForByline(article.publicationDate)"
+        updated-prefix="Modified "
+        :updated-date="formatDateForByline(article.updatedDate)"
         class="l-container l-container--10col"
       >
         <template v-slot:authors>
@@ -222,7 +224,7 @@ import LazyHydrate from 'vue-lazy-hydration'
 import RelatedAuthors from './RelatedAuthors.vue'
 import { getImagePath } from '~/mixins/image'
 import { insertAdDiv } from '~/utils/insert-ad-div'
-import { getScrollDepth, getArticleImage } from '~/mixins/helpers'
+import { formatDateForByline, getScrollDepth, getArticleImage } from '~/mixins/helpers'
 import {
   getStructuredData,
   getOgImage,
@@ -555,7 +557,8 @@ export default {
         this.showComments = true
       }
     },
-    getArticleImage
+    getArticleImage,
+    formatDateForByline
   },
   head () {
     return {
@@ -604,6 +607,10 @@ export default {
 
 .article-metadata {
   margin-bottom: var(--space-4);
+}
+
+.article-metadata .article-metadata-separator::after {
+  content: "|"
 }
 
 .article-title {
