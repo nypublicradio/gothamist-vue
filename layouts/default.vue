@@ -72,9 +72,6 @@ export default {
   beforeMount () {
     this.windowWidth = window.innerWidth
   },
-  mounted () {
-    this.handleNewPage()
-  },
   methods: {
     handleNewPage () {
       this.setAdTargeting()
@@ -122,6 +119,9 @@ export default {
   },
   head () {
     return {
+      bodyAttrs: {
+        class: this.$exp.$classes.join(' ')
+      },
       link: [
         {
           skip: this.$config.environment !== 'demo',

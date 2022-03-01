@@ -137,8 +137,17 @@ export default {
     '~/plugins/axios',
     '~/plugins/observe-visibility',
     '~/plugins/vue-mq',
-    '~/plugins/chartbeat.client.js'
+    '~/plugins/chartbeat.client.js',
+    '~/plugins/features'
   ],
+
+  extendPlugins (plugins) {
+    // force  our local features plugin to load last (after the nuxt-google-optimize plugin)
+    // yes, this is actually how nuxt expects you to change plugin load order,
+    // might break if we add an object to plugins array instead of a string
+    // https://nuxtjs.org/docs/configuration-glossary/configuration-extend-plugins/
+    return plugins.sort((a, b) => b === '~/plugins/features' ? -1 : a > b)
+  },
 
   serverMiddleware: [
     // Server-side redirects

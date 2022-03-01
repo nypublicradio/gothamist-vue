@@ -189,6 +189,7 @@
       <v-spacer />
     </div>
     <!-- sponsored story -->
+    <div v-if="$features.isBlueSquareEnabled" id="exp-blue" style="display: inline-block; height: 20px; width: 20px; background: blue;" />
     <div
       v-if="
         sponsoredSection && sponsoredSection.length > 0 && !$fetchState.pending
