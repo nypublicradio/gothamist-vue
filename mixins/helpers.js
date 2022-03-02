@@ -192,7 +192,7 @@ export const formatDateForByline = function (date) {
     const dateObject = new Date(date)
     const now = new Date()
     const shortDate = format(dateObject, 'MMMM d, y')
-    const longDate = format(dateObject, "MMMM d, y 'at' K:mm aaaa")
+    const longDate = format(dateObject, "MMMM d, y 'at' h:mm aaaa")
     return differenceInHours(now, dateObject) <= 12 ? longDate : shortDate
   }
   return null
