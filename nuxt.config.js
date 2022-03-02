@@ -146,7 +146,7 @@ export default {
 
     // load these here after all plugins (icluding dynamically loaded plugins from modules)
     // instead of in the plugins array
-    plugins.push('~/plugins/google-optimise.analytics.client.js')
+    plugins.push('~/plugins/google-optimize-analytics.client.js')
     plugins.push('~/plugins/features')
     return plugins
   },
