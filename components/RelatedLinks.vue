@@ -191,6 +191,7 @@ export default {
 
 .c-article__body .related-links a {
   cursor: pointer;
+  color: RGB(var(--color-text));
   transition: all 0s;
   text-underline-position: auto;
   text-decoration-line: none;
