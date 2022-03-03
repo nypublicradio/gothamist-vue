@@ -212,19 +212,19 @@
               sponsoredSection[0].listingImage
             )
           "
-          :image-height="426"
-          :image-width="640"
+          :image-height="240"
+          :image-width="360"
           :image-max-height="
             getArticleImageHeight(
               sponsoredSection[0].leadAsset,
               sponsoredSection[0].listingImage
-            ) || 426
+            ) || 240
           "
           :image-max-width="
             getArticleImageWidth(
               sponsoredSection[0].leadAsset,
               sponsoredSection[0].listingImage
-            ) || 640
+            ) || 360
           "
           :tags="
             formatTags(
