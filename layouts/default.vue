@@ -72,9 +72,6 @@ export default {
   beforeMount () {
     this.windowWidth = window.innerWidth
   },
-  mounted () {
-    this.handleNewPage()
-  },
   methods: {
     handleNewPage () {
       this.setAdTargeting()
