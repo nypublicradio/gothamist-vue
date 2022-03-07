@@ -189,7 +189,6 @@
       <v-spacer />
     </div>
     <!-- sponsored story -->
-    <div v-if="$features.isBlueSquareEnabled" id="exp-blue" style="display: inline-block; height: 20px; width: 20px; background: blue;" />
     <div
       v-if="
         sponsoredSection && sponsoredSection.length > 0 && !$fetchState.pending
@@ -961,6 +960,10 @@ export default {
 </script>
 
 <style lang="scss">
+.tagless-homepage-enabled .home-page .card-tag {
+  display: none;
+}
+
 .c-featured-blocks.l-wrap {
   padding: var(--space-7) var(--space-3) 0;
   @include media('>medium') {

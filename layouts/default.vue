@@ -120,7 +120,7 @@ export default {
   head () {
     return {
       bodyAttrs: {
-        class: this.$exp.$classes.join(' ')
+        class: this.$features.$classes.join(' ')
       },
       link: [
         {
