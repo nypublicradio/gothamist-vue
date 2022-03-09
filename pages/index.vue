@@ -960,7 +960,7 @@ export default {
 </script>
 
 <style lang="scss">
-.tagless-homepage-enabled .home-page .card-tag {
+.experiment-tagless-homepage-enabled .home-page .card-tag {
   display: none;
 }
 
