@@ -1,26 +1,20 @@
 /**
-
 # Feature toggles
 
 The feature toggle plugin was created to enable us to toggle a/b test experiment features
 without the rest of the code needing to know anything about the a/b testing setup. The client code
-shouldn't need to know what experiment id 123 variant 2 means, it just needs to know if  a feature is
+shouldn't need to know what experiment id #123 variant #2 means, it just needs to know if a feature is
 enabled or disabled.
 
-While it was created with a/b testing in mind it also has other applications:
+While this was created with a/b testing in mind it also has other applications:
 https://en.wikipedia.org/wiki/Feature_toggle
 
 ## Properties
 
-$features.enabled - An object containing feature names as keys and a boolean value: true (enabled) / false (disabled),
+$features.enabled - An object containing feature names as keys and an enabled value as a boolean: true (enabled) / false (disabled)
   this is where we add new feature toggles
 $features.disabled - the inverse of disabled,
 $features.classes - array of css classes, add these to the html body: feature-name-enabled or feature-name-disabled
-
-This allows us to do things like:
-- make experiments that enable multiple features
-- toggle features based on logic that looks at query strings or build options
-- quickly enable a feature after an experiment
 
 ## Using toggles within the app
 
@@ -50,7 +44,8 @@ the "enabled" object below. Also add a description of the feature and your name 
 in cleaning up the toggle later
 
 ### Adding an google optimize toggle
-Usefule
+
+Prefix your feature with: `experiment-`
 
 ### Adding an environment variable based toggle
 Useful when you need to integrate a feature into the main branch but aren't ready to deploy yet.
@@ -72,7 +67,7 @@ export default function ({ $exp }, inject) {
   }
   const disabled = {}
   for (const feature of Object.entries(enabled)) {
-    disabled.push(feature[0], !!feature[1])
+    disabled[feature[0]] = !!feature[1]
   }
   const classes = Object.entries(enabled)
     .map(entry => entry[1] ? entry[0] + '-enabled' : entry[0] + '-disabled')
