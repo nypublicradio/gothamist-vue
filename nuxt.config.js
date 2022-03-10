@@ -144,8 +144,8 @@ export default {
     // force some plugins to load last (after the nuxt-google-optimize plugin)
     // https://nuxtjs.org/docs/configuration-glossary/configuration-extend-plugins/
 
-    // load these here after all plugins (icluding dynamically loaded plugins from modules)
-    // instead of in the plugins array
+    // load these after all other plugins (including dynamically loaded plugins from modules)
+    // instead of loading them from the plugins array
     plugins.push('~/plugins/google-optimize-analytics.client.js')
     plugins.push('~/plugins/features')
     return plugins
