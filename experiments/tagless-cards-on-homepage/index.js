@@ -1,9 +1,9 @@
 export default {
   // A helper exp-{name}-{var} class will be added to the root element
-  name: 'test',
+  name: 'tagless-cards-on-homepage',
 
   // Google optimize experiment id
-  experimentID: 'q2sVJ2L7Q_2wztUUlCPRrg',
+  experimentID: 'tFD4aphHQk6HGaFe_Y9JxA',
 
   // [optional] specify number of sections for MVT experiments
   // sections: 1,
@@ -17,6 +17,5 @@ export default {
   // Implemented variants and their weights
   variants: [
     { weight: 1 }, // Original
-    { weight: 1 } // Variant 1
-  ]
+    { weight: 1 } // Tagless Cards on Homepage
 }

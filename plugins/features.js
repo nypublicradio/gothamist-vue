@@ -7,7 +7,7 @@ export default function ({ $exp }, inject) {
     // Part of a Google Optimize a/b test
     // - Matt Walsh
     // Expires:
-    'experiment-tagless-homepage': $exp && $exp.name === 'test' && $exp.$variantIndexes.includes(1)
+    'experiment-tagless-homepage': $exp && $exp.name === 'tagless-cards-on-homepage' && $exp.$variantIndexes.includes(1)
   }
 
   const enabled = features || {}

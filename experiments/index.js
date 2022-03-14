@@ -1,5 +1,5 @@
-import test from './test/index'
+import taglessCardsOnHomepage from './tagless-cards-on-homepage/index'
 
 export default [
-  test
+  taglessCardsOnHomepage
 ]
