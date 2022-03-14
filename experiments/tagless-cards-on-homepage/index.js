@@ -18,4 +18,5 @@ export default {
   variants: [
     { weight: 1 }, // Original
     { weight: 1 } // Tagless Cards on Homepage
+  ]
 }
