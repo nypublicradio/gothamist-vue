@@ -960,6 +960,10 @@ export default {
 </script>
 
 <style lang="scss">
+.experiment-tagless-homepage-enabled .home-page .card-tag {
+  display: none;
+}
+
 .c-featured-blocks.l-wrap {
   padding: var(--space-7) var(--space-3) 0;
   @include media('>medium') {

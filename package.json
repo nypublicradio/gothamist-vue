@@ -29,6 +29,7 @@
     "gulp-cloudfront-invalidate-aws-publish": "^1.0.0",
     "humps": "^2.0.1",
     "nuxt-edge": "latest",
+    "nuxt-google-optimize": "^0.5.4",
     "package.json": "^2.0.1",
     "vue-lazy-hydration": "^2.0.0-beta.4",
     "vue-mq": "^1.0.1",
