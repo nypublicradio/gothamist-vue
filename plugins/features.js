@@ -6,7 +6,7 @@ export default function ({ $exp }, inject) {
     // Remove tags from the home page cards
     // Part of a Google Optimize a/b test
     // - Matt Walsh
-    // Expires:
+    // Experiment started: March 14 2022
     'experiment-tagless-homepage': $exp && $exp.name === 'tagless-cards-on-homepage' && $exp.$variantIndexes.includes(1)
   }
 
