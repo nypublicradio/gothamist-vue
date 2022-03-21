@@ -1,6 +1,7 @@
 export default ({ $gtm, $cookies }) => {
   const setActiveMember = function () {
-    $cookies.set('_gothamistNyprMember', 'True')
+    const maxAge = 60 * 60 * 24 * 365 * 5 // 5 years, the far future
+    $cookies.set('_gothamistNyprMember', 'True', { path: '/', maxAge })
     $gtm.push({ NYPRMember: 'active-member' })
   }
 
