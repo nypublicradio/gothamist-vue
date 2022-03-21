@@ -1,12 +1,15 @@
 export default ({ $gtm, $cookies }) => {
+  const maxAge = 60 * 60 * 24 * 365 * 5 // 5 years, the far future
+
+  // Set the cookie and data layer status for an active member
   const setActiveMember = function () {
-    const maxAge = 60 * 60 * 24 * 365 * 5 // 5 years, the far future
     $cookies.set('_gothamistNyprMember', 'True', { path: '/', maxAge })
     $gtm.push({ NYPRMember: 'active-member' })
   }
 
+  // Set the cookie and data layer status for an inactive member
   const setInactiveMember = function () {
-    $cookies.set('_gothamistNyprMember', 'False')
+    $cookies.set('_gothamistNyprMember', 'False', { path: '/', maxAge })
     $gtm.push({ NYPRMember: 'inactive-member' })
   }
 
@@ -20,6 +23,7 @@ export default ({ $gtm, $cookies }) => {
       case 'False':
         setInactiveMember()
         return // if setting status from url, we don't need to check cookie
+      default:
     }
   }
 
@@ -30,5 +34,6 @@ export default ({ $gtm, $cookies }) => {
     case 'False':
       setInactiveMember()
       break
+    default:
   }
 }
