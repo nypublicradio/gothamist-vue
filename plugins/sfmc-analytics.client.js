@@ -1,15 +1,16 @@
 export default ({ $gtm, $cookies }) => {
+  const memberStatusCookie = '_gothamistNyprMember'
   const maxAge = 60 * 60 * 24 * 30 * 6 // about 6 months
 
   // Set the cookie and data layer status for an active member
   const setActiveMember = function () {
-    $cookies.set('_gothamistNyprMember', 'True', { path: '/', maxAge })
+    $cookies.set(memberStatusCookie, 'True', { path: '/', maxAge })
     $gtm.push({ NYPRMember: 'active-member' })
   }
 
   // Set the cookie and data layer status for an inactive member
   const setInactiveMember = function () {
-    $cookies.set('_gothamistNyprMember', 'False', { path: '/', maxAge })
+    $cookies.set(memberStatusCookie, 'False', { path: '/', maxAge })
     $gtm.push({ NYPRMember: 'inactive-member' })
   }
 
@@ -27,7 +28,7 @@ export default ({ $gtm, $cookies }) => {
     }
   }
 
-  switch ($cookies.get('_gothamistNyprMember')) {
+  switch ($cookies.get(memberStatusCookie)) {
     case 'True':
       setActiveMember()
       break
