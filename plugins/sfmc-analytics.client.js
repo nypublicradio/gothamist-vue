@@ -1,5 +1,5 @@
 export default ({ $gtm, $cookies }) => {
-  const maxAge = 60 * 60 * 24 * 365 * 5 // 5 years, the far future
+  const maxAge = 60 * 60 * 24 * 30 * 6 // about 6 months
 
   // Set the cookie and data layer status for an active member
   const setActiveMember = function () {
