@@ -1,5 +1,5 @@
-import taglessCardsOnHomepage from './tagless-cards-on-homepage/index'
+import audioPlayer from './audio-player/index'
 
 export default [
-  taglessCardsOnHomepage
+  audioPlayer
 ]

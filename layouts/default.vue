@@ -85,6 +85,7 @@ export default {
     handleNewPage () {
       this.setAdTargeting()
       this.setTrackingData()
+      this.setExperimentTracking()
       this.logPageView()
       this.$store.dispatch('global/setNavigation')
       debugger
@@ -120,6 +121,14 @@ export default {
           .split('/')
           .filter(segment => segment.length > 0)
       })
+    },
+    setExperimentTracking () {
+      if (this.$exp.experimentID && this.$exp.isEligible({ route: this.$route })) {
+        this.$gtm.push({
+          optimizeExperimentId: this.$exp.experimentID,
+          optimizeVariantId: this.$exp.$variantIndexes.join('-')
+        })
+      }
     },
     handleTransitionEnter () {
       this.$nextTick(() => {
