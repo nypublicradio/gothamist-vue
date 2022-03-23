@@ -20,6 +20,7 @@
         :key="block.id"
         class="streamfield-code u-spacing"
         :html="block.value.code"
+        @hook:mounted="countMountedBlock"
       />
 
       <!-- content collection -->
@@ -63,6 +64,7 @@
                 story.tags
               )
             "
+            @hook:mounted="countMountedBlock"
           >
             <article-metadata
               :publish-date="
@@ -118,6 +120,8 @@
           :caption="block.value.caption || block.value.image.caption"
           :credit="block.value.image.credit"
           :credit-url="block.value.image.creditLink"
+
+          @hook:mounted="countMountedBlock"
         />
       </div>
 
@@ -127,6 +131,7 @@
         :key="block.id"
         class="streamfield-paragraph u-spacing"
         :html="block.value"
+        @hook:mounted="countMountedBlock"
       />
 
       <!-- pull-quote -->
@@ -138,6 +143,7 @@
         <pull-quote
           :quote="block.value.pullQuote"
           :author="block.value.attribution"
+          @hook:mounted="countMountedBlock"
         />
       </div>
     </template>
@@ -165,24 +171,22 @@ export default {
       default: () => []
     }
   },
-  mounted () {
-    // you can't have script tags in v-html
-    // so we need to load the twitter embeds script manually
-    if (window.twttr) {
-      // the script is already loaded, so just reload the embeds
-      window.twttr.widgets.load()
-    } else if (!document.getElementById('twttr-widgets')) {
-      const embed = document.createElement('script')
-      embed.id = 'twttr-widgets'
-      embed.src = 'https://platform.twitter.com/widgets.js'
-      document.body.appendChild(embed)
+  data () {
+    return {
+      blocksMounted: 0
     }
-    // load newsletter signup embeds manually
-    if (document.querySelectorAll('[data-pym-src]').length > 0) {
-      const embed = document.createElement('script')
-      embed.id = 'nprapps'
-      embed.src = 'https://pym.nprapps.org/pym.v1.min.js'
-      document.body.appendChild(embed)
+  },
+  computed: {
+    blockCount () {
+      return this.streamfield?.length || NaN
+    }
+  },
+  mounted () {
+    const htmlBlocks = ['embed', 'heading', 'block_quote']
+    for (const block of this.streamfield) {
+      if (htmlBlocks.includes(block.type)) {
+        this.countMountedBlock()
+      }
     }
   },
   methods: {
@@ -194,7 +198,34 @@ export default {
     getHeightFromWidth,
     hasGallery,
     getTitle,
-    getSubtitle
+    getSubtitle,
+    countMountedBlock () {
+      this.blocksMounted = this.blocksMounted + 1
+      if (this.blocksMounted === this.blockCount) {
+        this.$emit('childrenMounted')
+        this.loadEmbedScripts()
+      }
+    },
+    loadEmbedScripts () {
+      // you can't have script tags in v-html
+      // so we need to load the twitter embeds script manually
+      if (window.twttr) {
+        // the script is already loaded, so just reload the embeds
+        window.twttr.widgets.load()
+      } else if (!document.getElementById('twttr-widgets')) {
+        const embed = document.createElement('script')
+        embed.id = 'twttr-widgets'
+        embed.src = 'https://platform.twitter.com/widgets.js'
+        document.body.appendChild(embed)
+      }
+      // load newsletter signup embeds manually
+      if (document.querySelectorAll('[data-pym-src]').length > 0) {
+        const embed = document.createElement('script')
+        embed.id = 'nprapps'
+        embed.src = 'https://pym.nprapps.org/pym.v1.min.js'
+        document.body.appendChild(embed)
+      }
+    }
   }
 }
 </script>

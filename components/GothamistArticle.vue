@@ -4,8 +4,10 @@
       <breadcrumbs class="article-breadcrumbs" :breadcrumbs="breadcrumbs" />
       <h1 class="article-title" v-html="article.title" />
       <article-metadata
-        :publish-date="article.formattedPublishDate"
-        :updated-date="article.formattedUpdatedDate"
+        publish-prefix="Published "
+        :publish-date="formatDateForByline(article.publicationDate)"
+        updated-prefix="Modified "
+        :updated-date="formatDateForByline(article.updatedDate)"
         class="l-container l-container--10col"
       >
         <template v-slot:authors>
@@ -128,8 +130,7 @@
           v-watch-scroll="updateScrollPercent"
           class="l-container l-container--10col article-body c-article__body"
           :streamfield="article.body"
-          @hook:mounted="insertAd"
-          @hook:updated="insertAd"
+          @childrenMounted="handleArticleMounted"
         />
       </LazyHydrate>
       <v-spacer size="quad" />
@@ -137,6 +138,11 @@
         class="l-container l-container--10col"
         :authors="article.relatedAuthors"
         default-photo="/static-images/defaults/users/default-user.jpg"
+      />
+      <RelatedLinks
+        ref="related-links"
+        title="Related to this story"
+        :links="article.relatedLinks"
       />
       <v-spacer size="quad" />
       <div class="l-container l-container--10col">
@@ -219,10 +225,10 @@
 import gtm from '@/mixins/gtm'
 import disqus from '@/mixins/disqus'
 import LazyHydrate from 'vue-lazy-hydration'
-import RelatedAuthors from './RelatedAuthors.vue'
 import { getImagePath } from '~/mixins/image'
-import { insertAdDiv } from '~/utils/insert-ad-div'
-import { getScrollDepth, getArticleImage } from '~/mixins/helpers'
+import { getStreamfieldLandmarks, insertAfterElement } from '~/utils/dom-helpers'
+import { formatDateForByline, getScrollDepth, getArticleImage } from '~/mixins/helpers'
+
 import {
   getStructuredData,
   getOgImage,
@@ -233,8 +239,7 @@ import {
 export default {
   name: 'GothamistArticle',
   components: {
-    LazyHydrate,
-    RelatedAuthors
+    LazyHydrate
   },
   directives: {
     'watch-scroll': {
@@ -516,23 +521,31 @@ export default {
     scrollToComments () {
       document.querySelector('#comments')?.scrollIntoView()
     },
-    insertAd () {
+    handleArticleMounted () {
+      const landmarks = getStreamfieldLandmarks(this.$refs['article-body'].$el)
+      const relatedLinksTarget = landmarks[Math.min(landmarks.length - 1, 3)].node
+      const adTarget = landmarks[Math.min(landmarks.length - 1, 5)].node
+      this.insertAd(adTarget)
+      this.insertRelatedLinks(relatedLinksTarget)
+    },
+    insertAd (targetElement) {
       if (
         this.article &&
         this.$refs['article-body'] &&
         !this.article.sensitiveContent
       ) {
-        this.$refs['article-body'].$nextTick(() => {
-          insertAdDiv('insertedAd', this.$refs['article-body'].$el, {
-            classNames: [
-              'htlad-interior_midpage_1',
-              'ad-div',
-              'mod-break-margins',
-              'mod-ad-disclosure'
-            ],
-            reset: true
-          })
-        })
+        const adDiv = document.createElement('DIV')
+        adDiv.classList.add('htlad-interior_midpage_1',
+          'ad-div',
+          'mod-break-margins',
+          'mod-ad-disclosure')
+        insertAfterElement(adDiv, targetElement)
+      }
+    },
+    insertRelatedLinks (targetElement) {
+      if (this.article.relatedLinks?.length) {
+        const component = this.$refs['related-links'].$el
+        insertAfterElement(component, targetElement)
       }
     },
     handleNewComment () {
@@ -555,7 +568,8 @@ export default {
         this.showComments = true
       }
     },
-    getArticleImage
+    getArticleImage,
+    formatDateForByline
   },
   head () {
     return {
@@ -604,6 +618,10 @@ export default {
 
 .article-metadata {
   margin-bottom: var(--space-4);
+}
+
+.article-metadata .article-metadata-separator::after {
+  content: "|"
 }
 
 .article-title {

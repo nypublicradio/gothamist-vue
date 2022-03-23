@@ -186,6 +186,18 @@ export const fuzzyDateTime = function (utcTimestamp) {
   }
 }
 
+// Returns article page date format, includes timestamp when less than 12 hours ago
+export const formatDateForByline = function (date) {
+  if (date) {
+    const dateObject = new Date(date)
+    const now = new Date()
+    const shortDate = format(dateObject, 'MMMM d, y')
+    const longDate = format(dateObject, "MMMM d, y 'at' h:mm aaaa")
+    return differenceInHours(now, dateObject) <= 12 ? longDate : shortDate
+  }
+  return null
+}
+
 // returns true if UTC date is less than 24 hours old
 export const isLessThan24Hours = function (utcStartTime) {
   const now = new Date()
@@ -232,18 +244,19 @@ export const isMoreThan48Hours = function (utcStartTime) {
 
 // if the Author has provided a listing title, use that, otherwise use the original title
 export const getTitle = function (story) {
-  return (story.listingTitle || story.listingTitle !== '') ? story.listingTitle : story.title
+  return story.listingTitle || story.title
 }
 
 // if the Author has provided a listing summary, use that, otherwise use the original summary
 export const getSubtitle = function (story) {
-  return (story.listingSummary || story.listingSummary !== '') ? story.listingSummary : story.description
+  return story.listingSummary || story.description
 }
 
 export default {
   methods: {
     amountScrolled,
     capitalize,
+    formatDateForByline,
     formatTags,
     formatTime,
     formatTitle,

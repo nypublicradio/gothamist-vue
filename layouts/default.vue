@@ -201,6 +201,9 @@ export default {
   },
   head () {
     return {
+      bodyAttrs: {
+        class: this.$features.classes.join(' ')
+      },
       link: [
         {
           skip: this.$config.environment !== 'demo',
