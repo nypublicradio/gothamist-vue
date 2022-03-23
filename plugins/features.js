@@ -7,7 +7,9 @@ export default function ({ $exp }, inject) {
     // Part of a Google Optimize a/b test
     // - Matt Walsh
     // Experiment started: March 14 2022
-    'experiment-tagless-homepage': $exp && $exp.name === 'tagless-cards-on-homepage' && $exp.$variantIndexes.includes(1)
+    'experiment-tagless-homepage': $exp && $exp.name === 'tagless-cards-on-homepage' && $exp.$variantIndexes.includes(1),
+    // Show the audio player on the home page
+    'experiment-audio-player': true
   }
 
   const enabled = features || {}
@@ -16,6 +18,6 @@ export default function ({ $exp }, inject) {
     disabled[feature[0]] = !feature[1]
   }
   const classes = Object.entries(enabled)
-    .map((entry) => (entry[1] ? `${entry[0]}-enabled` : `${entry[0]}-disabled`))
+    .map(entry => (entry[1] ? `${entry[0]}-enabled` : `${entry[0]}-disabled`))
   inject('features', { enabled, disabled, classes })
 }

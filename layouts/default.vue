@@ -38,7 +38,7 @@
     <!-- audio player -->
     <transition name="fade">
       <div
-        v-if="dataLoaded"
+        v-if="dataLoaded && $features.enabled['experiment-audio-player']"
         role="complementary"
         aria-label="WNYC Audio Controls"
       >
@@ -140,19 +140,21 @@ export default {
   mounted () {
     this.handleNewPage()
 
-    // audio player
-    // send a google analytics event every 2 minutes if a stream is playing
-    this.timer = window.setInterval(() => {
-      if (this.vueHifiIsPlaying) {
-        this.gaEvent('Gothamist Player', 'Ping', this.station)
-      } else {
-        clearInterval(this.timer)
-      }
-    }, 120000)
-    // audio player
+    if (this.$features.enabled['experiment-audio-player']) {
+      // send a google analytics event every 2 minutes if a stream is playing
+      this.timer = window.setInterval(() => {
+        if (this.vueHifiIsPlaying) {
+          this.gaEvent('Gothamist Player', 'Ping', this.station)
+        } else {
+          clearInterval(this.timer)
+        }
+      }, 120000)
+    }
   },
   beforeDestroy () {
-    clearInterval(this.timer)
+    if (this.$features.enabled['experiment-audio-player']) {
+      clearInterval(this.timer)
+    }
   },
   methods: {
     handleNewPage () {

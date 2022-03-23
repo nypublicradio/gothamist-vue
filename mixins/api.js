@@ -99,14 +99,18 @@ export default {
     })
   },
   mounted () {
-    this.pollApi()
-      .then(
-        res => this.pollApi()
-      )
-    // poll the API every 8 seconds
-    this.timer = setInterval(this.pollApi, 8000)
+    if (this.$features.enabled['experiment-audio-player']) {
+      this.pollApi()
+        .then(
+          res => this.pollApi()
+        )
+      // poll the API every 8 seconds
+      this.timer = setInterval(this.pollApi, 8000)
+    }
   },
   beforeDestroy () {
-    clearInterval(this.timer)
+    if (this.$features.enabled['experiment-audio-player']) {
+      clearInterval(this.timer)
+    }
   }
 }
