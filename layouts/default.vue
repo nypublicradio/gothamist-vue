@@ -37,62 +37,26 @@
     <gothamist-footer v-if="!isGallery" />
     <!-- audio player -->
     <transition name="fade">
-      <div
-        v-if="dataLoaded && $features.enabled['experiment-audio-player']"
-        role="complementary"
-        aria-label="WNYC Audio Controls"
-      >
-        <persistent-player
-          livestream
-          :auto-play="whatsOnNowPlaying"
-          :is-playing="vueHifiIsPlaying"
-          :is-loading="vueHifiIsLoading"
-          :volume="vueHifiVolume"
-          :is-muted="vueHifiIsMuted"
-          :image="whatsOnNowImage"
-          :station="whatsOnNowStation"
-          :title="whatsOnNowTitle"
-          :title-link="whatsOnNowTitleLink"
-          :description="whatsOnNowEpisodeTitle"
-          :description-link="whatsOnNowEpisodeLink"
-          :file="whatsOnNowFile"
-          :should-show-cta="!hasSomethingBeenPlayedYet"
-          class="u-color-group-dark"
-          aria-live="polite"
-          @togglePlay="playButtonClicked(whatsOnNow, 'Persistent Player')"
-          @volume-toggle-mute="toggleMute"
-          @volume-change="setVolume($event)"
-        />
-      </div>
+      <gothamist-player
+        v-if="$features.enabled['experiment-audio-player']"
+        class="gothamist-player-wrapper"
+      />
     </transition>
     <!-- audio player -->
   </div>
 </template>
 
 <script>
-/* global htlbid */
 import { mapState } from 'vuex'
+/* global htlbid */
 import gtm from '@/mixins/gtm'
-
-// audio player
-import whatsOnNow from '@/mixins/whatsOnNow'
-import api from '@/mixins/api'
-import vueHifi from '../node_modules/vue-hifi/src/mixins/vue-hifi'
-// audio player
 
 import { setTargeting } from '~/mixins/htl'
 
 export default {
   name: 'Gothamist',
-  mixins: [gtm, whatsOnNow, vueHifi, api],
-  data () {
-    return {
-      windowWidth: null,
-      // audio player
-      timer: null
-      // audio player
-    }
-  },
+  mixins: [gtm],
+
   computed: {
     isHomepage () {
       return this.$route.name === 'index'
@@ -103,31 +67,7 @@ export default {
     isTagPage () {
       return this.$route.name === 'tags-slug'
     },
-    ...mapState('global', ['isSensitiveContent']),
-    // audio player
-    ...mapState('whatsOnNow', {
-      dataLoaded: state => state.dataLoaded,
-      hasSomethingBeenPlayedYet: state => state.hasSomethingBeenPlayedYet,
-      whatsOnNow: state => state.whatsOnNow,
-      whatsOnNowEpisodeTitle: state => state.whatsOnNow.episodeTitle,
-      whatsOnNowEpisodeLink: state => state.whatsOnNow.episodeLink,
-      whatsOnNowFile: state => state.whatsOnNow.file,
-      whatsOnNowImage: state => state.whatsOnNow.image,
-      whatsOnNowPlaying: state => state.whatsOnNow.playing,
-      whatsOnNowStation: state => state.whatsOnNow.station,
-      whatsOnNowTitle: state => state.whatsOnNow.title,
-      whatsOnNowTitleLink: state => state.whatsOnNow.titleLink,
-      streams: state => state.streams,
-      selectedStream: state => state.selectedStream,
-      selectedStreamPlaying: state => state.selectedStream.playing
-    }),
-    ...mapState('vue-hifi', {
-      vueHifiVolume: state => state.volume,
-      vueHifiIsLoading: state => state.isLoading,
-      vueHifiIsMuted: state => state.isMuted,
-      vueHifiIsPlaying: state => state.isPlaying
-    })
-    // audio player
+    ...mapState('global', ['isSensitiveContent'])
   },
   watch: {
     $route (newRoute, oldRoute) {
@@ -139,22 +79,6 @@ export default {
   },
   mounted () {
     this.handleNewPage()
-
-    if (this.$features.enabled['experiment-audio-player']) {
-      // send a google analytics event every 2 minutes if a stream is playing
-      this.timer = window.setInterval(() => {
-        if (this.vueHifiIsPlaying) {
-          this.gaEvent('Gothamist Player', 'Ping', this.station)
-        } else {
-          clearInterval(this.timer)
-        }
-      }, 120000)
-    }
-  },
-  beforeDestroy () {
-    if (this.$features.enabled['experiment-audio-player']) {
-      clearInterval(this.timer)
-    }
   },
   methods: {
     handleNewPage () {
