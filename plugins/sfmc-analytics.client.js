@@ -14,6 +14,11 @@ export default ({ $gtm, $cookies }) => {
     $gtm.push({ NYPRMember: 'inactive-member' })
   }
 
+  // Set the data layer status for an unknown membership status (no cookie)
+  const setUnknownStatus = function () {
+    $gtm.push({ NYPRMember: 'status-unknown' })
+  }
+
   if (window && window.location) {
     const url = new URL(window.location.href)
     const memberStatus = url.searchParams.get('nypr_member')
@@ -25,6 +30,7 @@ export default ({ $gtm, $cookies }) => {
         setInactiveMember()
         return // if setting status from url, we don't need to check cookie
       default:
+        setUnknownStatus()
     }
   }
 
@@ -36,5 +42,6 @@ export default ({ $gtm, $cookies }) => {
       setInactiveMember()
       break
     default:
+      setUnknownStatus()
   }
 }
