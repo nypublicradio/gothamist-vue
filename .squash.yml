@@ -14,6 +14,7 @@ deployments:
           - DISQUS_PUBLIC_KEY=e6CVgEaLZqw0RNacE0YTx0PwnjyXh8X8QogknYzUX34hJ4k7EmUVPxVCD5FjHjqp
           - SENTRY_DSN=https://525e09964a6d4c87bfa58617dc758455@o557978.ingest.sentry.io/5743108
           - SENTRY_ENVIRONMENT=demo
+          - WHATS_ON_API=https://api.demo.nypr.digital/api/v4/whats_on/
           - ENV=demo
       run_options:
           --env NUXT_HOST=$NUXT_HOST
@@ -27,4 +28,5 @@ deployments:
           --env DISQUS_PUBLIC_KEY=$DISQUS_PUBLIC_KEY
           --env SENTRY_DSN=$SENTRY_DSN
           --env SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
+          --env WHATS_ON_API=$WHATS_ON_API
           --env ENV=$ENV
