@@ -40,6 +40,10 @@
       <gothamist-player
         v-if="$features.enabled['experiment-audio-player']"
         class="gothamist-player-wrapper"
+        @welcome-message-dismissed="gaEvent ('Livestream', 'Welcome Message Dismissed')"
+        @player-dismissed="gaEvent ('Livestream', 'Player Dismissed')"
+        @play-clicked="gaEvent ('Livestream', 'Started Livestream')"
+        @pause-clicked="gaEvent ('Livestream', 'Paused Livestream')"
       />
     </transition>
     <!-- audio player -->
@@ -74,9 +78,6 @@ export default {
       this.$store.commit('global/setPreviousPath', oldRoute.fullPath)
     }
   },
-  beforeMount () {
-    this.windowWidth = window.innerWidth
-  },
   mounted () {
     this.handleNewPage()
   },
@@ -86,6 +87,7 @@ export default {
       this.setTrackingData()
       this.logPageView()
       this.$store.dispatch('global/setNavigation')
+      debugger
     },
     setAdTargeting () {
       // remove any existing ads

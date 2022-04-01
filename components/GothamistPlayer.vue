@@ -1,18 +1,23 @@
 <template>
   <div
+    v-if="!playerDismissed"
     class="persistent-player-wrapper"
   >
-    <div
-      class="intro-tooltip"
+    <collapsible-message
+      prefix="player-welcome"
+      @collapse="handleWelcomeMessageCollapsed"
     >
-      You can now listen to WNYC on Gothamist! Let us know what you think of this experimental feature here.
-    </div>
-    <div class="player-row">
+      You can now listen to WNYC on Gothamist! Let us know what you think of this experimental feature <a href="https://surveys.hotjar.com/e0b0fda5-4c70-43b4-bea5-32bca9fd25f8" target="_blank" rel="noopener">here</a>.
+    </collapsible-message>
+    <div
+      class="player-row u-color-group-dark"
+    >
       <aside
         aria-label="WNYC Audio Controls"
       >
         <persistent-player
           v-if="dataLoaded"
+          class="gothamist-player"
           livestream
           :auto-play="whatsOnNowPlaying"
           :is-playing="vueHifiIsPlaying"
@@ -21,25 +26,21 @@
           :is-muted="vueHifiIsMuted"
           :station="whatsOnNowStation"
           :title="whatsOnNowTitle"
-          :title-link="whatsOnNowTitleLink"
           :description="whatsOnNowEpisodeTitle"
-          :description-link="whatsOnNowEpisodeLink"
           :file="whatsOnNowFile"
           :should-show-cta="!hasSomethingBeenPlayedYet"
-          class="u-color-group-dark"
           aria-live="polite"
-          @togglePlay="playButtonClicked(whatsOnNow, 'Persistent Player')"
+          @togglePlay="handlePlayButton"
           @volume-toggle-mute="toggleMute"
           @volume-change="setVolume($event)"
         />
         <div class="extra-controls">
-          <button class="close-button">
-            X
-          </button>
+          <v-button class="dismiss-button button" @click="handleDismissButton">
+            <close-icon />
+          </v-button>
         </div>
       </aside>
     </div>
-  </div>
   </div>
 </template>
 <script>
@@ -55,7 +56,8 @@ export default {
   data () {
     return {
       windowWidth: null,
-      timer: null
+      timer: null,
+      playerDismissed: false
     }
   },
   computed: {
@@ -93,29 +95,45 @@ export default {
     }, 120000)
   },
   beforeDestroy () {
+    this.windowWidth = window.innerWidth
     clearInterval(this.timer)
+  },
+  methods: {
+    handleWelcomeMessageCollapsed () {
+      this.$emit('welcome-message-dismissed')
+    },
+    handleDismissButton () {
+      this.$emit('player-dismissed')
+      this.stop()
+      this.playerDismissed = true
+    },
+    handlePlayButton (e) {
+      if (!this.vueHifiIsPlaying && !this.vueHifiIsLoading) {
+        this.$emit('play-clicked')
+      }
+      if (this.vueHifiIsPlaying && this.vueHifiIsLoading) {
+        this.$emit('pause-clicked')
+      }
+      this.playButtonClicked(this.whatsOnNow, 'Persistent Player')
+    }
   }
 }
 </script>
 
 <style lang="scss">
 .persistent-player-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: fixed;
   bottom: 0;
   right: 0;
   height: 144px;
-  position: fixed;
   z-index: 1200;
   width: 100%;
 
-  @include media('>medium') {
-    width: 350px;
-  }
-
-  .intro-tooltip {
-    height: 48px;
-    background: RGB(var(--color-banana-yellow));
-    padding: 8px 12px;
-    font-size: 12px;
+@include media('>medium') {
+    width: 380px;
   }
 
   .player-row aside {
@@ -131,9 +149,13 @@ export default {
     }
 
     .extra-controls {
-      width: 38px;
-      flex-basis: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      flex-basis: 64px;
       flex-grow: 0;
+      padding-right: 16px;
     }
   }
 
@@ -152,8 +174,34 @@ export default {
     }
   }
 
+  .dismiss-button {
+    background: RGB(var(--color-dark-gray));
+    & svg > path {
+      fill: RGB(var(--color-white));
+    }
+  }
+
   .volume-control {
     display: none;
   }
 }
+
+.gothamist-player {
+  .track-info-livestream-station {
+    letter-spacing: 0.15em;
+  }
+  .player-cta-play-button .button-text {
+    display: none;
+  }
+  .player-controls svg, .player-controls svg * {
+    fill: RGB(var(--color-button-text));
+  }
+  .button .loading-icon path {
+    stroke: RGB(51,51,51);
+  }
+  .player-controls .play-button {
+    min-width: auto;
+  }
+}
+
 </style>
