@@ -3,7 +3,7 @@ export default {
   name: 'audio-player',
 
   // Google optimize experiment id
-  experimentID: '1',
+  experimentID: '8G1COSP2SWGSj8ZrLaERiw',
 
   // [optional] specify number of sections for MVT experiments
   // sections: 1,
