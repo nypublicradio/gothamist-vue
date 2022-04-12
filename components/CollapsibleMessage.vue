@@ -77,7 +77,7 @@ export default {
     justify-content: flex-end;
     align-items: center;
     min-height: 48px;
-    width: 100%
+    width: 100%;
     background: RGB(var(--color-banana-yellow));
     padding: 12px 12px;
     font-size: var(--font-size-2);
