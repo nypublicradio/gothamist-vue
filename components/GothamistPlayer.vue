@@ -108,10 +108,13 @@ export default {
       this.playerDismissed = true
     },
     handlePlayButton (e) {
-      if (!this.vueHifiIsPlaying && !this.vueHifiIsLoading) {
+      if (!this.vueHifiIsPlaying && !this.vueHifiIsLoading && !this.hasSomethingBeenPlayedYet) {
         this.$emit('play-clicked')
       }
-      if (this.vueHifiIsPlaying && this.vueHifiIsLoading) {
+      if (!this.vueHifiIsPlaying && !this.vueHifiIsLoading && this.hasSomethingBeenPlayedYet) {
+        this.$emit('resume-clicked')
+      }
+      if (this.vueHifiIsPlaying) {
         this.$emit('pause-clicked')
       }
       this.playButtonClicked(this.whatsOnNow, 'Persistent Player')

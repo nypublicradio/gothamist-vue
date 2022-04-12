@@ -40,10 +40,11 @@
       <gothamist-player
         v-if="$features.enabled['experiment-audio-player']"
         class="gothamist-player-wrapper"
-        @welcome-message-dismissed="gaEvent ('Livestream', 'Welcome Message Dismissed')"
-        @player-dismissed="gaEvent ('Livestream', 'Player Dismissed')"
-        @play-clicked="gaEvent ('Livestream', 'Started Livestream')"
-        @pause-clicked="gaEvent ('Livestream', 'Paused Livestream')"
+        @welcome-message-dismissed="gaEvent('Livestream', 'Welcome Message Dismissed')"
+        @player-dismissed="gaEvent('Livestream', 'Player Dismissed')"
+        @play-clicked="gaEvent('Livestream', 'Livestream Started')"
+        @pause-clicked="gaEvent('Livestream', 'Livestream Paused')"
+        @resume-clicked="gaEvent('Livestream', 'Livestream Resumed')"
       />
     </transition>
     <!-- audio player -->
