@@ -193,6 +193,9 @@ export default {
   .player-cta-play-button .button-text {
     display: none;
   }
+  .player-controls .player-cta-play-button {
+    margin-right: 0;
+  }
   .player-controls svg, .player-controls svg * {
     fill: RGB(var(--color-button-text));
   }
