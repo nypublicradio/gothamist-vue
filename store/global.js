@@ -114,7 +114,7 @@ export const actions = {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.warn(error)
+        console.warn('Error Loading Navigation', error) // skipcq: JS-0002
       })
   }
 }
