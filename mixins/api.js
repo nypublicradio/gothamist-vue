@@ -8,15 +8,6 @@ export default {
         .then(response => (
           this.setTheState(response.data, 0)
         ))
-      // am stream
-      await this.$axios.get('/?filter[slug]=wnyc-am820&include=current-airing.image,current-show.show.image,current-episode.segments', { baseURL: this.$config.whatsOnAPI })
-        .then(response => (
-          this.setTheState(response.data, 1)
-        ))
-        .catch((error) => {
-          // eslint-disable-next-line no-console
-          console.warn(error) // skipcq: JS-0002
-        })
     },
     setTheState (apiResponse, index) {
       const showData = apiResponse.included.find((obj) => {
