@@ -1,4 +1,5 @@
-export const state = () => ({
+// vuex state
+export const whatsOnState = () => ({
   dataLoaded: true,
   hasSomethingBeenPlayedYet: false,
   whatsOnNow: {
@@ -275,24 +276,24 @@ export const mutations = {
   // set a stream to active
   setStreamToActive (state, index) {
     // set all streams' active property to false
-    for (const i in state.streams) {
-      state.streams[i].active = false
+    for (const stream of state.streams) {
+      stream.active = false
     }
     // set the selected stream's active property to true
     state.streams[index].active = true
   },
   // set all the streams' playing to false
   setStreamsToNotPlaying (state) {
-    for (const i in state.streams) {
-      state.streams[i].playing = false
+    for (const stream of state.streams) {
+      stream.playing = false
     }
     state.whatsOnNow.playing = false
   },
   // set the selected stream's playing to true
   // set all the other streams' playing to false
   setStreamToPlaying (state, index) {
-    for (const i in state.streams) {
-      state.streams[i].playing = false
+    for (const stream of state.streams) {
+      stream.playing = false
     }
     state.streams[index].playing = true
     state.whatsOnNow.playing = true

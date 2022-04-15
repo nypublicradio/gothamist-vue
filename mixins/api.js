@@ -13,7 +13,7 @@ export default {
         .then(response => (
           this.setTheState(response.data, 1)
         ))
-        .catch(function (error) {
+        .catch((error) => {
           // eslint-disable-next-line no-console
           console.log(error)
         })
@@ -37,11 +37,11 @@ export default {
       const segmentData = apiResponse.included.filter(item => item.type === 'segment')
       const formattedSegments = []
       if (segmentData !== null) {
-        segmentData.forEach(function (value) {
+        segmentData.forEach((value) => {
           formattedSegments.push(
             {
               title: value.attributes.title,
-              url: 'https://www.wnyc.org/story/' + value.attributes.slug,
+              url: `https://www.wnyc.org/story/${value.attributes.slug}`,
               newWindow: true
             }
           )
@@ -52,9 +52,7 @@ export default {
       let titleLink = showData ? showData.attributes.url : null
       // handle special airings
       if (airingData) {
-        title = airingData.attributes.title
-        details = airingData.attributes.description
-        titleLink = airingData.attributes.href
+        ({ title, description: details, href: titleLink } = airingData.attributes)
       }
       const formattedData = {
         index,
@@ -64,7 +62,7 @@ export default {
         episodeTitle: episodeData ? episodeData.attributes.title : null,
         episodeLink: episodeData ? episodeData.attributes.url : null,
         file: apiResponse.data[0].attributes.mobileAac,
-        image: imageData ? 'https://media.wnyc.org/i/480/480/l/80/' + imageData.attributes.name : apiResponse.data[0].attributes.imageLogo,
+        image: imageData ? `https://media.wnyc.org/i/480/480/l/80/${imageData.attributes.name}` : apiResponse.data[0].attributes.imageLogo,
         playing: this.streams[index].playing,
         slug: apiResponse.data[0].attributes.slug,
         station: apiResponse.data[0].attributes.name,
@@ -102,7 +100,7 @@ export default {
     if (this.$features.enabled['experiment-audio-player']) {
       this.pollApi()
         .then(
-          res => this.pollApi()
+          () => { this.pollApi() }
         )
       // poll the API every 8 seconds
       this.timer = setInterval(this.pollApi, 8000)

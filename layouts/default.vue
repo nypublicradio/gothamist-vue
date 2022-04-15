@@ -89,7 +89,6 @@ export default {
       this.setExperimentTracking()
       this.logPageView()
       this.$store.dispatch('global/setNavigation')
-      debugger
     },
     setAdTargeting () {
       // remove any existing ads
