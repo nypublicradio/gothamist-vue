@@ -15,7 +15,7 @@ export default {
         ))
         .catch((error) => {
           // eslint-disable-next-line no-console
-          console.log(error)
+          console.warn(error) // skipcq: JS-0002
         })
     },
     setTheState (apiResponse, index) {
