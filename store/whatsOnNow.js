@@ -1,5 +1,5 @@
 // vuex state
-export const whatsOnState = () => ({
+export const state = () => ({
   dataLoaded: true,
   hasSomethingBeenPlayedYet: false,
   whatsOnNow: {
