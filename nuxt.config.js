@@ -174,7 +174,8 @@ export default {
       baseURL: process.env.API
     },
     environment: process.env.ENV && process.env.ENV.toLowerCase(),
-    siteId: '1'
+    siteId: '1',
+    whatsOnAPI: process.env.WHATS_ON_API
   },
 
   gtm: {
@@ -218,7 +219,11 @@ export default {
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     // this is needed to transpile es6 modules imported from node_modules
-    transpile: [],
+    transpile: [
+      // audio-player
+      'vue-hifi'
+      // audio-player
+    ],
     extractCSS: true,
     extend (config, ctx) {
       config.module.rules.push({

@@ -52,7 +52,7 @@
         </div>
       </template>
     </the-footer>
-    <div class="htlad-interior_leaderboard_adhesion" />
+    <div v-if="!$features.enabled['experiment-audio-player']" class="htlad-interior_leaderboard_adhesion" />
   </div>
 </template>
 

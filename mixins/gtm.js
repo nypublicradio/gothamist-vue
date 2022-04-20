@@ -11,6 +11,9 @@ export default {
   computed: {
     ...mapState('global', {
       previousPath: state => state.previousPath
+    }),
+    ...mapState('vue-hifi', {
+      vueHifiIsPlaying: state => state.isPlaying
     })
   },
   methods: {

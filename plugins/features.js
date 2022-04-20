@@ -3,11 +3,8 @@
 export default function ({ $exp }, inject) {
   // Add your features here
   const features = {
-    // Remove tags from the home page cards
-    // Part of a Google Optimize a/b test
-    // - Matt Walsh
-    // Experiment started: March 14 2022
-    'experiment-tagless-homepage': $exp && $exp.name === 'tagless-cards-on-homepage' && $exp.$variantIndexes.includes(1)
+    // Show the audio player on the home page
+    'experiment-audio-player': $exp && $exp.name === 'audio-player' && $exp.$variantIndexes.includes(1)
   }
 
   const enabled = features || {}

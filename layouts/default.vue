@@ -35,23 +35,33 @@
       </transition>
     </main>
     <gothamist-footer v-if="!isGallery" />
+    <!-- audio player -->
+    <transition name="fade">
+      <gothamist-player
+        v-if="$features.enabled['experiment-audio-player']"
+        class="gothamist-player-wrapper"
+        @welcome-message-dismissed="gaEvent('Livestream', 'Welcome Message Dismissed')"
+        @player-dismissed="gaEvent('Livestream', 'Player Dismissed')"
+        @play-clicked="gaEvent('Livestream', 'Livestream Started')"
+        @pause-clicked="gaEvent('Livestream', 'Livestream Paused')"
+        @resume-clicked="gaEvent('Livestream', 'Livestream Resumed')"
+      />
+    </transition>
+    <!-- audio player -->
   </div>
 </template>
 
 <script>
-/* global htlbid */
 import { mapState } from 'vuex'
+/* global htlbid */
 import gtm from '@/mixins/gtm'
+
 import { setTargeting } from '~/mixins/htl'
 
 export default {
   name: 'Gothamist',
   mixins: [gtm],
-  data () {
-    return {
-      windowWidth: null
-    }
-  },
+
   computed: {
     isHomepage () {
       return this.$route.name === 'index'
@@ -69,9 +79,6 @@ export default {
       this.$store.commit('global/setPreviousPath', oldRoute.fullPath)
     }
   },
-  beforeMount () {
-    this.windowWidth = window.innerWidth
-  },
   mounted () {
     this.handleNewPage()
   },
@@ -79,6 +86,7 @@ export default {
     handleNewPage () {
       this.setAdTargeting()
       this.setTrackingData()
+      this.setExperimentTracking()
       this.logPageView()
       this.$store.dispatch('global/setNavigation')
     },
@@ -113,6 +121,14 @@ export default {
           .split('/')
           .filter(segment => segment.length > 0)
       })
+    },
+    setExperimentTracking () {
+      if (this.$exp.experimentID && this.$exp.isEligible({ route: this.$route })) {
+        this.$gtm.push({
+          optimizeExperimentId: this.$exp.experimentID,
+          optimizeVariantId: this.$exp.$variantIndexes.join('-')
+        })
+      }
     },
     handleTransitionEnter () {
       this.$nextTick(() => {
@@ -166,9 +182,9 @@ export default {
 </script>
 
 <style lang="scss">
-$ad-wrapper-desktop:274px;
-$ad-wrapper-mobile:74px;
-$main-margin-top:70px;
+$ad-wrapper-desktop: 274px;
+$ad-wrapper-mobile: 74px;
+$main-margin-top: 70px;
 
 html {
   scroll-padding-top: 85px;
@@ -176,9 +192,15 @@ html {
 
 // prevents the footer from showing in the viewport before content is loaded, which affects our content shift score
 main {
-  min-height: calc( 100vh - ( var(--heading-height) + #{$ad-wrapper-mobile} + #{$main-margin-top} ) );
+  min-height: calc(
+    100vh -
+      (var(--heading-height) + #{$ad-wrapper-mobile} + #{$main-margin-top})
+  );
   @include media('>medium') {
-    min-height: calc( 100vh - ( var(--heading-height) + #{$ad-wrapper-desktop} + #{$main-margin-top} ) );
+    min-height: calc(
+      100vh -
+        (var(--heading-height) + #{$ad-wrapper-desktop} + #{$main-margin-top})
+    );
   }
 }
 
