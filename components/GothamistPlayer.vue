@@ -3,12 +3,14 @@
     v-show="!playerDismissed"
     class="persistent-player-wrapper"
   >
-    <collapsible-message
-      prefix="player-welcome"
-      @collapse="handleWelcomeMessageCollapsed"
-    >
-      You can now listen to WNYC on Gothamist! Let us know what you think of this experimental feature <a href="https://surveys.hotjar.com/e0b0fda5-4c70-43b4-bea5-32bca9fd25f8" target="_blank" rel="noopener noreferrer">here</a>.
-    </collapsible-message>
+    <client-only>
+      <collapsible-message
+        prefix="player-welcome"
+        @collapse="handleWelcomeMessageCollapsed"
+      >
+        You can now listen to WNYC on Gothamist! Let us know what you think of this experimental feature <a href="https://surveys.hotjar.com/e0b0fda5-4c70-43b4-bea5-32bca9fd25f8" target="_blank" rel="noopener noreferrer">here</a>.
+      </collapsible-message>
+    </client-only>
     <div
       class="player-row u-color-group-dark"
     >
