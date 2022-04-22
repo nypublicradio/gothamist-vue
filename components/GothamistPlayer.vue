@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="!playerDismissed"
+    v-show="!playerDismissed"
     class="persistent-player-wrapper"
   >
     <collapsible-message
