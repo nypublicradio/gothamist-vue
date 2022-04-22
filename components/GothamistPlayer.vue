@@ -26,7 +26,6 @@
           :is-muted="vueHifiIsMuted"
           :station="whatsOnNowStation"
           :title="whatsOnNowTitle"
-          :description="whatsOnNowEpisodeTitle"
           :file="whatsOnNowFile"
           :should-show-cta="!hasSomethingBeenPlayedYet"
           aria-live="polite"
@@ -192,6 +191,12 @@ export default {
 .gothamist-player {
   .track-info-livestream-station {
     letter-spacing: 0.15em;
+  }
+  .track-info-title, .track-info-title h2 {
+    max-width: calc(100vw - 162px);
+    @include media('>medium') {
+      max-width: 210px;
+    }
   }
   .player-cta-play-button .button-text {
     display: none;
