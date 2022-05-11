@@ -218,12 +218,6 @@ export default {
   },
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-    // this is needed to transpile es6 modules imported from node_modules
-    transpile: [
-      // audio-player
-      'vue-hifi'
-      // audio-player
-    ],
     extractCSS: true,
     extend (config, ctx) {
       config.module.rules.push({

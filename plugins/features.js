@@ -1,10 +1,9 @@
 /** See features.md in this same folder for documentation **/
 
-export default function ({ $exp }, inject) {
+export default function (_, inject) {
   // Add your features here
   const features = {
-    // Show the audio player on the home page
-    'experiment-audio-player': $exp && $exp.name === 'audio-player' && $exp.$variantIndexes.includes(1)
+
   }
 
   const enabled = features || {}
