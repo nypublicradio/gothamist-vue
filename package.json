@@ -31,7 +31,6 @@
     "nuxt-edge": "latest",
     "nuxt-google-optimize": "^0.5.4",
     "package.json": "^2.0.1",
-    "vue-hifi": "0.0.6",
     "vue-lazy-hydration": "^2.0.0-beta.4",
     "vue-mq": "^1.0.1",
     "vue-observe-visibility": "^1.0.0"

@@ -35,21 +35,6 @@
       </transition>
     </main>
     <gothamist-footer v-if="!isGallery" />
-    <!-- audio player -->
-    <client-only>
-      <transition name="fade">
-        <gothamist-player
-          v-if="$features.enabled['experiment-audio-player']"
-          class="gothamist-player-wrapper"
-          @welcome-message-dismissed="gaEvent('Livestream', 'Welcome Message Dismissed')"
-          @player-dismissed="gaEvent('Livestream', 'Player Dismissed')"
-          @play-clicked="gaEvent('Livestream', 'Livestream Started')"
-          @pause-clicked="gaEvent('Livestream', 'Livestream Paused')"
-          @resume-clicked="gaEvent('Livestream', 'Livestream Resumed')"
-        />
-      </transition>
-    </client-only>
-    <!-- audio player -->
   </div>
 </template>
 
