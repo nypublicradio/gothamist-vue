@@ -134,7 +134,7 @@ export default {
           hid: 'htlcss',
           rel: 'stylesheet',
           type: 'text/css',
-          href: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.css'
+          href: 'https://htlbid.com/stage/v3/gothamist-legacy.com/htlbid.css'
         },
         {
           skip: this.$config.environment === 'demo',
@@ -153,7 +153,7 @@ export default {
         {
           skip: this.$config.environment !== 'demo',
           hid: 'htljs',
-          src: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.js',
+          src: 'https://htlbid.com/stage/v3/gothamist-legacy.com/htlbid.js',
           defer: true
         },
         {
