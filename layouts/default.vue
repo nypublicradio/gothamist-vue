@@ -134,14 +134,14 @@ export default {
           hid: 'htlcss',
           rel: 'stylesheet',
           type: 'text/css',
-          href: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.css'
+          href: 'https://htlbid.com/stage/v3/gothamist-legacy.com/htlbid.css'
         },
         {
           skip: this.$config.environment === 'demo',
           hid: 'htlcss',
           rel: 'stylesheet',
           type: 'text/css',
-          href: 'https://htlbid.com/v3/gothamistv2.com/htlbid.css'
+          href: 'https://htlbid.com/v3/gothamist-legacy.com/htlbid.css'
         },
         {
           hid: 'canonical_url',
@@ -153,13 +153,13 @@ export default {
         {
           skip: this.$config.environment !== 'demo',
           hid: 'htljs',
-          src: 'https://htlbid.com/stage/v3/gothamist.com/htlbid.js',
+          src: 'https://htlbid.com/stage/v3/gothamist-legacy.com/htlbid.js',
           defer: true
         },
         {
           skip: this.$config.environment === 'demo',
           hid: 'htljs',
-          src: 'https://htlbid.com/v3/gothamistv2.com/htlbid.js',
+          src: 'https://htlbid.com/v3/gothamist-legacy.com/htlbid.js',
           defer: true
         }
       ]
