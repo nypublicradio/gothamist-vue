@@ -18,8 +18,9 @@ RUN apt-get update \
 WORKDIR /code
 
 COPY package.json ./
+COPY ./package-lock.json ./
 
-RUN npm install 
+RUN npm ci
 
 COPY . ./
 RUN rm /etc/nginx/nginx.conf \
