@@ -142,7 +142,7 @@ jobs:
           command: |
             env | sed -n "s/^${ENV^^}_//p" >> .env
             set -o allexport && source .env && set +o allexport
-            npm install
+            npm ci
             npm run deploy
 
   deploy-nuxt:
