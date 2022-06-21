@@ -379,3 +379,5 @@ indexexchange.com, 194359, DIRECT, 50b1c356f2c5c8fc
 pubmatic.com, 160308, DIRECT, 5d62403b186f2ace
 
 hcodemedia.com, 409, DIRECT
+
+google.com, pub-9835879021808285, DIRECT, f08c47fec0942fa0
