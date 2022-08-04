@@ -186,8 +186,7 @@ jobs:
               --ports=80 \
               --environment=$ENV \
               --tag=$TAG \
-              --wait=300 \
-              --enable-execute-command 
+              --wait=300
       - save_cache:
           <<: *circle_key
           paths: 
