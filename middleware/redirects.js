@@ -7,15 +7,27 @@ const redirects =
   ]
 
 module.exports = function (req, res, next) {
-  // const host = req.headers.host
-  // const fullUrl = req.url
-  const url = req.url.split('?')[0]
+  const betaCookie = req.headers.cookie.match('betaLot=([^;]+);')
+  let lot = 1000
+  if (betaCookie) {
+    lot = parseInt(betaCookie[1])
+  } else {
+    lot = Math.floor(Math.random() * 100)
+    res.setHeader('Set-Cookie', [`betaLot=${lot}`])
+  }
   let urlParams = null
   if (req.url.includes('?')) {
     urlParams = '?' + req.url.split('?')[1]
   }
 
-  const redirect = redirects.find(r => r.from === url)
+  const lotSize = 5
+  const betaURL = lot < lotSize ? `https://beta.gothamist.com${req.url}` : undefined
+
+  // const host = req.headers.host
+  // const fullUrl = req.url
+  const url = req.url.split('?')[0]
+
+  const redirect = { to: betaURL } || redirects.find(r => r.from === url)
   if (redirect) {
     let newLocation
     if (urlParams) {
