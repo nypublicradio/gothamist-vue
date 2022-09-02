@@ -6,8 +6,11 @@ const redirects =
     { from: '/tags/Sets%20&%20the%20City%20profile', to: '/tags/sets-and-the-city-profile' }
   ]
 
+// Percent of users sent to beta site
+const betaPercent = process.env.BETA_PERCENT || 5
+
 module.exports = function (req, res, next) {
-  const betaCookie = req.headers.cookie.match('betaLot=([^;]+);')
+  const betaCookie = req.headers.cookie ? req.headers.cookie.match('betaLot=([^;]+);') : undefined
   let lot = 1000
   if (betaCookie) {
     lot = parseInt(betaCookie[1])
@@ -20,14 +23,18 @@ module.exports = function (req, res, next) {
     urlParams = '?' + req.url.split('?')[1]
   }
 
-  const lotSize = 5
-  const betaURL = lot < lotSize ? `https://beta.gothamist.com${req.url}` : undefined
+  if (lot < betaPercent) {
+    res.writeHead(302, {
+      Location: `https://beta.gothamist.com${req.url}`
+    })
+    res.end()
+  }
 
   // const host = req.headers.host
   // const fullUrl = req.url
   const url = req.url.split('?')[0]
 
-  const redirect = { to: betaURL } || redirects.find(r => r.from === url)
+  const redirect = redirects.find(r => r.from === url)
   if (redirect) {
     let newLocation
     if (urlParams) {
