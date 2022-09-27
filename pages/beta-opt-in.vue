@@ -5,7 +5,7 @@
 <script>
 export default {
   beforeMount () {
-    const targetPath = 'https://gothamist.com' + this.$route.query.target || ''
+    const targetPath = `https://gothamist.com${this.$route.query.target || ''}`
     const cookieOptions = {
       secure: true,
       httpOnly: true,
