@@ -182,16 +182,9 @@
           intersection: { rootMargin: '300px 0px 0px 0px', threshold: 0.01 }
         }"
       />
-      <template v-if="!article.disableComments && showComments">
-        <disqus-embed
-          v-if="article"
-          :identifier="String(article.legacyId || article.uuid)"
-          :url="article.url"
-          @new-comment="handleNewComment"
-        />
-        <v-spacer size="quin" />
-      </template>
-
+      <div class="l-container l-container--10col">
+        <beta-opt-in :redirect-to="this.$route.path" />
+      </div>
       <dismissible-area prefix="donateBanner" :views-before-showable="2">
         <template v-slot="dismissibleArea">
           <donate-banner
