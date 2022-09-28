@@ -270,4 +270,9 @@ div:empty + .ad-label {
 .home-page .l-container--16col {
   max-width: calc((var(--max-width) / 16) * 15.75);
 }
+
+// hide comment counts
+.article-metadata .article-metadata-comments {
+  visibility: hidden;
+}
 </style>
