@@ -196,5 +196,6 @@ executors:
   default:
     docker:
       - image: cimg/node:14.18
+    resource_class: large
     environment:
       JOBS: 2  
