@@ -78,6 +78,7 @@ workflows:
 jobs:
   build-static:
     executor: default
+    resource_class: large
     steps:
       - checkout
       - restore_cache:
@@ -95,6 +96,7 @@ jobs:
 
   test-static:
     executor: default
+    resource_class: large
     steps:
       - checkout
       - restore_cache:
@@ -112,6 +114,7 @@ jobs:
   test-nginx:
     docker:
       - image: nginx
+    resource_class: large
     steps:
       - checkout
       - run:
@@ -129,6 +132,7 @@ jobs:
   deploy-static:
     docker: 
       - image: cimg/node:14.18
+    resource_class: large
     parameters:
       <<: *env_param
     steps:
@@ -148,6 +152,7 @@ jobs:
   deploy-nuxt:
     docker:
       - image: circleci/python:3.6
+    resource_class: large
     parameters: 
       <<: *env_param
       tag:
@@ -196,6 +201,5 @@ executors:
   default:
     docker:
       - image: cimg/node:14.18
-    resource_class: large
     environment:
       JOBS: 2  
