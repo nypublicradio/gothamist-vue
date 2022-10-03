@@ -1,6 +1,6 @@
 <template>
   <div class="beta-opt-in">
-    A new Gothamist is coming! We’ve moved comments over to our beta site. <a :href="`beta-opt-in/${redirectTo ? '?target=' + redirectTo : ''} `">Click here to join the conversation and get a preview of our new website.</a>
+    A new Gothamist is coming! We’ve moved comments over to our beta site. <a :href="`beta-opt-in/${redirectTo ? '?target=' + redirectTo : ''} `" rel="nofollow">Click here to join the conversation and get a preview of our new website.</a>
   </div>
 </template>
 <script>
